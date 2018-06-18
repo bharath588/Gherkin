@@ -17,10 +17,13 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
-import pageobjects.homepage.HomePage;
+
+
+import psc.homepage.HomePage;
 import psc.login.LoginPage;
 
 import com.aventstack.extentreports.Status;
+
 import gwgwebdriver.ByAngularButtonText;
 import gwgwebdriver.ByAngularRepeater;
 import gwgwebdriver.GwgWebDriver;

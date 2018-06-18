@@ -6,10 +6,14 @@ package pscBDD.employee;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import gwgwebdriver.How;
-import gwgwebdriver.NextGenWebDriver;
-import gwgwebdriver.pagefactory.NextGenPageFactory;
-import lib.Web;
+
+
+
+
+
+
+
+
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -18,12 +22,19 @@ import org.testng.Assert;
 
 import pscBDD.homePage.HomePage;
 import pscBDD.login.LoginPage;
-import reporter.Reporter;
-import annotations.FindBy;
+
+
+import bdd_annotations.FindBy;
+import bdd_core.framework.Globals;
+import bdd_gwgwebdriver.How;
+import bdd_gwgwebdriver.NextGenWebDriver;
+import bdd_gwgwebdriver.pagefactory.NextGenPageFactory;
+import bdd_lib.Web;
+import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
 
-import core.framework.Globals;
+
 
 /**
  * @author rvpndy

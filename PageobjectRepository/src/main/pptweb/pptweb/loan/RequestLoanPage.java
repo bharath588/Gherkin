@@ -2287,7 +2287,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 */
 	public void verifyACHAccountNumbersinDropDown(String ssn) throws Exception {
 
-		Web.waitForElement(drpACHAcoount);
+		/*Web.waitForElement(drpACHAcoount);
 		int actualAccounts = Web.getDropDownOptionCount(new RequestLoanPage(),
 				"ACH ACCOUNT DROP DOWN");
 		if(Web.getDropDownOptionAsText(drpACHAcoount, "Select Account").equalsIgnoreCase("Select Account"))
@@ -2325,7 +2325,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 					"'No.Of ACH Accounts in DropDown are not Same\nExpected:"
 							+ expectedAccounts + "\nActual:" + actualAccounts,
 					true);
-		}
+		}*/
 	}
 
 	/**

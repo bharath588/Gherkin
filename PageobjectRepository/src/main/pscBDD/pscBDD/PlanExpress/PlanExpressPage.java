@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import lib.DB;
-import lib.Web;
+
+
+
+
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,11 +23,13 @@ import org.testng.Assert;
 import pscBDD.commonLib.CommonLib;
 import pscBDD.login.LoginPage;
 import pscBDD.partnerlinkHomePage.PartnerlinkHomePage;
+import bdd_core.framework.Globals;
+import bdd_lib.DB;
+import bdd_lib.Web;
+import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
 
-import reporter.Reporter;
-import core.framework.Globals;
 
 /**
  * @author rvpndy

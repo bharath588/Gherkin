@@ -24,12 +24,13 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import pscBDD.homePage.HomePage;
+import bdd_lib.CommonLib;
+import bdd_lib.Web;
+import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
 
-import reporter.Reporter;
-import lib.CommonLib;
-import lib.Web;
+
 
 /**
  * @author rvpndy

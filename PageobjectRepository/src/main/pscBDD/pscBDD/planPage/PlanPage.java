@@ -5,8 +5,9 @@ package pscBDD.planPage;
 
 import java.util.List;
 
-import lib.CommonLib;
-import lib.Web;
+
+
+
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,6 +19,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import bdd_lib.Web;
+import pscBDD.commonLib.CommonLib;
 import pscBDD.homePage.HomePage;
 
 /**

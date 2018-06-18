@@ -6,9 +6,10 @@ package pscBDD.userVerification;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import lib.CommonLib;
-import lib.Stock;
-import lib.Web;
+
+
+
+
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
@@ -22,10 +23,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import pscBDD.login.LoginPage;
+import bdd_lib.CommonLib;
+import bdd_lib.Stock;
+import bdd_lib.Web;
+import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
 
-import reporter.Reporter;
 
 /**
  * @author rvpndy

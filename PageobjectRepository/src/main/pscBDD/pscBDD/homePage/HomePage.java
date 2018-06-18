@@ -6,17 +6,11 @@ package pscBDD.homePage;
 import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import lib.Stock;
-import lib.Web;
-
-import org.testng.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -25,12 +19,14 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
 import pscBDD.userVerification.UserVerificationPage;
+import bdd_lib.Web;
+import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
 
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
-import reporter.Reporter;
+
 
 /**
  * @author rvpndy
@@ -127,11 +123,6 @@ public class HomePage extends LoadableComponent<HomePage> {
 							userVeriPg.getSecurityAnswer((Web.returnElement(
 									userVeriPg, "SECURITYQUESTION")).getText()
 									.trim()) };
-					// userVeriData[0] =
-					// Stock.GetParameterValue("userVerificationEmail");
-					// userVeriData[1] =
-					// getSecurityAnswer((Web.returnElement(userVeriPg,
-					// "SECURITYQUESTION")).getText().trim());
 					userVeriPg.performVerification(userVeriData);
 
 				}

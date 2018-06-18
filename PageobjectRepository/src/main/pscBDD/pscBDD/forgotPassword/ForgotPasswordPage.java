@@ -5,7 +5,9 @@ package pscBDD.forgotPassword;
 
 import java.util.List;
 
-import lib.Web;
+
+
+
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,10 +16,12 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import pscBDD.login.LoginPage;
+import bdd_lib.Web;
+import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
 
-import reporter.Reporter;
+
 
 /**
  * @author rvpndy

@@ -28,10 +28,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 
+
+
+import bdd_core.framework.Globals;
+import bdd_reporter.Reporter;
+
 import com.aventstack.extentreports.Status;
 
-import core.framework.Globals;
-import reporter.Reporter;
+
+
+
 import cucumber.api.java.Before;
 
 /**

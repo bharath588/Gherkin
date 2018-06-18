@@ -5,11 +5,11 @@ package pscBDD.jumpPage;
 
 import java.util.List;
 
-import lib.Web;
+
+
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import bdd_lib.Web;
 import pscBDD.login.LoginPage;
 import pscBDD.userVerification.UserVerificationPage;
 
@@ -80,6 +81,7 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 		wait.until(ExpectedConditions.visibilityOf(weGreeting));
 	}
 	
+	@SuppressWarnings("unused")
 	private WebElement getWebElement(String fieldName){
 		if(fieldName.equalsIgnoreCase("JUMP PAGE URL"))
 			return urlJumpPage;

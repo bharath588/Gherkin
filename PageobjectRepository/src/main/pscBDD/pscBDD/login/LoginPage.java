@@ -5,8 +5,12 @@ package pscBDD.login;
 
 import java.util.List;
 
-import lib.Stock;
-import lib.Web;
+
+
+
+
+
+
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,12 +21,15 @@ import org.testng.Assert;
 
 import pscBDD.commonLib.CommonLib;
 import pscBDD.forgotPassword.ForgotPasswordPage;
+import bdd_core.framework.ThrowException;
+import bdd_core.framework.ThrowException.TYPE;
+import bdd_lib.Stock;
+import bdd_lib.Web;
+import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
 
-import reporter.Reporter;
-import core.framework.ThrowException;
-import core.framework.ThrowException.TYPE;
+
 
 /**
  * @author rvpndy

@@ -3,10 +3,6 @@
  */
 package pscBDD.fileSharing;
 
-import gwgwebdriver.How;
-import gwgwebdriver.NextGenBy;
-import gwgwebdriver.NextGenWebDriver;
-import gwgwebdriver.pagefactory.NextGenPageFactory;
 
 
 
@@ -18,23 +14,35 @@ import gwgwebdriver.pagefactory.NextGenPageFactory;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import lib.Web;
+
+
+
+
+
+
+
+
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-import annotations.FindBy;
+
 
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
 import pscBDD.homePage.HomePage;
 import pscBDD.login.LoginPage;
+import bdd_annotations.FindBy;
+import bdd_core.framework.Globals;
+import bdd_gwgwebdriver.How;
+import bdd_gwgwebdriver.NextGenWebDriver;
+import bdd_gwgwebdriver.pagefactory.NextGenPageFactory;
+import bdd_lib.Web;
+import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
 
-import core.framework.Globals;
-import reporter.Reporter;
 /**
  * @author rvpndy
  *

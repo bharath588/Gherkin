@@ -3,14 +3,18 @@
  */
 package pscBDD.fundProspectus;
 
-import gwgwebdriver.How;
-import gwgwebdriver.NextGenWebDriver;
-import gwgwebdriver.pagefactory.NextGenPageFactory;
+
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import lib.Web;
+
+
+
+
+
+
+
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -18,11 +22,16 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
 import pscBDD.login.LoginPage;
+import bdd_annotations.FindBy;
+import bdd_gwgwebdriver.How;
+import bdd_gwgwebdriver.NextGenWebDriver;
+import bdd_gwgwebdriver.pagefactory.NextGenPageFactory;
+import bdd_lib.Web;
+import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
 
-import reporter.Reporter;
-import annotations.FindBy;
+
 
 /**
  * @author rvpndy
