@@ -3,11 +3,15 @@
  */
 package org.bdd.psc.stepDefinitions;
 
+import pscBDD.casemanagement.CaseManagement;
+import bdd_core.framework.Globals;
+import bdd_reporter.Reporter;
+
 import com.aventstack.extentreports.Status;
 
-import org.bdd.psc.pageobjects.CaseManagement;
-import reporter.Reporter;
-import core.framework.Globals;
+
+
+
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;

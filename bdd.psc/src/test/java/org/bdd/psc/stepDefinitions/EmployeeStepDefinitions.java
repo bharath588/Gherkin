@@ -3,17 +3,18 @@
  */
 package org.bdd.psc.stepDefinitions;
 
+import pscBDD.employee.EmployeePage;
+import pscBDD.homePage.HomePage;
+import pscBDD.jumpPage.JumpPage;
+import pscBDD.login.LoginPage;
+import pscBDD.userVerification.UserVerificationPage;
 import gherkin.formatter.model.Scenario;
-import lib.CommonLib;
-import lib.Web;
 
-import org.bdd.psc.pageobjects.EmployeePage;
-import org.bdd.psc.pageobjects.HomePage;
-import org.bdd.psc.pageobjects.JumpPage;
-import org.bdd.psc.pageobjects.LoginPage;
-import org.bdd.psc.pageobjects.UserVerificationPage;
 
-import reporter.Reporter;
+
+import bdd_lib.CommonLib;
+import bdd_lib.Web;
+import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
 

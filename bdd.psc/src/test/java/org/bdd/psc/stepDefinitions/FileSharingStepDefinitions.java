@@ -3,15 +3,16 @@
  */
 package org.bdd.psc.stepDefinitions;
 
+import pscBDD.forgotPassword.ForgotPasswordPage;
+import pscBDD.homePage.HomePage;
+import pscBDD.jumpPage.JumpPage;
+import pscBDD.login.LoginPage;
+import pscBDD.userVerification.UserVerificationPage;
+import bdd_reporter.Reporter;
+
 import com.aventstack.extentreports.Status;
 
 import gherkin.formatter.model.Scenario;
-import org.bdd.psc.pageobjects.ForgotPasswordPage;
-import org.bdd.psc.pageobjects.HomePage;
-import org.bdd.psc.pageobjects.JumpPage;
-import org.bdd.psc.pageobjects.LoginPage;
-import org.bdd.psc.pageobjects.UserVerificationPage;
-import reporter.Reporter;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;

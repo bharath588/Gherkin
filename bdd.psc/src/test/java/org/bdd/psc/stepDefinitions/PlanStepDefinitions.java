@@ -3,9 +3,20 @@
  */
 package org.bdd.psc.stepDefinitions;
 
-import lib.Web;
+import pscBDD.homePage.HomePage;
+import pscBDD.login.LoginPage;
+import pscBDD.planPage.PlanPage;
+import pscBDD.userVerification.UserVerificationPage;
+import bdd_lib.Web;
+import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
+
+
+
+
+
+
 
 
 import cucumber.api.java.After;
@@ -13,11 +24,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.bdd.psc.pageobjects.HomePage;
-import org.bdd.psc.pageobjects.LoginPage;
-import org.bdd.psc.pageobjects.PlanPage;
-import org.bdd.psc.pageobjects.UserVerificationPage;
-import reporter.Reporter;
 import gherkin.formatter.model.Scenario;
 
 /**

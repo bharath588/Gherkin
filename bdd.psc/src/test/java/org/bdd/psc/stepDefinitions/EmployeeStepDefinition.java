@@ -6,12 +6,16 @@ package org.bdd.psc.stepDefinitions;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bdd.psc.pageobjects.EmployeePages;
-import org.bdd.psc.pageobjects.HomePage;
-import org.bdd.psc.pageobjects.LoginPage;
 
-import reporter.Reporter;
-import core.framework.Globals;
+
+
+
+
+import pscBDD.employee.EmployeePages;
+import pscBDD.homePage.HomePage;
+import pscBDD.login.LoginPage;
+import bdd_core.framework.Globals;
+import bdd_reporter.Reporter;
 import cucumber.api.DataTable;
 import cucumber.api.Delimiter;
 import cucumber.api.java.After;

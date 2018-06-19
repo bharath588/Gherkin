@@ -8,9 +8,10 @@
     <classes>
       <class name="org.bdd.psc.testRunner.TestRunner">
         <methods>
+          <include name="tearDownClass"/>
+          <include name="teardown"/>
           <include name="setUpClass"/>
           <include name="feature"/>
-          <include name="tearDownClass"/>
         </methods>
       </class> <!-- org.bdd.psc.testRunner.TestRunner -->
     </classes>
