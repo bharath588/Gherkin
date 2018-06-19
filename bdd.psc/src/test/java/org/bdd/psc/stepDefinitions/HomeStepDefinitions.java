@@ -13,6 +13,7 @@ import pscBDD.forgotPassword.ForgotPasswordPage;
 import pscBDD.homePage.HomePage;
 import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
+
 import pscBDD.planPage.PlanDMBACustomSitePage;
 import pscBDD.userVerification.UserVerificationPage;
 import bdd_lib.CommonLib;
@@ -23,6 +24,16 @@ import com.aventstack.extentreports.Status;
 import bdd_core.framework.Globals;
 import gherkin.formatter.model.Scenario;
 import bdd_reporter.Reporter;
+
+import pscBDD.userVerification.UserVerificationPage;
+import bdd_core.framework.Globals;
+import bdd_lib.Web;
+import bdd_reporter.Reporter;
+
+import com.aventstack.extentreports.Status;
+
+import gherkin.formatter.model.Scenario;
+
 import cucumber.api.DataTable;
 import cucumber.api.Delimiter;
 import cucumber.api.PendingException;
@@ -39,8 +50,10 @@ import cucumber.api.java.en.When;
 public class HomeStepDefinitions {
 	public static String featureName = null;
 	public static Scenario scenario = null;
+
 	
 	private static List<String> newTabUrl=new ArrayList<String>();
+
 
 	LoginPage login;
 	UserVerificationPage userVerPage;
@@ -182,33 +195,6 @@ public class HomeStepDefinitions {
 	public void user_is_connected_to_a_plan() throws Throwable {
 		// Write code here that turns the phrase above into concrete actions
 		Reporter.initializeReportForTC(1, Globals.scenarioName);
-		throw new PendingException();
-	}
-
-	@When("^User clicks on the YouTube social media icon$")
-	public void user_clicks_on_the_YouTube_social_media_icon() throws Throwable {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
-	}
-
-	@Then("^A new tab opens with https://www\\.youtube\\.com/channel/UCFPLlGp(\\d+)vPjBb-G(\\d+)SnUWhQ$")
-	public void a_new_tab_opens_with_https_www_youtube_com_channel_UCFPLlGp_vPjBb_G_SnUWhQ(
-			int arg1, int arg2) throws Throwable {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
-	}
-
-	@When("^User clicks on the Instagram social media icon$")
-	public void user_clicks_on_the_Instagram_social_media_icon()
-			throws Throwable {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
-	}
-
-	@Then("^A new tab opens with https://www\\.instagram\\.com/empowerretirement/$")
-	public void a_new_tab_opens_with_https_www_instagram_com_empowerretirement()
-			throws Throwable {
-		// Write code here that turns the phrase above into concrete actions
 		throw new PendingException();
 	}
 

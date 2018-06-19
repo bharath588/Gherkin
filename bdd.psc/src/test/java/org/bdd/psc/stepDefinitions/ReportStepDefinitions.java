@@ -10,12 +10,21 @@ import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
 import pscBDD.reports.ReportsPage;
 import pscBDD.userVerification.UserVerificationPage;
+
 import bdd_lib.Web;
 
 import com.aventstack.extentreports.Status;
 
 import bdd_reporter.Reporter;
 import bdd_core.framework.Globals;
+
+import bdd_core.framework.Globals;
+import bdd_lib.Web;
+import bdd_reporter.Reporter;
+
+import com.aventstack.extentreports.Status;
+
+
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;

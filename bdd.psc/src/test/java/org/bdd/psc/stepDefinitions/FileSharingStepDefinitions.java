@@ -3,7 +3,8 @@
  */
 package org.bdd.psc.stepDefinitions;
 
-import java.util.ArrayList;
+import gherkin.formatter.model.Scenario;
+
 import java.util.List;
 import java.util.Map;
 
@@ -13,18 +14,13 @@ import pscBDD.homePage.HomePage;
 import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
 import pscBDD.userVerification.UserVerificationPage;
+import bdd_core.framework.Globals;
 import bdd_lib.Web;
+import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
 
-import bdd_core.framework.Globals;
-import gherkin.formatter.model.Scenario;
-
-
-
-import bdd_reporter.Reporter;
 import cucumber.api.DataTable;
-import cucumber.api.Delimiter;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;

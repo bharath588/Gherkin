@@ -20,6 +20,16 @@
 	        <version>0.0.1-SNAPSHOT</version>
 	     </dependency>
 	</dependencies>
+	<pluginRepositories>
+		<pluginRepository>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<id>hindsighttesting.release</id>
+			<name>Hindsight Software Release Repository</name>
+			<url>http://hindsightsoftware.bintray.com/public-maven</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,87 +37,87 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 	<build>
-		<pluginManagement><!-- lock down plugins versions to avoid using Maven 
-				defaults (may be moved to parent pom) -->
-				<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.18.1</version>
-					<configuration>
-						<threadCount>1</threadCount>
-						<reuseForks>false</reuseForks>
-						<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
-						<suiteXmlFiles>
-							<suiteXmlFile>RunXML/${suiteFile}.xml</suiteXmlFile>
-						</suiteXmlFiles>
-						<systemProperties>
-							<property>
-								<name>env</name>
-								<value>${env}</value>
-							</property>
-						</systemProperties>
-						<systemProperties>
-							<property>
-								<name>testDataPath</name>
-								<value>${testDataPath}</value>
-							</property>
-						</systemProperties>
-						<systemProperties>
-							<property>
-								<name>CAPTURESCREENSHOT</name>
-								<value>${CAPTURESCREENSHOT}</value>
-							</property>
-						</systemProperties>
-						<systemProperties>
-							<property>
-								<name>BROWSER</name>
-								<value>${BROWSER}</value>
-							</property>
-						</systemProperties>
-						<systemProperties>
-							<property>
-								<name>type</name>
-								<value>${ExecutionMode}</value>
-							</property>
-						</systemProperties>
-					</configuration>
-				</plugin>
-				<!-- Compiler plugin configures the java version to be used for compiling 
-					the code -->
-			
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.4</version>
-					<configuration>
-						<source>1.8</source>
-						<target>1.8</target>
+		<plugins>
+			<!--<plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-plugin</artifactId> 
+				<version>2.18.1</version> <configuration> <threadCount>1</threadCount> <reuseForks>false</reuseForks> 
+				<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine> <suiteXmlFiles> <suiteXmlFile>RunXML/${suiteFile}.xml</suiteXmlFile> 
+				</suiteXmlFiles> <systemProperties> <property> <name>env</name> <value>${env}</value> 
+				</property> </systemProperties> <systemProperties> <property> <name>testDataPath</name> 
+				<value>${testDataPath}</value> </property> </systemProperties> <systemProperties> 
+				<property> <name>CAPTURESCREENSHOT</name> <value>${CAPTURESCREENSHOT}</value> 
+				</property> </systemProperties> <systemProperties> <property> <name>BROWSER</name> 
+				<value>${BROWSER}</value> </property> </systemProperties> <systemProperties> 
+				<property> <name>type</name> <value>${ExecutionMode}</value> </property> 
+				</systemProperties> </configuration> </plugin> -->
+			<!-- Compiler plugin configures the java version to be used for compiling 
+				the code -->
 
-					</configuration>
-				</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
 
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>1.9.1</version>
-					<executions>
-						<execution>
-							<id>add-source</id>
-							<phase>generate-sources</phase>
-							<goals>
-								<goal>add-source</goal>
-							</goals>
-							<configuration>
-								<sources>
-									<source>src/test/java</source>
-									<source>src/main/java</source>
-								</sources>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+				</configuration>
+			</plugin>
+
+			<!-- <plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.9.1</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/test/java</source>
+								<source>src/main/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin> -->
+			<plugin>
+				<groupId>com.hindsighttesting.behave</groupId>
+				<artifactId>behave-maven-plugin</artifactId>
+				<version>1.0.5</version>
+				<configuration>
+					<httpsProxyURL>https://143.199.237.62:8080/</httpsProxyURL>
+					<httpsProxyUsername>rvpndy</httpsProxyUsername>
+					<httpsProxyPassword>I@matw0rk</httpsProxyPassword>
+					<server>https://dev-jira.retirementpartner.com</server>
+					<projectKey>11301</projectKey>
+					<username>rvpndy</username>
+					<password>I@matw0rk</password>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>features</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.21.0</version>				
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 </project>

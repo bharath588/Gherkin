@@ -1,20 +1,16 @@
-/**
- * 
- */
+
+
 package org.bdd.psc.stepDefinitions;
 
 import java.util.List;
 
 import pscBDD.forgotPassword.ForgotPasswordPage;
 import pscBDD.login.LoginPage;
+import bdd_core.framework.Globals;
+import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
 
-import bdd_core.framework.Globals;
-
-
-
-import bdd_reporter.Reporter;
 import cucumber.api.Delimiter;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -132,22 +128,6 @@ public class ForgotPasswordStepDefinitions {
 					"clicking close on pop up does not return to forgot password page", true);
 			HomeStepDefinitions.forgotPwdPageVisits = 0;
 		}
-	}
-	
-	@Then("^the \"([^\"]*)\" section should be displayed$")
-	public void the_contact_us_section_should_be_displayed(String contactus)
-			throws Throwable {
-		if (forgotPwdPage.isContactUsSectionDisplayedCorrectMessage(contactus)) {
-			Reporter.logEvent(Status.PASS,
-					" The contactUs section should displays : " + contactus,
-					"The contactUs section is displays : " + contactus, true);
-		} else {
-			Reporter.logEvent(Status.FAIL,
-					" The contactUs section should displays: " + contactus,
-					"The contactUs section isn't displays : " + contactus,
-					true);
-		}
-
 	}
 
 }

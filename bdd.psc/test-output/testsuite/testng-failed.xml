@@ -8,9 +8,16 @@
     <classes>
       <class name="org.bdd.psc.testRunner.TestRunner">
         <methods>
+<<<<<<< HEAD
           <include name="setUpClass"/>
           <include name="feature"/>
           <include name="tearDownClass"/>
+=======
+          <include name="tearDownClass"/>
+          <include name="teardown"/>
+          <include name="setUpClass"/>
+          <include name="feature"/>
+>>>>>>> refs/remotes/origin/smylnk
         </methods>
       </class> <!-- org.bdd.psc.testRunner.TestRunner -->
     </classes>

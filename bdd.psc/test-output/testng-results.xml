@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <testng-results skipped="0" failed="1" ignored="0" total="1" passed="0">
   <reporter-output>
   </reporter-output>
@@ -19,13 +20,39 @@
             <param index="0">
               <value>
                 <![CDATA[PSC social media icons]]>
+=======
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="testsuite" duration-ms="66998" started-at="2018-05-29T10:43:25Z" finished-at="2018-05-29T10:44:32Z">
+    <groups>
+      <group name="cucumber">
+        <method signature="TestRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:org.bdd.psc.testRunner.TestRunner@a67c67e]" name="feature" class="org.bdd.psc.testRunner.TestRunner"/>
+      </group> <!-- cucumber -->
+    </groups>
+    <test name="BDD Tests" duration-ms="66998" started-at="2018-05-29T10:43:25Z" finished-at="2018-05-29T10:44:32Z">
+      <class name="org.bdd.psc.testRunner.TestRunner">
+        <test-method status="PASS" signature="setUpClass()[pri:0, instance:org.bdd.psc.testRunner.TestRunner@a67c67e]" name="setUpClass" is-config="true" duration-ms="11046" started-at="2018-05-29T16:13:25Z" finished-at="2018-05-29T16:13:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpClass -->
+        <test-method status="PASS" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:org.bdd.psc.testRunner.TestRunner@a67c67e]" name="feature" duration-ms="49129" started-at="2018-05-29T16:13:39Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2018-05-29T16:14:29Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[InstAF - Rename Investment and Performance to Investment Results]]>
+>>>>>>> refs/remotes/origin/smylnk
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- feature -->
+<<<<<<< HEAD
         <test-method status="PASS" signature="tearDownClass()[pri:0, instance:org.bdd.psc.testRunner.TestRunner@544fe44c]" name="tearDownClass" is-config="true" duration-ms="74" started-at="2018-04-12T17:39:19Z" finished-at="2018-04-12T17:39:19Z">
+=======
+        <test-method status="PASS" signature="tearDownClass()[pri:0, instance:org.bdd.psc.testRunner.TestRunner@a67c67e]" name="tearDownClass" is-config="true" duration-ms="163" started-at="2018-05-29T16:14:32Z" finished-at="2018-05-29T16:14:32Z">
+>>>>>>> refs/remotes/origin/smylnk
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDownClass -->
