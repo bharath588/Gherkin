@@ -14,6 +14,8 @@ import java.util.List;
 
 
 
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -39,6 +41,8 @@ public class PlanExpressPage extends LoadableComponent<PlanExpressPage> {
 
 	@FindBy(linkText = "1")
 	private WebElement planPipeLineData;
+	@FindBy(linkText = "2")
+	private WebElement completePlanData;
 	@FindBy(id = "framea")
 	private WebElement planExpressFrame;
 	@FindBy(xpath = "html/body/div[1]/div[1]")
@@ -85,6 +89,16 @@ public class PlanExpressPage extends LoadableComponent<PlanExpressPage> {
 	private WebElement implementationCheckList;
 	@FindBy(xpath=".//input[@type='radio' and @value='Y']")
 	private WebElement nextGenEmpExpAnsY;
+	@FindBy(xpath = "//table/tbody/tr//td[2]")
+	private List<WebElement> planNumbers;
+	@FindBy(linkText = "3600: Enrollment Kits")
+	private WebElement question3600;
+	@FindBy(linkText = "Create Forms and Update Recordkeeping System")
+	private WebElement createFormsLink;
+	@FindBy(xpath = "//div[@class='message']")
+	private WebElement planLoadMessage;
+	@FindBy(xpath = ".//*[@id='answer(30-0)']")
+	private WebElement beneficiaryFormY;
 
 	static ResultSet resultSet;
 	static int i = 0;
@@ -272,6 +286,64 @@ public class PlanExpressPage extends LoadableComponent<PlanExpressPage> {
 		if(Web.isWebElementDisplayed(saveAndReturnButton, false)){
 			Web.clickOnElement(saveAndReturnButton);
 		}
+	}
+	
+	public void clickOnCompletePlanData() {
+		Web.waitForElement(planExpressFrame);
+		Web.FrameSwitchONandOFF(true, planExpressFrame);
+		if (Web.isWebElementDisplayed(completePlanData, true)) {
+			Web.actionsClickOnElement(completePlanData);
+		}
+	}
+	
+	public void clickOnPlanLink(String ga_id) {
+		if (planNumbers.size() > 0) {
+			for (WebElement ele : planNumbers) {
+				if (ele.getText().trim().equalsIgnoreCase(ga_id))
+					Web.clickOnElement(ele.findElement(By
+							.xpath("/preceding-sibling::td")));
+				break;
+			}
+		}
+	}
+	public void clickOn3600EnrollmentKits() {
+		if (Web.isWebElementDisplayed(question3600, true))
+			Web.clickOnElement(question3600);
+	}
+
+	public void selectYBeneficiaryForm() {
+		if (Web.isWebElementDisplayed(beneficiaryFormY, true))
+			Web.actionsClickOnElement(beneficiaryFormY);
+	}
+
+	public void clickOnCreateFormsAndUpdate() {
+		if (Web.isWebElementDisplayed(createFormsLink, true))
+			Web.clickOnElement(createFormsLink);
+	}
+
+	public boolean isSuccessMessage() {
+		if (Web.isWebElementDisplayed(planLoadMessage, true))
+			return true;
+		return false;
+	}
+
+	public void verifyDBValues(String query, String ga_id) {
+		try {
+			resultSet = DB.executeQuery("D_INST", query, ga_id);
+			resultSet.last();
+			int row = resultSet.getRow();
+			if (row >= 1)
+				Reporter.logEvent(Status.PASS,
+						"PXIS has run and plan data is created",
+						"PXIS has run and plan data is created", false);
+			else
+				Reporter.logEvent(Status.PASS,
+						"PXIS has run and plan data is created",
+						"PXIS has run and plan data is not created", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
