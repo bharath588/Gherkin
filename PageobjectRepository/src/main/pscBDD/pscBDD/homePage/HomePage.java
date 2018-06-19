@@ -42,8 +42,20 @@ public class HomePage extends LoadableComponent<HomePage> {
 	private WebElement homePageLogo;
 	@FindBy(xpath = ".//input[@id='planSearchAc_input']")
 	private WebElement planSearchBox;
+	
+	@FindBy(id = "planDropDown")
+	private WebElement planDropDownMenu;
+	
+	@FindBy(id = "angularProfileLink")
+	private WebElement myProfileLink;
+	@FindBy(xpath="//*[@class='breadcrumb']/i")
+	private WebElement breadCrumb;
+	
 	@FindBy(xpath = ".//button[@id='planSearchAutocompleteButton']")
 	private WebElement btnPlanSearchTxtGO;
+	@FindBy(xpath = ".//button[@id='planSearchDropdownButton']")
+	private WebElement btnPlanSearchDropDownGO;
+	
 	@FindBy(id = "termsconditions")
 	private WebElement termsAndConditions;
 	@FindBy(xpath = "//ul[@id='footBottomLinks']/li")
@@ -54,7 +66,8 @@ public class HomePage extends LoadableComponent<HomePage> {
 	private WebElement closeFooterDialog;
 	@FindBy(xpath = ".//*[@id='main']/div")
 	private WebElement sysReqDiv;
-	@FindBy(xpath = ".//div[contains(@class,'CopyRight') or contains(@class,'copyright')]")
+	
+	@FindBy(xpath = ".//div[contains(@class,'CopyRight') or contains(@class,'copyright') or contains(@id,'footLegal') or contains(@class,'disclosure')]")
 	private WebElement copyrightText;
 	@FindBy(xpath = "//*[@id='newMenu']//li/a[text()='Reports']")
 	private WebElement reportsMenu;
@@ -62,6 +75,8 @@ public class HomePage extends LoadableComponent<HomePage> {
 	private WebElement standardReportsSubMenu;
 	@FindBy(xpath = "//*[@id='main']/div/h1")
 	private WebElement iframeFooterHeader;
+	@FindBy(xpath=".//span[text()='Site Bulletin']/following-sibling::a/span")
+	private WebElement CancelNewsBulletin;
 
 	private LoadableComponent<?> parent;
 	public static WebDriver webDriver;
@@ -127,6 +142,8 @@ public class HomePage extends LoadableComponent<HomePage> {
 
 				}
 			}
+			if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
+				Web.clickOnElement(CancelNewsBulletin);		
 		} catch (Exception e) {
 			try {
 				throw new Exception(
@@ -179,6 +196,11 @@ public class HomePage extends LoadableComponent<HomePage> {
 		return null;
 
 	}
+	
+	public void clickOnMyProfile(){
+		if(Web.isWebElementDisplayed(myProfileLink, true))
+			Web.clickOnElement(myProfileLink);
+	}
 
 	public void switchPlan(String planNumber) {
 		try {
@@ -191,7 +213,17 @@ public class HomePage extends LoadableComponent<HomePage> {
 				Reporter.logEvent(Status.INFO, "Switched to plan:", planNumber,
 						true);
 				Thread.sleep(5000);
-			} else {
+			}else if(Web.isWebElementDisplayed(planDropDownMenu,true)){
+				Web.actionsClickOnElement(planDropDownMenu);
+				Web.actionsClickOnElement(planDropDownMenu);
+				Web.selectDropDownOption(planDropDownMenu, planNumber, true);
+				Web.clickOnElement(btnPlanSearchDropDownGO);
+				
+				Reporter.logEvent(Status.INFO, "Switched to plan:", planNumber,
+						true);
+				Thread.sleep(5000);
+			} 
+			else {
 				Reporter.logEvent(
 						Status.INFO,
 						"No plan search box. User is associated with single plan",
@@ -343,6 +375,21 @@ public class HomePage extends LoadableComponent<HomePage> {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public boolean isHomePage(){
+		if(Web.isWebElementDisplayed(homePageLogo, true))
+			return true;
+		else
+			return false;				
+	}
+	
+	public boolean isMyProfilePage(){
+		if(Web.isWebElementDisplayed(breadCrumb, true))
+			if(breadCrumb.getText().trim().equalsIgnoreCase("My Profile"))
+				return true;
+		return false;
+		
 	}
 
 }

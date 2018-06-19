@@ -12,6 +12,11 @@ import java.util.List;
 
 
 
+
+
+import java.util.Set;
+
+//import org.bdd.psc.pageobjects.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -38,6 +43,16 @@ import com.aventstack.extentreports.Status;
 public class LoginPage extends LoadableComponent<LoginPage> {
 
 	public static WebDriver webDriver;
+	
+	@FindBy(linkText = "FAQ")
+	private WebElement faqLink;
+	@FindBy(xpath = "//h1[contains(text(),'FAQs')]")
+	private WebElement faqHeaderPageTitle;
+	@FindBy(xpath = "//h3[contains(text(),'must my password contain')]")
+	private WebElement howManyCharPasswordContain;
+	@FindBy(xpath = "//p[contains(text(),'Passwords must be between')]")
+	private WebElement howManyCharPasswordContainAnswer;
+	
 	@FindBy(id = "username")
 	private WebElement txtUserName;
 	@FindBy(id = "password")
@@ -60,6 +75,28 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement termsAndConditionsLink;
 	@FindBy(xpath = "//div[contains(@class,'footer-doc-links')]//li")
 	private List<WebElement> footerLinks;
+	
+	@FindBy(linkText="Privacy Policy")
+	private WebElement PrivacyPolicy;
+	@FindBy(linkText="Legal Notices")
+	private WebElement LegalNotices;
+	//@FindBy(id="facebook")
+	@FindBy(xpath="//*[contains(@id,'facebook') or contains(@class,'social-link facebook')]")
+	private WebElement facebook;
+	@FindBy(xpath="//*[contains(@id,'twitter') or contains(@class,'social-link twitter')]")
+	private WebElement twitter;
+	@FindBy(xpath="//*[contains(@id,'linkedin') or contains(@class,'social-link linkedin')]")
+	private WebElement linkedin;
+	@FindBy(id="instagram")
+	private WebElement instagram;
+	@FindBy(id="youtube")
+	private WebElement youtube;
+	@FindBy(xpath="//div[@class='footer-social-media']/a")
+	private List<WebElement> socialMediaIcons;
+	
+	@FindBy(xpath="//div[contains(@class,'disclosure') or contains(@id,'footLegal')]")
+	private WebElement footerReqText;
+	
 	@FindBy(linkText = "Forgot Password?")
 	private WebElement forgotPassword;
 	@FindBy(xpath = ".//*[@id='main']/div[2]/div[2]/div")
@@ -76,13 +113,16 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement preloginBreadcrumbs;
 	@FindBy(xpath = ".//*[@id='main']/div[1]/div/ol/li[1]")
 	private WebElement homeLinkInBreadcrumb;
+	
+	@FindBy(xpath = ".//*[strong[contains(text(),'help')]]/following-sibling::p[1]")
+	private WebElement contactUsPreLogin;
 
 	LoadableComponent<?> parent;
 	public static String URL;
 	CommonLib commonLib;
 	ForgotPasswordPage forgotPwdPage;
 	String primeWindow = "";
-	static String accucode;
+	public static String accucode;
 
 	/*-----------------------------------------------------------------*/
 
@@ -101,6 +141,15 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	protected void load() {
 		// TODO Auto-generated method stub
 		// webDriver.get(Stock.getConfigParam("AppURLPSC"));
+		
+		try{
+			if (Web.isWebElementDisplayed(logout))
+				 Web.clickOnElement(logout);
+			}
+		catch(Exception e){
+			
+		}
+		
 		if (!(URL == null)) {
 			Web.getDriver().get(URL);
 			Web.getDriver().manage().window().maximize();
@@ -110,8 +159,10 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			URL = Stock.getConfigParam("AppURLPSC");
 			URL = URL.replace("accucode", Stock.getConfigParam("accucode"));
 			Web.getDriver().get(URL);
+			Web.getDriver().get(URL);
 			Web.getDriver().manage().window().maximize();
 		}
+		Reporter.logEvent(Status.INFO, "opens the URL for the accuCode: "+LoginPage.accucode,"opens the URL for the accuCode: "+LoginPage.accucode, true);
 	}
 
 	@Override
@@ -166,6 +217,30 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("Logout")) {
 			return this.logout;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Legal Notices")){
+			return this.LegalNotices;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Privacy Policy")){
+			return this.PrivacyPolicy;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Facebook")){
+			return this.facebook;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Twitter")){
+			return this.twitter;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Linkedin")){
+			return this.linkedin;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Youtube")){
+			return this.youtube;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Instagram")){
+			return this.instagram;
+		}
+		if(fieldName.trim().equalsIgnoreCase("footerReqText")){
+			return this.footerReqText;
 		}
 
 		// Reporter.logEvent(
@@ -256,14 +331,18 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		return URL;
 	}
 
-	public boolean isErrorDisplayed() {
+	public boolean isErrorDisplayed() throws InterruptedException {
+		Web.getDriver().switchTo().frame(frmLogin);
 		if (errorMessage.isDisplayed()) {
 			Reporter.logEvent(Status.INFO, "Error displays", "Error displays:"
 					+ errorMessage.getText(), true);
+			Web.getDriver().switchTo().defaultContent();
 			return true;
 		}
+		Web.getDriver().switchTo().defaultContent();
 		return false;
 	}
+
 
 	public boolean isTermsAndConditionsDisplayed() {
 		if (Web.isWebElementDisplayed(termsAndConditionsLink))
@@ -445,5 +524,134 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			return true;
 		return false;
 	}
+	
+	public String openAndCloseNewTab(String linkName) {
+		try {
+			WebElement element = getWebElement(linkName);
+			String newUrl="";
+			if (Web.isWebElementDisplayed(element, true)) {
+				Web.clickOnElement(element);
+				Thread.sleep(2000);
+				Set<String> handles = Web.getDriver().getWindowHandles();
+				String firstWindow = Web.getDriver().getWindowHandle();
+				handles.remove(firstWindow);
+				if (handles.iterator().next() != firstWindow) {
+					Web.getDriver().switchTo().window(handles.iterator().next());
+					newUrl=Web.getDriver().getCurrentUrl();
+					Web.getDriver().close();
+					Web.getDriver().switchTo().window(firstWindow);
+				}
+
+			}
+
+			return newUrl;
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public boolean textFormatMatches(String marketingText,WebElement element, WebElement...frame){
+
+		try{
+			forgotPwdPage = new ForgotPasswordPage();
+			if(frame.length>0){
+				Web.FrameSwitchONandOFF(true, frame);
+				if(Web.isWebElementDisplayed(forgotPwdPage, "System Requirement Window")){
+					if(Web.returnWebElement(forgotPwdPage, 
+							"System Requirement Window").getText().trim()
+							.contains(marketingText.trim()))
+						return true;
+				}
+			}
+			else if(Web.isWebElementDisplayed(element)){
+				if(element.getText().trim().contains(marketingText.trim()))
+					System.out.println("true");
+					return true;
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+	public void checkCorrectOrderOfSocialIconObjects(List<String> icon) {
+		try {
+			int i = 0;
+			if (icon.size() == socialMediaIcons.size()) {
+				for (WebElement element : socialMediaIcons) {
+					String expIcon=icon.get(i++);
+					if (element.getText().trim().replaceAll(" ","").equalsIgnoreCase(expIcon))
+					{
+						Reporter.logEvent(Status.PASS, " Social media icon "+expIcon+" displays in correct order in Pre/post-Login page", 
+		        				" Social media icon "+expIcon+" displays in correct order in Pre/post-Login page", true);
+					}
+					else
+						Reporter.logEvent(Status.FAIL, " Social media icon "+expIcon+" displays in correct order in Pre/post-Login page", 
+		        				" Social media icon "+expIcon+" does not displays in correct order in Pre/post-Login page", true);
+				}
+			} 
+			else
+				Reporter.logEvent(Status.FAIL, " All Social media icon should displays in Pre/post-Login page", 
+        				" All Social media icon does not displayed in Pre/post-Login page", true);
+			}
+		catch (Exception e) {
+			throw new Error("Error getting in social media icon obejct fields : "+ e.getMessage());
+			
+		}
+
+	}
+	
+	public boolean isNextGenUrlPage(String nextGenUrl)throws InterruptedException {
+		int i = 0;
+		Web.getDriver().switchTo().defaultContent();
+		while (i < 15){
+			try {
+				Web.getDriver().switchTo().frame(frmLogin);
+				if (Web.isWebElementDisplayed(txtUserName, true))
+					break;
+			} catch (Exception e) {
+				i++;
+				Thread.sleep(1000);
+				Web.getDriver().switchTo().defaultContent();
+			}
+		}
+		if (Web.getDriver().getCurrentUrl().trim().equals(nextGenUrl.trim()))
+			return true;
+		return false;
+	}
+	
+	public boolean isContactUsSectionDisplayCorrectTextInPreLogin(String contactUsText){
+		String text=contactUsPreLogin.getText().trim().replace("\n", "").replace("\r", "");
+		if(Web.getDriver().getCurrentUrl().contains("InstMetLife"))
+			text=text.replace("Contact us", "").trim();
+		System.out.println("----------");
+		System.out.println(text);
+		System.out.println(contactUsText.replace("'", "").trim());
+		if(text.equalsIgnoreCase(contactUsText.replace("'", "").trim()))
+			return true;
+		return false;
+		
+	}
+	public void clickOnFAQLink(){
+		if(Web.isWebElementDisplayed(faqLink, true))
+			Web.clickOnElement(faqLink);
+	}
+	public boolean isFAQpageDisplayes(){
+		if(Web.isWebElementDisplayed(faqHeaderPageTitle, true))
+			return true;
+		return false;
+	}
+	public boolean isSameTextDisplaysInFAQ(String textContent){
+		String actual=howManyCharPasswordContain.getText()+howManyCharPasswordContainAnswer.getText();
+		String input=textContent.trim().replace("\n", "");
+		
+		if(input.trim().equalsIgnoreCase(actual.trim()))
+			return true;
+		return false;
+		
+	}
+
 
 }

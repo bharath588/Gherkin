@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
@@ -18,6 +19,7 @@ import bdd_gwgwebdriver.How;
 import bdd_gwgwebdriver.NextGenWebDriver;
 import bdd_gwgwebdriver.pagefactory.NextGenPageFactory;
 import bdd_lib.Web;
+import bdd_lib.XL_ReadWrite;
 import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
@@ -36,6 +38,10 @@ public class ReportsPage extends LoadableComponent<ReportsPage> {
 	public static String folderNameValue;
 	public static String subfolderNameValue;
 	public static String fileNameValue;
+	
+	public XL_ReadWrite xl;
+	public String downloadPath="C:\\Users\\"+System.getProperty("user.name")+"\\Downloads\\PSCSponsorReportsCatalog.xlsx";
+	public String sheetNameInReportCatalogFile="Report Catalog";
 
 	@FindBy(how =How.ID, using="framef")
 	private WebElement reportsFrame;
@@ -94,6 +100,9 @@ public class ReportsPage extends LoadableComponent<ReportsPage> {
 	@FindBy(how=How.XPATH,using=".//*[@id='fileSharingModalDialog']//div/label[contains(text(),'File name')]/parent::div/following-sibling::div/p")
 	private WebElement fileName;
 	
+	@FindBy(how=How.LINK_TEXT,using="Reports catalog")
+	private WebElement ReportscatalogLink;
+	
 
 	LoadableComponent<?> parent;
 
@@ -125,7 +134,12 @@ public class ReportsPage extends LoadableComponent<ReportsPage> {
 						e.printStackTrace();
 					}*/
 		if(Web.isWebElementDisplayed(new HomePage(), "Reports Menu", true)){
-			Web.clickOnElement(new HomePage(), "Reports Menu");
+			//Web.clickOnElement(new HomePage(), "Reports Menu");
+			try{
+				new Actions(Web.getDriver()).moveToElement(Web.returnElement(new HomePage(), "Reports Menu")).click().build().perform();
+			}
+			catch(Exception e){}
+			
 			Web.nextGenDriver.waitForAngular();
 			Web.clickOnElement(new HomePage(), "Standard Reports");
 			try {
@@ -147,6 +161,23 @@ public class ReportsPage extends LoadableComponent<ReportsPage> {
 	@Override
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(standardReports));
+	}
+	
+	/** <pre> Method to return WebElement object corresponding to specified field name
+	 * Elements available for fields:
+	 *  </pre>
+	 * @param fieldName
+	 * @return
+	 */
+	@SuppressWarnings("unused")
+	private WebElement getWebElement(String fieldName) {
+		
+		if(fieldName.trim().equalsIgnoreCase("ReportsCatalogLink")){
+			//Web.getDriver().switchTo().defaultContent();
+			return this.ReportscatalogLink;
+		}
+		return null;
+		
 	}
 
 	public void openMyReports(){
@@ -361,7 +392,25 @@ public class ReportsPage extends LoadableComponent<ReportsPage> {
 		}
 	}
 
-
+	public void downloadReportCatlogFile(){
+		try{
+			System.out.println(downloadPath);
+			xl=new XL_ReadWrite(downloadPath);
+			
+			if(xl.isSheetExist(sheetNameInReportCatalogFile)){
+				Reporter.logEvent(Status.PASS, "Download the Reports Catalog excel file", 
+						"Download the Reports Catalog excel file", false);	
+			}
+			else{
+				Reporter.logEvent(Status.FAIL, "Download the Reports Catalog excel file", 
+						"Didn't Download the Reports Catalog excel file", false);	
+			}
+		}
+		catch(Exception e){
+			
+			e.printStackTrace();
+		}
+	}
 
 
 

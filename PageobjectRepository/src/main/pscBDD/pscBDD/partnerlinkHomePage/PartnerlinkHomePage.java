@@ -4,7 +4,8 @@
 package pscBDD.partnerlinkHomePage;
 
 import java.lang.reflect.Method;
-import lib.Web;
+
+
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
@@ -18,6 +19,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import bdd_lib.Web;
 import pscBDD.commonLib.CommonLib;
 import pscBDD.login.LoginPage;
 import pscBDD.userVerification.UserVerificationPage;
