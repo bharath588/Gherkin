@@ -129,5 +129,20 @@ public class ForgotPasswordStepDefinitions {
 			HomeStepDefinitions.forgotPwdPageVisits = 0;
 		}
 	}
+	@Then("^the \"([^\"]*)\" section should be displayed$")
+	public void the_contact_us_section_should_be_displayed(String contactus)
+			throws Throwable {
+		if (forgotPwdPage.isContactUsSectionDisplayedCorrectMessage(contactus)) {
+			Reporter.logEvent(Status.PASS,
+					" The contactUs section should displays : " + contactus,
+					"The contactUs section is displays : " + contactus, true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					" The contactUs section should displays: " + contactus,
+					"The contactUs section isn't displays : " + contactus,
+					true);
+		}
+
+	}
 
 }
