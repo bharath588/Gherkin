@@ -8,23 +8,21 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import lib.CommonLib;
-import lib.Web;
+import pscBDD.fileSharing.FileSharingPage;
+import pscBDD.forgotPassword.ForgotPasswordPage;
+import pscBDD.homePage.HomePage;
+import pscBDD.jumpPage.JumpPage;
+import pscBDD.login.LoginPage;
+import pscBDD.planPage.PlanDMBACustomSitePage;
+import pscBDD.userVerification.UserVerificationPage;
+import bdd_lib.CommonLib;
+import bdd_lib.Web;
 
 import com.aventstack.extentreports.Status;
 
-import core.framework.Globals;
+import bdd_core.framework.Globals;
 import gherkin.formatter.model.Scenario;
-
-import org.bdd.psc.pageobjects.FileSharingPage;
-import org.bdd.psc.pageobjects.ForgotPasswordPage;
-import org.bdd.psc.pageobjects.HomePage;
-import org.bdd.psc.pageobjects.JumpPage;
-import org.bdd.psc.pageobjects.LoginPage;
-import org.bdd.psc.pageobjects.PlanDMBACustomSitePage;
-import org.bdd.psc.pageobjects.UserVerificationPage;
-
-import reporter.Reporter;
+import bdd_reporter.Reporter;
 import cucumber.api.DataTable;
 import cucumber.api.Delimiter;
 import cucumber.api.PendingException;

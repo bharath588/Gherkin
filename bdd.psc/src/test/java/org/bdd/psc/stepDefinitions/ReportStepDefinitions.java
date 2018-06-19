@@ -3,19 +3,19 @@
  */
 package org.bdd.psc.stepDefinitions;
 
-import lib.Web;
+import pscBDD.fileSharing.FileSharingPage;
+import pscBDD.forgotPassword.ForgotPasswordPage;
+import pscBDD.homePage.HomePage;
+import pscBDD.jumpPage.JumpPage;
+import pscBDD.login.LoginPage;
+import pscBDD.reports.ReportsPage;
+import pscBDD.userVerification.UserVerificationPage;
+import bdd_lib.Web;
 
 import com.aventstack.extentreports.Status;
 
-import org.bdd.psc.pageobjects.FileSharingPage;
-import org.bdd.psc.pageobjects.ForgotPasswordPage;
-import org.bdd.psc.pageobjects.HomePage;
-import org.bdd.psc.pageobjects.JumpPage;
-import org.bdd.psc.pageobjects.LoginPage;
-import org.bdd.psc.pageobjects.ReportsPage;
-import org.bdd.psc.pageobjects.UserVerificationPage;
-import reporter.Reporter;
-import core.framework.Globals;
+import bdd_reporter.Reporter;
+import bdd_core.framework.Globals;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;

@@ -9,8 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lib.CommonLib;
-import lib.Web;
+import pscBDD.homePage.HomePage;
+import pscBDD.login.LoginPage;
+import pscBDD.planPage.InvestmentsPerformancePage;
+import pscBDD.planPage.PlanPage;
+import pscBDD.planPage.PlanProvisionsPage;
+import pscBDD.userVerification.UserVerificationPage;
+import bdd_lib.CommonLib;
+import bdd_lib.Web;
 
 import com.aventstack.extentreports.Status;
 
@@ -20,15 +26,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-
-import org.bdd.psc.pageobjects.HomePage;
-import org.bdd.psc.pageobjects.InvestmentsPerformancePage;
-import org.bdd.psc.pageobjects.LoginPage;
-import org.bdd.psc.pageobjects.PlanPage;
-import org.bdd.psc.pageobjects.PlanProvisionsPage;
-import org.bdd.psc.pageobjects.UserVerificationPage;
-
-import reporter.Reporter;
+import bdd_reporter.Reporter;
 import gherkin.formatter.model.Scenario;
 
 /**

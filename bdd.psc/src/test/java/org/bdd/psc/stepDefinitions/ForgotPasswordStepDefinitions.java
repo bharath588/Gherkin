@@ -5,14 +5,16 @@ package org.bdd.psc.stepDefinitions;
 
 import java.util.List;
 
+import pscBDD.forgotPassword.ForgotPasswordPage;
+import pscBDD.login.LoginPage;
+
 import com.aventstack.extentreports.Status;
 
-import core.framework.Globals;
+import bdd_core.framework.Globals;
 
-import org.bdd.psc.pageobjects.ForgotPasswordPage;
-import org.bdd.psc.pageobjects.LoginPage;
 
-import reporter.Reporter;
+
+import bdd_reporter.Reporter;
 import cucumber.api.Delimiter;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
