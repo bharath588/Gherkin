@@ -94,11 +94,11 @@
 						<parameter name="ManualTCName"
 							value="DDTC-21980_Employee_Search_Sanity_Suite_invalidempid">
 						</parameter>
-					</include> -->
-					 <!-- <include name="TC017_Employment_Info_Verification">
+					</include>
+					 <include name="TC017_Employment_Info_Verification">
 						<parameter name="ManualTCName" value="DDTC-2249_Employment_Info_Verification" />
-					</include> -->
-					<!-- <include name="TC018_Employee_Contact_Info_Verification">
+					</include>
+					<include name="TC018_Employee_Contact_Info_Verification">
 						<parameter name="ManualTCName"
 							value="DDTC-1323_Employee_Contact_Info_Verification" />
 					</include>
@@ -113,33 +113,33 @@
 					</include>
 					<include name="TC022_Paycheck_contribution_View">
 						<parameter name="ManualTCName" value="DDTC-2146_Paycheck_contribution_View" />
-					</include> 
+					</include>  -->
 					<include name="TC023_EnrolmmentAndEligibility">
 						<parameter name="ManualTCName" value="DDTC-1395_EnrolmmentAndEligibility" />
-					</include>-->
+					</include>
 					 <!-- <include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
 						<parameter name="ManualTCName"
 							value="DDTC-1549_Verify_Employee_Overview_PlanList_Balance_Section" />
-					</include> -->
-					<!-- <include name="TC026_Verify_Employee_Basic_Info">
+					</include>
+					<include name="TC026_Verify_Employee_Basic_Info">
 						<parameter name="ManualTCName" value="DDTC-2091_Verify_Employee_Basic_Info" />
-					</include> -->
+					</include>
 					<include name="TC027_Verify_Subset_History_Section">
 						<parameter name="ManualTCName"
 							value="DDTC-1022_Verify_Subset_History_Section" />
 					</include>
-					<!-- <include name="TC028_Recently_Viewed_Switch_Participant_Reg">
+					<include name="TC028_Recently_Viewed_Switch_Participant_Reg">
 						<parameter name="ManualTCName"
 							value="DDTC-1440_Recently_Viewed_Switch_Participant_Reg" />
-					</include> -->
+					</include>
 					<include name="TC029_Edit_Enrollment_And_Eligibility">
 						<parameter name="ManualTCName"
 							value="DDTC-2194_Edit_Enrollment_And_Eligibility" />
 					</include>
-					<!-- <include name="TC30_Account_balance_Tab">
+					<include name="TC30_Account_balance_Tab">
 						<parameter name="ManualTCName" value="DDTC-317_Validate_Account_balance_Tab" />
-					</include> -->
-					<!--<include name="TC31_Disable_PAE_then_renable_PAE">
+					</include>
+					<include name="TC31_Disable_PAE_then_renable_PAE">
 						<parameter name="ManualTCName" value="DDTC-1062_Disable_PAE_then_renable_PAE" />
 					</include>
 					<include name="TC32_Supress_Menu_Items_for_TRS_Flex">
