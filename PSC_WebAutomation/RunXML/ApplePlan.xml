@@ -6,7 +6,7 @@
 	</listeners>
 	<test name="Regression_Yellow_Period_Exec2_Apple_Plan">
 		 <classes>
-			<class name="app.psc.testcases.userverification.userverificationtestcases">
+			<!-- <class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
 					<include
 						name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input">
@@ -19,7 +19,7 @@
 							value="DDTC-21960_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid" />
 					</include>
 				</methods>
-			</class>
+			</class> -->
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
 					 <include name="TC001_Search_Employee_For_Valid_SSN">
@@ -169,7 +169,7 @@
 					</include>
 				</methods>
 			</class> 
-			<class name="app.psc.testcases.login.logintestcases">
+			<!-- <class name="app.psc.testcases.login.logintestcases">
 				<methods>
 				 <include name="TC017_01_Internal_Employee_External_Client_Login">
 						<parameter name="ManualTCName"
@@ -185,7 +185,7 @@
 							value="DDTC-316_SIT_PSC_Login_01_TC008_Login flow- New PSC User">
 						</parameter>
 					</include>
-					 <!-- <include name="TC004_01_Verify_Header_and_Footer_Links_PreLogin">
+					 <include name="TC004_01_Verify_Header_and_Footer_Links_PreLogin">
 						<parameter name="ManualTCName"
 							value="DDTC-1379_SIT_PSC_Login_01_TC014_Footer links_Prelogin">
 						</parameter>
@@ -194,9 +194,9 @@
 						<parameter name="ManualTCName"
 							value="DDTC-22067_SIT_PSC_Login_01_TC014_Footer links_Postlogin">
 						</parameter>
-					</include> -->  
+					</include>  
 				</methods>
-			</class>
+			</class> -->
 			<class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
 					<include name="TC12_3rd_Level_Links">
@@ -204,7 +204,7 @@
 					</include>
 				</methods>
 			</class>
-			<class name="app.psc.testcases.myprofile.MyProfileTestCases">
+			<!-- <class name="app.psc.testcases.myprofile.MyProfileTestCases">
 				<methods>
 					<include name="TC002_01_SIT_PSC_Update_Email_Address_Positive_Flow">
 						<parameter name="ManualTCName"
@@ -232,7 +232,7 @@
 						<parameter name="ManualTCName" value="DDTC-245_FAQ_DDTC" />
 					</include>
 				</methods>
-			</class>
+			</class> -->
 		</classes>
 	</test>
 </suite>

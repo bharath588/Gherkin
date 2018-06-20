@@ -8,7 +8,7 @@
 	<classes>
 	<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
-					<!--  <include
+					 <include
 						name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input">
 						<parameter name="ManualTCName"
 							value="DDTC-21981_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Invalid" />
@@ -17,7 +17,7 @@
 						name="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input">
 						<parameter name="ManualTCName"
 							value="DDTC-21960_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid" />
-					</include> --> 
+					</include> 
 					<include
 						name="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session">
 						<parameter name="ManualTCName"
@@ -64,7 +64,7 @@
 			<class
 				name="app.psc.testcases.accountverification.accountverification_existingusr">
 				<methods>
-					<!-- <include name="TC019_Verify_Default_Plan_Prompting">
+					<include name="TC019_Verify_Default_Plan_Prompting">
 						<parameter name="ManualTCName"
 							value="DDTC-22072_SIT_PSC_Login_01_TC019_Default_Plan_Prompting">
 						</parameter>
@@ -101,7 +101,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-1370_SIT_PSC_HomePage_02_TC002_Compliance Hyperlink">
 						</parameter>
-					</include> --> 
+					</include> 
 					<include name="TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security">
 						<parameter name="ManualTCName"
 							value="DDTC-1121_SIT_PSC_HomePage_02_TC003_Compliance_Security">
@@ -117,10 +117,10 @@
 						<parameter name="ManualTCName" value="DDTC-227_Multifactoring_Regr">
 						</parameter>
 					</include> 
-					<!-- <include name="TC009_01_Verify_Multifactoring">
+					<include name="TC009_01_Verify_Multifactoring">
 						<parameter name="ManualTCName" value="Multifactoring_Regr">
 						</parameter>
-					</include> -->
+					</include>
 				</methods>
 			</class>
 			<class
@@ -138,7 +138,7 @@
 			</class>
 			<class name="app.psc.testcases.login.logintestcases">
 				<methods>
-					<!--  <include name="TC006_01_Verify_Force_Login">
+					<include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
 							value="DDTC-1144_SIT_PSC_Login_01_TC006_Gwrs- Forcelogin" />
 					</include>  
@@ -151,8 +151,8 @@
 						<parameter name="ManualTCName"
 							value="DDTC-316_SIT_PSC_Login_01_TC008_Login flow- New PSC User">
 						</parameter>
-					</include> -->
-					<!-- <include name="TC004_01_Verify_Header_and_Footer_Links_PreLogin">
+					</include>
+					<include name="TC004_01_Verify_Header_and_Footer_Links_PreLogin">
 						<parameter name="ManualTCName"
 							value="DDTC-1379_SIT_PSC_Login_01_TC014_Footer links_Prelogin">
 						</parameter>
@@ -161,7 +161,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-22067_SIT_PSC_Login_01_TC014_Footer links_Postlogin">
 						</parameter>
-					</include> -->
+					</include>
 					<include name="TC006_01_Verify_Error_Message_For_Terminated_User">
 						<parameter name="ManualTCName" value="DDTC-1007_SIT_PSC_Login_01_TC004_Terminate User" />
 					</include>
@@ -173,21 +173,21 @@
 						<parameter name="ManualTCName"
 							value="DDTC-13037_Display correct date and time of my last login" />
 					</include>
-					<!--<include name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
+					<include name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
 						<parameter name="ManualTCName"
 							value="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered" />
 					</include>
 					 <include name="TC04_Validate_Plan_Page_When_PlanName_Entered">
 						<parameter name="ManualTCName"
 							value="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered" />
-					</include> -->
+					</include>
 					<include name="TC001_01_SIT_PSC_Sitenavigation_Menutabs">
 						<parameter name="ManualTCName" value="DDTC-310_SIT_PSC_Sitenavigation_Menutabs" />
 					</include>
 					<include name="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs">
 						<parameter name="ManualTCName" value="DDTC-310_SIT_PSC_Sitenavigation_SubMenutabs" />
 					</include>
-					<!-- <include name="TC004_Verify_PLUser_Login_With_No_Plna_Access">
+					<include name="TC004_Verify_PLUser_Login_With_No_Plna_Access">
 						<parameter name="ManualTCName"
 							value="Verify_PLUser_Login_With_No_Plna_Access" />
 					</include> 
@@ -201,7 +201,7 @@
 					</include>
 					<include name="TC003_UI_Validations_On_JumpPage">
 						<parameter name="ManualTCName" value="UI_Validations_On_JumpPage" />
-					</include> -->
+					</include>
 					<include
 						name="TC05_01_SIT_PSC_HomePage_01_TC001_frame_on_Dashboard_Filesharing_and_Reports_pages">
 						<parameter name="ManualTCName"
@@ -217,7 +217,7 @@
 					</include>
 				</methods>
 			</class>
-			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
 				<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
 						<parameter name="ManualTCName"
@@ -487,7 +487,7 @@
 							value="DDTC-298_OngoingDeferral_UI_Validation" />
 					</include>
 				</methods> 
-			</class> -->
+			</class>
 			
 			<class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
@@ -590,7 +590,7 @@
 					</include>
 				</methods>
 			</class>   
-			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+			<class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
 				<methods>
 					<include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
 						<parameter name="ManualTCName"
@@ -647,9 +647,9 @@
 						</parameter>
 					</include>
 				</methods>
-			</class> -->
+			</class>
 		 	
-			<!-- <class name="app.psc.testcases.myprofile.MyProfileTestCases">
+			<class name="app.psc.testcases.myprofile.MyProfileTestCases">
 				<methods>
 					<include name="TC001_01_SIT_PSC_Update_My_profile_Default_Plan">
 						<parameter name="ManualTCName" value="DDTC-10189_SIT_PSC_Update_My_profile_Default_Plan" />
@@ -684,8 +684,8 @@
 						<parameter name="ManualTCName" value="DDTC-245_FAQ_DDTC" />
 					</include>
 				</methods>
-			</class> -->
-			<!-- <class name="app.psc.testcases.guidedpayroll.guidedpayrolltestcases">
+			</class>
+			<class name="app.psc.testcases.guidedpayroll.guidedpayrolltestcases">
 				<methods>
 					<include name="TC001_Verify_Contributiontotal_for_Invalid_User_input">
 						<parameter name="ManualTCName" value="DDTC-160_Gpp Sanity_01"/>
@@ -722,7 +722,7 @@
 						<parameter name="ManualTCName" value="DDTC-22542_Gpp_regression_process_confirm"/>
 					</include>
 				</methods>
-			</class>-->
+			</class>
 			<!-- <class name="app.psc.testcases.filesharing.filesharingtestcases">
 				<methods>
 					<include
@@ -831,7 +831,7 @@
 							value="DDTC:89_TC021_SIT_PSC_FileSharing_04_TC026_Screen_element_Expiration_date"/>
 					</include> 
 				</methods>
-			</class>  -->
+			</class> --> 
 			<class name="app.psc.testcases.reports.ReportsTestCases">
 				<methods>
 					<include
