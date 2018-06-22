@@ -238,6 +238,7 @@ public class validate_participanthomepage {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			verifyOrderPIN(itr, testdata);
+			Web.getDriver().switchTo().defaultContent();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
