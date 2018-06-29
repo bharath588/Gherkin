@@ -1,0 +1,1036 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset='utf-8' /> 
+	<meta name='description' content='' />
+	<meta name='robots' content='noodp, noydir' />
+	<meta name='viewport' content='width=device-width, initial-scale=1' />
+
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href='https://cdn.rawgit.com/anshooarora/extentreports-java/9fa70d0ed9c34a8ed445ceee3494d3d7de7f8918/dist/css/extent.css' type='text/css' rel='stylesheet' />
+	
+	<title>pptwebReports</title>
+
+</head>
+	<body class='extent standard default hide-overflow '>
+		<div id='theme-selector' alt='Click to toggle theme. To enable by default, use theme configuration.' title='Click to toggle theme. To enable by default, use theme configuration.'>
+			<span><i class='material-icons'>desktop_windows</i></span>
+		</div>
+
+<nav>
+	<div class="nav-wrapper">
+		<a href="#!" class="brand-logo blue darken-3">Extent</a>
+
+		<!-- slideout menu -->
+		<ul id='slide-out' class='side-nav fixed hide-on-med-and-down'>
+			<li class='waves-effect active'><a href='#!' view='test-view' onclick="configureView(0);chartsView('test');"><i class='material-icons'>dashboard</i></a></li>
+						<li class='waves-effect'><a href='#!' view='category-view' onclick="configureView(1)"><i class='material-icons'>label_outline</i></a></li>
+			<li class='waves-effect'><a href='#!' onclick="configureView(-1);chartsView('dashboard');" view='dashboard-view'><i class='material-icons'>track_changes</i></i></a></li>
+		</ul>
+
+		<!-- report name -->
+		<span class='report-name'>pptwebReports</span>
+		
+		<!-- report headline -->
+		<span class='report-headline'></span>
+
+		<!-- nav-right -->
+		<ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
+			<a href='#!'>
+				<span class='label suite-start-time'>May 16, 2018 4:07:20 PM</span>
+			</a>
+			<a href='#!'>
+				<span class='label'>v3.0.1</span>
+			</a>
+		</ul>
+	</div>
+</nav>
+		<!-- container -->
+		<div class='container'>
+
+<div id='test-view' class='view'>
+				
+	<section id='controls'>
+		<div class='controls grey lighten-4'>
+			<!-- test toggle -->
+			<div class='chip transparent'>
+				<a class='dropdown-button tests-toggle' data-activates='tests-toggle' data-constrainwidth='true' data-beloworigin='true' data-hover='true' href='#'>
+					<i class='material-icons'>warning</i> Status
+				</a>
+				<ul id='tests-toggle' class='dropdown-content'>
+											<li status='pass'><a href='#!'>Pass <i class='material-icons green-text'>check_circle</i></a></li>
+					<li class='divider'></li>
+					<li status='clear' clear='true'><a href='#!'>Clear Filters <i class='material-icons'>clear</i></a></li>
+				</ul>
+			</div>
+			<!-- test toggle -->
+
+			<!-- category toggle -->
+			<div class='chip transparent'>
+				<a class='dropdown-button category-toggle' data-activates='category-toggle' data-constrainwidth='false' data-beloworigin='true' data-hover='true' href='#'>
+					<i class='material-icons'>local_offer</i> Category
+				</a>
+				<ul id='category-toggle' class='dropdown-content'>
+					<li><a href='#'>app.pptweb.testcases.loans.LoansTestCases</a></li>
+					<li><a href='#'>MachineDetails</a></li>
+					<li><a href='#'>TestCases</a></li>
+					<li class='divider'></li>
+					<li class='clear'><a href='#!' clear='true'>Clear Filters</a></li>
+				</ul>
+			</div>
+			<!-- category toggle -->
+
+			<!-- clear filters -->
+			<div class='chip transparent hide'>
+				<a class='' id='clear-filters' alt='Clear Filters' title='Clear Filters'>
+					<i class='material-icons'>close</i> Clear
+				</a>
+			</div>
+			<!-- clear filters -->
+
+			<!-- enable dashboard -->
+			<div id='toggle-test-view-charts' class='chip transparent'>
+				<a class='pink-text' id='enable-dashboard' alt='Enable Dashboard' title='Enable Dashboard'>
+					<i class='material-icons'>track_changes</i> Dashboard
+				</a>
+			</div>
+			<!-- enable dashboard -->
+
+			<!-- search -->
+			<div class='chip transparent' alt='Search Tests' title='Search Tests'>
+				<a href="#" class='search-div'>
+					<i class='material-icons'>search</i> Search
+				</a>
+
+				<div class='input-field left hide'>
+					<input id='search-tests' type='text' class='validate browser-default' placeholder='Search Tests...'>
+				</div>
+				
+			</div>
+			<!-- search -->
+		</div>
+	</section>
+
+
+<div id='test-view-charts' class='subview-full'>
+	<div id='charts-row' class='row nm-v nm-h'>
+		<div class='col s12 m6 l6 np-h'>
+			<div class='card-panel nm-v'>
+				<div class='left panel-name'>Tests</div>
+				<div class='chart-box'>
+					<canvas id='parent-analysis' width='100' height='80'></canvas>
+				</div>
+				<div class='block text-small'>
+					<span><span class='strong'>1</span> test(s) passed</span>
+				</div>
+				<div class='block text-small'>
+					<span class='strong'>0</span> test(s) failed, <span class='strong'>0</span> others
+				</div>
+			</div>
+		</div>
+		
+		<div class='col s12 m6 l6 np-h'>
+			<div class='card-panel nm-v'>
+				<div class='left panel-name'>Steps</div>
+				<div class='chart-box'>
+					<canvas id='child-analysis' width='100' height='80'></canvas>
+				</div>
+				<div class='block text-small'>
+					<span><span class='strong'>88</span> step(s) passed</span>
+				</div>
+				<div class='block text-small'>
+					<span class='strong'>0</span> step(s) failed, <span class='strong'>9</span> others
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+	<div class='subview-left left'>
+		
+		<div class='view-summary'>
+			<h5>Tests</h3>
+			<ul id='test-collection' class='test-collection'>
+				
+				
+				<li class='test displayed active has-leaf pass' status='pass' bdd='false' test-id='1'>
+					<div class='test-heading'>
+						<span class='test-name'>app.pptweb.testcases.loans.LoansTestCases</span>
+						<span class='test-time'>May 16, 2018 4:07:21 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>May 16, 2018 4:07:21 PM</span>
+	<span class='label end-time'>May 16, 2018 4:10:24 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 3m 3s+281ms</span>
+</div>
+	<div class='test-attributes'>
+			<div class='category-list'>
+				<span class='category label white-text'>app.pptweb.testcases.loans.LoansTestCases</span>
+			</div>
+	</div>
+	<ul class='collapsible node-list' data-collapsible='accordion'>
+		
+				<li class='node level-1  pass' status='pass' test-id='2'>
+					<div class='collapsible-header'>
+						<div class='node-name'>XWJPMDD255</div>						
+						<span class='node-time'>May 16, 2018 4:07:21 PM</span>
+						<span class='node-duration'>0h 3m 3s+234ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<ul class='collapsible node-list' data-collapsible='accordion'>
+				<li class='node level-2 leaf pass' status='pass' test-id='3'>
+					<div class='collapsible-header'>
+						<div class='node-name'>SIT_DDTC_27613_General_Purpose_Loan_Request_via_Re<br>     gular_mail_delivery_method<br>Iteration 1</div>						
+						<span class='node-time'>May 16, 2018 4:07:21 PM</span>
+						<span class='node-duration'>0h 3m 2s+874ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<div class='collapsible-body'>
+									<div class='category-list right'>
+											<span class='category label white-text'>TestCases</span>
+									</div>
+								<div class='node-steps'>
+									<table class='bordered table-results'>
+										<thead>
+											<tr>
+												<th>Status</th>
+												<th>Timestamp</th>
+												<th>Details</th>
+											</tr>
+										</thead>
+										<tbody>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>4:07:21 PM</td>
+													<td class='step-details'><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Test Data used for this Test Case:</td> <td word-wrap:break:word>LOANAMOUNT=1000
+LOANTOTAL=1000
+LOAN_TYPE= General Purpose
+GC_ID=150065
+GA_ID=150065-01
+USERNAME=101159442ABC
+LOANTYPE=GENERAL
+LOANTERM=12
+SSN=101159442
+</td></tr></table></pre></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>4:08:12 PM</td>
+													<td class='step-details'><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Select verification code delivery option</td> <td word-wrap:break:word>Clicked on link 'Already have a code'</td></tr></table></pre></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>4:08:15 PM</td>
+													<td class='step-details'><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Enter Verification Code</td> <td word-wrap:break:word>Verification code [74196385] has been entered</td></tr></table></pre></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>4:08:20 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_544.png' width='10%' src='' data-src='./\Screenshots\_Itr1_544.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:12 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify AVAILABLE TO BORROW  is Displayed</td> <td word-wrap:break:word>AVAILABLE TO BORROW is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:13 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Loan Maximum Amount is displayed</td> <td word-wrap:break:word>Loan Maximum Amount is displayed 
+Loan Maximum:$50,000.00</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>4:09:18 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_545.png' width='10%' src='' data-src='./\Screenshots\_Itr1_545.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:18 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Maximum Loans Allowed is Matching</td> <td word-wrap:break:word>Maximum Loans Allowed is displayed as per Data base
+Expected No.Of Loans:5
+Actual No.Of Loans:5</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:18 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify  Maximum Loan Amount for each Loan Structure is displayed</td> <td word-wrap:break:word>Maximum Loan Amount for each Loan Structure is Matching {MORTGAGE=3, GENERAL=3}</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>4:09:24 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_546.png' width='10%' src='' data-src='./\Screenshots\_Itr1_546.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:25 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Loan purpose  is Displayed</td> <td word-wrap:break:word>Loan purpose is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:25 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Maximum loan  is Displayed</td> <td word-wrap:break:word>Maximum loan is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:25 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Repayment term  is Displayed</td> <td word-wrap:break:word>Repayment term is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:26 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Documentation required  is Displayed</td> <td word-wrap:break:word>Documentation required is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:26 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Interest rate  is Displayed</td> <td word-wrap:break:word>Interest rate is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:26 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Repayment  is Displayed</td> <td word-wrap:break:word>Repayment is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:26 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Fees  is Displayed</td> <td word-wrap:break:word>Fees is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:26 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Reqest Loan Button is Displayed</td> <td word-wrap:break:word>Reqest GENERAL PURPOSE Button is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:26 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Reqest Loan Button is Displayed</td> <td word-wrap:break:word>Reqest MORTAGAGE Button is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:30 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify How much would you like to borrow?  is Displayed</td> <td word-wrap:break:word>How much would you like to borrow? is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:33 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify BUTTON CONTINUE is Displayed</td> <td word-wrap:break:word>BUTTON CONTINUE is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:33 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify BUTTON BACK is Displayed</td> <td word-wrap:break:word>BUTTON BACK is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:36 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Repayment Term Table is Displayed</td> <td word-wrap:break:word>Repayment Term Table is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:39 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify How would you like your funds delivered?  is Displayed</td> <td word-wrap:break:word>How would you like your funds delivered? is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:39 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify My loan summary  is Displayed</td> <td word-wrap:break:word>My loan summary is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:39 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify REGULAR MAIL RADIO BUTTON is Displayed</td> <td word-wrap:break:word>REGULAR MAIL RADIO BUTTON is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:39 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify EXPEDITED MAIL RADIO BUTTON is Displayed</td> <td word-wrap:break:word>EXPEDITED MAIL RADIO BUTTON is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:39 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Radio Button is Displayed for Regulr Mail</td> <td word-wrap:break:word>Radio Button is Displayed for Regulr Mail</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:39 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Radio Button is Displayed for EXPEDITED MAIL</td> <td word-wrap:break:word>Radio Button is Displayed for EXPEDITED MAIL</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:40 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify  ACH DELIVERY Option is Displayed</td> <td word-wrap:break:word> ACH DELIVERY Option is Not Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:40 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Delivery Time for Regular Mail is Displayed</td> <td word-wrap:break:word>Delivery Time for Regular Mail is Displayed
+Expected:Delivery up to 5 business days
+Actual:Delivery up to 5 business days</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:40 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Delivery Time for Expedited Mail is Displayed</td> <td word-wrap:break:word>Delivery Time for Expedited Mail is Displayed
+Expected:Delivery up to 2 business days
+Actual:Delivery up to 2 business days</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:40 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify 'Regulr Mail' Radio Button is Selected By Default</td> <td word-wrap:break:word>'Regulr Mail' Radio Button is Selected By Default</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:41 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify BUTTON CONTINUE is Displayed</td> <td word-wrap:break:word>BUTTON CONTINUE is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:41 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify My loan summary  is Displayed</td> <td word-wrap:break:word>My loan summary is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:41 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify INTEREST RATE  is Displayed</td> <td word-wrap:break:word>INTEREST RATE is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:41 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify FEES*  is Displayed</td> <td word-wrap:break:word>FEES* is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:41 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify CHECK TOTAL  is Displayed</td> <td word-wrap:break:word>CHECK TOTAL is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:42 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify LOAN TOTAL  is Displayed</td> <td word-wrap:break:word>LOAN TOTAL is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:42 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify 'Loan Total' Amount is Same</td> <td word-wrap:break:word>'Loan Total' Amount is Same
+Loan Total=$1000.00</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:43 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Interest Rate in My Loan Summary page Displayed is same as Displayed in Request a Loan Page</td> <td word-wrap:break:word>Interest Rate in My Loan Summary page Displayed is same as Displayed in Request a Loan Page:4.5%</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:46 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify ToolTip Text for INTEREST RATE is displayed</td> <td word-wrap:break:word>Tooltip Text is displayed for INTEREST RATE
+Expected: Interest rate I pay to myself
+Actual: Interest rate I pay to myself</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:46 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify ToolTip Text for INTEREST RATE is displayed</td> <td word-wrap:break:word>Tooltip Text is displayed for INTEREST RATE
+Expected: Rate PRIME + 1
+Actual: Rate PRIME + 1</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:47 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify ToolTip Text for INTEREST RATE is displayed</td> <td word-wrap:break:word>Tooltip Text is displayed for INTEREST RATE
+Expected: Type FIXED
+Actual: Type FIXED</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:47 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify 'Origination Fee' is Displayed</td> <td word-wrap:break:word>'Origination Fee' is Displayed
+ FEE*=$75.00</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:50 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify ToolTip Text for FEES* is displayed</td> <td word-wrap:break:word>Tooltip text displayed for FEES* and is equal to Origination Fee as Expected
+FEE*: $75.00</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:51 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify 'Check Total' Amount is Same</td> <td word-wrap:break:word>'Check Total' Amount is Same
+Check Total=$925.00</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:52 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify 'Loan Total' Amount is Same</td> <td word-wrap:break:word>'Loan Total' Amount is Same
+Loan Total=$1000.00</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:53 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify ProActive Notification Screen is Displayed</td> <td word-wrap:break:word>ProActive Notification Screen is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:53 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Sign up for updates on your loan process  is Displayed</td> <td word-wrap:break:word>Sign up for updates on your loan process is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:53 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify EmailId Input Field is Displayed</td> <td word-wrap:break:word>EmailId Input Field is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:54 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Phone No Input Field is Displayed</td> <td word-wrap:break:word>Phone No Input Field is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:09:55 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Loan review Page  is Displayed</td> <td word-wrap:break:word>Loan review Page  is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>4:10:00 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_547.png' width='10%' src='' data-src='./\Screenshots\_Itr1_547.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:01 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Loan review Page  is Displayed</td> <td word-wrap:break:word>Loan review Page  is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>4:10:06 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_548.png' width='10%' src='' data-src='./\Screenshots\_Itr1_548.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:06 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Loan Details  is Displayed</td> <td word-wrap:break:word>Loan Details is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:06 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify PLAN:  is Displayed</td> <td word-wrap:break:word>PLAN: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:07 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify LOAN TYPE:  is Displayed</td> <td word-wrap:break:word>LOAN TYPE: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:07 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify TERM:  is Displayed</td> <td word-wrap:break:word>TERM: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:07 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify MATURITY DATE:  is Displayed</td> <td word-wrap:break:word>MATURITY DATE: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:07 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify INTEREST RATE:  is Displayed</td> <td word-wrap:break:word>INTEREST RATE: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:07 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify ANNUAL PERCENTAGE RATE (APR):  is Displayed</td> <td word-wrap:break:word>ANNUAL PERCENTAGE RATE (APR): is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:07 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify CHECK AMOUNT:  is Displayed</td> <td word-wrap:break:word>CHECK AMOUNT: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:07 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify LOAN AMOUNT:  is Displayed</td> <td word-wrap:break:word>LOAN AMOUNT: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:08 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify TOTAL INTEREST AMOUNT:  is Displayed</td> <td word-wrap:break:word>TOTAL INTEREST AMOUNT: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:08 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify TOTAL PRINCIPAL AND INTEREST AMOUNT:  is Displayed</td> <td word-wrap:break:word>TOTAL PRINCIPAL AND INTEREST AMOUNT: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:08 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Payment Information  is Displayed</td> <td word-wrap:break:word>Payment Information is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:08 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify FIRST PAYMENT DUE:  is Displayed</td> <td word-wrap:break:word>FIRST PAYMENT DUE: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:08 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify LAST PAYMENT DUE:  is Displayed</td> <td word-wrap:break:word>LAST PAYMENT DUE: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:08 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify NUMBER OF PAYMENTS:  is Displayed</td> <td word-wrap:break:word>NUMBER OF PAYMENTS: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:08 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify PAYMENT AMOUNT:  is Displayed</td> <td word-wrap:break:word>PAYMENT AMOUNT: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:09 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify PAYMENT METHOD:  is Displayed</td> <td word-wrap:break:word>PAYMENT METHOD: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:09 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify PAYMENT FREQUENCY:  is Displayed</td> <td word-wrap:break:word>PAYMENT FREQUENCY: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:09 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Fees and Taxes  is Displayed</td> <td word-wrap:break:word>Fees and Taxes is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:09 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify ORIGINATION FEE:  is Displayed</td> <td word-wrap:break:word>ORIGINATION FEE: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:09 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Delivery Information  is Displayed</td> <td word-wrap:break:word>Delivery Information is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:09 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify DELIVERY METHOD:  is Displayed</td> <td word-wrap:break:word>DELIVERY METHOD: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:09 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify MAILING ADDRESS:  is Displayed</td> <td word-wrap:break:word>MAILING ADDRESS: is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:10 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Loan Provisions  is Displayed</td> <td word-wrap:break:word>Loan Provisions is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:16 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Loan request received Page  is Displayed</td> <td word-wrap:break:word>Loan request received Page  is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>4:10:21 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_549.png' width='10%' src='' data-src='./\Screenshots\_Itr1_549.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:21 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Loan request received  is Displayed</td> <td word-wrap:break:word>Loan request received is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:21 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Loan Details  is Displayed</td> <td word-wrap:break:word>Loan Details is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:22 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Loan request received  is Displayed</td> <td word-wrap:break:word>Loan request received is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:22 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Check sent by Regular mail  is Displayed</td> <td word-wrap:break:word>Check sent by Regular mail is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:22 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Loan Confirmation Number And Date is Displayed</td> <td word-wrap:break:word>Loan Confirmation Number And Date is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:22 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Loan Submittion Date is Current date</td> <td word-wrap:break:word>'Loan Submittion Date is Same
+Date: 5/16/2018</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:22 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify TEXT COMPLETE is Displayed</td> <td word-wrap:break:word>TEXT COMPLETE is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:23 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify GREEN CHECK MARK is Displayed</td> <td word-wrap:break:word>GREEN CHECK MARK is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:23 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Typically 2 business days  is Displayed</td> <td word-wrap:break:word>Typically 2 business days is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:23 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Delivery up to 5 business days  is Displayed</td> <td word-wrap:break:word>Delivery up to 5 business days is Displayed</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:23 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Plan Name is Displayed</td> <td word-wrap:break:word>Plan Name is Displayed in Confirmation Page
+Plan Name: Steelcase Inc. Retirement Plan</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:23 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify 'Loan Type' is Displayed</td> <td word-wrap:break:word>'Loan Type' is Displayed
+ loan type: General Purpose</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:24 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Loan Term is Displayed in Confirmation Page</td> <td word-wrap:break:word>Loan Term is Displayed in Confirmation Page
+Loan Term: 12 months</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:24 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify Interest Rate is Displayed in Confirmation Page</td> <td word-wrap:break:word>Interest Rate is Displayed in Confirmation Page
+Interest Rate:4.5%</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>4:10:24 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Verify 'Loan Total' Amount is Same</td> <td word-wrap:break:word>'Loan Total' Amount is Same
+Loan Total=$1000.00</td></tr></table></pre></font></td>
+												</tr>
+										</tbody>
+									</table>
+								</div>
+						</div>
+				</li>
+						</ul>
+				</li>
+	</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- subview left -->
+
+	<div class='subview-right left'>
+		<div class='view-summary'>
+			<h5 class='test-name'></h5>
+
+			<div id='step-filters' class="right">
+				<span class="blue-text" status="info" alt="info" title="info"><i class="material-icons">info_outline</i></span>
+				<span class="green-text" status="pass" alt="pass" title="pass"><i class="material-icons">check_circle</i></span>
+				<span class="red-text" status="fail" alt="fail" title="fail"><i class="material-icons">cancel</i></span>
+				<span class="red-text text-darken-4" status="fatal" alt="fatal" title="fatal"><i class="material-icons">cancel</i></span>
+				<span class="pink-text text-lighten-1" status="error" alt="error" title="error"><i class="material-icons">error</i></span>
+				<span class="orange-text" alt="warning" status="warning" title="warning"><i class="material-icons">warning</i></span>
+				<span class="teal-text" status="skip" alt="skip" title="skip"><i class="material-icons">redo</i></span>
+				<span status="clear" alt="Clear filters" title="Clear filters"><i class="material-icons">clear</i></span>
+			</div>
+		</div>
+	</div>
+	<!-- subview right -->
+
+</div>
+<!-- test view --><div id='category-view' class='view hide'>
+
+	<section id='controls'>
+		<div class='controls grey lighten-4'>
+			<!-- search -->
+			<div class='chip transparent' alt='Search Tests' title='Search Tests'>
+				<a href="#" class='search-div'>
+					<i class='material-icons'>search</i> Search
+				</a>
+				
+				<div class='input-field left hide'>
+					<input id='search-tests' type='text' class='validate browser-default' placeholder='Search Tests...'>
+				</div>
+				
+			</div>
+			<!-- search -->
+		</div>
+	</section>
+
+	<div class='subview-left left'>
+		
+		<div class='view-summary'>
+			<h5>Categories</h3>
+			<ul id='category-collection' class='category-collection'>
+				
+				<li class='category displayed active'>
+					<div class='category-heading'>
+						<span class='category-name'>app.pptweb.testcases.loans.LoansTestCases</span>
+						<span class='category-status right'>
+							<span class='label pass'>1</span>
+						</span>
+					</div>
+					<div class='category-content hide'>
+						<div class='category-status-counts'>
+							<span class='label green accent-4 white-text'>Passed: 1</span>
+							
+							
+						</div>
+					
+						<div class='category-tests'>
+							<table class='bordered table-results'>
+								<thead>
+									<tr>
+										<th>Timestamp</th>
+										<th>TestName</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>May 16, 2018 4:07:21 PM</td>
+										<td class='linked' test-id='1'>app.pptweb.testcases.loans.LoansTestCases</td>
+										<td><span class='test-status pass'>pass</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</li>
+				<li class='category displayed active'>
+					<div class='category-heading'>
+						<span class='category-name'>MachineDetails</span>
+						<span class='category-status right'>
+							<span class='label pass'>1</span>
+						</span>
+					</div>
+					<div class='category-content hide'>
+						<div class='category-status-counts'>
+							<span class='label green accent-4 white-text'>Passed: 1</span>
+							
+							
+						</div>
+					
+						<div class='category-tests'>
+							<table class='bordered table-results'>
+								<thead>
+									<tr>
+										<th>Timestamp</th>
+										<th>TestName</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>May 16, 2018 4:07:21 PM</td>
+										<td class='linked' test-id='2'>app.pptweb.testcases.loans.LoansTestCases.XWJPMDD255</td>
+										<td><span class='test-status pass'>pass</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</li>
+				<li class='category displayed active'>
+					<div class='category-heading'>
+						<span class='category-name'>TestCases</span>
+						<span class='category-status right'>
+							<span class='label pass'>1</span>
+						</span>
+					</div>
+					<div class='category-content hide'>
+						<div class='category-status-counts'>
+							<span class='label green accent-4 white-text'>Passed: 1</span>
+							
+							
+						</div>
+					
+						<div class='category-tests'>
+							<table class='bordered table-results'>
+								<thead>
+									<tr>
+										<th>Timestamp</th>
+										<th>TestName</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>May 16, 2018 4:07:21 PM</td>
+										<td class='linked' test-id='3'>app.pptweb.testcases.loans.LoansTestCases.XWJPMDD255.SIT_DDTC_27613_General_Purpose_Loan_Request_via_Re<br>     gular_mail_delivery_method<br>Iteration 1</td>
+										<td><span class='test-status pass'>pass</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+
+	<div class='subview-right left'>
+		<div class='view-summary'>
+			<h5 class='category-name'></h5>
+		</div>
+	</div>
+</div>
+<!-- category view --><!-- exception view --><div id='dashboard-view' class='view hide'>
+	<div class='card-panel transparent np-v'>
+		<h5>Dashboard</h5>
+
+		<div class='row'>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Tests
+					<div class='panel-lead'>1</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Steps
+					<div class='panel-lead'>97</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Start
+					<div class='panel-lead'>May 16, 2018 4:07:20 PM</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+			 		End
+			 		<div class='panel-lead'>May 16, 2018 4:10:28 PM</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Time Taken
+					<div class='panel-lead'>187,585ms</div>
+				</div>
+			</div>
+			<div class='col s4'>
+				<div class='card-panel environment'>
+					<span class='right label cyan white-text'>Environment</span><p>&nbsp;</p>
+					
+					<table>
+						<tr>
+							<th>Name</th>
+							<th>Value</th>
+						</tr>
+							<tr>
+								<td>PLATFORM</td>
+								<td>WEB</td>
+							</tr>
+							<tr>
+								<td>Environment</td>
+								<td>PROJ_2</td>
+							</tr>
+							<tr>
+								<td>Selenium Version</td>
+								<td>3.0.1</td>
+							</tr>
+							<tr>
+								<td>Type </td>
+								<td>no</td>
+							</tr>
+					</table>
+				</div>
+			</div>
+			<div class='col s4'>
+				<div class='card-panel'>
+					<span class='right label cyan white-text'>Categories</span><p>&nbsp;</p>
+					
+					<table>
+						<tr>
+							<th>Name</th>
+							<th>Passed</th>
+							<th>Failed</th>
+							<th>Others</th>
+						</tr>
+						<tr>
+							<td>app.pptweb.testcases.loans.LoansTestCases</td>
+							<td>1</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>MachineDetails</td>
+							<td>1</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>TestCases</td>
+							<td>1</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- dashboard view --><!-- testrunner-logs view -->
+		</div>
+		<!-- container -->
+
+		<script>
+			var statusGroup = {
+				passParent: 1,
+				failParent: 0,
+				fatalParent: 0,
+				errorParent: 0,
+				warningParent: 0,
+				skipParent: 0,
+				exceptionsParent: 0,
+				
+				passChild: 88,
+				failChild: 0,
+				fatalChild: 0,
+				errorChild: 0,
+				warningChild: 0,
+				skipChild: 0,
+				infoChild: 9,
+				exceptionsChild: 0,
+				
+				passGrandChild: 0,
+				failGrandChild: 0,
+				fatalGrandChild: 0,
+				errorGrandChild: 0,
+				warningGrandChild: 0,
+				skipGrandChild: 0,
+				infoGrandChild: 0,
+				exceptionsGrandChild: 0,
+			};
+		</script>
+
+		<script src='https://cdn.rawgit.com/anshooarora/extentreports-java/9fa70d0ed9c34a8ed445ceee3494d3d7de7f8918/dist/js/extent.js' type='text/javascript'></script>
+
+		
+	</body>
+	
+</html>

@@ -4,17 +4,23 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	 <!-- <test name="Regression Suite" parallel="classes" thread-count="2"> --> 
-	<test name="BVT">
+	  <test name="Regression Suite" parallel="classes" thread-count="1">
+	<!-- <test name="BVT"> -->
 		<classes>
-			<class
+		<class name="app.pptweb.testcases.loans.LoansRefinanceTestCases">
+		<methods>
+			<!-- <class
 				name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_LeftNav">
 				<methods>
 				<include name="verify_Statement_On_Demand_Tab">
 						<parameter name="ManualTCName" value="Statement_On_Demand_Tab">
 						</parameter>
+					</include> -->
+					
+					<include name="DDTC_31627_LoansRefinance_Verify_The_Loan_Review_Page_For_Loan_Refinance_Flow">
+						<parameter name="ManualTCName" value="SIT_DDTC_31627_LoansRefinance_Verify_The_Loan_Review_Page_For_Loan_Refinance_Flow">
+						</parameter>
 					</include>
-
 				</methods>
 			</class>
 		</classes>

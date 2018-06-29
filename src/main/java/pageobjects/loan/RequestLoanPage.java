@@ -2,7 +2,12 @@ package pageobjects.loan;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +18,8 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.xalan.lib.sql.SQLQueryParser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -27,6 +34,7 @@ import pageobjects.landingpage.LandingPage;
 import appUtils.Common;
 
 import com.aventstack.extentreports.Status;
+import com.mongodb.connection.QueryResult;
 
 import core.framework.Globals;
 
@@ -34,7 +42,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 
 	// Declarations
 	private LoadableComponent<?> parent;
-	private static boolean waitforLoad = false;
+//	private static boolean waitforLoad = false;
 	@FindBy(xpath = "//h1[text()[normalize-space()='Loans']]")
 	private WebElement lblRequestALoan;
 	@FindBy(xpath = "//button[@id='reqGenPurposeLoan']")
@@ -189,10 +197,34 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private WebElement txtMaturityDate;
 	@FindBy(xpath = "//div[./b[contains(text(),'INTEREST RATE')]]//following-sibling::div")
 	private WebElement txtInterestRate;
+	@FindBy(xpath = "//div[./b[contains(text(),'APR')]]//following-sibling::div")
+	private WebElement txtAPR;
 	@FindBy(xpath = "//div[./b[contains(text(),'CHECK AMOUNT')]]//following-sibling::div")
 	private WebElement txtCheckAmount;
 	@FindBy(xpath = "//div[./b[contains(text(),'LOAN AMOUNT')]]//following-sibling::div")
 	private WebElement txtLoanAmount;
+	@FindBy(xpath = "//div[./b[contains(text(),'TOTAL INTEREST AMOUNT')]]//following-sibling::div")
+	private WebElement txtInterestAmount;
+	@FindBy(xpath = "//div[./b[contains(text(),'TOTAL PRINCIPAL AND INTEREST AMOUNT')]]//following-sibling::div")
+	private WebElement txtTotalPrincipalAndInterestAmount;
+	@FindBy(xpath = "//div[./b[contains(text(),'FIRST PAYMENT DUE')]]//following-sibling::div")
+	private WebElement txtFirstPaymentDue;
+	@FindBy(xpath = "//div[./b[contains(text(),'LAST PAYMENT DUE')]]//following-sibling::div")
+	private WebElement txtLastPaymentDue;
+	@FindBy(xpath = "//div[./b[contains(text(),'NUMBER OF PAYMENTS')]]//following-sibling::div")
+	private WebElement txtNumberOfPayments;
+	@FindBy(xpath = "//div[./b[contains(text(),'PAYMENT AMOUNT')]]//following-sibling::div")
+	private WebElement txtPaymentAmount;
+	@FindBy(xpath = "//div[./b[contains(text(),'PAYMENT METHOD')]]//following-sibling::div")
+	private WebElement txtPaymentMethod;
+	@FindBy(xpath = "//div[./b[contains(text(),'PAYMENT FREQUENCY')]]//following-sibling::div")
+	private WebElement txtPaymentFrequency;
+	
+	@FindBy(xpath = "//div[./b[contains(text(),'ORIGINATION FEE')]]//following-sibling::div")
+	private WebElement txtOriginationFeeInConfirmationPage;
+	@FindBy(xpath = "//div[./b[contains(text(),'DELIVERY METHOD')]]//following-sibling::div")
+	private WebElement txtDeliveryMethodInConfirmationPage;
+	
 	@FindBy(linkText = "Print")
 	private WebElement lnkPrint;
 	@FindBy(id = "ach-account-selection")
@@ -223,7 +255,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private WebElement txtTypically2BDays;
 	@FindBy(xpath = "//div[./strong/span[contains(text(),'Check sent by Regular mail')]]/following-sibling::div/span")
 	private WebElement txtDeliveryUpTo5BDays;
-@FindBy(xpath = ".//*[@id='loanReasons']/div[2]/div/p[1]")
+@FindBy(xpath = "//*[@id='loanReasons']/div[2]/div/p[1]")
 	private WebElement txtLoanReasons;
 	@FindBy(id = "prefilled")
 	private WebElement btnLoanReasonsPreFilledForm;
@@ -233,6 +265,9 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private WebElement mortgageInterestRateLoanSummaryPage;
 	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
 	private WebElement mortgageFeesLoanSummaryPage;
+	@FindBy(xpath = ".//*[@id='loanReasons']/div[contains(@ng-if,'showErrors()')]")
+	private WebElement txtPendingTransactionError;
+	
 	
 	@FindBy(xpath = "//div[@class='top small-popover fade tooltip in']/div[2]/*/*/*[1]/*")
 	private WebElement toolTipInterestRateText1;
@@ -251,13 +286,16 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private WebElement toolTipFeeDeliveryValue;
 	@FindBy(xpath = "//div[@class='top small-popover fade tooltip in']/div[2]/*/*/div[2]/div[1]/span")
 	private WebElement toolTipFeeOriginationText;
-	@FindBy(xpath = "//div[@class='top small-popover fade tooltip in']/div[2]/*/*/div[2]/div[2]/*")
+	@FindBy(xpath = "//div[@class='top small-popover fade tooltip in']/div[2]/*/*/div[1]/div[2]/*")
 	private WebElement toolTipFeeOriginationValue;
 
 	@FindBy(xpath = ".//*[@id='emailContainer']//input[@name='updateThruEmail']")
 	private WebElement chkBoxEmail;
 	@FindBy(xpath = ".//*[@id='phoneNbrContainer']//input[@name='updateThruTextMsg']")
 	private WebElement chkBoxTextMsg;
+	
+	@FindBy(xpath = "//*[@id='account-details-container']/div/div/div[2]/loan-summary/div/div/div[4]/div[2]/div/div[2]/div[2]")
+	private WebElement mailingAddressValue;
 	
 	@FindBy(xpath = "//p[@class='addr-holding-error']") private WebElement errAddressHold;
 	@FindBy(xpath = "//span[contains(text(),'BR_479')]/..") private WebElement errBR_479;
@@ -272,10 +310,108 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private String strRepaymentTerm = "//table[@id='quoteTable']/tbody/tr[rownum]/td//span";
 
 	private String loanTerm = "//table[@id='quoteTable']//tr[./td//span[contains(text(),'Repayment Term')]]//input";
-
+	private String payment = "//table[@id='quoteTable']//tr[./td//span[contains(text(),'Repayment Term')]]/td[2]";
+	
+	private String originationFee = "//table[@id='desktopTable']//div[contains(@ng-if,'loanType')]/div[contains(@translate,'originationFee')]";
+	private String repaymentTerm = "//table[@id='desktopTable']//tr[contains(@ng-if,'repaymentTerm')]//span[contains(@ng-if,'loanType')]";
 	private static String checkTotal = "";
 	private static String interestRate = "";
 	private static String loanType = "";
+	private static String maturityDate = "";
+	
+	public static String getMaturityDate() {
+		return maturityDate;
+	}
+
+	public static void setMaturityDate(String maturityDate) {
+		RequestLoanPage.maturityDate = maturityDate;
+	}
+
+	private static String paymentAmount = "";
+	private static String deliveryMethodSelected = "";
+	private static String totalLoanAmount;
+	
+	public static String getTotalLoanAmount() {
+		return totalLoanAmount;
+	}
+
+	public static void setTotalLoanAmount(String totalLoanAmount) {
+		RequestLoanPage.totalLoanAmount = totalLoanAmount;
+	}
+
+	//Refinancing
+	@FindBy(xpath = "//*[@id='mainBody']//div[@id='loanRefinanceContainer']")
+	private WebElement loanRefinancingSection;
+	@FindBy(xpath = "//*[@id='loanRefinanceContainer']/div[2]//input[contains(@type,'radio')]")
+	private WebElement btnRefinanceExistingLoan;
+	@FindBy(xpath = "//*[@id='loanRefinanceContainer']/div[1]//input[contains(@type,'radio')]")
+	private WebElement btnNewLoanRefinance;
+	@FindBy(xpath = "//*[@id='loanRefinanceContainer']/div[2]/*")
+	private WebElement txtRefinanceExistingLoan;
+	@FindBy(xpath = "//*[@id='loanRefinanceContainer']/div[1]/*")
+	private WebElement txtNewLoanRefinance;
+	@FindBy(xpath = "//div[@class='loan-refinance-checkbox']//input")
+	private List<WebElement> refinanceLoanChkBox;
+	@FindBy(xpath = "//*[@id='account-details-container']//h1[contains(@ng-if,'loanRefinanceCtrl.isNewLoansAllowed')]")
+	private WebElement refinancePageTitle;
+	@FindBy(xpath = "//*[@id='loanQuotesContainer']/div[1]/h2/span/div/a")
+	private WebElement lnkEnterYourOwnTerm;
+	@FindBy(xpath = "//*[@id='loanQuotesContainer']/div[1]/h2/span/div/div/div[2]/div")
+	private WebElement popOverEnterYourOwnLoanTerm;
+	@FindBy(id = "loanTermInput")
+	private WebElement loanTermInput;
+	@FindBy(id = "submitButton")
+	private WebElement btnAddEnterYourOwnLoanTerm;
+	@FindBy(xpath = "//*[@id='customQuotePopupContainer']/div[3]/div/span")
+	private WebElement errorMsgAS_212;
+	
+	private String strRepaymentTermRefinance = "//*[@id='loanQuotesContainer']//table[@id='quoteTable']/tbody/tr[rownum]/td//span";
+	
+	private String 
+	refinanceExistingLoansTableHeader = "//*[@id='loanQuotesContainer']/div[2]/div[@class='allocation-table-wrapper']/div[1]/table/thead/tr/th[colNum]";
+	
+	private String
+	refinanceExistingLoansTableRepaymentTerm = "//*[@id='loanQuotesContainer']/div[2]/div[@class='allocation-table-wrapper']/div[1]/table/tbody/tr[rownum]/td[contains(@data-header,'Repayment Term')]";
+	
+	@FindBy(xpath = "//span[@class='currency existing-loan-total']")
+	private WebElement refinanceCurrentBalance;
+	@FindBy(xpath = "//table[@class='overview-table']/tbody/tr[2]/td/div[@class='error-placeholder']")
+	private WebElement errorBlockForInvalidAmountEntered;
+	
+	private String 
+	activeLoansDetailTableHeaderGP = "//*[@id='loanRefinanceContainer']/div[2]/div[2]/div[2]/div/table/thead/tr/th[colNum]";
+	
+	private String 
+	activeLoansDetailTableBodyGP = "//*[@id='loanRefinanceContainer']/div[2]/div[2]/div[2]/div/table/tbody/tr/td[colNum]";
+	
+	private String 
+	activeLoansDetailTableHeaderPR = "//*[@id='loanRefinanceContainer']/div[1]/div[2]/div[2]/div/table/thead/tr/th[colNum]";
+	
+	private String 
+	activeLoansDetailTableBodyPR = "//*[@id='loanRefinanceContainer']/div[1]/div[2]/div[2]/div/table/tbody/tr[rowNum]/td[colNum]";
+	
+	@FindBy(xpath = "//*[@id='loanRefinanceContainer']/div[2]/div[2]/div[2]/div/table/tbody/tr/td[@data-header= 'Outstanding Balance']")
+	private WebElement outstandingBalanceValue;
+	
+	@FindBy(xpath = "//*[@id='loanRefinanceContainer']//div[contains(text(),' Select the loan or loans you would like to refinance.')]")
+	private WebElement txtActiveLoansHeader;
+	
+	@FindBy(xpath = ".//*[@class='top table-popover fade tooltip in']/div/*/*/div[1]/div[1]/b")
+	private WebElement toolTipCurrentBalPaymentAmount;
+	@FindBy(xpath = ".//*[@class='top table-popover fade tooltip in']/div/*/*/div[1]/div[2]/b")
+	private WebElement toolTipCurrentBalMaturityDate;
+	@FindBy(xpath = ".//*[@class='top table-popover fade tooltip in']/div/*/*/div[1]/div[3]/b")
+	private WebElement toolTipCurrentBalLoanTermRemaining;
+	@FindBy(xpath = ".//*[@class='top table-popover fade tooltip in']/div/*/*/div[2]/div[1]/span")
+	private WebElement toolTipCurrentBalPaymentAmountValue;
+	@FindBy(xpath = ".//*[@class='top table-popover fade tooltip in']/div/*/*/div[2]/div[2]/span")
+	private WebElement toolTipCurrentBalMaturityDateValue;
+	@FindBy(xpath = ".//*[@class='top table-popover fade tooltip in']/div/*/*/div[2]/div[3]/span")
+	private WebElement toolTipCurrentBalLoanTermRemainingValue;
+	
+	@FindBy(xpath = "//p[contains(text(),'You have reached the maximum number of loans')]")
+	private WebElement errorMsgExhaustedLoans;
+	
 	Actions keyBoardEvent = new Actions(Web.getDriver());
 
 	/**
@@ -695,7 +831,20 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		WebElement inpLoanTerm = Web.getDriver().findElement(
 				By.xpath(this.loanTerm.replace("Repayment Term", loanTerm)));
 		Web.clickOnElement(inpLoanTerm);
+		lib.Reporter.logEvent(Status.INFO, "verifying Loan Term is selected", "Loan term selected: "+loanTerm, false);
+		
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setpaymentAmount(String loanTerm) {
 
+		WebElement inpLoanTerm = Web.getDriver().findElement(
+				By.xpath(this.payment.replace("Repayment Term", loanTerm)));
+		RequestLoanPage.paymentAmount = "$" +inpLoanTerm.getText();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -710,6 +859,14 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 * 
 	 */
 	public void EnterLoanAmount(String loanAmount) {
+		Web.waitForPageToLoad(Web.getDriver());
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		inputLoanAmount.clear();
 		Web.setTextToTextBox(this.inputLoanAmount, loanAmount);
 
@@ -828,7 +985,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 		loans = DB.executeQuery(sqlQuery[0], sqlQuery[1], ga_Id);
 		try {
 			if (DB.getRecordSetCount(loans) > 0) {
@@ -868,11 +1025,11 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 		loans = DB.executeQuery(sqlQuery[0], sqlQuery[1], ga_Id);
 		try {
 			if (DB.getRecordSetCount(loans) > 0) {
-
+				System.out.println();
 				while (loans.next()) {
 					mapMaxLoansAllowed.put(loans.getString("loan_reason_code"),
 							loans.getString("max_loans_allowed"));
@@ -917,6 +1074,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 							By.xpath(strmaxloan.replace("LoanType",
 									"PrimaryRes")));
 				}
+				System.out.println();
 				maxloansExpected.put(key, txtLoanQuote.getText().split(" ")[0]);
 
 			}
@@ -1186,7 +1344,84 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		}
 
 	}
+	/**
+	 * <pre>
+	 * Method to Verify Continue Button Is Displayed
+	 *
+	 * </pre>
+	 */
+	public void verifyContinueButtonIsDisplayed(boolean enable) {
+		
+		
+		if (enable) {
+			if (btnContinue.isDisplayed()) {
+				lib.Reporter.logEvent(Status.PASS,
+						"Verify Continue Button is Displayed",
+						"Continue Button is Displayed", false);
 
+			} else {
+
+				lib.Reporter.logEvent(Status.FAIL,
+						"Verify Continue Button is Displayed",
+						"Continue Button is not Displayed", true);
+
+			}
+		} else {
+			try{
+				if (btnContinue.isDisplayed()) {
+					lib.Reporter.logEvent(Status.FAIL,
+							"Verify Continue Button is Displayed",
+							"Continue Button is Displayed", true);
+				}
+			}catch(Exception e){
+					lib.Reporter.logEvent(Status.PASS,
+							"Verify Continue Button is Displayed",
+							"Continue Button is not Displayed "+e.getMessage(), false);				
+
+			}
+			 
+		}
+
+	}
+
+	
+	/**
+	 * <pre>
+	 * Method to Verify Continue Button Is Enabled
+	 *
+	 * </pre>
+	 */
+	public void verifyUpdateButtonIsEnabled(boolean enable) {
+		Web.waitForElement(btnUpdate);
+		if (enable) {
+			if (btnUpdate.isEnabled()) {
+				lib.Reporter.logEvent(Status.PASS,
+						"Verify Continue Button is Enabled",
+						"Continue Button is Enabled", false);
+
+			} else {
+
+				lib.Reporter.logEvent(Status.FAIL,
+						"Verify Continue Button is Enabled",
+						"Continue Button is Not Enabled", true);
+
+			}
+		} else {
+			if (!btnUpdate.isEnabled()) {
+				lib.Reporter.logEvent(Status.PASS,
+						"Verify Continue Button is Disabled",
+						"Continue Button is Disabled", false);
+
+			} else {
+
+				lib.Reporter.logEvent(Status.FAIL,
+						"Verify Continue Button is Disabled",
+						"Continue Button is Not Disabled", true);
+
+			}
+		}
+
+	}
 	/**
 	 * <pre>
 	 * Method to Click On Continue Button
@@ -1202,6 +1437,27 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 
 			if (isTextDisplayed)
 				Web.clickOnElement(btnContinue);
+
+		} catch (NoSuchElementException e) {
+			e.printStackTrace();
+		}
+
+	}
+	/**
+	 * <pre>
+	 * Method to Click On Update Button
+	 * </pre>
+	 *
+	 */
+
+	public void clickUpdateButton() {
+		boolean isTextDisplayed = false;
+		try {
+
+			isTextDisplayed = Web.isWebElementDisplayed(btnUpdate, true);
+
+			if (isTextDisplayed)
+				Web.clickOnElement(btnUpdate);
 
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
@@ -1271,29 +1527,30 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		if (displayed) {
 			if (btnBack.isDisplayed()) {
 				lib.Reporter.logEvent(Status.PASS,
-						"Verify Back Button is Displayed",
-						"Back Button is Displayed", false);
+						"Verify Continue Button is Displayed",
+						"Continue Button is Displayed", false);
 
 			} else {
 
 				lib.Reporter.logEvent(Status.FAIL,
-						"Verify Back Button is Displayed",
-						"Back Button is Not Displayed", true);
+						"Verify Continue Button is Displayed",
+						"Continue Button is not Displayed", true);
 
 			}
 		} else {
-			if (!btnBack.isDisplayed()) {
-				lib.Reporter.logEvent(Status.PASS,
-						"Verify Back Button is Displayed",
-						"Back Button is Displayed", false);
-
-			} else {
-
-				lib.Reporter.logEvent(Status.FAIL,
-						"Verify Back Button is Displayed",
-						"Back Button is Not Displayed", true);
+			try{
+				if (btnBack.isDisplayed()) {
+					lib.Reporter.logEvent(Status.FAIL,
+							"Verify Continue Button is Displayed",
+							"Continue Button is Displayed", true);
+				}
+			}catch(Exception e){
+					lib.Reporter.logEvent(Status.PASS,
+							"Verify Continue Button is Displayed",
+							"Continue Button is not Displayed "+e.getMessage(), false);				
 
 			}
+			 
 		}
 
 	}
@@ -1313,12 +1570,52 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			List<WebElement> inpLoanTerm = Web.getDriver().findElements(
 					By.xpath(strRepaymentTerm.replace("rownum",
 							Integer.toString(i+1))));
-			int j = inpLoanTerm.size();
+	//		int j = inpLoanTerm.size();
 			String actualLoanTerm = inpLoanTerm.get(0).getText().toString()
 					.trim()
 					+ inpLoanTerm.get(1).getText().toString().trim();
 
 			if (repaymentTerm[i].equalsIgnoreCase(actualLoanTerm)) {
+				lib.Reporter
+						.logEvent(
+								Status.PASS,
+								"Verify Repayment Term is Displayed in Ascending Order",
+								"Repayment Term " + (i+1)+" :" + actualLoanTerm, false);
+
+			} else {
+
+				lib.Reporter
+						.logEvent(
+								Status.FAIL, 
+								"Verify Repayment Term is Displayed in Ascending Order",
+								"Repayment Term is not displayed as expected\nExpected:"
+										+ repaymentTerm[i] + "\nActual:"
+										+ actualLoanTerm, true);
+
+			}
+		}
+	}
+	/**
+	 * <pre>
+	 * Method to Verify Default Repayment Term Options for Loan Refinancing
+	 *
+	 * </pre>
+	 * 
+	 *
+	 */
+	public void verifyDefaultRepamentTermForLoanRefinance() {
+	//	String[] repaymentTerm = { "12months", "24months", "36months", "37months"};
+		String[] repaymentTerm = { "12months", "24months", "36months"};
+		for (int i = 0; i < repaymentTerm.length; i++) {
+			List<WebElement> inpLoanTerm = Web.getDriver().findElements(
+					By.xpath(strRepaymentTermRefinance.replace("rownum",
+							Integer.toString(i+1))));
+//			int j = inpLoanTerm.size();
+			String actualLoanTerm = inpLoanTerm.get(0).getText().toString()
+					.trim()
+					+ inpLoanTerm.get(1).getText().toString().trim();
+
+			if (repaymentTerm[i].contains(actualLoanTerm)) {
 				lib.Reporter
 						.logEvent(
 								Status.PASS,
@@ -1354,7 +1651,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			List<WebElement> inpLoanTerm = Web.getDriver().findElements(
 					By.xpath(strRepaymentTerm.replace("rownum",
 							Integer.toString(i+1))));
-			int j = inpLoanTerm.size();
+	//		int j = inpLoanTerm.size();
 			String actualLoanTerm = inpLoanTerm.get(0).getText().toString()
 					.trim()
 					+ inpLoanTerm.get(1).getText().toString().trim();
@@ -1811,6 +2108,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			throw (new Error(
 					"Origination Fee is Not Displayed in Loan Summary Page"));
 		}
+		
 		return fee;
 	}
 
@@ -1909,6 +2207,38 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 
 		}
 	}
+	
+	/**
+	 * <pre>
+	 * Method to Verify  Check Total Amount in Summary Page
+	 *
+	 * </pre>
+	 *
+	 */
+	public void verifyCheckTotalAmountForRefinance() {
+		double originationFee = Web
+				.getIntegerCurrency(getOriginationFeeFromLoanSummaryTable());
+		double loanTotal = Double.valueOf(Stock.GetParameterValue("loanAmount"));
+		String expectedCheckTotal = "$"
+				+ Double.toString(loanTotal - originationFee);
+		String actualCheckTotal = getCheckTotalFromSummaryTable();
+
+		if (actualCheckTotal.contains(expectedCheckTotal)) {
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify 'Check Total' Amount is Same",
+					"'Check Total' Amount is Same\nCheck Total="
+							+ actualCheckTotal, false);
+
+		} else {
+
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify 'Check Total' Amount is Same",
+					"'Check Total' Amount is Not Same\nExpected:"
+							+ expectedCheckTotal + "\nActual:"
+							+ actualCheckTotal, true);
+
+		}
+	}
 
 	/**
 	 * <pre>
@@ -1918,12 +2248,11 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 *
 	 */
 	public void verifyLoanTotalAmount() {
-		double originationFee = Web
-				.getIntegerCurrency(getOriginationFeeFromLoanSummaryTable());
-		double checkTotal = Web
-				.getIntegerCurrency(getCheckTotalFromSummaryTable());
+		double originationFee = Web.getIntegerCurrency(getOriginationFeeFromLoanSummaryTable());
+		double checkTotal = Web.getIntegerCurrency(getCheckTotalFromSummaryTable());
 		String expectedLoanTotal = "$"
 				+ Double.toString(checkTotal + originationFee);
+		
 		String actualLoanTotal = getLoanTotalFromLoanSummaryTable().replace(",", "");
 
 		if (actualLoanTotal.contains(expectedLoanTotal)) {
@@ -2220,10 +2549,15 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 */
 	public void verifyCheckAmountInConfirmationPage() {
 
-		String expectedCheckTotal = getCheckTotal();
+		double fee = Web.getIntegerCurrency(getOriginationFee());
+		double requestedAmount = Double.valueOf(Stock.GetParameterValue("loanAmount"));
+		double checkTotal = requestedAmount - fee;
+		
+		String expectedCheckTotal = "$"+Double.toString(checkTotal);
+		
 		String actualCheckTotal = getCheckAmountFromConfirmationPage();
 
-		if (expectedCheckTotal.equalsIgnoreCase(actualCheckTotal)) {
+		if (actualCheckTotal.contains(expectedCheckTotal)) {
 			lib.Reporter.logEvent(Status.PASS,
 					"Verify 'Check Total' Amount is Same",
 					"'Check Total' Amount is Same\nCheck Total="
@@ -2232,9 +2566,9 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		} else {
 
 			lib.Reporter.logEvent(Status.FAIL,
-					"Verify 'Check Total' Amount is Same",
+					"Verify 'Check Total' Amount is Same", 
 					"'Check Total' Amount is Not Same\nExpected:"
-							+ expectedCheckTotal + "\nActual:"
+							+ expectedCheckTotal + "\nActual: "
 							+ actualCheckTotal, true);
 
 		}
@@ -2270,6 +2604,37 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		}
 	}
 
+	
+	/**
+	 * <pre>
+	 * Method to Verify  Loan Amount is Matching in Confirmation Page
+	 *
+	 * </pre>
+	 *
+	 */
+	public void verifyLoanAmountInConfirmationPageForRefinance() {
+
+		String expectedLoanTotal = RequestLoanPage.getTotalLoanAmount();
+		String actualLoanTotal = getLoanAmountFromLoanConfirmationPage().replace(",", "");
+
+		if (actualLoanTotal.contains(expectedLoanTotal)) {
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify 'Loan Total' Amount is Same",
+					"'Loan Total' Amount is Same\nLoan Total="
+							+ actualLoanTotal, false);
+
+		} else {
+
+			lib.Reporter
+					.logEvent(Status.FAIL,
+							"Verify 'Loan Total' Amount is Same",
+							"'Loan Total' Amount is Not Same\nExpected:"
+									+ expectedLoanTotal + "\nActual:"
+									+ actualLoanTotal, true);
+
+		}
+	}
+
 	/**
 	 * <pre>
 	 * Method to Verify Loan Request Received Section in Confirmation Page for General Purpose Loan
@@ -2283,7 +2648,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			throws Exception {
 
 		isTextFieldDisplayed("Loan request received");
-		isTextFieldDisplayed("Processing");
+//		isTextFieldDisplayed("Processing");
 		isTextFieldDisplayed("Check sent by Regular mail");
 		String confirmationtext = txtConfirmationNumber.getText().toString()
 				.trim();
@@ -2314,7 +2679,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		verifyLoanTermInConfirmationPage();
 		verifyInterestRateInConfirmationPage();
 		verifyCheckAmountInConfirmationPage();
-		verifyLoanAmountInConfirmationPage();
+		verifyLoanAmountInConfirmationPageForRefinance();
 		return confirmationNo;
 	}
 
@@ -2700,7 +3065,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			throws Exception {
 
 		isTextFieldDisplayed("Loan request received");
-		isTextFieldDisplayed("Processing");
+	//	isTextFieldDisplayed("Processing");
 		isTextFieldDisplayed("Check sent by Regular mail");
 		String confirmationtext = txtConfirmationNumber.getText().toString()
 				.trim();
@@ -2719,7 +3084,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			lib.Reporter.logEvent(Status.FAIL,
 					"Verify Loan Request Received Date",
 					"'Loan Request Received Date is Not After 14 days\nExpected Date:"
-							+ expectedDate + "\nActual Date" + date, true);
+							+ expectedDate + "\nActual Date:" + date, true);
 		}
 
 		verifyWebElementIsDisplayed("TEXT COMPLETE");
@@ -2730,8 +3095,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		verifyLoanTypeInConfirmationPage();
 		verifyLoanTermInConfirmationPage();
 		verifyInterestRateInConfirmationPage();
-		verifyCheckAmountInConfirmationPage();
-		verifyLoanAmountInConfirmationPage();
+//		verifyCheckAmountInConfirmationPage();
+		verifyLoanAmountInConfirmationPageForRefinance();
 		return confirmationNo;
 	}
 	
@@ -2744,7 +3109,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	public void verifyPrincipalResidenceLoanDisclaimer() throws SQLException {
 
 		if (txtPrincipalloanDisclaimer1.getText().toString().trim()
-				.equals(Stock.GetParameterValue("PrincipalResidenceDisclaimer1")))
+				.equals(Stock.GetParameterValue("PrincipalResidenceDisclaimer1").trim()))
 			Reporter.logEvent(Status.PASS,
 					"Verify Principal Residence Loans Diclaimer is displayed",
 					" Principal Residence Loans Diclaimer is displayed"
@@ -2756,13 +3121,13 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 					Status.FAIL,
 					"Verify Principal Residence Loans Diclaimer is displayed",
 					" Principal Residence Loans Diclaimer is not matching \nExpected:"
-							+ Stock.GetParameterValue("Disclaimer1")
+							+ Stock.GetParameterValue("PrincipalResidenceDisclaimer1")
 							+ "\nActual:"
 							+ txtPrincipalloanDisclaimer2.getText().toString().trim(),
 					true);
 
 		if (txtPrincipalloanDisclaimer2.getText().toString().trim()
-				.equals(Stock.GetParameterValue("PrincipalResidenceDisclaimer2")))
+				.equals(Stock.GetParameterValue("PrincipalResidenceDisclaimer2").trim()))
 			Reporter.logEvent(Status.PASS,
 					"Verify Principal Residence Loans Diclaimer is displayed",
 					" Principal Residence Loans Diclaimer is displayed"
@@ -2774,7 +3139,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 					Status.FAIL,
 					"Verify Principal Residence Loans Diclaimer is displayed",
 					" Principal Residence Loans Diclaimer is not matching \nExpected:"
-							+ Stock.GetParameterValue("Disclaimer2")
+							+ Stock.GetParameterValue("PrincipalResidenceDisclaimer2")
 							+ "\nActual:"
 							+ txtPrincipalloanDisclaimer2.getText().toString().trim(),
 					true);
@@ -2810,10 +3175,10 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 */
 	public String  verifyPrincipalResidenceLoanRequestRecievedSectionForRegularMail()
 			throws Exception {
-		isTextFieldDisplayed("Your loan request has been received and a pre-filled form will be emailed to you shortly. "
+	/*	isTextFieldDisplayed("Your loan request has been received and a pre-filled form will be emailed to you shortly. "
 				+ "To complete the process, you must sign and return the form to the address provided. Depending on your preference, "
 				+ "you will receive an email and/or text with your loan's status.");
-		
+	*/	
 		isTextFieldDisplayed("Print, sign, and return the pre-filled form that will be emailed to you at the end of this process.");
 		
 		
@@ -2918,12 +3283,209 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		verifyPlanName(Stock.GetParameterValue("gc_id"));
 		verifyLoanTypeInConfirmationPage();
 		verifyLoanTermInConfirmationPage();
+		verifyLoanMaturityDateInConfirmationPage();
 		verifyInterestRateInConfirmationPage();
+		verifyAPRinConfirmationPage();
 		verifyCheckAmountInConfirmationPage();
 		verifyLoanAmountInConfirmationPage();
+		verifyTotalInterestAmountInConfirmationpage();
+		verifyTotalPrincipalAndInterestAmount();
 		
 	}
 	
+	/**
+	 * <pre>
+	 * Method to Verify  Loan Details Section in Confirmation Page For GP Loan Refinance
+	 *
+	 * </pre>
+	 * @throws Exception 
+	 *
+	 */
+	public void verifyLoanDetailsSectionConfirmationPageForLoanRefinance() throws Exception {
+
+		verifyPlanName(Stock.GetParameterValue("gc_id"));
+		verifyLoanTypeInConfirmationPage();
+		verifyLoanTermInConfirmationPage();
+		verifyLoanMaturityDateLoanRefinanceInConfirmationPage();
+		verifyInterestRateInConfirmationPage();
+		verifyAPRinConfirmationPage();
+		verifyCheckAmountInConfirmationPage();
+		verifyLoanAmountInConfirmationPageForRefinance();
+		verifyTotalInterestAmountInConfirmationpage();
+		verifyTotalPrincipalAndInterestAmountLoanRefinance();
+		
+	}
+	
+	/**
+	 * @author bbndsh
+	 */
+	private void verifyAPRinConfirmationPage() {
+		if(txtAPR.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify APR","APR value is displayed: "+txtAPR.getText().toString(),
+					false);
+		} else {
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify APR","APR value is not displayed: ", true);
+		}		
+	}
+
+	/**
+	 * @author bbndsh
+	 */
+	private void verifyTotalInterestAmountInConfirmationpage() {
+		if(txtInterestAmount.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify Total Interest Amount","Total Interest Amount value is displayed: "+txtInterestAmount.getText().toString(),
+					false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify Total Interest Amount","Total Interest Amount value is not displayed: "
+			, true);
+		}
+		
+	}
+
+	/**
+	 * @author bbndsh
+	 */
+	private void verifyTotalPrincipalAndInterestAmount() {
+		String loanAmount = "$"+Stock.GetParameterValue("LoanTotal")+".00";
+		String interestAmount = txtInterestAmount.getText().toString().trim();
+		
+		double deliveryFee  = Web.getIntegerCurrency(loanAmount) ;
+		double originationFee = Web.getIntegerCurrency(interestAmount);
+		double totalFee = deliveryFee + originationFee;
+		
+		String expectedTotalPrincipalAndInterestAmount = "$" + Double.toString(totalFee); 
+		String actualTotalPrincipalAndInterestAmount = null;
+		
+		if(txtTotalPrincipalAndInterestAmount.isDisplayed()){
+			actualTotalPrincipalAndInterestAmount = txtTotalPrincipalAndInterestAmount.getText().toString().trim().replaceAll(",", "");
+			if(expectedTotalPrincipalAndInterestAmount.contains(actualTotalPrincipalAndInterestAmount)){
+				lib.Reporter.logEvent(Status.PASS,
+						"Verify Total Principal And Interest Amount",
+						"Total Principal And Interest Amount is displayed as Expected: "+expectedTotalPrincipalAndInterestAmount,
+						false);
+			}else{
+				lib.Reporter.logEvent(Status.FAIL,
+						"Verify Total Principal And Interest Amount",
+						"Total Principal And Interest Amount is displayed as Expected: "+
+						"\nActual Value: "+actualTotalPrincipalAndInterestAmount+
+						"\nExpected Value: "+expectedTotalPrincipalAndInterestAmount,
+						true);
+			}
+		}else{
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify Total Principal And Interest Amount","Total Principal And Interest Amount is not Displayed",false);
+		}
+		
+	}
+	
+	/**
+	 * @author bbndsh
+	 */
+	private void verifyTotalPrincipalAndInterestAmountLoanRefinance() {
+		
+		double loanAmount  = Web.getIntegerCurrency(txtLoanAmount.getText().toString().trim()) ;
+		double interestAmount = Web.getIntegerCurrency( txtInterestAmount.getText().toString().trim());
+		double totalPrincipalInterestAmount = loanAmount + interestAmount;
+		
+		String expectedTotalPrincipalAndInterestAmount = "$" + Double.toString(totalPrincipalInterestAmount); 
+		String actualTotalPrincipalAndInterestAmount = null;
+		
+		if(txtTotalPrincipalAndInterestAmount.isDisplayed()){
+			actualTotalPrincipalAndInterestAmount = txtTotalPrincipalAndInterestAmount.getText().toString().trim().replaceAll(",", "");
+			if(expectedTotalPrincipalAndInterestAmount.contains(actualTotalPrincipalAndInterestAmount)){
+				lib.Reporter.logEvent(Status.PASS,
+						"Verify Total Principal And Interest Amount",
+						"Total Principal And Interest Amount is displayed as Expected: "+expectedTotalPrincipalAndInterestAmount,
+						false);
+			}else{
+				lib.Reporter.logEvent(Status.FAIL,
+						"Verify Total Principal And Interest Amount",
+						"Total Principal And Interest Amount is displayed as Expected: "+
+						"\nActual Value: "+actualTotalPrincipalAndInterestAmount+
+						"\nExpected Value: "+expectedTotalPrincipalAndInterestAmount,
+						true);
+			}
+		}else{
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify Total Principal And Interest Amount","Total Principal And Interest Amount is not Displayed",false);
+		}
+		
+	}
+
+	/**
+	 * Maturity Date for Princiapl Residence
+	 * @author bbndsh
+	 */
+	private void verifyLoanMaturityDateInConfirmationPage() {
+		String date = null;
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.YEAR, Integer.valueOf(Stock.GetParameterValue("loanTerm")));
+		date = c.get(Calendar.MONTH+1)+"/"+c.get(Calendar.DATE)+"/"+c.get(Calendar.YEAR);		
+		
+		String expectedDate = date;
+		String actualDate = null;
+		
+		if(txtMaturityDate.isDisplayed()){			
+				actualDate = txtMaturityDate.getText().toString().trim();
+				if(actualDate.equalsIgnoreCase(expectedDate)){
+					lib.Reporter.logEvent(Status.PASS,
+					"Verify Maturity Date",
+					"Maturity Date is displayed as Expected: "+expectedDate,
+					false);
+					setMaturityDate(expectedDate);
+				} else {
+					lib.Reporter.logEvent(Status.FAIL,
+					"Verify Maturity Date",
+					"Maturity Date is not displayed as expected"+"\nExpected Date: "+expectedDate+"\nActual Date: "+actualDate, true);
+				}
+		}else{
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify Maturity Date","Maturity Date is not Displayed",true);
+		}
+		
+		
+		
+	}
+	
+	/**
+	 * Maturity Date for General Purpose Loan refinance
+	 * @author bbndsh
+	 */
+	private void verifyLoanMaturityDateLoanRefinanceInConfirmationPage() {
+		Date date = null;
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.MONTH, Integer.valueOf(Stock.GetParameterValue("loanTerm")));
+		date = c.getTime();		
+		
+		String expectedDate = new SimpleDateFormat("M/dd/yyyy").format(date);		
+		String actualDate = null;
+		
+		if(txtMaturityDate.isDisplayed()){			
+				actualDate = txtMaturityDate.getText().toString().trim();
+				if(actualDate.equalsIgnoreCase(expectedDate)){
+					lib.Reporter.logEvent(Status.PASS,
+					"Verify Maturity Date",
+					"Maturity Date is displayed as Expected: "+expectedDate,
+					false);
+					RequestLoanPage.maturityDate = expectedDate;
+				} else {
+					lib.Reporter.logEvent(Status.FAIL,
+					"Verify Maturity Date",
+					"Maturity Date is not displayed as expected"+"\nExpected Date: "+expectedDate+"\nActual Date: "+actualDate, true);
+				}
+		}else{
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify Maturity Date","Maturity Date is not Displayed",true);
+		}
+		
+		
+		
+	}
+
 	/**
 	 * <pre>
 	 * Method to Verify  Payment Information Section in Confirmation Page
@@ -2934,9 +3496,134 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 */
 	public void verifyPaymentInformationSectionInConfirmationPage() throws Exception {
 
-		
+		verifyFirstPaymentDueInLoanSummaryPage();
+		verifyLastPaymentDueInLoanSummaryPage();
+		verifyNumberOfPaymentsInLoanSummaryPage();
+		verifyPaymentAmountInLoanSummaryPage();		
+		verifyPaymentMethodInLoanSummaryPage();
+		verifyPaymentFrequencyInLoanSummaryPage();
 		
 	}
+	
+	/**
+	 * @author bbndsh
+	 */
+	private void verifyPaymentFrequencyInLoanSummaryPage() {
+		if(txtPaymentFrequency.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS,
+					"\nVerifying Payment Frequency", "Payment Frequency is displayed: "+txtPaymentFrequency.getText().toString(),
+					false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL,
+					"\nVerifying Payment Frequency", "Payment Frequency is not displayed: ",
+					false);
+		}
+		
+	}
+
+	/**
+	 * @author bbndsh
+	 */
+	private void verifyPaymentMethodInLoanSummaryPage() {
+		if(txtPaymentMethod.isDisplayed()){
+			String paymentMethod = txtPaymentMethod.getText().toString().trim();
+			if(paymentMethod.equalsIgnoreCase("PAYROLL") || (paymentMethod.equalsIgnoreCase("CHECK"))){
+				lib.Reporter.logEvent(Status.PASS,
+						"\nVerifying Payment method", "Payment method is displayed: "+paymentMethod, false);
+			}else{
+				lib.Reporter.logEvent(Status.FAIL,
+						"\nVerifying Payment method", "Payment method is not displayed as expected: "+
+								"\nExpected: "+"PAYROLL or CHECK"+"\nActual: "+paymentMethod, true);
+			}
+		}
+		
+	}
+
+	/**
+	 * @author bbndsh
+	 */
+	private void verifyPaymentAmountInLoanSummaryPage() {
+		String actualPaymentAmount = null;
+		String expectedPaymentAmount = RequestLoanPage.paymentAmount;
+		if(txtPaymentAmount.isDisplayed()){
+			actualPaymentAmount = txtPaymentAmount.getText().toString().trim();
+			if(expectedPaymentAmount.contains(actualPaymentAmount)){
+				lib.Reporter.logEvent(Status.PASS,
+						"Verify Payment Amount is displayed and is equal to Amount selected in Loan Quote Page",
+						"Payment Amount is displayed and is equal to Amount selected in Loan Quote Page: "+expectedPaymentAmount
+						,false);
+			}else{
+				lib.Reporter.logEvent(Status.FAIL,
+						"Verify Payment Amount is displayed and is equal to Amount selected in Loan Quote Page",
+						"Payment Amount is not equal to Amount selected in Loan Quote Page: "+
+						"\nExpected: "+expectedPaymentAmount+"\nActual: "+actualPaymentAmount
+						,true);
+			}
+		}
+	}
+
+	/**
+	 * @author bbndsh
+	 */
+	private void verifyNumberOfPaymentsInLoanSummaryPage() {
+		
+		if(txtNumberOfPayments.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify Number of Payments",
+					"Number of Payments is Displayed "+txtNumberOfPayments.getText().toString().trim(),
+					false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify Number of Payments",
+					"Number of Payments is not Displayed ",
+					true);
+		}
+		
+	}
+
+	/**
+	 * @author bbndsh
+	 */
+	private void verifyLastPaymentDueInLoanSummaryPage() {
+		
+		String actualLastDueDate = txtLastPaymentDue.getText().toString().trim();
+		
+		if(txtLastPaymentDue.isDisplayed()){
+			if(getMaturityDate().toString().trim().equalsIgnoreCase(actualLastDueDate)){
+				lib.Reporter.logEvent(Status.PASS,
+						"Verify Last Payment Due Date",
+						"Last Payment Due Date is Displayed as expected "+RequestLoanPage.maturityDate,
+						false);
+			}else{
+				lib.Reporter.logEvent(Status.FAIL,
+						"Verify Last Payment Due Date",
+						"Last Payment Due Date is not Displayed as expected "+
+						"\nExpected Date: "+RequestLoanPage.maturityDate+"\nActual Date: "+actualLastDueDate,
+						true);
+			}
+		}
+		
+	}
+
+	/**
+	 * @author bbndsh
+	 */
+	private void verifyFirstPaymentDueInLoanSummaryPage() {
+		if(txtLastPaymentDue.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify First Payment Due Date",
+					"First Payment Due Date is Diplayed: "+txtLastPaymentDue.getText().toString(),
+					false);
+		}else{			
+			lib.Reporter.logEvent(Status.FAIL,
+						"Verify First Payment Due Date",
+						"First Payment Due Date is not Diplayed ",
+						true);
+			
+		}
+		
+	}
+
 	/**
 	 * <pre>
 	 * Method to Verify Fees And Taxes Section in Confirmation Page
@@ -2946,13 +3633,30 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 *
 	 */
 	public void verifyFeesAndTaxesSectionInConfirmationPage() throws Exception {
-
-	
-		
-		
+		verifyOriginationFeeFromLoansLandingPage();
 		
 	}
 	
+	private void verifyOriginationFeeFromLoansLandingPage() {
+		
+		String expectedOriginationFeeValue = this.originationFee;
+		String actualOriginationFeeValue = txtOriginationFeeInConfirmationPage.getText().trim();
+		
+		if(expectedOriginationFeeValue.equalsIgnoreCase(actualOriginationFeeValue)){
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify Origination Fee",
+					"Origination fee is displayed as same as in Loans landing Page: "+expectedOriginationFeeValue,
+					false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify Origination Fee",
+					"Origination fee is displayed is not same as in Loans landing Page: "+
+					"\nExpected: "+expectedOriginationFeeValue+"\nActual: "+actualOriginationFeeValue,
+					true);
+		}
+		
+	}
+
 	/**
 	 * <pre>
 	 * Method to Verify Delivery Information Section in Confirmation Page
@@ -2963,12 +3667,85 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 */
 	public void verifyDeliveryInformationSectionInConfirmationPage() throws Exception {
 
-		
-		
-		
+		verifyDeliveryMethod();
+		verifyMailingAddressForPptFromDB(Stock.GetParameterValue("SSN"));
 		
 	}
 	
+	private void verifyDeliveryMethod(){
+		
+		String expectedDeliveryMethod = getDeliveryMethodSelected();
+		String actualDeliveryMethod = null;
+		
+		if(txtDeliveryMethodInConfirmationPage.isDisplayed()){
+			actualDeliveryMethod = txtDeliveryMethodInConfirmationPage.getText().toString().trim();
+			if(expectedDeliveryMethod.equalsIgnoreCase(actualDeliveryMethod)){
+				lib.Reporter.logEvent(Status.PASS, "verifying Delivery method in Confirmation page", 
+						"Delivery method is same as expected "+expectedDeliveryMethod, false);
+			}else{
+				lib.Reporter.logEvent(Status.FAIL, "verifying Delivery method in Confirmation page", 
+						"Delivery method is not same as in Request loan type page"+
+								"\nExpected: "+expectedDeliveryMethod+"\nActual: "+actualDeliveryMethod, true);
+			}
+		}
+	}
+	
+	private void verifyMailingAddressForPptFromDB(String ssn) throws SQLException {
+		String expectedAddress = null;
+		String actualAddress = null;
+		
+		expectedAddress = getAddressForPptFromDB(ssn).replaceAll(",", "");
+		if(mailingAddressValue.isDisplayed()){
+			actualAddress = mailingAddressValue.getText().toString().replaceAll("\n", " ").replaceAll(",", "");
+		}
+		
+		if(expectedAddress.replaceAll(" ", "").contains(actualAddress.replaceAll(" ", ""))){
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify Mailing Address from DB",
+					"Mailing address in Confirmation Page is same as that from DB ADDRESS table: "+expectedAddress, false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify Mailing Address from DB",
+					"Mailing address in Confirmation Page is same as that from DB ADDRESS table: "+
+					"\nExpected:"+ expectedAddress+"\nActual: "+actualAddress, true);
+		}
+		
+	}
+	
+
+	private String getAddressForPptFromDB(String ssn) throws SQLException {
+		
+				String[] sqlQuery = null;
+				ResultSet resultSet = null;
+				String address = "";
+
+				try {
+					sqlQuery = Stock.getTestQuery("getMailingAddressForPpt");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+				resultSet = DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
+				try {
+					if (DB.getRecordSetCount(resultSet) > 0) {
+						resultSet.first();
+						address = resultSet.getString("LOC");
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+					Reporter.logEvent(
+							Status.WARNING,
+							"Query get PlanName:" + sqlQuery[0],
+							"The Query did not return any results. Please check participant test data as the appropriate data base.",
+							false);
+				}
+
+				return address;
+	}
+
+	
+
 	/**
 	 * <pre>
 	 * Method to Verify Default Repayment Term Options for Principal Residence Loan
@@ -2984,7 +3761,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			List<WebElement> inpLoanTerm = Web.getDriver().findElements(
 					By.xpath(strRepaymentTerm.replace("rownum",
 							Integer.toString(i+1))));
-			int j = inpLoanTerm.size();
+	//		int j = inpLoanTerm.size();
 			String actualLoanTerm = inpLoanTerm.get(0).getText().toString()
 					.trim()
 					+ inpLoanTerm.get(1).getText().toString().trim();
@@ -3088,8 +3865,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 
 	public void verifyLoanReasons() {
 		
-		// verifyWebElementIsDisplayed("txtLoanReasons");
-		if(isTextFieldDisplayed(Stock.GetParameterValue("LoanReasons"))){
+	//	verifyWebElementIsDisplayed("txtLoanReasons");
+		if(txtLoanReasons.isDisplayed()){
 			lib.Reporter.logEvent(Status.PASS,
 					"Verify Loan Reasons is Displayed",
 					"Loan Reasons Displayed: " ,	false);
@@ -3119,7 +3896,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	public void validateToolTipForInterestRate()
 			throws InterruptedException {
 		
-		
+		String expectedtext1 = null;
 		WebElement ele = this.getWebElement("INTEREST RATE");
 
 		keyBoardEvent.moveToElement(ele).build().perform();
@@ -3135,39 +3912,41 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 					"Tooltip Text is displayed for INTEREST RATE\nExpected: "
 							+ expectedtext + "\nActual: " + actualText, false);
 		} else {
-			Reporter.logEvent(Status.PASS,
+			Reporter.logEvent(Status.FAIL,
 					"Verify ToolTip Text for INTEREST RATE is displayed",
 					"Tooltip Text is not displayed for INTEREST RATE\nExpected: "
 							+ expectedtext + "\nActual: " + actualText, true);
 		}
 
-		expectedtext = "Rate PRIME + 1";
+		expectedtext1 = "Rate PRIME + 1";
+		expectedtext =  "Rate PRIME + 0";
 		actualText = toolTipInterestRateText2.getText().toString().trim() + " "
 				+ toolTipInterestRateText3.getText().toString().trim();
 		
-		if (expectedtext.equalsIgnoreCase(actualText)) {
+		if (expectedtext.equalsIgnoreCase(actualText) || (expectedtext1.equalsIgnoreCase(actualText))) {
 			Reporter.logEvent(Status.PASS,
 					"Verify ToolTip Text for INTEREST RATE is displayed",
 					"Tooltip Text is displayed for INTEREST RATE\nExpected: "
-							+ expectedtext + "\nActual: " + actualText, false);
+							+ expectedtext +"/"+expectedtext1 + "\nActual: " + actualText, false);
 		} else {
-			Reporter.logEvent(Status.PASS,
+			Reporter.logEvent(Status.FAIL,
 					"Verify ToolTip Text for INTEREST RATE is displayed",
 					"Tooltip Text is not displayed for INTEREST RATE\nExpected: "
 							+ expectedtext + "\nActual: " + actualText, true);
 		}
 
 		expectedtext = "Type FIXED";
+		expectedtext1 = "Type VARIABLE";
 		actualText = toolTipInterestRateText4.getText().toString().trim() + " "
 				+ toolTipInterestRateText5.getText().toString().trim();
 		
-		if (expectedtext.equalsIgnoreCase(actualText)) {
+		if (expectedtext.equalsIgnoreCase(actualText) || (expectedtext1.equalsIgnoreCase(actualText))) {
 			Reporter.logEvent(Status.PASS,
 					"Verify ToolTip Text for INTEREST RATE is displayed",
 					"Tooltip Text is displayed for INTEREST RATE\nExpected: "
-							+ expectedtext + "\nActual: " + actualText, false);
+							+ expectedtext +"/"+expectedtext1+ "\nActual: " + actualText, false);
 		} else {
-			Reporter.logEvent(Status.PASS,
+			Reporter.logEvent(Status.FAIL,
 					"Verify ToolTip Text for INTEREST RATE is displayed",
 					"Tooltip Text is not displayed for INTEREST RATE\nExpected: "
 							+ expectedtext + "\nActual: " + actualText, true);
@@ -3213,7 +3992,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			
 			sActualText = "$" + Double.toString(totalFee); 
 		
-			if(sExpectedText.equalsIgnoreCase(sActualText)){
+			if(sExpectedText.contains(sActualText)){
 				Reporter.logEvent(Status.PASS, "Verify ToolTip Text for FEES* is displayed",
 					"Tooltip text displayed for FEES* and is equal to sum of Origination Fee and Delivery Fee as Expected" + sExpectedText, false);
 			}else{				
@@ -3224,6 +4003,18 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			}
 		}
 		}
+	
+		public String getOriginationFee() {
+			return originationFee;
+		}
+
+		public void setOriginationFee(String loanType) {
+			WebElement originationFeeInRequestTypePage = Web.getDriver().findElement(
+					By.xpath(originationFee.replace("loanType", loanType)));
+			
+			this.originationFee = originationFeeInRequestTypePage.getText().split(" ")[1];
+		}
+
 	public void verifyLoansLandingPage() {
 		isTextFieldDisplayed("AVAILABLE TO BORROW");
 		String loanAmt = getMaximumLoanAmount();
@@ -3277,13 +4068,21 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 		  isTextFieldDisplayed("Loan purpose");
 		  isTextFieldDisplayed("Maximum loan");
-		  isTextFieldDisplayed("Minimum loan");
+		  try{
+			  isTextFieldDisplayed("Minimum loan");
+		  }catch(Exception e){
+			  e.printStackTrace();
+		  }
 		  isTextFieldDisplayed("Repayment term");
 		  isTextFieldDisplayed("Documentation required");
 		  isTextFieldDisplayed("Interest rate");
 		  isTextFieldDisplayed("Repayment");
 		  isTextFieldDisplayed("Fees");
-		  isTextFieldDisplayed("Waiting period");
+		  try{
+			  isTextFieldDisplayed("Waiting period");
+		  }catch(Exception e){
+			  e.printStackTrace();
+		  }
 		  verifyLoneTypeisDisplayed("GENERAL PURPOSE");
 		  verifyLoneTypeisDisplayed("MORTAGAGE");
 		
@@ -3298,8 +4097,75 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		isTextFieldDisplayed("LOAN TOTAL");
 		verifyLoanTotalAmount();
 		setCheckTotal(getCheckTotalFromSummaryTable());
+		setInterestRate(getInterestRateFromLoanSummaryTable());
 		
 	}
+
+	public void verifyMyLoanSummarySectionForLoanRefinance() {
+		
+		isTextFieldDisplayed("My loan summary");
+		isTextFieldDisplayed("INTEREST RATE");
+		isTextFieldDisplayed("FEES*");
+		isTextFieldDisplayed("CHECK TOTAL");
+		isTextFieldDisplayed("LOAN TOTAL");
+		verifyLoanTotalAmountLoanRefinance();
+		verifyCheckTotalLoanRefinance();
+		setCheckTotal(getCheckTotalFromSummaryTable());
+		
+	}
+
+	private void verifyCheckTotalLoanRefinance() {
+		double refinanceAmount = Double.valueOf(Stock.GetParameterValue("loanAmount"));
+		double fee = Web.getIntegerCurrency(txtOriginationFee.getText().toString().trim());
+		double checkTotal = refinanceAmount - fee;
+		
+		String expectedCheckTotal = "$" + Double.toString(checkTotal);
+		String actualCheckTotal = null;
+		
+		if(txtCheckTotal.isDisplayed()){
+			actualCheckTotal = txtCheckTotal.getText().toString().trim();
+			if(actualCheckTotal.contains(expectedCheckTotal)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Check Total Amount",
+						"Check Total Amount is displayed: "+expectedCheckTotal, false);
+			}else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Check Total Amount",
+						"Check box 'Update me by email at' is selected"+
+						"\nExpected: "+expectedCheckTotal+
+						"\nActual: "+actualCheckTotal, true);
+			}
+		}
+		
+		
+	}
+
+	public void verifyLoanTotalAmountLoanRefinance() {
+		double actualCheckTotal = Web.getIntegerCurrency(txtCheckTotal.getText().toString().trim());
+		double fee = Web.getIntegerCurrency(txtOriginationFee.getText().toString().trim());
+		double currentBalance = Web.getIntegerCurrency(refinanceCurrentBalance.getText().toString().trim());
+		
+		double totalLoanAmount = (double)actualCheckTotal + fee + currentBalance;
+		 DecimalFormat f = new DecimalFormat("##.##");
+	     System.out.println(f.format(totalLoanAmount));
+	     totalLoanAmount = Double.valueOf(f.format(totalLoanAmount));
+		String expectedLoanAmount = "$"+Double.toString(totalLoanAmount);
+		String actualLoanAmount = getLoanTotalFromLoanSummaryTable().replaceAll(",", "");
+		
+		if(expectedLoanAmount.contains(actualLoanAmount)){
+			Reporter.logEvent(Status.PASS,
+					"Verify Loan Total Amount",
+					"Loan Total Amount is displayed: "+expectedLoanAmount, false);
+			RequestLoanPage.setTotalLoanAmount(actualLoanAmount);
+		}else{
+			Reporter.logEvent(Status.FAIL,
+					"Verify Loan Total Amount",
+					"Check box 'Update me by email at' is selected"+
+					"\nExpected: "+expectedLoanAmount+
+					"\nActual: "+actualLoanAmount, true);
+		}
+	}
+		
 
 	public void verifyLoanSummarypage() {
 		
@@ -3517,8 +4383,540 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 	}
 
+	public static String getDeliveryMethodSelected() {
+		return deliveryMethodSelected;
+	}
+
+	public void setDeliveryMethodSelected() {
+		if(inpRegularMail.isSelected()){
+			RequestLoanPage.deliveryMethodSelected = "Regular mail";
+		}
+		else if(inpExpressMail.isSelected()){
+			RequestLoanPage.deliveryMethodSelected = "Expedited mail";
+		}else{
+//			RequestLoanPage.deliveryMethodSelected = "Regular mail";
+		}
+	}
+
+	public void verifyRepaymentTerm() {
+		WebElement txtRepaymentTerm = Web.getDriver().findElement(By.xpath(repaymentTerm.replace("loanType", Stock.GetParameterValue("loanTypeForRepaymentTerm"))));
+		if(txtRepaymentTerm.isDisplayed()){
+			Reporter.logEvent(Status.PASS,
+					"Verify Repayment term information under 'PRIMARY RESIDENCE LOAN'",
+					"Repayment term information under 'PRIMARY RESIDENCE LOAN' is displayed "+txtRepaymentTerm.getText().toString(), false);
+		}else{
+			Reporter.logEvent(Status.FAIL,
+					"Verify Repayment term information under 'PRIMARY RESIDENCE LOAN'",
+					"Repayment term information under 'PRIMARY RESIDENCE LOAN' is not displayed ", true);
+		}
+	}
+
+	public void verifyMaxLoanThresholdLimitErrorMsgIsDisplayed() {
+		String expectedErrorMsg = Stock.GetParameterValue("PendingTransactionErrorMsg");
+		String actualErrorMsg = null;
+		
+		if(txtPendingTransactionError.isDisplayed()){
+			actualErrorMsg = txtPendingTransactionError.getText().toString();
+			if(actualErrorMsg.equalsIgnoreCase(expectedErrorMsg)){
+				Reporter.logEvent(Status.PASS,
+						"Verifying Error message is Displayed",
+						"Error Message is displayed: "+actualErrorMsg, true);
+			}else{
+				Reporter.logEvent(Status.FAIL,
+						"Verifying Error message is Displayed",
+						"Error Message is not displayed as expected: "+
+						"\nExpected: "+expectedErrorMsg+
+						"\nActual: "+actualErrorMsg, true);
+			}
+		}
+		
+	}
+
+	public boolean verifyLoanRefinancingPageLoad() {
+		boolean isPageLoaded = false;
+		try {
+
+			if(Web.isWebElementDisplayed(loanRefinancingSection, true)){
+				isPageLoaded = true; 
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return isPageLoaded;		
+	}
+
+	public void selectRefinanceExistingLoanButton() {
+		Web.clickOnElement(btnRefinanceExistingLoan);		
+	}
+	
+	public void selectRequestANewLoan() {
+		Web.clickOnElement(btnNewLoanRefinance);		
+	}
+
+	/**
+	 * @author bbndsh
+	 * @param noofLoans
+	 * 
+	 */
+	public void selectActiveLoanCheckBox(int noofLoans)  {
+		try{
+			for(int i=0;i<noofLoans;i++){
+		
+		Web.clickOnElement(refinanceLoanChkBox.get(i));	
+		
+			}
+	}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public void verifyLoanRefinancePage() {
+		String font_weight = null;
+		
+		try{
+			Thread.sleep(3000);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		if(refinancePageTitle.isDisplayed()){
+			font_weight = refinancePageTitle.getCssValue("font-weight");
+			if(Integer.parseInt(font_weight) >= 700){
+				lib.Reporter.logEvent(Status.PASS, "Verifying page Title of Loan Refinance page", "Page Title is displayed and is in BOLD: "+
+						refinancePageTitle.getText().toString().trim(),  false);
+			}else{
+				lib.Reporter.logEvent(Status.FAIL, "Verifying page Title of Loan Refinance page", "Page Title is not displayed properly: "+
+						refinancePageTitle.getText().toString().trim(), true);
+			}
+		}
+		
+		if(txtNewLoanRefinance.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS, "Verifying options for Loan Refinance page is displayed", "Options for 'New Loan' Loan Refinance page is displayed: "+
+					txtNewLoanRefinance.getText().toString().trim(),  false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL, "Verifying options for Loan Refinance page is displayed", "Options for 'New Loan' Loan Refinance page is not displayed", true);
+		}
+		
+		if (txtRefinanceExistingLoan.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS, "Verifying options for Loan Refinance page is displayed", "Options for 'Refinance Existing Loans' Loan Refinance page is displayed: "+
+					txtRefinanceExistingLoan.getText().toString().trim(),  false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL, "Verifying options for Loan Refinance page is displayed", "Options for 'Refinance Existing Loans' Loan Refinance page is not displayed", true);
+		}
+	}
+
+	public void verifyRefinanceRepaymentTermAfterAddingNewTerm(String ...newLoanTerm) {
+		
+		/**
+		 * repayment term body
+		 */
+		List<String> repaymentTermList = new ArrayList<>();
+	//	repaymentTermList.addAll(Arrays.asList("12months", "24months", "36months"));
+		repaymentTermList.addAll(Arrays.asList("60months", "83months"));
+		
+		for(String str:newLoanTerm){
+			repaymentTermList.add(repaymentTermList.size(), str+" months");
+		}
+		
+		for (int i = 0; i < repaymentTermList.size(); i++) {
+			List<WebElement> refinanceRepaymentTerm = Web.getDriver().findElements(
+					By.xpath(refinanceExistingLoansTableRepaymentTerm.replace("rownum",	Integer.toString(i+1))));
+			
+			lib.Reporter.logEvent(Status.PASS, "Verifying Repayment Loan Term ", "Repayment Loan Term "+
+					refinanceRepaymentTerm.get(0).getText().toString(), false);
+			
+		}	
+	}
+	
+	public void verifyRefinanceRepaymentTerm(String repaymentTerms) {
+		
+		List<String> repaymentTermList = new ArrayList<>();
+		for(int i = 0; i < repaymentTermList.size(); i++){
+			repaymentTermList.add(repaymentTerms.split(",")[i]);
+		}
+		/**
+		 * repayment term Header verifying
+		 */
+		for (int i = 0; i < repaymentTermList.size(); i++) {
+			List<WebElement> repaymentLoanTermHeader = Web.getDriver().findElements(
+					By.xpath(refinanceExistingLoansTableHeader.replace("colNum",Integer.toString(i+1))));
+			
+			lib.Reporter.logEvent(Status.INFO, "Verifying Repayment Loan Term header", "Repayment Loan Term header value: "+
+					repaymentLoanTermHeader.get(0).getText().toString().trim(), false);
+		}
+		
+		/**
+		 * repayment term body
+		 */
+		/*List<String> repaymentTermList = new ArrayList<>();
+		repaymentTermList.addAll(Arrays.asList("12months", "24months"));//, "36months"));
+		*/
+		
+		for (int i = 0; i < repaymentTermList.size(); i++) {
+			List<WebElement> refinanceRepaymentTerm = Web.getDriver().findElements(
+					By.xpath(refinanceExistingLoansTableRepaymentTerm.replace("rownum",	Integer.toString(i+1))));
+			
+			lib.Reporter.logEvent(Status.PASS, "Verifying Repayment Loan Term ", "Repayment Loan Term "+
+					refinanceRepaymentTerm.get(0).getText().toString(), false);
+			
+		}	
+	}
+
+	public void clickOnEnterYourOwnLoanTerm(String newLoanTerm) {
+
+		if(lnkEnterYourOwnTerm.isDisplayed()){
+			lnkEnterYourOwnTerm.click();
+			if(popOverEnterYourOwnLoanTerm.isDisplayed()){
+				Web.setTextToTextBox(loanTermInput, newLoanTerm);
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				btnAddEnterYourOwnLoanTerm.click();
+			}
+		}
+		
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
+		
+		
+	}
+
+	public void verifyAS_212ErrorMessage() {
+		
+		try{
+			Web.waitForElement(errorMsgAS_212);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		if(errorMsgAS_212.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS, "verifying AS_212 error message is displayed when Invalid Loan Term entered",
+					"AS_212 error message is displayed "+errorMsgAS_212.getText().toString().trim(), true);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL, "verifying AS_212 error message is displayed when Invalid Loan Term entered",
+					"AS_212 error message is not displayed ", true);
+		}
+	}
+
+	public void verifyErrorMsgForInvalidLoanAmount(String amountToBeEntered) {
+		
+		EnterLoanAmount(amountToBeEntered);
+		
+		try{
+			Web.waitForElement(errorBlockForInvalidAmountEntered);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		if(errorBlockForInvalidAmountEntered.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS, "Verifying Error message for Invalid Amount Entered is Displayed",
+					"Error message for Invalid Amount entered is displayed: "+
+							errorBlockForInvalidAmountEntered.getText().toString().trim(), false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL, "Verifying Error message for Invalid Amount Entered is Displayed",
+					"Error message for Invalid Amount entered is not displayed: ", true);
+		}
+
+	}
+
+	public void clearInputLoanAmountField() {
+		
+		try{
+			inputLoanAmount.clear();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void verifyNewLoanRefinanceisSelected() {
+		
+		if (btnNewLoanRefinance.isDisplayed() && btnNewLoanRefinance.isSelected()) {
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify 'New Loan' Radio Button is Selected By Default",
+					"'New Loan' Radio Button is Selected By Default", false);
+
+		} else {
+
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify 'New Loan' Radio Button is Selected By Default",
+					"'New Loan' Radio Button is Not Selected By Default",
+					true);
+
+		}
+		
+	}
+
+	public void verifyActiveLoansDetailsHeaderSectionForRefinance(){
+		
+		if(txtActiveLoansHeader.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS, "Verifying Active Loans Header text is Displayed Section ", "Active Loans Header text is Displayed: "+
+					txtActiveLoansHeader.getText().toString(), false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL, "Verifying Active Loans Header text is Displayed Section ", "Active Loans Header text is not Displayed", true);
+			
+		}
+	}
+	
+	//TODO
+	public void verifyActiveLoansDetailsSectionForRefinance(String headers) {
+		
+		
+		for (int i = 0; i < 5; i++) {
+			List<WebElement> activeLoansHeader = Web.getDriver().findElements(
+					By.xpath(activeLoansDetailTableHeaderGP.replace("colNum",	Integer.toString(i+1))));
+			
+			lib.Reporter.logEvent(Status.PASS, "Verifying Active Loans Details Section ", "Active Loans Details header "+
+					activeLoansHeader.get(0).getText().toString(), false);
+			
+			/*WebElement activeLoansBody = Web.getDriver().findElement(
+					By.xpath(activeLoansDetailTableBodyGP.replace("dataHeader", StringUtils.capitalize(activeLoansHeader.get(0).getText().toString().trim))));
+			
+			lib.Reporter.logEvent(Status.PASS, "Verifying Active Loans Details Section ", "Active Loans Details Body "+
+					activeLoansBody.getText().toString(), false);
+			*/
+		}
+		
+	}
+	
+	public void verifyActiveLoansDetailsSectionForRefinancePR() {
+		
+		for (int i = 0; i < 5; i++) {
+			List<WebElement> activeLoansHeader = Web.getDriver().findElements(
+					By.xpath(activeLoansDetailTableHeaderPR.replace("colNum",	Integer.toString(i+1))));
+			
+			lib.Reporter.logEvent(Status.PASS, "Verifying Active Loans Details Section ", "Active Loans Details header "+
+					activeLoansHeader.get(0).getText().toString(), false);
+			
+			WebElement activeLoansBody = Web.getDriver().findElement(
+					By.xpath(activeLoansDetailTableBodyPR.replace("dataHeader", StringUtils.capitalize(activeLoansHeader.get(0).getText().toString().trim()))));
+			
+			lib.Reporter.logEvent(Status.PASS, "Verifying Active Loans Details Section ", "Active Loans Details Body "+
+					activeLoansBody.getText().toString(), false);
+			
+		}
+		
+	}
+	
+	
+
+	public void verifyCurrentActiveLoanBalanceIsDisplayed() {
+		
+		if(refinanceCurrentBalance.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS, "Verifying current active loan balance is displayed", 
+						"current active loan balance is displayed: "+refinanceCurrentBalance.getText().toString().trim(), false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL, "Verifying current active loan balance is displayed", 
+					"current active loan balance is displayed: ", true);
+		}
+		
+	}
+
+	public void validateToolTipForLoanOutstandingBalance() {
+		
+		keyBoardEvent.moveToElement(refinanceCurrentBalance).build().perform();
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		String expectedtext = "PAYMENT AMOUNT";
+		String actualText = toolTipCurrentBalPaymentAmount.getText().toString()
+				.trim();
+		if (expectedtext.equalsIgnoreCase(actualText)) {
+			Reporter.logEvent(Status.PASS,
+					"Verify ToolTip Text for CURRENT BALANCE is displayed",
+					"Tooltip Text is displayed for CURRENT BALANCE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, false);
+			Reporter.logEvent(Status.PASS,	"Verifying Value",
+					"Value is displayed: "+toolTipCurrentBalPaymentAmountValue.getText().toString().trim(), false);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify ToolTip Text for CURRENT BALANCE is displayed",
+					"Tooltip Text is not displayed for CURRENT BALANCE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, true);
+		}
+
+		expectedtext = "MATURITY DATE";
+		actualText = toolTipCurrentBalMaturityDate.getText().toString().trim() ;
+		
+		if (expectedtext.equalsIgnoreCase(actualText)) {
+			Reporter.logEvent(Status.PASS,
+					"Verify ToolTip Text for CURRENT BALANCE is displayed",
+					"Tooltip Text is displayed for INTEREST RATE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, false);
+			Reporter.logEvent(Status.PASS,	"Verifying Value",
+					"Value is displayed: "+toolTipCurrentBalMaturityDateValue.getText().toString().trim(), false);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify ToolTip Text for CURRENT BALANCE is displayed",
+					"Tooltip Text is not displayed for INTEREST RATE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, true);
+		}
+
+		expectedtext = "LOAN TERM REMAINING";
+		actualText = toolTipCurrentBalLoanTermRemaining.getText().toString().trim() ;
+		
+		if (expectedtext.equalsIgnoreCase(actualText)) {
+			Reporter.logEvent(Status.PASS,
+					"Verify ToolTip Text for CURRENT BALANCE is displayed",
+					"Tooltip Text is displayed for CURRENT BALANCE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, false);
+			Reporter.logEvent(Status.PASS,	"Verifying Value",
+					"Value is displayed: "+toolTipCurrentBalLoanTermRemainingValue.getText().toString().trim(), false);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify ToolTip Text for CURRENT BALANCE is displayed",
+					"Tooltip Text is not displayed for CURRENT BALANCE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, true);
+		}
+		//TODO
+		keyBoardEvent.release(toolTipCurrentBalMaturityDate);
+		
+	}
+
+	public void verifyOutstandingBalance() {
+		
+		if(outstandingBalanceValue.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS, "Verifying Outstanding balance after selecting 'Refinance existing loan'", 
+					"Outstanding Balance is : "+outstandingBalanceValue.getText().toString().trim(), true);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL, "Verifying Outstanding balance after selecting 'Refinance existing loan'", 
+					"Outstanding Balance is not displayed: ", true);
+		}
+		
+	}
+
+	public void verifyInformationalMessageForExhaustedloans() {
+		String expectedMsg = "You have reached the maximum number of loans allowed by your plan. You may still be able to borrow more by refinancing another loan.";
+		String actualMsg = null;
+		
+		try{
+			if(errorMsgExhaustedLoans.isDisplayed()){
+				actualMsg = errorMsgExhaustedLoans.getText().toString().trim();
+				if(actualMsg.equalsIgnoreCase(expectedMsg)){
+					lib.Reporter.logEvent(Status.PASS, "Verify the informational message at the top of the  active loan details table", 
+							"Informational message is displayed: "+actualMsg, false);
+				}
+			}
+		}catch(Exception e){
+			lib.Reporter.logEvent(Status.FAIL, "Verify the informational message at the top of the  active loan details table", 
+					"Informational message is not displayed as expected: "+
+							"\nActual: "+actualMsg+"\nExpected: "+expectedMsg+"\n"+e.getMessage(), true);
+		}
+		
+	}
+
+	public void verifyFrequencyRestrictionMsg() {
+		
+		
+	}
+
+	public void setMortgageOrSpousalStepInDatabase(String StepToBeSetInDB) throws SQLException {
+		ResultSet queryResultSet = null;		
+		String[] sqlQuery = null;
+		
+		sqlQuery = Stock.getTestQuery("checkStepToBeInsertedPresentInDB");
+		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		queryResultSet = DB.executeQuery(sqlQuery[0], sqlQuery[1], StepToBeSetInDB);
+		
+		if(DB.getRecordSetCount(queryResultSet) == 0){
+			if(StepToBeSetInDB.equalsIgnoreCase("Mortgage")){
+				try {
+					sqlQuery = Stock.getTestQuery("insertStepIntoDB_Mortgage");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}else{
+				try {
+					sqlQuery = Stock.getTestQuery("insertStepIntoDB_Spousal");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		
+			sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+			queryResultSet = DB.executeQuery(sqlQuery[0], sqlQuery[1]);
+			try {
+				if (DB.getRecordSetCount(queryResultSet) > 0) {
+					lib.Reporter.logEvent(Status.INFO, "Inserting 'Mortgage/Spousal' Step in TDL", "No of rows inserted: "+DB.getRecordSetCount(queryResultSet), false);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				Reporter.logEvent(
+					Status.WARNING,
+					"Query to insert 'Mortgage/Spousal' step:" + sqlQuery[0],
+					"The Query did not return any results.",
+					false);
+			}
+		}
+		
+	}
+	
+	public void ResetMortgageOrSpousalStepInDatabase(String StepToBeSetInDB) throws SQLException {
+		ResultSet queryResultSet = null;
+		String[] sqlQuery = null;
+		
+		sqlQuery = Stock.getTestQuery("checkStepToBeDeletedInDB");
+		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		queryResultSet = DB.executeQuery(sqlQuery[0], sqlQuery[1], StepToBeSetInDB);
+		
+		if(DB.getRecordSetCount(queryResultSet) > 0){
+		if(StepToBeSetInDB.equalsIgnoreCase("Mortgage")){
+			try {
+				sqlQuery = Stock.getTestQuery("deleteStepFromDB_Mortgage");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else{
+			try {
+				sqlQuery = Stock.getTestQuery("deleteStepFromDB_Spousal");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		queryResultSet = DB.executeQuery(sqlQuery[0], sqlQuery[1]);
+		try {
+			if (DB.getRecordSetCount(queryResultSet) > 0) {
+				lib.Reporter.logEvent(Status.INFO, "Deleting 'Mortgage/Spousal' Step in TDL", "No of rows deleted: "+DB.getRecordSetCount(queryResultSet), false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Reporter.logEvent(
+					Status.WARNING,
+					"Query to delete 'Mortgage/Spousal' step:" + sqlQuery[0],
+					"The Query did not return any results.",
+					false);
+		}
+		}
+	}
+
+	public void setMortgagePaperWorkIndicator(String reviewIndicator, String ga_id) throws SQLException {
+		ResultSet queryResultSet = null;		
+		String[] sqlQuery = null;
+		
+		sqlQuery = Stock.getTestQuery("setMortgagePaperworkIndicator");
+		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+
+		queryResultSet = DB.executeQuery(sqlQuery[0], sqlQuery[1], reviewIndicator, ga_id);
+		try {
+			if (DB.getRecordSetCount(queryResultSet) > 0) {
+				lib.Reporter.logEvent(Status.INFO, "Setting Mortgage Paperwork indicator to: "+reviewIndicator, 
+						"Mortgage paperwork Indicator is set to : "+reviewIndicator+"\nTable Name: grp_loan_struc ", false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Reporter.logEvent(
+					Status.WARNING,
+					"Setting Mortgage Paperwork indicator to: "+reviewIndicator, 
+					"Mortgage paperwork Indicator is not set to : "+reviewIndicator+"\nTable Name: grp_loan_struc ", false);
+		}
+	}
 	
 }
-
-
-

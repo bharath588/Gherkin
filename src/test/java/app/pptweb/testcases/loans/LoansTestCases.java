@@ -89,8 +89,8 @@ public class LoansTestCases {
 			lib.Reporter.logEvent(Status.INFO,
 					"Test Data used for this Test Case:", printTestData(),
 					false);
-			RVMD_Multiple_Disbursement_Reversals_Executed_via_MAIN_MENU rvmd_reversal;
-			rvmd_reversal = new RVMD_Multiple_Disbursement_Reversals_Executed_via_MAIN_MENU();
+			/*RVMD_Multiple_Disbursement_Reversals_Executed_via_MAIN_MENU rvmd_reversal;
+			rvmd_reversal = new RVMD_Multiple_Disbursement_Reversals_Executed_via_MAIN_MENU();*/
 			// General.setDatabaseInstance(Stock.GetParameterValue("LOGON_DATABASE"));
 			/*rvmd_reversal.setServiceParameters(Stock.GetParameterValue("SSN"));
 			rvmd_reversal.runService();
@@ -113,8 +113,7 @@ public class LoansTestCases {
 			// Step 6
 			// TODO
 			// Step 7
-			requestLoan.verifyMaximumLoansForLoanStructure(Stock
-					.GetParameterValue("ga_id"));
+			requestLoan.verifyMaximumLoansForLoanStructure(Stock.GetParameterValue("ga_id"));
 			// Step 8
 			requestLoan.verifyLoansDisclaimer();
 			// Step 9
@@ -148,7 +147,7 @@ public class LoansTestCases {
 			requestLoan.verifyWebElementIsDisplayed("Link Enter Your Own Term");
 			// Step 15
 			requestLoan.isTextFieldDisplayed("Select");
-			requestLoan.isTextFieldDisplayed(" bi-weekly");
+			requestLoan.isTextFieldDisplayed("monthly");
 			requestLoan.isTextFieldDisplayed("Repayment Term");
 			requestLoan.verifyDefaultRepamentTerm();
 			// Step 16
@@ -429,7 +428,7 @@ public class LoansTestCases {
 			 * Step 28 - Hover the mouse on the 'INTEREST RATE' value - not
 			 * feasible
 			 */
-
+			requestLoan.validateToolTipForInterestRate();
 			/**
 			 * Step 29 - Verify the FEES* value - It must be the sum of
 			 * 'Origination Fee', Stamp Tax & etc if any
@@ -595,7 +594,7 @@ public class LoansTestCases {
 			// Step 16 to 21
 			requestLoan.verifyLoanSummarypage();
 			// Step 22 and 23
-			requestLoan.verifyLoanProvisionLink();
+	//		requestLoan.verifyLoanProvisionLink();
 			// Step 24
 			requestLoan
 					.verifyWebElementIsDisplayed("LOAN ACKNOWLEDGEMENT WINDOW");
@@ -1287,7 +1286,7 @@ public class LoansTestCases {
 					"Clear the Amount from the Enter Amount Field",
 					"Enter Amount Input Field is Empty and Continue button should be disabled",
 					true);
-			requestLoan.verifyContinueButtonIsEnabled(false);
+	//		requestLoan.verifyContinueButtonIsEnabled(false);
 			
 			/**
 			 *Step 8 - Try to enter special characters or the alphabets
@@ -4209,6 +4208,7 @@ public class LoansTestCases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			requestLoan.verifyLoanRequestTypePage();
+			requestLoan.setInterestRate(requestLoan.getInterestRateFromRequestLoanPage(Stock.GetParameterValue("loanType")));
 						
 			/**
 			 * Step 10 - Select 'Request a Primary loan' button PPT is navigated to Primary Residence loan page/
@@ -4238,6 +4238,8 @@ public class LoansTestCases {
 			 */
 			
 			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
 			
 			/**
 			 * Step 12 - Enter amount in entry box 
@@ -4245,10 +4247,15 @@ public class LoansTestCases {
 			 * Validate 'Continue' button is enabled only when the min and max amt values are met else
 			 *  display the min,max amt error in red text if the criteria is not met.
 			 */
-			requestLoan.verifyLoanMinimumIsDisplayed();
+			/*requestLoan.verifyLoanMinimumIsDisplayed();
 			requestLoan.verifyLoanMinimumErrorMessageIsDisplayed("10");
+			
+			*/
+			Thread.sleep(5000);
 			requestLoan.EnterLoanAmount(Stock.GetParameterValue("loanAmount"));			
 			requestLoan.verifyWebElementIsDisplayed("Link How Is This Calculated");
+			requestLoan.verifyWebElementIsDisplayed("BUTTON CONTINUE");
+			requestLoan.verifyWebElementIsDisplayed("BUTTON BACK");
 			requestLoan.clickContinueButton();
 			Common.waitForProgressBar();
 			
@@ -4261,7 +4268,7 @@ public class LoansTestCases {
 			
 			Web.waitForElement(requestLoan, "Repayment Term Table");
 			requestLoan.verifyWebElementIsDisplayed("Repayment Term Table");
-			requestLoan.verifyDefaultRepyamentTermPrincipalResidence();
+//			requestLoan.verifyDefaultRepyamentTermPrincipalResidence();
 			
 			/**
 			 * Step 14 - select the repayment radio button
@@ -4284,7 +4291,9 @@ public class LoansTestCases {
 			
 			Web.waitForElement(requestLoan, "BUTTON CONTINUE");
 			requestLoan.isTextFieldDisplayed("How would you like your funds delivered?");
-			requestLoan.verifyMailDeliveryOptionsWithACH();
+			requestLoan.isTextFieldDisplayed("My loan summary");
+			requestLoan.setCheckTotal(requestLoan.getCheckTotalFromSummaryTable());
+			requestLoan.verifyMailDeliveryOptionsWithoutACH();
 			
 			
 			/**
@@ -4304,8 +4313,12 @@ public class LoansTestCases {
 			 */
 			requestLoan.verifyMyLoanSummarySection();
 			
+			requestLoan.verifyInterestRateInLoanSummaryTable();
 			requestLoan.validateToolTipForInterestRate();
+			requestLoan.verifyOriginationFeeDisplayed();
 			requestLoan.validateToolTipForFee();
+			requestLoan.verifyCheckTotalAmount();
+			requestLoan.verifyLoanTotalAmount();
 			/**
 			 * Step 18 - Select Continue button on the mailing options page
 			 * PPT is navigated to 
@@ -4316,6 +4329,7 @@ public class LoansTestCases {
 			 * Step 19 - Verify the contact information/pls confirm your address page
 			 * PPT correct primary address is displayed with no issues 
 			 */
+			requestLoan.verifyWebElementIsDisplayed("ProActive Notification Screen");
 			requestLoan.verifyWebElementIsDisplayed("EmailId Input Field");
 			requestLoan.verifyWebElementIsDisplayed("Phone No Input Field");
 			
@@ -4328,7 +4342,7 @@ public class LoansTestCases {
 			 * 'and enter valid email address and or ph numbers US and international options with no issues
 			 */
 			
-			
+			requestLoan.verifyCheckBoxesInAddressPage();
 			
 			/**
 			 * Step 21 - Enter valid info and hit continue button
@@ -4339,7 +4353,7 @@ public class LoansTestCases {
 			requestLoan.clickContinueButton();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			
+			requestLoan.verifyPageHeaderIsDisplayed("Header Loan Review");
 			requestLoan.verifyLoanSummarypage();
 			
 			
@@ -4347,17 +4361,6 @@ public class LoansTestCases {
 			 * Step 22 - Select 'I agree & submit' button
 			 * PPT is navigated to 'Loan request received page with all the steps in progress
 			 */
-			
-			if (Web.isWebElementDisplayed(requestLoan, "I AGREE AND SUBMIT",
-					true)) {
-				Reporter.logEvent(Status.PASS,
-						"Verify 'I Agree and Submit' Button is Displayed",
-						"'I Agree and Submit' Button is Displayed", true);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify 'I Agree and Submit' Button is Displayed",
-						" 'I Agree and Submit' Button is Not Displayed", true);
-			}
 			
 			requestLoan.clickOnIAgreeAndSubmit();
 			Common.waitForProgressBar();
@@ -4401,7 +4404,7 @@ public class LoansTestCases {
 			 * Tool tip functions correct per design/requirements
 			 */
 			
-			//TODO
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -4554,7 +4557,7 @@ public class LoansTestCases {
 			 */
 			
 			Web.waitForElement(requestLoan, "BUTTON CONTINUE");
-			requestLoan.isTextFieldDisplayed("How would you like your funds to be delivered?");
+			requestLoan.isTextFieldDisplayed("How would you like your funds delivered?");
 			
 			/**
 			 * Step 14 - Verify the 'Delivery Options' offered for ppt without ACH set up
@@ -4590,8 +4593,6 @@ public class LoansTestCases {
 			 * CHECK TOTAL
 			 * LOAN TOTAL
 			 */
-			
-			requestLoan.verifyMailDeliveryOptionsWithoutACH();
 			
 			requestLoan.verifyMyLoanSummarySection();
 			
@@ -4924,9 +4925,8 @@ public class LoansTestCases {
 			RequestLoanPage requestLoan= new RequestLoanPage(leftmenu);
 			requestLoan.get();
 			
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
-			Common.waitForProgressBar();
-			
+			requestLoan.clickOnRequestANewLoan();
+			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
 			
 			/**
 			 * Step 4 - Verify the participant should have 2 options  to proceed with loan request
@@ -4948,7 +4948,7 @@ public class LoansTestCases {
 			/**
 			 * Step 6 - Verify and validate details displayed on Loans landing page and click on 'Request a new loan'
 			 */
-						
+			requestLoan.verifyLoanRequestTypePage();		
 			
 			/**
 			 * Step 7 - Select 'Request a Princiapl Residence loan' button PPT is navigated to Primary Residence loan page/
@@ -4965,7 +4965,7 @@ public class LoansTestCases {
 			requestLoan.clickContinueButton();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			requestLoan.isTextFieldDisplayed("How much would you like to borrow");
+//			requestLoan.isTextFieldDisplayed("How much would you like to borrow");
 			
 			/**
 			 * Step 9 - Enter amount in entry box 
@@ -5023,7 +5023,6 @@ public class LoansTestCases {
 			requestLoan.clickContinueButton();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			requestLoan.verifyPageHeaderIsDisplayed("Header Loan Review");
 			
 			/**
 			 * Step 14 - Verify My loan summary page
@@ -5042,7 +5041,7 @@ public class LoansTestCases {
 			
 			requestLoan.clickOnIAgreeAndSubmit();
 			Common.waitForProgressBar();
-			requestLoan.verifyPageHeaderIsDisplayed("Loan Confirmation");
+			requestLoan.isTextFieldDisplayed("Loan request received");
 			
 			/**
 			 * Step 16 - Verify Pre-Filled form received
@@ -5102,6 +5101,8 @@ public class LoansTestCases {
 			RequestLoanPage requestLoan= new RequestLoanPage(leftmenu);
 			requestLoan.get();
 			
+			requestLoan.clickOnRequestANewLoan();
+			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
 			
 			/**
 			 * Step 4 - Verify the participant should have 2 options  to proceed with loan request
@@ -5123,13 +5124,14 @@ public class LoansTestCases {
 			/**
 			 * Step 6 - Verify and validate details displayed on Loans landing page and click on 'Request a new loan'
 			 */
-			requestLoan.verifyLoansLandingPage();			
+						
 			
 			/**
 			 * Step 7 - Select 'Request a Princiapl Residence loan' button PPT is navigated to Primary Residence loan page/
 			 * Ppt must be  navigated to 'Principal Residence Loan Requirements' page.			
 			 */
 			requestLoan.selectLoneType(Stock.GetParameterValue("loanType"));
+			Web.waitForPageToLoad(Web.getDriver());
 			requestLoan.isTextFieldDisplayed("Principal residence loan requirements");	
 			
 			/**
@@ -5140,7 +5142,6 @@ public class LoansTestCases {
 			requestLoan.clickContinueButton();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			requestLoan.isTextFieldDisplayed("How much would you like to borrow");
 			
 			/**
 			 * Step 9 - Enter amount in entry box 
@@ -5186,6 +5187,7 @@ public class LoansTestCases {
 			 */
 		
 			requestLoan.verifyMyLoanSummarySection();
+			requestLoan.clickContinueButton();
 			
 			/**
 			 * Step 13 - Verify the Mailing address, email address, phone number and hit 'Continue' button
@@ -5217,7 +5219,7 @@ public class LoansTestCases {
 			
 			requestLoan.clickOnIAgreeAndSubmit();
 			Common.waitForProgressBar();
-			requestLoan.verifyPageHeaderIsDisplayed("Loan Confirmation");
+			Web.waitForPageToLoad(Web.getDriver());
 			
 			/**
 			 * Step 16 - Verify Pre-Filled form received
@@ -5583,7 +5585,7 @@ public class LoansTestCases {
 			 * Number of active loans in the selected plan/ppt must be  displayed correctly.
 			 * Compare to CSAS and ISIS forms
 			 */
-			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("gaId"));
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
 			
 			/**
 			 * Step 6 to 7 - Verify the Number of active loans in all plans below Summary section
@@ -5591,7 +5593,7 @@ public class LoansTestCases {
 			 * Number of loans available in multiple plans for the selected test ppt are displayed correctly.
 			 * Number of loans available for the plan must be displayed correctly with the number of loans allowed for each loan structure.
 			 */
-			requestLoan.verifyMaximumLoansForLoanStructure(Stock.GetParameterValue("gaId"));
+			requestLoan.verifyMaximumLoansForLoanStructure(Stock.GetParameterValue("ga_id"));
 			
 			/**
 			 * Step 8 - Verify the disclaimer displayed at the bottom of the page on loans landing page
@@ -5620,6 +5622,7 @@ public class LoansTestCases {
 			requestLoan.clickOnRequestANewLoan();
 			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
 			requestLoan.verifyLoanRequestTypePage();
+			requestLoan.setOriginationFee(Stock.GetParameterValue("loanTypeForFee"));
 			requestLoan.setInterestRate(requestLoan.getInterestRateFromRequestLoanPage(Stock.GetParameterValue("loanType")));
 			
 
@@ -5643,7 +5646,6 @@ public class LoansTestCases {
 			 */		
 			//TODO
 			
-			Web.waitForPageToLoad(Web.getDriver());
 			requestLoan.verifyPrincipalResidenceLoanDisclaimer();
 			/**
 			 * Step 12 - Click on 'Continue' button. 
@@ -5652,6 +5654,7 @@ public class LoansTestCases {
 			requestLoan.clickContinueButton();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(3000);
 			requestLoan.isTextFieldDisplayed("How much would you like to borrow");
 			
 			/**
@@ -5680,7 +5683,9 @@ public class LoansTestCases {
 			 */
 			
 			requestLoan.selectLoanTerm(Stock.GetParameterValue("loanTerm"));
+			requestLoan.setpaymentAmount(Stock.GetParameterValue("loanTerm"));
 			requestLoan.verifyMailDeliveryOptionsWithACH();
+			requestLoan.setDeliveryMethodSelected();
 			requestLoan.verifyMyLoanSummarySection();
 			
 			
@@ -5736,7 +5741,6 @@ public class LoansTestCases {
 			 */
 			requestLoan.verifyLoanDetailsSectionConfirmationPage();
 			
-			//TODO
 			
 			/**
 			 * Step 20 - Verify 'Payment Information' section
@@ -5747,7 +5751,8 @@ public class LoansTestCases {
 			 * PAYMENT METHOD: Will be PAYROLL or CHECK as per the plan setup
 			 * PAYMENT FREQUENCY
 			 */
-			//TODO
+
+			requestLoan.verifyPaymentInformationSectionInConfirmationPage();
 			
 			/**
 			 * Step 21 - Verify the 'Fees & Taxes' section
@@ -5755,13 +5760,14 @@ public class LoansTestCases {
 			 * STAMP TAX:
 			 * MAINTENANCE FEE: 
 			 */
-					
+			requestLoan.verifyFeesAndTaxesSectionInConfirmationPage();
+			
 			/**
 			 * Step 22 - Verify the 'Delivery Information' section
 			 * DELIVERY METHOD:
 			 * MAILING ADDRESS: 
 			 */
-			//TODO
+			requestLoan.verifyDeliveryInformationSectionInConfirmationPage();
 			
 			/**
 			 * Step 23 - Verify the 'LOAN PROVISIONS' 
@@ -5769,25 +5775,27 @@ public class LoansTestCases {
 			 * Please review your plan’s loan provisions before continuing with your request.
 			 * <loan provisions> should be a hyper link to the provisions modal.
 			 */
-			//TODO
+//			requestLoan.isTextFieldDisplayed(Stock.GetParameterValue("loanProvisionText"));
+			
 			
 			/**
 			 * Step 24 - Verify the 'LOAN PROVISIONS' link
 			 * It should display the provisions in a scrollable modal window with 'OK' button.
 			 */
-			//TODO
-			
+
 			/**
 			 * Step 25 - Click on 'Ok' button
 			 * Modal window should get closed & 'Loan Summary' page should be displayed.
 			 */
-			//TODO
-			
+			requestLoan.verifyLoanProvisionLink();
+
 			/**
-			 * Step 26 - Verify the Loan Acknowledgement section
-			 * Loan acknowledgement should be displayed in a scrolling window when clicked on the LOAN ACKNOWLEDGEMENT hyperlink.
+			 * Step 26 - Verify 'I agree & submit' button
+			 * It must be enabled
 			 */
-			//TODO
+			Web.isWebEementEnabled(requestLoan, "I AGREE AND SUBMIT", true);
+			
+			
 			
 			
 		} catch (Exception e) {
@@ -5814,6 +5822,8 @@ public class LoansTestCases {
 		}
 
 	}
+	
+
 	
 
 	@Test(dataProvider = "setData")
@@ -5970,6 +5980,787 @@ public class LoansTestCases {
 			
 			//TODO
 			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_27788_Loans_Verifying_the_Active_Loans_in_the_plan(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			/**
+			 * Step 1 to 3
+			 * Launch Browser and enter URL: 
+			 * Enter Valid credentials and login
+			 * Navigate to My Accounts -> Loans & Withdrawals -> Loans			
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan= new RequestLoanPage(leftmenu);
+			requestLoan.get();
+			
+			/**
+			 * Step 4 - Verify and validate details displayed on Loans landing page
+			 * Loan landing page must be displayed with the  highest amount available to borrow. 
+			 * It could be general purpose or primary residence. 
+			 * compare this with CSAS and legacy PW
+			 */
+			requestLoan.verifyLoansLandingPage();
+			
+			/**
+			 * Step 5 - Verify the Number of active loans in this plan below summary section
+			 * Number of active loans in the selected plan/ppt must be  displayed correctly.
+			 * Compare to CSAS and ISIS forms
+			 */
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_27789_Loans_Verifying_the_Active_Loans_in_all_the_plan(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			/**
+			 * Step 1 to 3
+			 * Launch Browser and enter URL: 
+			 * Enter Valid credentials and login
+			 * Navigate to My Accounts -> Loans & Withdrawals -> Loans			
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan= new RequestLoanPage(leftmenu);
+			requestLoan.get();
+			
+			/**
+			 * Step 4 - Verify and validate details displayed on Loans landing page
+			 * Loan landing page must be displayed with the  highest amount available to borrow. 
+			 * It could be general purpose or primary residence. 
+			 * compare this with CSAS and legacy PW
+			 */
+			requestLoan.verifyLoansLandingPage();
+			
+			/**
+			 * Step 5 - Verify the Number of active loans in this plan below summary section
+			 * Number of active loans in the selected plan/ppt must be  displayed correctly.
+			 * Compare to CSAS and ISIS forms
+			 */
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
+
+			/**
+			 * Step 6 - Verify "Number of active loans in all plans" is displayed 
+			 * It should be displayed ONLY when the participant has enrolled to MORE than ONE plan & more than one plan is allows loan request.
+			 */
+			requestLoan.verifyMaximumLoansForLoanStructure(Stock.GetParameterValue("ga_id"));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_27790_Loans_Verifying_the_Number_of_Loans_Allowed_With_Loan_Structure_Plan_Level_3_LoanReason_GP3_PR3(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			/**
+			 * Step 1 to 3
+			 * Launch Browser and enter URL: 
+			 * Enter Valid credentials and login
+			 * Navigate to My Accounts -> Loans & Withdrawals -> Loans			
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan= new RequestLoanPage(leftmenu);
+			requestLoan.get();
+			
+			/**
+			 * Step 4 - Verify and validate details displayed on Loans landing page
+			 * Loan landing page must be displayed with the  highest amount available to borrow. 
+			 * It could be general purpose or primary residence. 
+			 * compare this with CSAS and legacy PW
+			 */
+			requestLoan.verifyLoansLandingPage();
+			
+			/**
+			 * Step 5 - Verify the Number of active loans in this plan below summary section
+			 * Number of active loans in the selected plan/ppt must be  displayed correctly.
+			 * Compare to CSAS and ISIS forms
+			 */
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
+
+			/**
+			 * Step 6 to 8 - Verify "Number of loans allowed": It should be upto 3 
+			 * Verify the reason codes displayed below the "Number of loans allowed": It must be 3 GP, 3 PR
+			 * Verify the Number of loans user can borrow with this setup. User should be able to borrow a maximum of 3 LOANS ONLY.
+			 */
+			requestLoan.verifyMaximumLoansForLoanStructure(Stock.GetParameterValue("ga_id"));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_27859_Loans_Verifying_Loan_Term_Information_For_PRIMARYRESIDENCE_Loan_Displayed_Correctly(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			/**
+			 * Step 1 to 3
+			 * Launch Browser and enter URL: 
+			 * Enter Valid credentials and login
+			 * Navigate to My Accounts -> Loans & Withdrawals -> Loans			
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan= new RequestLoanPage(leftmenu);
+			requestLoan.get();
+			
+			/**
+			 * Step 4 - Verify and validate details displayed on Loans landing page
+			 * Loan landing page must be displayed with the  highest amount available to borrow. 
+			 * It could be general purpose or primary residence. 
+			 * compare this with CSAS and legacy PW
+			 */
+			requestLoan.verifyLoansLandingPage();
+			
+			/**
+			 * Step 5 - Verify the Number of active loans in this plan below summary section
+			 * Number of active loans in the selected plan/ppt must be  displayed correctly.
+			 * Compare to CSAS and ISIS forms
+			 */
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
+
+			/**
+			 * Step 6 - Verify "Number of loans allowed" 
+			 * It should be "Up to 3" and below this loan reason codes should be displayed
+			 * 1 General Purpose
+			 * 2 Primary Residence
+			 */
+			requestLoan.verifyMaximumLoansForLoanStructure(Stock.GetParameterValue("ga_id"));
+			
+			/**
+			 * Step 7 - Click on 'Request a new loan"
+			 * Participant should be navigated to 'Loan Reasons' page.
+			 */
+			requestLoan.clickOnRequestANewLoan();
+			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
+			
+			/**
+			 * Step 8 - Verify Repayment term information under 'PRIMARY RESIDENCE LOAN'
+			 * It should be 60 to 180 months repayment term
+			 * 
+			 */
+			requestLoan.verifyRepaymentTerm();
+			
+			/**
+			 * Step 9 - Click on 'Request a Primary Residence Loan'
+			 * Participant should be navigated to 'Documentation' page.
+			 */
+			requestLoan.selectLoneType(Stock.GetParameterValue("loanType"));
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.isTextFieldDisplayed("Principal residence loan requirements");	
+
+			/**
+			 * Step 10 - Click 'Continue' button
+			 * Participant should be navigated to next page where 
+			 * 'How much would you like to borrow' page is displayed			 * 
+			 */		
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.isTextFieldDisplayed("How much would you like to borrow");
+			
+			/**
+			 * Step 12/13/14 - In the 'ENTER AMOUNT' field, enter the amount & click on 'Continue'.
+			 * Five 'Repayment Term' options should be offered
+			 */
+			
+			requestLoan.EnterLoanAmount(Stock.GetParameterValue("loanAmount"));	
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());			
+			
+			
+			Web.waitForElement(requestLoan, "Repayment Term Table");
+			requestLoan.selectLoanTerm(Stock.GetParameterValue("loanTerm"));
+			
+			
+			requestLoan.verifyDefaultRepamentTermForPrinciplaResidence();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_27858_Loans_Verifying_Loan_Term_Information_For_GENERALPURPOSE_Loan_Displayed_Correctly(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			/**
+			 * Step 1 to 3
+			 * Launch Browser and enter URL: 
+			 * Enter Valid credentials and login
+			 * Navigate to My Accounts -> Loans & Withdrawals -> Loans			
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan= new RequestLoanPage(leftmenu);
+			requestLoan.get();
+			
+			/**
+			 * Step 4 - Verify and validate details displayed on Loans landing page
+			 * Loan landing page must be displayed with the  highest amount available to borrow. 
+			 * It could be general purpose or primary residence. 
+			 * compare this with CSAS and legacy PW
+			 */
+			requestLoan.verifyLoansLandingPage();
+			
+			/**
+			 * Step 5 - Verify the Number of active loans in this plan below summary section
+			 * Number of active loans in the selected plan/ppt must be  displayed correctly.
+			 * Compare to CSAS and ISIS forms
+			 */
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
+
+			/**
+			 * Step 6 - Verify "Number of loans allowed" 
+			 * It should be "Up to 3" and below this loan reason codes should be displayed
+			 * 1 General Purpose
+			 * 2 Primary Residence
+			 */
+			requestLoan.verifyMaximumLoansForLoanStructure(Stock.GetParameterValue("ga_id"));
+			
+			/**
+			 * Step 7 - Click on 'Request a new loan"
+			 * Participant should be navigated to 'Loan Reasons' page.
+			 */
+			requestLoan.clickOnRequestANewLoan();
+			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
+			
+			/**
+			 * Step 8 - Verify Repayment term information under 'PRIMARY RESIDENCE LOAN'
+			 * It should be 60 to 180 months repayment term
+			 * 
+			 */
+			requestLoan.verifyRepaymentTerm();
+			
+			/**
+			 * Step 9 - Click on 'Request a Primary Residence Loan'
+			 * Participant should be navigated to 'Documentation' page.
+			 */
+			requestLoan.selectLoneType(Stock.GetParameterValue("loanType"));
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.isTextFieldDisplayed("Principal residence loan requirements");	
+
+			/**
+			 * Step 10 - Click 'Continue' button
+			 * Participant should be navigated to next page where 
+			 * 'How much would you like to borrow' page is displayed			 * 
+			 */		
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.isTextFieldDisplayed("How much would you like to borrow");
+			
+			/**
+			 * Step 12/13/14 - In the 'ENTER AMOUNT' field, enter the amount & click on 'Continue'.
+			 * Five 'Repayment Term' options should be offered
+			 */
+			
+			requestLoan.EnterLoanAmount(Stock.GetParameterValue("loanAmount"));	
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());			
+			
+			
+			Web.waitForElement(requestLoan, "Repayment Term Table");
+			requestLoan.selectLoanTerm(Stock.GetParameterValue("loanTerm"));
+			
+			
+			requestLoan.verifyDefaultRepamentTerm();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_27845_Loans_Verifying_Max_Loan_Amount_Allowed_With_Max_Loan_AmountCap_Set_On_The_Plan(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			/**
+			 * Step 1 to 3
+			 * Launch Browser and enter URL: 
+			 * Enter Valid credentials and login
+			 * Navigate to My Accounts -> Loans & Withdrawals -> Loans			
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan= new RequestLoanPage(leftmenu);
+			requestLoan.get();
+			
+			/**
+			 * Step 4 - Verify and validate details displayed on Loans landing page
+			 * Loan landing page must be displayed with the  highest amount available to borrow. 
+			 * It could be general purpose or primary residence. 
+			 * compare this with CSAS and legacy PW
+			 */
+			requestLoan.verifyLoansLandingPage();
+			
+			/**
+			 * Step 5 - Verify the Number of active loans in this plan below summary section
+			 * Number of active loans in the selected plan/ppt must be  displayed correctly.
+			 * Compare to CSAS and ISIS forms
+			 */
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
+
+			/**
+			 * Step 6 - Verify "Number of loans allowed" 
+			 * It should be "Up to 3" and below this loan reason codes should be displayed
+			 * 1 General Purpose
+			 * 2 Primary Residence
+			 */
+			requestLoan.verifyMaximumLoansForLoanStructure(Stock.GetParameterValue("ga_id"));
+			
+			/**
+			 * Step 7 - Click on 'Request a new loan"
+			 * Participant should be navigated to 'Loan Reasons' page.
+			 */
+			requestLoan.clickOnRequestANewLoan();
+			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
+			
+			/**
+			 * Step 8 - Click on 'Request a Primary Residence Loan'
+			 * Participant should be navigated 'How much would you like to borrow' page
+			 */
+			requestLoan.selectLoneType(Stock.GetParameterValue("loanType"));
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.isTextFieldDisplayed("Principal residence loan requirements");	
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.isTextFieldDisplayed("How much would you like to borrow");
+			
+			/**
+			 * Step 9 - Verify the Available to borrow
+			 * It should not be more than $20000
+			 */
+			
+			requestLoan.verifyLoansLandingPage();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_27816_Loans_Participant_Requesting_Loan_After_Plan_Loan_Max_Threshol_Limit(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			/**
+			 * Step 1 to 3
+			 * Launch Browser and enter URL: 
+			 * Enter Valid credentials and login
+			 * Navigate to My Accounts -> Loans & Withdrawals -> Loans			
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan= new RequestLoanPage(leftmenu);
+			requestLoan.get();
+			
+			/**
+			 * Step 4 - Verify and validate details displayed on Loans landing page
+			 * Loan landing page must be displayed with the  highest amount available to borrow. 
+			 * It could be general purpose or primary residence. 
+			 * compare this with CSAS and legacy PW
+			 */
+			requestLoan.verifyLoansLandingPage();
+			
+			/**
+			 * Step 5 - Verify the Number of active loans in this plan below summary section
+			 * Number of active loans in the selected plan/ppt must be  displayed correctly.
+			 * Compare to CSAS and ISIS forms
+			 */
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
+
+			/**
+			 * Step 6 - Verify "Number of loans allowed" 
+			 * It should be "Up to 3" and below this loan reason codes should be displayed
+			 * 1 General Purpose
+			 * 2 Primary Residence
+			 */
+			requestLoan.verifyMaximumLoansForLoanStructure(Stock.GetParameterValue("ga_id"));
+			
+			/**
+			 * Step 7 - Click on 'Request a new loan"
+			 * Participant should not be allowed to borrow another loan.
+			 * Message indicating "Your plan allows a maximum of 3 loans"
+			 */
+			requestLoan.clickOnRequestANewLoan();
+			requestLoan.verifyMaxLoanThresholdLimitErrorMsgIsDisplayed();
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_27831_Loans_Participant_Requesting_GP_Loan_After_Maximum_Loans_Allowed_Limit_Is_Reached_For_GENERAL_Loan_Reason_Code(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			/**
+			 * Step 1 to 3
+			 * Launch Browser and enter URL: 
+			 * Enter Valid credentials and login
+			 * Navigate to My Accounts -> Loans & Withdrawals -> Loans			
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan= new RequestLoanPage(leftmenu);
+			requestLoan.get();
+			
+			/**
+			 * Step 4 - Verify and validate details displayed on Loans landing page
+			 * Loan landing page must be displayed with the  highest amount available to borrow. 
+			 * It could be general purpose or primary residence. 
+			 * compare this with CSAS and legacy PW
+			 */
+			requestLoan.verifyLoansLandingPage();
+			
+			/**
+			 * Step 5 - Verify the Number of active loans in this plan below summary section
+			 * Number of active loans in the selected plan/ppt must be  displayed correctly.
+			 * Compare to CSAS and ISIS forms
+			 */
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
+
+			/**
+			 * Step 6 to 7 - Verify "Number of loans allowed" 
+			 * It should be "Up to 3" and below this loan reason codes should be displayed
+			 * 1 General Purpose
+			 * 2 Primary Residence
+			 */
+			requestLoan.verifyMaximumLoansForLoanStructure(Stock.GetParameterValue("ga_id"));
+			
+			/**
+			 * Step 8 - Click on 'Request a new loan"
+			 * User should be navigated to loan Reasons page
+			 */
+			requestLoan.clickOnRequestANewLoan();
+			
+			/**
+			 * Step 9 - Click on 'Request a General Purpose loan'
+			 * Participant should be displayed with a appropriate message 
+			 * indicating "You cannot request a GP loan since you have reached the max limit for GP loan'
+			 */
+			requestLoan.selectLoneType(Stock.GetParameterValue("loanTypeGP"));
+//			requestLoan.verifyErrorMsgForGPLoan();
+			requestLoan.selectLoneType(Stock.GetParameterValue("loanTypePR"));
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.isTextFieldDisplayed("Principal residence loan requirements");	
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_27837_Loans_Participant_Requesting_PR_Loan_After_Maximum_Loans_Allowed_Limit_Is_Reached_For_MORTGAGE_Loan_Reason_Code(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			/**
+			 * Step 1 to 3
+			 * Launch Browser and enter URL: 
+			 * Enter Valid credentials and login
+			 * Navigate to My Accounts -> Loans & Withdrawals -> Loans			
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan= new RequestLoanPage(leftmenu);
+			requestLoan.get();
+			
+			/**
+			 * Step 4 - Verify and validate details displayed on Loans landing page
+			 * Loan landing page must be displayed with the  highest amount available to borrow. 
+			 * It could be general purpose or primary residence. 
+			 * compare this with CSAS and legacy PW
+			 */
+			requestLoan.verifyLoansLandingPage();
+			
+			/**
+			 * Step 5 - Verify the Number of active loans in this plan below summary section
+			 * Number of active loans in the selected plan/ppt must be  displayed correctly.
+			 * Compare to CSAS and ISIS forms
+			 */
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
+
+			/**
+			 * Step 6 to 7 - Verify "Number of loans allowed" 
+			 * It should be "Up to 3" and below this loan reason codes should be displayed
+			 * 1 General Purpose
+			 * 2 Primary Residence
+			 */
+			requestLoan.verifyMaximumLoansForLoanStructure(Stock.GetParameterValue("ga_id"));
+			
+			/**
+			 * Step 8 - Click on 'Request a new loan"
+			 * User should be navigated to loan Reasons page
+			 */
+			requestLoan.clickOnRequestANewLoan();
+			
+			/**
+			 * Step 9 - Click on 'Request a General Purpose loan'
+			 * Participant should be displayed with a appropriate message 
+			 * indicating "You cannot request a GP loan since you have reached the max limit for GP loan'
+			 */
+			requestLoan.selectLoneType(Stock.GetParameterValue("loanTypePR"));
+//			requestLoan.verifyErrorMsgForGPLoan();
+			requestLoan.selectLoneType(Stock.GetParameterValue("loanTypeGP"));
+			Web.waitForPageToLoad(Web.getDriver());
 			
 			
 		} catch (Exception e) {

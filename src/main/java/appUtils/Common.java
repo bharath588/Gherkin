@@ -24,6 +24,7 @@ import org.openqa.selenium.support.PageFactory;
 import pageobjects.general.LeftNavigationBar;
 
 
+
 import com.aventstack.extentreports.Status;
 
 import core.framework.Globals;
@@ -134,7 +135,7 @@ public class Common {
 			}
 
 		}
-		System.out.println("DATA BASE Name"
+		System.out.println("DATA BASE Name: "
 				+ participantDB.getString("database_instance"));
 		return participantDB.getString("database_instance");
 	}
@@ -946,7 +947,7 @@ public static String getPlanName(String gc_Id) throws SQLException {
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
-
+	sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 	Plan = DB.executeQuery(sqlQuery[0], sqlQuery[1], gc_Id);
 try{
 	if (DB.getRecordSetCount(Plan) > 0) {
@@ -1030,7 +1031,7 @@ public static String getDBNameForUnregisteredUser(String ssn) throws SQLExceptio
 		}
 
 	}
-	System.out.println("DATA BASE Name"
+	System.out.println("DATA BASE Name: "
 			+ participantDB.getString("database_instance"));
 	return participantDB.getString("database_instance");
 }
