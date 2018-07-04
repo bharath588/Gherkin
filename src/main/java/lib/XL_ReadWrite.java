@@ -650,6 +650,64 @@ Author : Souvik     Date : 03-10-2013
 			throw new Exception("Exception occurred while setting formulae :" +e.getMessage());
 		}		 
 	}
+	
+	
+	/**
+	 * <pre>
+	 * Method to add column if not exists
+	 * </pre>
+	 * @author gbhrgv
+	 * @param sheetName
+	 * @param colName
+	 * @throws Exception
+	 */
+	public void addColumnInSheet(String sheetName,String colName) throws Exception{
+		try {
+			int index = workbook.getSheetIndex(sheetName);			
+			int colNum = -1; 
+			sheet = workbook.getSheetAt(index);
+			row = sheet.getRow(0);
+			colNum = row.getLastCellNum()-1;
+			if(!isColumnExists(sheet,colName)){
+			setCellData(sheetName,0,colNum+1,colName);	
+			}
+		}catch (Exception e) {
+			throw new Exception("Exception occurred while adding column : " + colName + " for sheet name : "+ sheetName+". Exception details : "+e.getMessage());
+		}
+	}
+	
+	/**
+	 * <pre>
+	 * Method to check column name exists in excel sheet
+	 * </pre>
+	 * @author gbhrgv
+	 * @throws Exception
+	 */
+	public boolean isColumnExists(HSSFSheet sheet2, String colName)
+			throws Exception {
+		boolean flag = false;
+		try {
+
+			int index = workbook.getSheetIndex(sheet2);
+			int colNum = -1;
+			sheet = workbook.getSheetAt(index);
+			row = sheet.getRow(0);
+			colNum = row.getLastCellNum() - 1;
+			for (int i = 0; i <= colNum; i++) {
+				if (row.getCell(i).getStringCellValue().trim()
+						.equalsIgnoreCase(colName.trim())) {
+					flag = true;
+					break;
+				}
+			}
+		} catch (Exception e) {
+			throw new Exception("Exception occurred while checking column exists: "
+					+ colName + " for sheet name : " + sheet2
+					+ ". Exception details : " + e.getMessage());
+		}
+		return flag;
+	}
+
 
 }
 
