@@ -692,7 +692,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="10725092" />
+				<parameter name="PPT_ID" value="1720824" />
 				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
@@ -702,7 +702,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="12458042" />
+				<parameter name="PPT_ID" value="1720824" />
 				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
@@ -1076,7 +1076,7 @@ ORDER BY wb.ga_id,
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="PPT_ID" value="13585062" />
-				<parameter name="ExceptionMessage" value="Unable to locate an account balance for 2018-05-15 453361-01 13585062" />
+				<parameter name="ExceptionMessage" value="Unable to locate an account balance for" />
 				
 			</Iteration>
 		</TestCase>
@@ -1093,7 +1093,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="3818031" />
+				<parameter name="PPT_ID" value="13585062" />
 				<parameter name="IntrestRate" value="4.250% fixed" />
 				<parameter name="LoanType" value="Account Reduction" />
 				<parameter name="LoanCategories" value="GENERAL, MORTGAGE" />

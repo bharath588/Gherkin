@@ -12,9 +12,12 @@
 			<class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
 			<methods>
 			
-		 <include name="DDTC_26960_DDTC_26945_Paperless_LoanPaymentFrequenct_PaymentMethod"> 
+	 <include name="DDTC_26960_DDTC_26945_Paperless_LoanPaymentFrequenct_PaymentMethod"> 
 						<parameter name="ManualTCName" value="DDTC_26960_DDTC_26945_Paperless_LoanPaymentFrequenct_PaymentMethod" />
 					</include>
+					<include name="validating_refinance_with_adtn_loan_amnt_functionality"> 
+						<parameter name="ManualTCName" value="csas_TC_22_Validating_Refinance_With_Additional_Loan_Amount" />
+					</include> 
 			
 			<include name="DDTC_26089_Paperless_Loan_Exceptions"> 
 						<parameter name="ManualTCName" value="DDTC_26089_Paperless_Loan_Exceptions" />
@@ -57,9 +60,7 @@
 					
 				
 				
-				<include name="DDTC_26926_Paperless_Loan_Exceptions"> 
-						<parameter name="ManualTCName" value="DDTC_26926_Paperless_Loan_Exceptions" />
-					</include> 
+				 
 					<include name="DDTC_25963_Paperless_Loan_Exceptions"> 
 						<parameter name="ManualTCName" value="DDTC_25963_Paperless_Loan_Exceptions" />
 					</include>
@@ -82,9 +83,7 @@
 					<include name="validating_loan_number_link"> 
 					 	<parameter name="ManualTCName" value="csas_TC_18_Validating_Loan_Number_Link"/>
 					</include>
-					<include name="validating_refinance_with_adtn_loan_amnt_functionality"> 
-						<parameter name="ManualTCName" value="csas_TC_22_Validating_Refinance_With_Additional_Loan_Amount" />
-					</include> 
+					
 					<include name="statement_order_update_confirmation">
 						<parameter name="ManualTCName" value="csas_TC_16_Statement_Order_Update_Confirmation" />
 					</include>	 		
@@ -162,7 +161,10 @@
 					</include>	
 			<include name="PaperlessLoan_LoanRequest_ConfirmContactInformation_PDI_No_CORE_22807"> 
 						<parameter name="ManualTCName" value="CSAS_ConfirmContactInformation_PDI_No" />
-					</include>
+					</include>  
+					<include name="DDTC_26926_Paperless_Loan_Exceptions"> 
+						<parameter name="ManualTCName" value="DDTC_26926_Paperless_Loan_Exceptions" />
+					</include> 
 			
 			  </methods>
 			 </class>
