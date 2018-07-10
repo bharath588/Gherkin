@@ -60,6 +60,16 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 
 	private String tableHeader =".//*[@id='overview-investments-table']//th[HeaderIndex]";
 	private String tableContent=".//*[@id='overview-investments-table']//tr//td[ContentIndex]";
+	
+	//Bhargav	
+	@FindBy(xpath="//h1[text()='Rate of Return']") private WebElement rorPageHeader;
+	@FindBy(xpath="//span[contains(@ng-class,'rateOfReturn') and contains(@ng-class,'annualized')]") private WebElement rorAnnualizedPercent;
+	@FindBy(xpath="//span[contains(@ng-class,'rateOfReturn') and contains(@ng-class,'cummulative')]") private WebElement rorcummulativePercent;
+	@FindBy(xpath="(//table//td[not(i)])[1]") private WebElement sFromDate;
+	@FindBy(xpath="(//table//td[not(i)])[2]") private WebElement sToDate;
+	@FindBy(xpath="//*[text()='Account Information']/parent::div[contains(@class,'nav')]//*[contains(text(),'Rate of return')]")
+    private WebElement sLeftNavRORLink;
+	
 	/**
 	 * Default Constructor
 	 */
@@ -422,5 +432,85 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 		return isTextMatching;
 
 	}
+	
+	//Bhargav
+	
+	public void verifyRORPageDisplayed(boolean sValue) throws InterruptedException
+	{
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
+		Thread.sleep(2000);
+		if(sValue){
+			if(Web.isWebElementDisplayed(rorPageHeader, true))
+				Reporter.logEvent(Status.PASS,
+						"Verify the rate of return page is displayed.",
+						"Rate of return page is displayed.", true);
+			
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify the rate of return page is displayed.",
+						"Rate of return page is not displayed.", true);
+		}
+		else
+		{
+			if(!Web.isWebElementDisplayed(rorPageHeader))
+				Reporter.logEvent(Status.PASS,
+						"Verify the rate of return page is not displayed.",
+						"Rate of return page is not displayed.", true);
+			
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify the rate of return page is displayed.",
+						"Rate of return page is  displayed.", true);
+		}
+		
+		
+	}
+	public void verifyDatesinRORPage(String[] sDates) throws InterruptedException
+	{
+		Common.waitForProgressBar();
+		Web.waitForElement(rorPageHeader);
+		Web.waitForElement(sFromDate);
+		String sFromDateRor=Web.getWebElementText(sFromDate).trim();
+		String sToDateRor=Web.getWebElementText(sToDate).trim();
+		if(sFromDateRor.equals(sDates[0].trim()) && sToDateRor.equals(sDates[1].trim()))
+			Reporter.logEvent(Status.PASS,
+					"Verify the dates of rate of return shows the correct date range.",
+					"Dates of rate of return shows the correct date", true);
+		
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify the dates of rate of return shows the correct date range.",
+					"Dates of rate of return not shows the correct date-  Expected FromDate:"+sDates[0]+" Actual  FromDate:"+sFromDateRor+" \n Expected ToDate:"+sDates[1]+" Actual  FromDate:"+sToDateRor, true);
+		
+	}
+	
+	public void verifyRORPercentageinRORPage(String sRorType,String sPercentage)
+	{
+		Web.waitForElement(rorPageHeader);
+		if(sRorType.equalsIgnoreCase("annualized"))
+		{
+			if(Web.getWebElementText(rorAnnualizedPercent).trim().equals(sPercentage))
+				Reporter.logEvent(Status.PASS,
+					"Verify the rate of return on this page matches the percentage on rate of return card.",
+					"Rate of return on this page matches the percentage on rate of return card.", true);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify the rate of return on this page matches the percentage on rate of return card.",
+					"Rate of return on this page not matches the percentage on rate of return card. Actual:"+rorAnnualizedPercent.getText()+"Expected:"+sPercentage, true);
+		}
+		else if(sRorType.equalsIgnoreCase("cummulative"))
+		{
+			if(Web.getWebElementText(rorcummulativePercent).trim().equals(sPercentage))
+				Reporter.logEvent(Status.PASS,
+					"Verify the rate of return on this page matches the percentage on rate of return card.",
+					"Rate of return on this page matches the percentage on rate of return card.", true);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify the rate of return on this page matches the percentage on rate of return card.",
+					"Rate of return on this page not matches the percentage on rate of return card. Actual:"+rorcummulativePercent.getText()+"Expected:"+sPercentage, true);
+		}
+	}
+	
 
 }

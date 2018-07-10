@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import lib.DB;
@@ -22,7 +23,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import pageobjects.general.LeftNavigationBar;
-
 
 import com.aventstack.extentreports.Status;
 
@@ -449,6 +449,7 @@ public class Common {
   		try {		
   			//Updating DB for setting GDR Rules 			
   			String[] sqlQuery = Stock.getTestQuery("getPptCritDetailId");
+  			sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
   			ResultSet getPPtCritDetailIdRs=DB.executeQuery(sqlQuery[0], sqlQuery[1], planId,dsrsCode);		
   			critDetailId=DB.getRecordSetCount(getPPtCritDetailIdRs);
   			if(critDetailId>0)
@@ -456,7 +457,9 @@ public class Common {
   			while(getPPtCritDetailIdRs.next())
   			{
   				String critId=getPPtCritDetailIdRs.getString("Rule_Crit_Detail_ID");  				
-  				String[] updateQuery=Stock.getTestQuery("updateGDRStatus");  				
+  				String[] updateQuery=Stock.getTestQuery("updateGDRStatus"); 
+  				//Mosin - To get the DB according to the username DB
+  				updateQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
   				DB.executeUpdate(updateQuery[0], updateQuery[1],taxReasoncode,sdmtCode,gdmt_seqnum,critId);		
   				Reporter.logEvent(Status.PASS, "Verify GDR Rule has been Set up for this Plan",
   						"The GDR Rule has been set up for "+dsrsCode + " and for the Tax Reason Code "+taxReasoncode,false);
@@ -489,6 +492,7 @@ public class Common {
   		try {		
   			//Updating DB for setting GDR Rules 			
   			String[] sqlQuery = Stock.getTestQuery("getPptCritDetailId");
+  			sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
   			ResultSet getPPtCritDetailIdRs=DB.executeQuery(sqlQuery[0], sqlQuery[1], planId,dsrsCode);		
   			critDetailId=DB.getRecordSetCount(getPPtCritDetailIdRs);
   			if(critDetailId>0)
@@ -496,7 +500,9 @@ public class Common {
   			while(getPPtCritDetailIdRs.next())
   			{
   				String critId=getPPtCritDetailIdRs.getString("Rule_Crit_Detail_ID");  				
-  				String[] updateQuery=Stock.getTestQuery("updateGDRStatus_SepService");  				
+  				String[] updateQuery=Stock.getTestQuery("updateGDRStatus_SepService");
+  				//Mosin - To get the DB according to the username DB
+  				updateQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
   				DB.executeUpdate(updateQuery[0], updateQuery[1],taxReasoncode,sdmtCode,gdmt_seqnum,dsmd_Code,critId);		
   				Reporter.logEvent(Status.PASS, "Verify GDR Rule has been Set up for this Plan",
   						"The GDR Rule has been set up for "+dsrsCode + " and "+dsmd_Code +" for the Tax Reason Code "+taxReasoncode,false);
@@ -634,6 +640,12 @@ public class Common {
 		}
 		
 	}
+	/**
+	 * 
+	 * @param format
+	 * @return
+	 * @throws Exception
+	 */
 	public static String getFutureDate(String format) throws Exception {
 		DateFormat dateFormat = new SimpleDateFormat(format);
 		Calendar calendar = Calendar.getInstance();         
@@ -642,6 +654,13 @@ public class Common {
 		System.out.println("DATE"+date);
 		return date;
 	}
+	/**
+	 * 
+	 * @param format
+	 * @param futeureDate
+	 * @return
+	 * @throws Exception
+	 */
 	public static String getFutureDate(String format,int futeureDate) throws Exception {
 		DateFormat dateFormat = new SimpleDateFormat(format);
 		Calendar calendar = Calendar.getInstance();         
@@ -659,7 +678,7 @@ public class Common {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
+	
 	public static List<String> getDisbursmentReason(String ga_Id) throws SQLException {
 
 		// query to get the no of plans
@@ -1222,4 +1241,276 @@ public static void updateLoanHardshipIndicators(String hardshipIndicator,String 
 	DB.executeUpdate(sqlQuery[0], sqlQuery[1], hardshipIndicator,ga_id);
 	
 }
+/**
+* Method to update Loan Defaulted_Loans_Allowed_Ind in grp_Loan_Stuc Table
+* @author srsksr
+* @throws Exception
+*/
+public static void update_Defaulted_Loans_Allowed_Ind(String defaulted_Loans_Allowed_Ind,String ga_id) throws Exception {
+		
+	String userName=Stock.GetParameterValue("username");
+	String[] sqlQuery = Stock.getTestQuery("update_defaulted_loans_allowed_ind");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], defaulted_Loans_Allowed_Ind,ga_id);
+	
+}
+/**
+* Method to update Loan default_ind in Loan_act Table
+* @author srsksr
+* @throws Exception
+*/
+public static void update_Default_Ind(String default_Ind,String ga_id) throws Exception {
+		
+	String userName=Stock.GetParameterValue("username");
+	String[] sqlQuery = Stock.getTestQuery("update_default_ind");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], default_Ind,getParticipantID(userName.substring(0, 9)),ga_id);
+	
+}
+/**
+* Method to update default_code in Address Table
+* @author srsksr
+* @throws Exception
+*/
+public static void update_Default_Code(String default_Code) throws Exception {
+		
+	String userName=Stock.GetParameterValue("username");
+	String[] sqlQuery = Stock.getTestQuery("update_default_code");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], default_Code,getParticipantID(userName.substring(0, 9)));
+	
+}
+/**
+ * Method to update mail_check_to_employer_ind in group_loan_struc Table
+ * @param indicator
+ * @param ga_id
+ * @throws Exception
+ */
+public static void update_mail_check_to_employer_ind(String indicator,String ga_id) throws Exception {
+	
+	String userName=Stock.GetParameterValue("username");
+	String[] sqlQuery = Stock.getTestQuery("update_mail_check_to_employer_ind ");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], indicator,ga_id);
+	
+}
+/**
+ *  Method Sets Date into particular format like ex:mm/dd/yyyy and returns Date in String Format type
+ *  @author gbhrgv
+ *  @param date
+ *  @param Dateformat type ex:mm/dd/yyyy
+ */
+ public static String setSimpleFormatDate(String sdate,String dateformatType) {	 
+		SimpleDateFormat sfd = new SimpleDateFormat(dateformatType);
+		String sdate1 = null;
+		try {
+			Date date = sfd.parse(sdate);
+			 sdate1 = sfd.format(date);
+			System.out.println(sdate1);
+		} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL, "Date Parse Exception Accured",
+					"", true);
+		}
+		return sdate1;
+   }
+ /**
+  *  Method to delete the Maximizer record of the ppt
+  *  @author mhskhn
+  *  @param ind id
+  *  @param plan number
+ * @throws SQLException 
+  */
+	public static void deleteMaximizer(String indId, String planId) throws SQLException {
+
+		String userName = Stock.GetParameterValue("username");
+		String[] sqlQuery = Stock.getTestQuery("deleteMaximizerDefrl");
+		sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"
+				+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		DB.executeQuery(sqlQuery[0], sqlQuery[1], indId, planId);
+	}
+
+	/**
+	 * Method to delete part service record for the ppt
+	 * 
+	 * @author mhskhn
+	 * @param ind
+	 *            id
+	 * @param plan
+	 *            number
+	 * @throws SQLException
+	 */
+	public static void deletePartService(String indId, String planId)
+			throws SQLException {
+
+		String userName = Stock.GetParameterValue("username");
+		String[] sqlQuery = Stock.getTestQuery("deletePartService");
+		sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"
+				+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		DB.executeQuery(sqlQuery[0], sqlQuery[1], indId, planId);
+	}
+
+	/**
+	 * Method Sets Date into particular format like ex:mm/dd/yyyy and returns
+	 * Date in String Format type
+	 * 
+	 * @author gbhrgv
+	 * @param date
+	 * @param Dateformat
+	 *            type ex:mm/dd/yyyy
+	 */
+	public static void updateTermdate(String sDate) throws Exception {
+		String gcId[] = Stock.GetParameterValue("planId").split("-");
+		String[] updateTermDate = Stock.getTestQuery("updateTermDate");
+		updateTermDate[0] = Common.getParticipantDBName(Stock
+				.GetParameterValue("userName"))
+				+ "DB_"
+				+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		DB.executeUpdate(updateTermDate[0], updateTermDate[1], sDate,
+				Stock.GetParameterValue("ind_ID"), gcId[0]);
+	}
+
+	/**
+	 * Method Sets Hire-date Date in String Format type
+	 * 
+	 * @author gbhrgv
+	 * @param SSN
+	 * @param hireDate
+	 *            type ex:mm-dd-yy
+	 */
+	public static void updateEmployeeHireDate(String hireDate, String SSN)
+			throws Exception {
+		String sQuery[] = Stock.getTestQuery("UpdateEmployeeHireDate");
+		sQuery[0] = Common.getParticipantDBName(Stock
+				.GetParameterValue("userName"))
+				+ "DB_"
+				+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		DB.executeUpdate(sQuery[0], sQuery[1], hireDate, SSN);
+	}
+	/**
+	 * Method Sets online_enroll_code to N or A
+	 * 
+	 * @author mhskhn
+	 * @param Code
+	 * @param PlanId
+	 *            type ex:mm-dd-yy
+	 */
+	public static void updatePlanEnrollCode(String sCode, String sPlanId)
+			throws Exception {
+		String sQuery[] = Stock.getTestQuery("updatePlanEnrollCode");
+		sQuery[0] = Common.getParticipantDBName(Stock
+				.GetParameterValue("userName"))
+				+ "DB_"
+				+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		DB.executeUpdate(sQuery[0], sQuery[1], sCode, sPlanId);
+	}
+	/**
+     * Method Sets online_enroll_code to N or A
+     * 
+      * @author mhskhn
+     * @param Code
+     * @param PlanId
+     *            type ex:mm-dd-yy
+     */
+     public static String getIRSRLCode(String sPlanId)
+                   throws Exception {
+            String sQuery[] = Stock.getTestQuery("getIRSRLCode");
+            sQuery[0] = Common.getParticipantDBName(Stock
+                         .GetParameterValue("userName"))
+                         + "DB_"
+                         + Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+            ResultSet getIRSRL=DB.executeQuery(sQuery[0], sQuery[1], sPlanId);
+            getIRSRL.first();
+            String sPlanCode = getIRSRL.getString("IRSRL_CODE");
+            return sPlanCode;
+     }
+     /**
+      * Method is used to update the payroll type(sdsv_subcode)
+      * 
+       * @author mhskhn
+      * @param Code
+      * @param PlanId
+      *            type ex:mm-dd-yy
+      */
+      public static void updatePayRollType(String sPayRollType, String sPlanId)
+                    throws Exception {
+             String sQuery[] = Stock.getTestQuery("updateDate picker toDropDown");
+             sQuery[0] = Common.getParticipantDBName(Stock
+                          .GetParameterValue("userName"))
+                          + "DB_"
+                          + Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+             DB.executeUpdate(sQuery[0], sQuery[1],sPayRollType, sPlanId);
+             
+      }
+      /**
+       * Method is used to verify if 2 String are equal or nots
+       * 
+        * @author mhskhn
+       * @param s1
+       * @param s2
+       */
+      public static void verifyTwoStrings(String s1, String s2)
+      {
+    	  if(s1.equalsIgnoreCase(s2))
+    		  Reporter.logEvent(Status.PASS,
+						"Verify if the two string's are equal",
+						"Given String's are equal. Expected: "
+								+ s1 + " Actual:"+ s2, false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify if the two string's are equal",
+						"Given String's are equal. Expected: "
+								+ s1 + " Actual:"+ s2, true);
+      }
+      private static String remove = "REMOVE";
+      private static String blank = "BLANK";
+        /**<pre>
+    	 * It returns the request url
+    	 * @param baseURL of the request url mostly static part of the url.
+    	 * @param params other parameters (mandatory or optional) of the request url
+    	 * @return string url
+    	 */
+    	public static String formRequestURLPPTWeb(String baseURL, String...params)
+    	{
+    		String requestURL = baseURL;
+    		try
+    		{
+    			if(params.length>0)
+    			{
+    				for(String param : params)
+    				{
+    					if(!(param.contains(remove)||param.contains(blank)||param.contains("?")))
+    					{
+    						if(requestURL.endsWith("/")){
+    							requestURL = requestURL+param;}
+    						else if(requestURL.endsWith("&")){
+    							requestURL=requestURL+param;
+    						}
+    						else{
+    							requestURL = requestURL+"/"+param;
+    						}
+    					}
+    					if(param.contains(blank))
+    					{
+    						param = param.replace(blank, "");
+    						requestURL = requestURL+"/"+param;
+    					}
+    					if(param.contains("?"))
+    					{
+    						if(requestURL.endsWith("/")){
+    							requestURL = requestURL.substring(0,requestURL.length()-1).trim();
+    						}
+    						requestURL = requestURL+param;
+    					}
+    				}
+    				if(requestURL.endsWith("/")){
+    					requestURL = requestURL.substring(0,requestURL.length()-1).trim();
+    				}
+    			}
+    		}
+    		catch(Exception e)
+    		{
+    			e.printStackTrace();
+    		}
+    		return requestURL;
+    	}
 }

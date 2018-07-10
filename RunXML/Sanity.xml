@@ -34,16 +34,16 @@
                     </parameter>
                     </include>
                
-                    <include name="ForgotPasswordFlow_SendActivationCode_Have_Activation_Code">
+                  <!--   <include name="ForgotPasswordFlow_SendActivationCode_Have_Activation_Code">
                      <parameter name="ManualTCName" value="SIT_xPPTWEB_Sanity_Login_03_04_TC01_already have an Activation Code">
                     </parameter>
-                    </include>
+                    </include> -->
                 
                     <include name="Beneficiary_TC002_Married_with_Spouse_One_beneficiary_use_address_on_record_Sanity">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC002_Married with Spouse One beneficiary use address on record_Sanity"></parameter>
                     </include>
    
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity">
+                   <!--  <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC001_Married with Spouse One beneficiary new address_Sanity"></parameter>
                     </include>
                     
@@ -66,7 +66,7 @@
                     <include name="SIT_PPTWEB_Deferral__AfterTax">
                      <parameter name="ManualTCName" value="SIT_PPTWEB_Sanity_Deferral_001_After-tax_Select another contribution rate">
                     </parameter>
-                    </include>
+                    </include> -->
               
                  <include name="SIT_PPTWEB_Deferral__Regular">
                   <parameter name="ManualTCName" value="SIT_PPTWEB_Sanity_Deferral_012_Regular_BEFORE-Select Another contribution rate">
@@ -82,14 +82,14 @@
          
    <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                  <include name="SF01_TC01_User_has_PIN">
+                 <!--  <include name="SF01_TC01_User_has_PIN">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC001_UI_Validation_User_has_PIN"></parameter>
                     </include>
                
                     <include name="SF01_TC02_User_does_not_have_PIN">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC002_UI_Validation_User_does_not_have_PIN"></parameter>
                     </include>
-               
+                -->
                    
                     <include name="AccountLookup_PositiveFlow_WithOutPIN">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_04_TC001_Functionality_Without_PIN__Positive_flow"></parameter>
@@ -161,7 +161,7 @@
 					<include name="DDTC_30104_FE_DIM_Access_Online_Guidance">
                     <parameter  name="ManualTCName" value="SIT_DDTC_30104_FE_DIM_Access_Online_Guidance">
                     </parameter>
-                    </include> -->
+                    </include>  -->
 
 					
 					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data">

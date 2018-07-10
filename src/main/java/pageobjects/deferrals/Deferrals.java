@@ -59,7 +59,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(id="buttonEdit_OTHER") private WebElement buttonEditOther;
 			@FindBy(xpath=".//span[text()[normalize-space()='More Options']]") private WebElement lnkMoreOptions;
 			@FindBy(xpath=".//span[text()[normalize-space()='Fewer Options']]") private WebElement lnkFewerOptions;
-			
+			@FindBy(xpath="//*[contains(text(),'I have contributed') and contains(text(),'to other retirement plans')]") private WebElement prioPlanContributionMsg;
 			//Add Contribution Page
 			@FindBy(xpath=".//h1[text()[normalize-space()='Add a After-tax contribution']]") 
 			private WebElement lblAddAfterTaxContribution;
@@ -221,7 +221,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//p[contains(@ng-if,'newContributionRateType')]") private WebElement txtMinimumAndMaximum;
 			@FindBy(xpath="//div[@class='rightblock']//div[@class='things-to-know-container']") private WebElement thingstoKnowContainer;
 
-			
+			@FindBy(xpath="//*[@name='contributionRate']/span") private WebElement txtContribution;
 			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
 			String pendingDeferral=".//*[@id='account-details-container']/.//td[contains(text(),'DeferralType')]/../td/.//a[contains(text(),'Pending')]";
 			String txtpendingDeferral="//div[contains(@class,'modal-body')]//div[contains(text(),'DeferralType')]";
@@ -2513,8 +2513,306 @@ return expectedCompanyMatch;
 		
 		
 	}
-	
+	/**<pre> Method to delete Deferrals.
+	 *.</pre>
+	 * @throws InterruptedException 
+	 * 
+	 */
+	public void deleteAODBDeferralsDB(String[] sqlQuery, String ind_id) throws Exception {
+		
+		int deleteBene = 0;
+		//sqlQuery = Stock.getTestQuery(sQueryName);
 
+		sqlQuery[0] = Common.getParticipantDBName(Stock
+				.GetParameterValue("userName"))
+				+ "DB_"
+				+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		deleteBene = DB.executeUpdate(sqlQuery[0], sqlQuery[1], ind_id);
+
+		if (deleteBene > 0)
+			System.out.println("Deleted the Deferals from "+sqlQuery[0]);
+		else
+			System.out.println("Not Deleted the Deferals from "+sqlQuery[0]);
+		}
+	
+	/**
+	 * @throws Exception 
+	 * 
+	 */
+	public void deleteAllAODDeferrals() throws Exception
+	{
+		deleteAODBDeferralsDB(Stock.getTestQuery("deleteDeferralNotification"),Stock.GetParameterValue("ind_ID"));
+		deleteAODBDeferralsDB(Stock.getTestQuery("deleteDeferral"),Stock.GetParameterValue("ind_ID"));
+	}
+	/**<pre> Method to update EffectiveDate.
+	 *.</pre>
+	 * @throws InterruptedException 
+	 * 
+	 */
+	public void updateEffectiveDate() throws Exception {
+		System.out.println("In updateEffectiveDate");
+		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy");
+		Calendar cal = Calendar.getInstance();
+	    cal.add(Calendar.DATE, -1);
+	    String date=dateFormat.format(cal.getTime());
+	    System.out.println("Date"+date);
+		String[] updateQuery = Stock.getTestQuery("UpdateEffectiveDate");
+		int updateService=0;
+		updateQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName"))+ "DB_"
+				+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		updateService = DB.executeUpdate(updateQuery[0],
+				updateQuery[1], date, Stock.GetParameterValue("SSN"));
+		if(updateService>0)
+			Reporter.logEvent(Status.PASS,
+					"Update EffectiveDate if the IND time is in between 7 AM - 11 AM",
+					"Updated EffectiveDate", false);
+		else
+			Reporter.logEvent(Status.INFO,
+					"Update EffectiveDate if the IND time is in between 7 AM - 11 AM",
+					"Did not Update EffectiveDate", false);
+		}
+	/**<pre> Method to check if updating the EffectiveDate is required or not.
+	 *.</pre>
+	 * @throws InterruptedException 
+	 * 
+	 */
+	public void checkEffectiveDate() throws Exception {
+		int hour = Calendar.getInstance().get(Calendar.HOUR);
+		int min = Calendar.getInstance().get(Calendar.MINUTE);
+		DateFormat dateFormat = new SimpleDateFormat("a");
+		Calendar cal = Calendar.getInstance();
+		String sAMorPM = dateFormat.format(cal.getTime());
+		if (sAMorPM.equalsIgnoreCase("AM")) {
+			if (hour >= 7 && hour < 11) {
+				System.out.println("Indian Hour:"+hour);
+				this.updateEffectiveDate();
+				Web.getDriver().navigate().refresh();
+				System.out.println("Updated");
+			} else if(hour==11 && min <=30)
+			{
+				this.updateEffectiveDate();
+				Web.getDriver().navigate().refresh();
+				System.out.println("Updated");
+			}
+		}
+		if(Web.isWebElementDisplayed(Web.getDriver().findElement
+				(By.xpath(pendingDeferral.replace("DeferralType", Stock.GetParameterValue("Contribution_type")))), false))
+		{
+			this.updateEffectiveDate();
+			Web.getDriver().navigate().refresh();
+			System.out.println("Updated");
+		}
+	}
+	public void addDeferralsForAOD(ArrayList<String> ar) throws Exception
+	{
+		for(int i=0;i<ar.size();i++)
+		{
+			switch(ar.get(i))
+			{
+			case "Standard Add":
+				clickAddEditButton(ar.get(i));
+				click_Select_Your_Contribution_Rate();
+				select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
+				myContributions_Confirmation_Page();
+				Web.clickOnElement(btnMyContributions);
+				Thread.sleep(3000);
+				checkEffectiveDate();
+				break;
+			case "Catch Up Add":
+				clickAddEditButton(ar.get(i));
+				click_Select_Your_Contribution_Rate();
+				select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
+				myContributions_Confirmation_Page();
+				Web.clickOnElement(btnMyContributions);
+				Thread.sleep(3000);
+				checkEffectiveDate();
+				break;
+			case "After Tax Add":
+				clickAddEditButton(ar.get(i));
+				click_Select_Your_Contribution_Rate();
+	 			Web.clickOnElement(btnContinue);
+	 			myContributions_Confirmation_Page();
+	 			Web.clickOnElement(btnMyContributions);
+	 			Thread.sleep(3000);
+	 			checkEffectiveDate();
+	 			break;
+			case "Other Add":
+				clickAddEditButton(ar.get(i));
+				click_Select_Your_Contribution_Rate();
+	 			Web.clickOnElement(btnContinue);
+	 			myContributions_Confirmation_Page();
+	 			Web.clickOnElement(btnMyContributions);
+	 			Thread.sleep(3000);
+	 			checkEffectiveDate();
+	 			break;
+			case "Bonus Add":
+				clickAddEditButton(ar.get(i));
+				click_Select_Your_Contribution_Rate();
+				select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
+				myContributions_Confirmation_Page();
+				Web.clickOnElement(btnMyContributions);
+				Thread.sleep(3000);
+				checkEffectiveDate();
+				break;
+			default:
+				Reporter.logEvent(Status.INFO, "Add Contribution", 
+						"In default block", true);
+			}
+		}
+	}
+	public void addDeferralsForAOD_DollarOnly(ArrayList<String> ar) throws Exception
+	{
+		for(int i=0;i<ar.size();i++)
+		{
+			switch(ar.get(i))
+			{
+			case "Standard Add":
+				clickAddEditButton(ar.get(i));
+				select_Another_Contribution_Rate_Dollar();
+				select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
+				myContributions_Confirmation_Page();
+				Web.clickOnElement(btnMyContributions);
+				Thread.sleep(3000);
+				checkEffectiveDate();
+				break;
+			case "Catch Up Add":
+				clickAddEditButton(ar.get(i));
+				select_Another_Contribution_Rate_Dollar();
+				select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
+				myContributions_Confirmation_Page();
+				Web.clickOnElement(btnMyContributions);
+	 			Thread.sleep(3000);
+				checkEffectiveDate();
+				break;
+			case "After Tax Add":
+				clickAddEditButton(ar.get(i));
+				select_Another_Contribution_Rate_Dollar();
+				Web.waitForElement(btnContinue);
+				Web.clickOnElement(btnContinue);					
+				myContributions_Confirmation_Page();
+				Web.clickOnElement(btnMyContributions);
+				Thread.sleep(3000);
+				checkEffectiveDate();
+	 			break;
+			case "Other Add":
+				clickAddEditButton(ar.get(i));
+				select_Another_Contribution_Rate_Dollar();
+				Web.waitForElement(btnContinue);
+				Web.clickOnElement(btnContinue);
+				myContributions_Confirmation_Page();
+				Web.clickOnElement(btnMyContributions);
+				checkEffectiveDate();
+	 			break;
+			case "Bonus Add":
+				clickAddEditButton(ar.get(i));
+				select_Another_Contribution_Rate_Dollar();
+				select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
+				myContributions_Confirmation_Page();
+				Web.clickOnElement(btnMyContributions);
+				checkEffectiveDate();
+				break;
+			default:
+				Reporter.logEvent(Status.INFO, "Add Contribution", 
+						"In default block", true);
+			}
+		}
+	}
+	/**<pre> Method to change the salary on the maximize to IRS panel of the Standard deferral
+	 *.</pre>
+	 * @throws InterruptedException 
+	 * 
+	 */
+	public void standard_Change_Salary() throws InterruptedException{
+		
+		Web.waitForElement(btnAddOrEditStandard);
+		//TODO
+		Web.clickOnElement(btnAddOrEditStandard);
+		Web.waitForElement(radioMaximizeToIRSLimit);
+		Web.clickOnElement(radioMaximizeToIRSLimit);
+		Web.waitForElement(lnkAnnualCompensation);
+        Web.clickOnElement(lnkAnnualCompensation);			//String irs_contr_rate=	txtIRSMyContribution.getText().split("%")[0];
+		Web.setTextToTextBox(txtAnnualCompensation, Stock.GetParameterValue("Annual_Compensation"));
+		Reporter.logEvent(Status.INFO, "Entered Annual Compansation amount", "Annual compensation amount entered is: "+Stock.GetParameterValue("Annual_Compensation"), false);
+		Web.clickOnElement(btnUpdate);
+		if(Web.isWebElementDisplayed(txtAnnualCompensation, true))
+			Web.clickOnElement(lnkAnnualCompensation);
+		
+			
+		select_ContributionType(Stock.GetParameterValue("Contribution_type"));	
+		
+		Web.waitForElement(btnAddOrEditCatchUp);
+		Web.clickOnElement(btnAddOrEditCatchUp);
+		Web.waitForElement(radioMaximizeToIRSLimit);
+		click_Maximize_IRS_Limit();
+
+		select_ContributionType(Stock.GetParameterValue("Contribution_type"));
+		
+		Web.waitForElement(lblMyContributions);
+		if(Web.isWebElementDisplayed(lblMyContributions))
+			Reporter.logEvent(Status.PASS, "Verify My Contributions page is displayed", "My Contributions page is displayed", true);
+		else
+			Reporter.logEvent(Status.FAIL, "Verify My Contributions page is displayed", "My Contributions page not displayed", true);
+		
+		myContributions_Confirmation_Page();
+		Web.clickOnElement(btnMyContributions);
+		Thread.sleep(3000);
+	}
+	/**<pre> Method to Validate PriorPlan Contributions Message  in Contributions Page displayed or not </pre> 
+	 */
+	public int validatePriorPlanContributions(boolean sValue,String currentYear)
+
+	{
+		double value=0;
+		Common.waitForProgressBar();
+		if (sValue) {
+			if (Web.isWebElementDisplayed(prioPlanContributionMsg, true) && prioPlanContributionMsg.getText().contains(currentYear))
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify prior plan contributions in the current year.",
+						"Prior plan contributions are displayed in the current year.",
+						false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify prior plan contributions in the current year.",
+						"Prior plan contributions are  not displayed in the current year.",
+						true);
+			String sPriorContributionAmnt[]=prioPlanContributionMsg.getText().split(" ");
+			
+			for(String sAmnt:sPriorContributionAmnt)
+			{
+				if(sAmnt.contains("$")){
+					value=Double.parseDouble(sAmnt.substring(1).replaceAll(",", ""));
+					break;
+				}
+			}
+			
+		} else {
+			if (Web.isWebElementDisplayed(prioPlanContributionMsg, false))
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify prior plan contributions are not displayed in the current year.",
+						"Prior plan contributions are not displayed in the current year.",
+						false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify prior plan contributions are not displayed in the current year.",
+						"Prior plan contributions are displayed in the current year.",
+						true);
+		}
+		
+		
+		return (int) Math.round(value);
+	}
+	/**
+	 * Method returns ContributionValue text in contribution rate slider
+	 * @return
+	 */
+	  public String getContributionValueinDeferral()
+	  {
+		  return txtContribution.getText();
+	  }
 }
 	
 

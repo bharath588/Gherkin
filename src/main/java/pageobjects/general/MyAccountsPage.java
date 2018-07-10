@@ -1,5 +1,6 @@
 package pageobjects.general;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lib.Reporter;
@@ -235,5 +236,21 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
           }
   		
 		
+	}
+	
+	/**
+	 * Method returns PlaneNames in My Accounts Page
+	 @author gbhrgv
+	 */
+	public ArrayList<String> getPlanNamesinPage()
+	{
+		int size=lstLnkPlanName.size();
+		System.out.println("No of Plans in MY Accounts Page :"+size);
+		ArrayList<String> sPlans =new ArrayList<String>();
+		for(WebElement ele:lstLnkPlanName)
+		{
+			sPlans.add(ele.getText());
+		}
+		return sPlans;		
 	}
 }

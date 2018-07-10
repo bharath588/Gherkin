@@ -9,15 +9,15 @@
         <class name="app.pptweb.testcases.enrollment.EnrollmentTestCases">
                 <methods>
                 
-                   <!-- <include name="DDTC_26997_NQ_SE_Via_AccountOverview_VerifyDeferral_Election_Page_As_Returning_User">
+                   <include name="DDTC_26997_NQ_SE_Via_AccountOverview_VerifyDeferral_Election_Page_As_Returning_User">
                     <parameter  name="ManualTCName" value="SIT_DDTC_26997_NQ_SE_Via_AccountOverview_VerifyDeferral_Election_Page_As_Returning_User"></parameter>
-                    </include>  -->
+                    </include> 
                     
-                  <include name="DDTC_27026_NQ_SE_Via_Liat_Verify_Summary_Page_As_Returning_User">
+                 <!--  <include name="DDTC_27026_NQ_SE_Via_Liat_Verify_Summary_Page_As_Returning_User">
                     <parameter  name="ManualTCName" value="SIT_DDTC_27026_NQ_SE_Via_Liat_Verify_Summary_Page_As_Returning_User"></parameter>
                     </include>
                     
-                   <!--   <include name="DDTC_27025_NQ_SE_Via_Liat_Verify_Summary_Page_As_Returning_User_When_Deferral_Amount_meets_granularity_rules">
+                    <include name="DDTC_27025_NQ_SE_Via_Liat_Verify_Summary_Page_As_Returning_User_When_Deferral_Amount_meets_granularity_rules">
                     <parameter  name="ManualTCName" value="SIT_DDTC_27025_NQ_SE_Via_Liat_Verify_Summary_Page_As_Returning_User_When_Deferral_Amount_meets_granularity_rules"></parameter>
                     </include>
                     
@@ -70,7 +70,7 @@
                     
                     <include name="DDTC_27002_NQ_SE_Via_AccountOverview_Verify_Deferral_Election_Page_As_Returning_User_Same_Enrollment_Window">
                     <parameter  name="ManualTCName" value="SIT_DDTC_27002_NQ_SE_Via_AccountOverview_Verify_Deferral_Election_Page_As_Returning_User_Same_Enrollment_Window"></parameter>
-                    </include> -->
+                    </include>  -->
                     
                     
 				</methods>

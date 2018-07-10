@@ -2,6 +2,7 @@ package pageobjects.transactionhistory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import lib.Reporter;
@@ -57,6 +58,16 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	private WebElement btnSubmitQuery;
 	@FindBy(xpath = ".//*[@id='currentDeferralsEffDateColTitle']/a")
 	private WebElement colConfirmationNumber;
+	
+	//mosin - error block
+	@FindBy(xpath = "//div[@class='errors']")
+	private WebElement zeroTransError;
+	@FindBy(xpath = "(//tbody[@id='txnSummaryTbody']/tr)[1]/td")
+	private List<WebElement> firstTransHistory;
+	
+	@FindBy(xpath = "//*[contains(text(),'The requested URL was not found on this server.')]")
+	private WebElement genericError;
+	
 	/** Empty args constructor
 	 * 
 	 */
@@ -147,6 +158,9 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 		if (fieldName.trim().equalsIgnoreCase("DropDown Frequency")) {
 			return this.drpDateFreequency;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Transaction History Heading")) {
+			return this.lblTransactionHistory;
+		}
 		
 		// Log out
 				if (fieldName.trim().equalsIgnoreCase("LOG OUT")
@@ -230,8 +244,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 			else
 				Reporter.logEvent(Status.FAIL, "verify "+tableName+" Header displayed", tableName+" Header not displayed",true);
 		 	Web.getDriver().switchTo().defaultContent();
-	}
-
+	}	
 	public void verifyReferenceNumber(){
 		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		if(txtConfirmationNo.getText().trim().equalsIgnoreCase(confirmationNo))
@@ -257,4 +270,78 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 		Web.waitForElement(colConfirmationNumber);
 		Web.getDriver().switchTo().defaultContent();
 	}
+	/**
+	 * This Method is to verify if Transaction histpry page is loaded or not
+	 * @param dateFrequency
+	 */
+	public void verifyParticipanttakenToTransactionHistoryPage(){
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
+		if(Web.isWebElementDisplayed(genericError))
+		{
+			Web.getDriver().navigate().refresh();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+		}
+		if(Web.isWebElementDisplayed(lblTransactionHistory, true))
+			Reporter.logEvent(Status.PASS, "Verify Transaction History Page is loaded after clicking on Show more link from Overview page",
+					"Transaction History page is loaded", true);
+		else
+			Reporter.logEvent(Status.FAIL, "Verify Transaction History Page is loaded after clicking on Show more link from Overview page",
+					"Transaction History page is not loaded", true);
+
+	}
+	/**
+	 * This Method is to verify the error msg for ppt who has zero transaction history
+	 * @param dateFrequency
+	 */
+	public void verifyZeroTransactionHistoryPage(){
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
+		if(Web.isWebElementDisplayed(zeroTransError,true))
+			Reporter.logEvent(Status.PASS, "Verify Transaction History Page Error message is displayed for zero transaction's",
+					"Transaction History Error message is displayed", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Verify Transaction History Page Error message is displayed for zero transaction's",
+					"Transaction History Error message is displayed", true);
+	}
+	/**
+	 * This Method is to compare values from Transaction History page are matching as per the vales in Transaction Card from Account overview page
+	 * @param dateFrequency
+	 */
+	public void verifyTransactionHistoryValues(ArrayList<String> lstValues)
+	{
+		Web.waitForElement(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
+		System.out.println("List size"+lstValues.size());
+		System.out.println("Values from Account overview page:");
+		for(int i=0;i<lstValues.size();i++)
+		{
+			System.out.println(lstValues.get(i));
+		}
+		try{
+			for(int i=0;i<firstTransHistory.size();i++)
+			{
+				if(firstTransHistory.get(i).getText().contains(lstValues.get(i)))
+						Reporter.logEvent(Status.PASS, 
+								"Verify values from Transaction History page are matching as per the vales in Transaction Card ",
+								"Values are matching. Expected: "+lstValues.get(i)+" Actual: "+firstTransHistory.get(i).getText(), false);
+					else
+						Reporter.logEvent(Status.FAIL, 
+								"Verify values from Transaction History page are matching as per the vales in Transaction Card ",
+								"Values are not matching. Expected: "+lstValues.get(i)+" Actual: "+firstTransHistory.get(i).getText(), true);
+			}
+			Web.getDriver().switchTo().defaultContent();
+		}
+		catch(Exception e)
+		{
+			Web.getDriver().switchTo().defaultContent();
+			Reporter.logEvent(Status.FAIL, 
+					"Verify values from Transaction History page are matching as per the vales in Transaction Card ",
+					"Values didn't pull from Account overview page", true);
+		}
+	}
+	
 }

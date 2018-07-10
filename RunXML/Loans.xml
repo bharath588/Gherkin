@@ -10,7 +10,7 @@
 			<class name="app.pptweb.testcases.loans.LoansTestCases">
 				<methods>
 
-				<!-- 	<include
+					<include
 						name="DDTC_27488_General_Purpose_Loan_Repayment_Term_Page_Verification">
 						<parameter name="ManualTCName"
 							value="SIT_DDTC_27488_General_Purpose_Loan_Repayment_Term_Page_Verification">
@@ -119,11 +119,12 @@
 							value="SIT_DDTC_27502_Principal_Residence_Loan_Repayment_Term_Page_Verification">
 						</parameter>
 					</include>
-					 -->
-					<!-- 
-					Test cases - bbndsh
-					 -->
-					 <!--
+					
+					
+		
+				<!-- 	Test cases - bbndsh	 -->
+					
+					 
 					 <include name="DDTC_27416_Happy_Path_Initiate_Primary_Residence_Loan">
 						<parameter name="ManualTCName" value="SIT_DDTC_27416_Happy_Path_Initiate_Primary_Residence_Loan">
 						</parameter>
@@ -135,26 +136,235 @@
 					<include name="DDTC_27612_Principal_Residence_Loan_Request_via_Expedited_mail_delivery_method">
 						<parameter name="ManualTCName" value="SIT_DDTC_27612_Principal_Residence_Loan_Request_via_Expedited_mail_delivery_method">
 						</parameter>
-					</include>	
+					</include> 
 					<include name="DDTC_27626_Loans_Pre_Filled_form_Delivery_for_Principal_Residence_Loan_Request_by_participant_with_recent_address_change">
 						<parameter name="ManualTCName" value="SIT_DDTC_27626_Loans_Pre_Filled_form_Delivery_for_Principal_Residence_Loan_Request_by_participant_with_recent_address_change">
 						</parameter>
-					</include>	
+					</include>
 					<include name="DDTC_27625_Loans_Future_Dated_Principal_Residence_Loan_Request_by_participant_with_recent_address_change">
 						<parameter name="ManualTCName" value="SIT_DDTC_27625_Loans_Future_Dated_Principal_Residence_Loan_Request_by_participant_with_recent_address_change">
 						</parameter>
-					</include>
+					</include>	
 					<include name="DDTC_27629_Loans_Principal_Residence_Loan_Request_via_ACH_delivery_method">
 						<parameter name="ManualTCName" value="SIT_DDTC_27629_Loans_Principal_Residence_Loan_Request_via_ACH_delivery_method">
 						</parameter>
-					</include>
+					</include>	
 					<include name="DDTC_27661_Loans_ProActive_Notification_Opted_Principal_Residence_Loan_Request">
 						<parameter name="ManualTCName" value="SIT_DDTC_27661_Loans_ProActive_Notification_Opted_Principal_Residence_Loan_Request">
 						</parameter>
-					</include>-->
+					</include> 
+					<include name="DDTC_27884_Loans_Principal_Residence_Loan_Summary_page_verification">
+						<parameter name="ManualTCName" value="SIT_DDTC_27884_Loans_Principal_Residence_Loan_Summary_page_verification">
+						</parameter>
+					</include>
+					<include name="DDTC_27788_Loans_Verifying_the_Active_Loans_in_the_plan">
+						<parameter name="ManualTCName" value="SIT_DDTC_27788_Loans_Verifying_the_Active_Loans_in_the_plan">
+						</parameter>
+					</include>
+					<include name="DDTC_27789_Loans_Verifying_the_Active_Loans_in_all_the_plan">
+						<parameter name="ManualTCName" value="SIT_DDTC_27789_Loans_Verifying_the_Active_Loans_in_all_the_plan">
+						</parameter>
+					</include>
+					<include name="DDTC_27790_Loans_Verifying_the_Number_of_Loans_Allowed_With_Loan_Structure_Plan_Level_3_LoanReason_GP3_PR3">
+						<parameter name="ManualTCName" value="SIT_DDTC_27790_Loans_Verifying_the_Number_of_Loans_Allowed_With_Loan_Structure_Plan_Level_3_LoanReason_GP3_PR3">
+						</parameter>
+					</include>
+					<include name="DDTC_27859_Loans_Verifying_Loan_Term_Information_For_PRIMARYRESIDENCE_Loan_Displayed_Correctly">
+						<parameter name="ManualTCName" value="SIT_DDTC_27859_Loans_Verifying_Loan_Term_Information_For_PRIMARYRESIDENCE_Loan_Displayed_Correctly">
+						</parameter>
+					</include>
+					<include name="DDTC_27858_Loans_Verifying_Loan_Term_Information_For_GENERALPURPOSE_Loan_Displayed_Correctly">
+						<parameter name="ManualTCName" value="SIT_DDTC_27858_Loans_Verifying_Loan_Term_Information_For_GENERALPURPOSE_Loan_Displayed_Correctly">
+						</parameter>
+					</include>
+					<include name="DDTC_27845_Loans_Verifying_Max_Loan_Amount_Allowed_With_Max_Loan_AmountCap_Set_On_The_Plan">
+						<parameter name="ManualTCName" value="SIT_DDTC_27845_Loans_Verifying_Max_Loan_Amount_Allowed_With_Max_Loan_AmountCap_Set_On_The_Plan">
+						</parameter>
+					</include>
+					<include name="DDTC_27816_Loans_Participant_Requesting_Loan_After_Plan_Loan_Max_Threshol_Limit">
+						<parameter name="ManualTCName" value="SIT_DDTC_27816_Loans_Participant_Requesting_Loan_After_Plan_Loan_Max_Threshol_Limit">
+						</parameter>
+					</include>
+					<include name="DDTC_27831_Loans_Participant_Requesting_GP_Loan_After_Maximum_Loans_Allowed_Limit_Is_Reached_For_GENERAL_Loan_Reason_Code">
+						<parameter name="ManualTCName" value="SIT_DDTC_27831_Loans_Participant_Requesting_GP_Loan_After_Maximum_Loans_Allowed_Limit_Is_Reached_For_GENERAL_Loan_Reason_Code">
+						</parameter>
+					</include>
+					<include name="DDTC_27837_Loans_Participant_Requesting_PR_Loan_After_Maximum_Loans_Allowed_Limit_Is_Reached_For_MORTGAGE_Loan_Reason_Code">
+						<parameter name="ManualTCName" value="SIT_DDTC_27837_Loans_Participant_Requesting_PR_Loan_After_Maximum_Loans_Allowed_Limit_Is_Reached_For_MORTGAGE_Loan_Reason_Code">
+						</parameter>
+					</include>
 					
-					</methods>
-					</class>
+
+				</methods>
+			</class>
+			
+			 
+			<class name="app.pptweb.testcases.loans.LoansRefinanceTestCases">
+				<methods>  
+					<include name="DDTC_31571_LoansRefinance_Verifying_Loan_Refinance_Option_Is_Offered_To_The_Participant">
+						<parameter name="ManualTCName" value="SIT_DDTC_31571_LoansRefinance_Verifying_Loan_Refinance_Option_Is_Offered_To_The_Participant">
+						</parameter>
+					</include>  
+					<include name="DDTC_31582_LoansRefinance_Verifying_Loan_Refinance_Option_Is_Offered_To_The_Participant_For_General_Purpose_Flow_Only">
+						<parameter name="ManualTCName" value="SIT_DDTC_31582_LoansRefinance_Verifying_Loan_Refinance_Option_Is_Offered_To_The_Participant_For_General_Purpose_Flow_Only">
+						</parameter>
+					</include>
+					<include name="DDTC_31584_LoansRefinance_Verifying_Loan_Refinance_Option_Is_Offered_To_The_Participant_For_Principal_Residence_Loan_Flow_Only">
+						<parameter name="ManualTCName" value="SIT_DDTC_31584_LoansRefinance_Verifying_Loan_Refinance_Option_Is_Offered_To_The_Participant_For_Principal_Residence_Loan_Flow_Only">
+						</parameter>
+					</include>	
+					<include name="DDTC_31627_LoansRefinance_Verify_The_Loan_Review_Page_For_Loan_Refinance_Flow">
+						<parameter name="ManualTCName" value="SIT_DDTC_31627_LoansRefinance_Verify_The_Loan_Review_Page_For_Loan_Refinance_Flow">
+						</parameter>
+					</include>	
+					<include name="DDTC_31628_LoansRefinance_Verify_The_Confirmation_Page_For_General_Purpose_Loan_Refinance_Request">
+						<parameter name="ManualTCName" value="SIT_DDTC_31628_LoansRefinance_Verify_The_Confirmation_Page_For_General_Purpose_Loan_Refinance_Request">
+						</parameter>
+					</include>
+					<include name="DDTC_31629_LoansRefinance_Verify_The_Confirmation_Page_For_Principal_Residence_Loan_Refinance_Request">
+						<parameter name="ManualTCName" value="SIT_DDTC_31629_LoansRefinance_Verify_The_Confirmation_Page_For_Principal_Residence_Loan_Refinance_Request">
+						</parameter>
+					</include>
+					<include name="DDTC_31638_Request_New_General_Purpose_Loan_When_Participant_Has_Option_To_Either_Request_New_Loan_Refinance_Existing_Loan">
+						<parameter name="ManualTCName" value="SIT_DDTC_31638_Request_New_General_Purpose_Loan_When_Participant_Has_Option_To_Either_Request_New_Loan_Refinance_Existing_Loan">
+						</parameter>
+					</include>
+					<include name="DDTC_31641_Request_New_Principal_Residence_Loan_When_Participant_Has_Option_To_Either_Request_New_Loan_Refinance_Existing_Loan">
+						<parameter name="ManualTCName" value="SIT_DDTC_31641_Request_New_Principal_Residence_Loan_When_Participant_Has_Option_To_Either_Request_New_Loan_Refinance_Existing_Loan">
+						</parameter>
+					</include>
+					<include name="DDTC_31643_Refinance_Active_General_Purpose_Loan_Try_Requesting_Another_General_Purpose_Loan_Before_Existing_Refinance_Request_Not_Complete">
+						<parameter name="ManualTCName" value="SIT_DDTC_31643_Refinance_Active_General_Purpose_Loan_Try_Requesting_Another_General_Purpose_Loan_Before_Existing_Refinance_Request_Not_Complete">
+						</parameter>
+					</include>
+					<include name="DDTC_31644_Verify_When_Participant_Has_Exhausted_The_Available_Loans_Does_Not_Have_Loans_Eligible_For_Refinance">
+						<parameter name="ManualTCName" value="SIT_DDTC_31644_Verify_When_Participant_Has_Exhausted_The_Available_Loans_Does_Not_Have_Loans_Eligible_For_Refinance">
+						</parameter>
+					</include>
+					
+				
+					<!--	Sprint Auto S11 -->
+					
+					
+					<include name="DDTC_31688_Verify_Enter_Your_Own_Term_Functionality_AS_212_Exception_For_Refinance_Flow">
+						<parameter name="ManualTCName" value="SIT_DDTC_31688_Verify_Enter_Your_Own_Term_Functionality_AS_212_Exception_For_Refinance_Flow">
+						</parameter>
+					</include>
+					<include name="DDTC_31672_Enter_Amount_Field_Validation_AS_205_AS_211_Exceptions_For_Loan_Refinance">
+						<parameter name="ManualTCName" value="SIT_DDTC_31672_Enter_Amount_Field_Validation_AS_205_AS_211_Exceptions_For_Loan_Refinance">
+						</parameter>
+					</include>
+					<include name="DDTC_31619_Refinance_An_Active_General_Purpose_Loan_With_Participant_Having_Option_o_Either_Request_A_New_Loan_Or_Refinancing_Existing_Loan">
+						<parameter name="ManualTCName" value="SIT_DDTC_31619_Refinance_An_Active_General_Purpose_Loan_With_Participant_Having_Option_o_Either_Request_A_New_Loan_Or_Refinancing_Existing_Loan">
+						</parameter>
+					</include>
+					<include name="DDTC_31588_Verifying_Loan_Refinance_Page_For_General_Purpose_Loan_Flow_And_Participant_Has_Not_Exhausted_All_Loans">
+						<parameter name="ManualTCName" value="SIT_DDTC_31588_Verifying_Loan_Refinance_Page_For_General_Purpose_Loan_Flow_And_Participant_Has_Not_Exhausted_All_Loans">
+						</parameter>
+					</include>
+					<include name="DDTC_32448_Loan_Refinance_Pre_Filled_form_Delivery_for_General_Purpose_Loan_Refinance_Request_by_Participant_With_Recent_Address_Change">
+						<parameter name="ManualTCName" value="SIT_DDTC_32448_Loan_Refinance_Pre_Filled_form_Delivery_for_General_Purpose_Loan_Refinance_Request_by_Participant_With_Recent_Address_Change">
+						</parameter>
+					</include>
+					<include name="DDTC_32423_Loan_Refinance_Future_Dated_General_Purpose_Loan_Refinance_Request_by_Participant_With_Recent_Address_Change">
+						<parameter name="ManualTCName" value="SIT_DDTC_32423_Loan_Refinance_Future_Dated_General_Purpose_Loan_Refinance_Request_by_Participant_With_Recent_Address_Change">
+						</parameter>
+					</include>
+					<include name="DDTC_31595_Loan_Refinance_Verify_Loan_Quotes_Page_General_Purpose_Loan_Refinance_Flow">
+						<parameter name="ManualTCName" value="SIT_DDTC_31595_Loan_Refinance_Verify_Loan_Quotes_Page_General_Purpose_Loan_Refinance_Flow">
+						</parameter>
+					</include>
+					<include name="DDTC_31668_Verify_Loans_Landing_Page_After_Loan_Refinance_Request_Is_Completed">
+						<parameter name="ManualTCName" value="SIT_DDTC_31668_Verify_Loans_Landing_Page_After_Loan_Refinance_Request_Is_Completed">
+						</parameter>
+					</include>
+					<include name="DDTC_31589_Verifying_Loan_Refinance_Page_GP_Loan_Flow_And_Participant_Has_Exhausted_All_The_Loans">
+						<parameter name="ManualTCName" value="SIT_DDTC_31589_Verifying_Loan_Refinance_Page_GP_Loan_Flow_And_Participant_Has_Exhausted_All_The_Loans">
+						</parameter>
+					</include>	
+					<include name="DDTC_31631_Refinance_An_Active_General_Purpose_Loan_With_Participant_Having_Option_To_Refinance_Existing_Loan_Only">
+						<parameter name="ManualTCName" value="SIT_DDTC_31631_Refinance_An_Active_General_Purpose_Loan_With_Participant_Having_Option_To_Refinance_Existing_Loan_Only">
+						</parameter>
+					</include>
+					<include name="DDTC_31630_Refinance_Multiple_Active_General_Purpose_Loan_With_Participant_Having_Option_To__Either_Request_A_NewLoan_Or_Refinance_Existing_Loan_Only">
+						<parameter name="ManualTCName" value="SIT_DDTC_31630_Refinance_Multiple_Active_General_Purpose_Loan_With_Participant_Having_Option_To__Either_Request_A_NewLoan_Or_Refinance_Existing_Loan_Only">
+						</parameter>
+					</include>
+					<include name="DDTC_31632_Refinance_Multiple_Active_General_Purpose_Loan_With_Participant_Having_Option_To_Refinance_Existing_Loan_Only">
+						<parameter name="ManualTCName" value="SIT_DDTC_31632_Refinance_Multiple_Active_General_Purpose_Loan_With_Participant_Having_Option_To_Refinance_Existing_Loan_Only">
+						</parameter>
+					</include>	
+					
+					<!-- Sprint AutoS12 -->
+					
+					<include name="DDTC_31590_Verifying_Loan_Refinance_Page_For_Principal_Residence_Loan_Flow_Participant_Has_Not_Exhausted_All_Loans">
+						<parameter name="ManualTCName" value="SIT_DDTC_31590_Verifying_Loan_Refinance_Page_For_Principal_Residence_Loan_Flow_Participant_Has_Not_Exhausted_All_Loans">
+						</parameter>
+					</include>
+					<include name="DDTC_31591_Verifying_Loan_Refinance_Page_For_Principal_Residence_Loan_Flow_Participant_Has_Exhausted_All_Loans">
+						<parameter name="ManualTCName" value="SIT_DDTC_31591_Verifying_Loan_Refinance_Page_For_Principal_Residence_Loan_Flow_Participant_Has_Exhausted_All_Loans">
+						</parameter>
+					</include>
+					<include name="DDTC_31618_Loan_Refinance_Verify_Loan_Quotes_Page_Princiapal_Residence_Loan_Refinance_Flow">
+						<parameter name="ManualTCName" value="SIT_DDTC_31618_Loan_Refinance_Verify_Loan_Quotes_Page_Princiapal_Residence_Loan_Refinance_Flow">
+						</parameter>
+					</include>
+					<include name="DDTC_31633_Refinance_An_Active_Principal_Residence_Loan_With_Participant_Having_Option_To_Either_Request_A_New_Loan_Or_Refinancing_Existing_Loan">
+						<parameter name="ManualTCName" value="SIT_DDTC_31633_Refinance_An_Active_Principal_Residence_Loan_With_Participant_Having_Option_To_Either_Request_A_New_Loan_Or_Refinancing_Existing_Loan">
+						</parameter>
+					</include>
+					<include name="DDTC_31634_Refinance_Multiple_Active_Principal_Residence_Loans_With_Participant_Having_Option_To_Either_Request_A_NewLoan_Or_Refinance_Existing_Loan">
+						<parameter name="ManualTCName" value="SIT_DDTC_31634_Refinance_Multiple_Active_Principal_Residence_Loans_With_Participant_Having_Option_To_Either_Request_A_NewLoan_Or_Refinance_Existing_Loan">
+						</parameter>
+					</include>
+					<include name="DDTC_31635_Refinance_An_Active_Principal_Residence_Loan_With_Participant_Having_Option_To_Refinance_Existing_Loan_Only">
+						<parameter name="ManualTCName" value="SIT_DDTC_31635_Refinance_An_Active_Principal_Residence_Loan_With_Participant_Having_Option_To_Refinance_Existing_Loan_Only">
+						</parameter>
+					</include>
+					<include name="DDTC_31636_Refinance_Multiple_Active_Principal_Residence_Loans_With_Participant_Having_Option_To_Refinance_Existing_Loan_Only">
+						<parameter name="ManualTCName" value="SIT_DDTC_31636_Refinance_Multiple_Active_Principal_Residence_Loans_With_Participant_Having_Option_To_Refinance_Existing_Loan_Only">
+						</parameter>
+					</include> 
+					<include name="DDTC_32466_Loan_Refinance_Future_Dated_Principal_Resedence_Loan_Refinance_Request_by_Participant_With_Recent_Address_Change">
+						<parameter name="ManualTCName" value="SIT_DDTC_32466_Loan_Refinance_Future_Dated_Principal_Resedence_Loan_Refinance_Request_by_Participant_With_Recent_Address_Change">
+						</parameter>
+					</include>
+					<include name="DDTC_32467_Loan_Refinance_Pre_Filled_form_Delivery_for_Principal_Residence_Loan_Refinance_Request_by_Participant_With_Recent_Address_Change">
+						<parameter name="ManualTCName" value="SIT_DDTC_32467_Loan_Refinance_Pre_Filled_form_Delivery_for_Principal_Residence_Loan_Refinance_Request_by_Participant_With_Recent_Address_Change">
+						</parameter>
+					</include> 
+					<include name="DDTC_27811_Loans_Frequency_Restriction_Participant_Restricted_With_2_Loan_Requests_Annually">
+						<parameter name="ManualTCName" value="SIT_DDTC_27811_Loans_Frequency_Restriction_Participant_Restricted_With_2_Loan_Requests_Annually">
+						</parameter>
+					</include>
+					<include name="DDTC_27814_Loans_Frequency_Restriction_Participant_Restricted_With_2_Loan_Requests_Per_Calendar_Year">
+						<parameter name="ManualTCName" value="SIT_DDTC_27814_Loans_Frequency_Restriction_Participant_Restricted_With_2_Loan_Requests_Per_Calendar_Year">
+						</parameter>
+					</include>
+					<include name="DDTC_27815_Loans_Frequency_Restriction_Participant_Restricted_With_2_Loan_Requests_Per_Plan_Year">
+						<parameter name="ManualTCName" value="SIT_DDTC_27815_Loans_Frequency_Restriction_Participant_Restricted_With_2_Loan_Requests_Per_Plan_Year">
+						</parameter>
+					</include> 
+				</methods>
+			</class> 
+			
+			<class name="app.pptweb.testcases.loans.SpousalAndMortgageStepTestCases">
+				<methods>
+					<include name="DDTC_33236_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_MORTGAGE_Step_In_TDL">
+						<parameter name="ManualTCName" value="SIT_DDTC_33236_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_MORTGAGE_Step_In_TDL">
+						</parameter>
+					</include>
+					<include name="DDTC_33237_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_MORTGAGE_Step_Not_Present_In_TDL">
+						<parameter name="ManualTCName" value="SIT_DDTC_33237_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_MORTGAGE_Step_Not_Present_In_TDL">
+						</parameter>
+					</include>
+					<include name="DDTC_33249_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_MORTGAGE_Step_Present_In_TDL_Mortgage_PaperWork_Review_Indicator_N">
+						<parameter name="ManualTCName" value="SIT_DDTC_33249_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_MORTGAGE_Step_Present_In_TDL_Mortgage_PaperWork_Review_Indicator_N">
+						</parameter>
+					</include>
+				</methods>	
+			</class>					
+					
 					<class name="app.pptweb.testcases.loans.LoanExceptionTestCases">
 				<methods>
 					
@@ -210,7 +420,7 @@
 					
 					<!--  Sprint 10 -->
 					
-				<!-- 	<include
+					<include
 						name="DDTC_27991_Loan_exceptions_BR_478_participant_having_pending_distribution">
 						<parameter name="ManualTCName"
 							value="SIT_DDTC_27991_Loan_exceptions_BR_478_participant_having_pending_distribution">
@@ -272,7 +482,7 @@
 						<parameter name="ManualTCName"
 							value="SIT_DDTC_28038_Loan_exceptions_BR_470_Requesting_Loan_when_Participant_has_reached_the_max_number_of_loans_allowed_for_the_plan">
 						</parameter>
-						</include> -->
+						</include> 
 				</methods>
 			</class>
 		</classes>

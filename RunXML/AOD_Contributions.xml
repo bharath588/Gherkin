@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+
+	<test name="AOD_Contributions">
+		<classes>
+			<class name="app.pptweb.testcases.aod.ContribuitionsTestcases">
+				<methods>
+					<include
+						name="AOD_Contribution_DDTC_28863_SIT_PPTWEB_Account_overview_Contributions_card_combined_catchup_Zero_YTD_contributions">
+						<parameter name="ManualTCName"
+							value="DDTC-28863 SIT_PPTWEB_Account overview_Contributions card combined catchup Zero YTD contributions">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_28867_SIT_PPTWEB_Account_overview_Contributions_card_Separate_catchup_Zero_YTD_contributions">
+						<parameter name="ManualTCName"
+							value="DDTC-28867 SIT_PPTWEB_Account overview_Contributions card Separate catchup Zero YTD contributions">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_29350_Account_overview_Contributions_card_with_Auto_increase_for_Standard_Catch_up_and_After_tax_contributions">
+						<parameter name="ManualTCName"
+							value="DDTC-29350 SIT_PPTWEB_Account overview_Contributions card with Auto increase for Standard Catch-up and After tax contributions">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_29351_SIT_PPTWEB_Account_overview_Contributions_card_with_Standard_Catch_up_Bonus_After_tax_and_Other_contribution">
+						<parameter name="ManualTCName"
+							value="DDTC-29351 SIT_PPTWEB_Account overview_Contributions card with Standard Catch-up Bonus After tax and Other contribution">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_28866_SIT_PPTWEB_Account_overview_Contributions_card_separate_catchup">
+						<parameter name="ManualTCName"
+							value="DDTC-28866 SIT_PPTWEB_Account overview_Contributions card separate catchup">
+						</parameter>
+					</include>
+
+					<!-- 2nd Sprint -->
+					<include
+						name="AOD_Balance_DDTC_28871_SIT_PPTWEB_Account_overview_Contributions_card_multiple_plans">
+						<parameter name="ManualTCName"
+							value="DDTC-28871 SIT_PPTWEB_Account overview_Contributions card multiple plans">
+						</parameter>
+					</include>
+					<!-- Bhargav -->
+					<include
+						name="AOD_Contribution_DDTC_29355_SIT_PPTWEB_Account_overview_Contributions_card_for_terminated_participant">
+						<parameter name="ManualTCName"
+							value="DDTC-29355 SIT_PPTWEB_Account overview_Contributions card for terminated participant">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_29356_SIT_PPTWEB_Account_overview_Contributions_card_with_Standard_Catch_up_Bonus_After_tax_and_Other_contribution_dollar_only">
+						<parameter name="ManualTCName"
+							value="DDTC-29356_SIT_PPTWEB_Account_overview_Contributions_card_with_Standard_Catch_up_Bonus_After_tax_and_Other_contribution_dollar_only">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_DDTC_29357_SIT_PPTWEB_Account_overview_Contributions_card_with_Standard_Catch_up_Bonus_After_tax_and_Other_contribution_percent_only">
+						<parameter name="ManualTCName"
+							value="DDTC-29357_SIT_PPTWEB_Account_overview_Contributions_card_with_Standard_Catch_up_Bonus_After_tax_and_Other_contribution_percent_only">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_29358_SIT_PPTWEB_Account_overview_Contributions_card_for_NQ_plan">
+						<parameter name="ManualTCName"
+							value="DDTC-29358_SIT_PPTWEB_Account_overview_Contributions_card_for_NQ_plan">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_29359_SIT_PPTWEB_Account_overview_Contributions_card_with_hire_date_less_than_one_year">
+						<parameter name="ManualTCName"
+							value="DDTC-29359_SIT_PPTWEB_Account_overview_Contributions_card_with_hire_date_less_than_one_year">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_29360_SIT_PPTWEB_Account_overview_Contributions_card_with_hire_date_more_than_one_year">
+						<parameter name="ManualTCName"
+							value="DDTC-29360_SIT_PPTWEB_Account_overview_Contributions_card_with_hire_date_more_than_one_year">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_29361_SIT_PPTWEB_Account_overview_Contributions_card_zero_YTD_with_non_zero_prior_plan_contributions_for_401a_plan">
+						<parameter name="ManualTCName"
+							value="DDTC-29361_SIT_PPTWEB_Account overview_Contributions_card_zero_YTD_with_non_zero_prior_plan_contributions_for_401a_plan">
+						</parameter>
+					</include>
+					
+					<!-- 3rd Sprint -->
+					<!-- Combined 2 TC's 29382 and 29661 -->
+					<include
+						name="AOD_Contribution_DDTC_29382_29661_SIT_PPTWEB_Account_overview_Contributions_card_with_participant_having_CSOR_deferrals_only">
+						<parameter name="ManualTCName"
+							value="DDTC-29382 SIT_PPTWEB_Account overview_Contributions card with participant having CSOR deferrals only">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_29673_SIT_PPTWEB_Account_overview_Contributions_card_for_payroll_type_code_GENERIC">
+						<parameter name="ManualTCName"
+							value="DDTC-29673 SIT_PPTWEB_Account overview_Contributions card for payroll type code GENERIC">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_31344_SIT_PPTWEB_Account_overview_Contributions_card_for_payroll_type_code_ADJRUNPAYROLLDATE">
+						<parameter name="ManualTCName"
+							value="DDTC-31344 SIT_PPTWEB_Account overview_Contributions card for payroll type code ADJRUNPAYROLLDATE">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_29643_SIT_PPTWEB_Account_overview_Contributions_card_for_457b_plan">
+						<parameter name="ManualTCName"
+							value="DDTC-29643 SIT_PPTWEB_Account overview_Contributions card for 457b plan">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_29646_SIT_PPTWEB_Account_overview_Contributions_card_for_403B_plan">
+						<parameter name="ManualTCName"
+							value="DDTC-29646 SIT_PPTWEB_Account overview_Contributions card for 403B plan">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_29645_SIT_PPTWEB_Account_overview_Contributions_card_for_401A_plan">
+						<parameter name="ManualTCName"
+							value="DDTC-29645 SIT_PPTWEB_Account overview_Contributions card for 401A plan">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_29644_SIT_PPTWEB_Account_overview_Contributions_card_for_1165E_plan">
+						<parameter name="ManualTCName"
+							value="DDTC_29644_SIT_PPTWEB_Account_overview_Contributions_card_for_1165E_plan">
+						</parameter>
+					</include>
+					<!-- Bhargav -->
+					
+					<include
+						name="AOD_Contribution_DDTC_29600SIT_PPTWEB_Account_overview_Editing_contributions_through_Contributions_card_with_View_only_deferrals">
+						<parameter name="ManualTCName"
+							value="DDTC-29600_SIT_PPTWEB_Account_overview_Editing_contributions_through_Contributions_card_with_View_only_deferrals">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_29601_SIT_PPTWEB_Account_overview_Editing_contributions_through_Contributions_card_with_Standard_Catchup_Bonus_Aftertax_and_Other_contribution_dollar_only">
+						<parameter name="ManualTCName"
+							value="DDTC-29601_SIT_PPTWEB_Account_overview_Editing_contributions_through_Contributions_card_with_Standard_Catchup_Bonus_Aftertax_and_Other_contribution_dollar_only">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_29602_SIT_PPTWEB_Account_overview_Editing_contributions_through_Contributions_card_with_Standard_Catch_up_Bonus_After_tax_and_Other_contribution_percent_only">
+						<parameter name="ManualTCName"
+							value="DDTC-29602_SIT_PPTWEB_Account_overview_Editing_contributions_through_Contributions_card_with_Standard_Catch_up_Bonus_After_tax_and_Other_contribution_percent_only">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Contribution_DDTC_29603_SIT_PPTWEB_Account_overview_Editing_contributions_through_Contributions_card_for_terminated_participant">
+						<parameter name="ManualTCName"
+							value="DDTC-29603_SIT_PPTWEB_Account_overview_Editing_contributions_through_Contributions_card_for_terminated_participant">
+						</parameter>
+					</include>
+
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

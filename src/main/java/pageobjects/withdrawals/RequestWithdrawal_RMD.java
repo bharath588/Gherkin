@@ -17,7 +17,6 @@ import lib.Stock;
 import lib.Web;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -396,12 +395,10 @@ public class RequestWithdrawal_RMD extends
 		if (fieldName.trim().equalsIgnoreCase("Request My RMD Button")) {
 			return this.btnRequestRMD;
 		}
-		
-		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
-				+ fieldName + "'",
-				"No WebElement mapped for this field\nPage: <b>"
-						+ this.getClass().getName() + "</b>", false);
-
+		if (fieldName.trim().equalsIgnoreCase("Cancel TAX Modal")) {
+			return this.lnkCancelTax;
+		}
+			
 		return null;
 	}
 	
@@ -1037,7 +1034,12 @@ public class RequestWithdrawal_RMD extends
 		
 		this.lnkCancelTax.click();
 		isTextFieldDisplayed("10%* federal");
-		lnkModifyWithholding.click();
+		if(Web.isWebElementDisplayed(lnkModifyWithholding, true))
+			lnkModifyWithholding.click();
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify tax withholding button",
+					"tax withholding button is not displayed", true);
 		
 		this.lnkContributionRate.click();
 		lib.Web.waitForElement(txtcontributionRateSlider);
@@ -1070,6 +1072,7 @@ public class RequestWithdrawal_RMD extends
 			//System.out.println(i);
 			Thread.sleep(2000);
 			this.lnkChangeMethod.get(i).click();
+			Thread.sleep(2000);
 			/*if(this.btnRegaularMail.isSelected())
 				Reporter.logEvent(Status.PASS,
 						"Verify by default Regaular Mail is selected",
@@ -1078,7 +1081,7 @@ public class RequestWithdrawal_RMD extends
 				Reporter.logEvent(Status.FAIL,
 						"Verify by default Regaular Mail is selected",
 						"Regaular Mail is not selected by default", true);*/
-			
+			Web.waitForElement(txtRegularMailFee);
 			if(txtRegularMailFee.getText().equalsIgnoreCase("Free"))
 				Reporter.logEvent(Status.PASS,
 						"Regular Mail Fee should be Free",
@@ -1087,7 +1090,7 @@ public class RequestWithdrawal_RMD extends
 				Reporter.logEvent(Status.FAIL,
 						"Regular Mail Fee should be Free",
 						"Regaular Mail fee is not Free, Fee Cost: "+txtRegularMailFee.getText(), true);
-			
+			Thread.sleep(2000);
 			isTextFieldDisplayed("Delivery up to 5 business days");
 			if (String.valueOf(Web.getIntegerCurrency(txtExpeditedMailFee
 							.getText())).contains(sExpeditedCharge))

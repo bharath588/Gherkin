@@ -1,6 +1,6 @@
 package app.pptweb.testcases.aod;
-
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -12,22 +12,20 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import pageobjects.balance.Balance;
 import pageobjects.general.AccountOverview;
 import pageobjects.general.LeftNavigationBar;
 import pageobjects.landingpage.LandingPage;
-import pageobjects.liat.ProfilePage;
 import pageobjects.loan.LoansSummaryPage;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
-import pageobjects.statementsanddocuments.StatementsAndDocuments;
+import pageobjects.transactionhistory.TransactionHistory;
 import appUtils.Common;
 
 import com.aventstack.extentreports.Status;
 
 import core.framework.Globals;
 
-public class LoansBalanceTestcases {
+public class TransactionHistoryTestcases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	LoginPage login;
 	String tcName;
@@ -62,7 +60,7 @@ public class LoansBalanceTestcases {
 	}
 	
 	@Test(dataProvider = "setData")
-	public void AOD_Loans_DDTC_28724_SIT_PPTWEB_Account_overview_Loan_Balance_card_multiple_loans(
+	public void AOD_Transaction_DDTC_28854_SIT_PPTWEB_Account_overview_Transaction_History_card_with_less_than_five_transactions(
 			int itr, Map<String, String> testdata) {
 
 		try {
@@ -79,15 +77,15 @@ public class LoansBalanceTestcases {
  			LeftNavigationBar sLeftNav=new LeftNavigationBar(homePage);
  			sLeftNav.get();
  			AccountOverview myAccountOverview=new AccountOverview();
-			myAccountOverview.validateLoansBalanceCard();
-			myAccountOverview.verifyMaturityDates();
-			String sLoanBalance = myAccountOverview.verifyLoanBalance();
-			myAccountOverview.clickOnLoanViewDetailsLink(true);
+ 			ArrayList<String> lstValues = myAccountOverview.verifyTranscationHistoryValues();
+			myAccountOverview.validateTransactionHistoryCard();
+			myAccountOverview.verifyTranscationHeading();
+			myAccountOverview.verifyTranscationHistory();
+			myAccountOverview.clickOnTransactionShowMoreLink(true);
 			
-			LoansSummaryPage myLoan=new LoansSummaryPage();
-			myLoan.verifyParticipanttakenToLoanSummaryPage();
-			myLoan.verifyLoanSummaryPage(sLoanBalance);
-			
+			TransactionHistory trans = new TransactionHistory();
+			trans.verifyParticipanttakenToTransactionHistoryPage();
+			trans.verifyTransactionHistoryValues(lstValues);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -113,7 +111,7 @@ public class LoansBalanceTestcases {
 		}
 	}
 	@Test(dataProvider = "setData")
-	public void AOD_Loans_DDTC_28723_SIT_PPTWEB_Account_overview_Loan_Balance_card_single_loan(
+	public void AOD_Transaction_DDTC_28702_SIT_PPTWEB_Account_overview_Transaction_History_card_with_greater_than_five_transactions(
 			int itr, Map<String, String> testdata) {
 
 		try {
@@ -130,15 +128,15 @@ public class LoansBalanceTestcases {
  			LeftNavigationBar sLeftNav=new LeftNavigationBar(homePage);
  			sLeftNav.get();
  			AccountOverview myAccountOverview=new AccountOverview();
-			myAccountOverview.validateLoansBalanceCard();
-			myAccountOverview.verifyMaturityDates();
-			String sLoanBalance = myAccountOverview.verifyLoanBalance();
-			myAccountOverview.clickOnLoanViewDetailsLink(true);
+			myAccountOverview.validateTransactionHistoryCard();
+			ArrayList<String> lstValues = myAccountOverview.verifyTranscationHistoryValues();
+			myAccountOverview.verifyTranscationHeading();
+			myAccountOverview.verifyTranscationHistory();
+			myAccountOverview.clickOnTransactionShowMoreLink(true);
 			
-			LoansSummaryPage myLoan=new LoansSummaryPage();
-			myLoan.verifyParticipanttakenToLoanSummaryPage();
-			myLoan.verifyLoanSummaryPage(sLoanBalance);
-			
+			TransactionHistory trans = new TransactionHistory();
+			trans.verifyParticipanttakenToTransactionHistoryPage();
+			trans.verifyTransactionHistoryValues(lstValues);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -164,7 +162,7 @@ public class LoansBalanceTestcases {
 		}
 	}
 	@Test(dataProvider = "setData")
-	public void AOD_Loans_DDTC_28725_SIT_PPTWEB_Account_overview_Loan_Balance_card_no_loans(
+	public void AOD_Loans_DDTC_28855_SIT_PPTWEB_Account_overview_Transaction_History_card_with_zero_transactions(
 			int itr, Map<String, String> testdata) {
 
 		try {
@@ -181,8 +179,11 @@ public class LoansBalanceTestcases {
  			LeftNavigationBar sLeftNav=new LeftNavigationBar(homePage);
  			sLeftNav.get();
  			AccountOverview myAccountOverview=new AccountOverview();
-			myAccountOverview.validateNoLoansBalanceCard();
-			
+			myAccountOverview.validateNoTransactionHistoryCard();
+			sLeftNav.clickNavigationLink("Transaction History");
+			TransactionHistory trans = new TransactionHistory();
+			trans.get();
+				
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -208,3 +209,4 @@ public class LoansBalanceTestcases {
 		}
 	}
 }
+

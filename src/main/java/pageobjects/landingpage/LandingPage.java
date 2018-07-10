@@ -85,6 +85,13 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	@FindBy(xpath=".//select[contains(@id,'ContactCountryName')]") private WebElement drpCountry;
 	@FindBy(xpath=".//*[@id='phoneNumberIdD']") private WebElement inpPhoneNo;
 	
+	//Mosin - To get Salary
+	@FindBy(id="progress-to-goal")
+	private WebElement lnkClickGoal;
+	@FindBy(id="todays-salary")
+	private WebElement txtSalary;
+	/*@FindBy(xpath="//*[@data-goal-id='progress-to-goal']") 
+	private WebElement txtSalary;*/
 	
 	private String lnkEnrollNow="//li[./a[contains(@ng-href,'planid')]]//a[./span[contains(text(),'Enrollment now open')]]";
 
@@ -521,7 +528,26 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		System.out.println("Bal by acount id"+sAmount);
 		return sAmount;
 	}
-  		
+	/**
+	 * method to get the salary of the ppt in Landing Page
+	 * @throws InterruptedException 
+	 */
+	//Mosin
+	public String getSalary() throws InterruptedException
+	{
+		String sSalary = null;
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.clickOnElement(lnkClickGoal);
+		Thread.sleep(1000);
+		Web.clickOnElement(txtSalary);
+		sSalary = txtSalary.getAttribute("value");
+		if(sSalary.contains("$"))
+			sSalary = String.valueOf(Web.getIntegerCurrency(sSalary));
+		System.out.println("Salary"+sSalary);
+		Web.clickOnElement(lnkCancelGoalSetup);
+		return sSalary;
+	}
 		
 	
 }

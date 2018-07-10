@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+	<test name="ID_Proofing">
+		<classes>
+			<class name="app.pptweb.testcases.aod.RateofReturnTestCases">
+				<methods>
+					<include
+						name="AOD_ROR_DDTC_28555_SIT_PPTWEB_AOD_ROR_card_Rate_of_return_not_available">
+						<parameter name="ManualTCName"
+							value="DDTC-28555_SIT_PPTWEB_Account overview_Rate of return card - Rate of return not available">
+						</parameter>
+					</include>
+					<include
+						name="AOD_ROR_DDTC_28526_SIT_PPTWEB_Account_overview_ROR_card_annualized">
+						<parameter name="ManualTCName"
+							value="DDTC-28526_SIT_PPTWEB_Account overview_Rate of return card - annualized">
+						</parameter>
+					</include>
+					<include
+						name="AOD_ROR_DDTC_29480_SIT_PPTWEB_Account_overview_ROR_card_not_displayed">
+						<parameter name="ManualTCName"
+							value="DDTC-29480_SIT_PPTWEB_Account overview_Rate of return card not displayed ">
+						</parameter>
+					</include>
+					<include
+						name="AOD_ROR_DDTC_28870_SIT_PPTWEB_Account_overview_ROR_card_multiple_plans">
+						<parameter name="ManualTCName"
+							value="DDTC-28870_SIT_PPTWEB_Account overview_Rate of return card - multiple plans">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

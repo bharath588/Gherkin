@@ -4,9 +4,10 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-    <test name="LOGIN">
+    <test name="LOGIN" parallel="classes" >
         <classes>
             <class name="app.pptweb.testcases.login.logintestcases">
+             <parameter name="browser" value="firefox"/>
                 <methods>
                    
                 <include name="SF01_TC01_Verify_invalid_Userid_and_Password">

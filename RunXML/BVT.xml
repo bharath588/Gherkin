@@ -1,86 +1,468 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite">
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Default Suite" verbose="1">
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	 <!-- <test name="Regression Suite" parallel="classes" thread-count="2"> --> 
-	<test name="BVT">
+
+	<test name="testInterRESTResponse">
 		<classes>
-		  <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                
-                 <!-- PRIOR PLAN CONTRIBUTIONS 5 -->
-  
-                     <include name="SIT_PPTWEB_Deferral__AfterTax">
-                   <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
-                    </parameter>
-                    </include>
-                
-                      <include name="Deferral_016_Regular_SPLIT_Select_Another_contributiont_rate">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_016_Regular_SPLIT- Select Another contributiont rate_Sanity">
-                    </parameter>
-                    </include>
-                  <include name="Catchup_SelectAnotherContribution_Split">
-                    <parameter name="ManualTCName" value="Catchup_SelectAnotherContribution_Split">
-                    </parameter>
-                    </include>
-                
-                     <include name="Catchup_SelectAnotherContribution_Roth">
-                    <parameter name="ManualTCName" value="Catchup_SelectAnotherContribution_Roth">
-                    </parameter>
-                    </include>
-                     <include name="Deferral_009_Other_Select_another_contribution_rate">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_009_Other_Select another contribution rate">
-                    </parameter>
-                    </include>
-               
-                     <include name="Other_SelectAnotherContribution_Catchup_Roth">
-                    <parameter name="ManualTCName" value="Other_SelectAnotherContribution_Catchup_Roth">
-                    </parameter>
-                    </include>
-               
-                     <include name="Other_SelectAnotherContribution_split">
-                    <parameter name="ManualTCName" value="Other_SelectAnotherContribution_split">
-                    </parameter>
-                    </include>
-                      <include name="Deferral_012_Regular_BEFORE_Select_Another_contribution_rate">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_012_Regular_BEFORE-Select Another contribution rate_Sanity">
-                    </parameter>
-                    </include>
-                     <include name="Deferral_004_Catch_up_Select_another_contribution_rate">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_004_Catch up_Select another contribution rate">
-                    </parameter>
-                    </include> 
-                       <include name="Participant_not_elegible_for_Bonus_type_contribution">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_003_Bonus_Participant not eligible for Bonus type contribution">
-                    </parameter>
-                    </include>    
-                  
-                                    
-      
-             
-   				 <!--  BONUS 3 -->
-    
-  
-                      <include name="Deferral_002_Bonus_Select_another_contribution_rate">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_002_Bonus_Select another contribution rate">
-                    </parameter>
-                    </include>
-                
-                     <include name="Bonus_SelectAnotherContribution_after">
-                    <parameter name="ManualTCName" value="Bonus_SelectAnotherContribution_after">
-                    </parameter>
-                    </include> 
-                
-                     <include name="Bonus_SelectAnotherContribution_split">
-                    <parameter name="ManualTCName" value="Bonus_SelectAnotherContribution_split">
-                    </parameter>
-                    </include>     
-                 
-                
-                    </methods>
+		
+		<class name="app.testcases.BCOM_6217_GlwbSumaryDetailTestCases">
+				<methods>
+				<include name="TC01_6217_GlwbSumaryDetail_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_6217_glwbSumaryDetail_TC01"></parameter>
+					</include> 
+					<include name="TC02_6217_GlwbSumaryDetail_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_6217_glwbSumaryDetail_TC02"></parameter>
+					</include> 		
+					</methods>
+				</class>
+				
+				<class name="app.sponsorcampaign.ContactServiceTestCases">
+		<methods>
+		<include name="TC01_ContactServicer_Positive_Flow">
+		<parameter name="ManualTCName"
+		value="BCOM_ContactServerinfo_TC01"></parameter>
+		</include> 
+		
+		<include name="TC02_ContactServicer_Negative_Flow">
+		<parameter name="ManualTCName"
+		value="BCOM_ContactServerinfo_TC02"></parameter>
+		</include> 
+		
+		<include name="TC03_ContactServicer_Negative_Flow">
+		<parameter name="ManualTCName"
+		value="BCOM_ContactServerinfo_TC03"></parameter>
+		</include> 
+		</methods>
+		</class> 
+		
+		 <class name="app.sponsorcampaign.CampaignDataTestCases">
+				<methods>
+					 <include name="TC01_CampaignType_CategoryData_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_CampaignData_TC01"></parameter>
+					</include> 
+					<include name="TC02_CampaignType_ReasonData_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_CampaignData_TC02"></parameter>
+					</include> 
+					<include name="TC03_CampaignType_Is_Empty_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_CampaignData_TC03"></parameter>
+							</include>
+							<include name="TC04_CampaignDB_Is_Empty_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_CampaignData_TC04"></parameter>
+					</include>
+					<include name="TC05_CampaignDataPostRequest_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_CampaignData_TC05"></parameter>
+					</include> 
+					</methods>
+					</class>  
+					<class name="app.testcases.BCOM_6215_GlwbSumaryDetailTestCases">
+				<methods>
+				
+			<include name="TC01_6215_GlwbSumaryDetail_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_6215_glwbSumaryDetailActy_TC01"></parameter>
+					</include> 	
+					<include name="TC02_6215_GlwbSumaryDetail_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_6215_glwbSumaryDetailActy_TC02"></parameter>
+					</include>
+					
+					</methods>
+				</class>
+	 <class name="app.tranfers.BCOM_6130_TransferTestCases">
+				<methods>
+					<include name="TC01_Tranfer_6130_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_Tranfers_6130_TC01"></parameter>
+					</include>
+					<include name="TC02_Tranfer_6130_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_Tranfers_6130_TC02"></parameter>
+					</include>
+					</methods>
+				</class>
+	 <class name="app.document.DocumentTestCases">
+				<methods>
+					<include name="TC01_Document_DocumentLocation_Positive_Flow">
+						<parameter name="ManualTCName" value="BCOM_Document_Docinfo_TC01" />
+					</include>
+					<include name="TC02_Document_DocumentLocation_Nagative_Flow">
+						<parameter name="ManualTCName" value="BCOM_Document_Docinfo_TC02" />
+					</include>
+					
+					<include name="TC03_Document_DocumentLocation_Positive_Flow">
+						<parameter name="ManualTCName" value="BCOM_Document_Docinfo_TC03" />
+					</include>
+					<include name="TC04_Document_DocumentLocation_Nagative_Flow">
+						<parameter name="ManualTCName" value="BCOM_Document_Docinfo_TC04" />
+					</include>
+
+					<include name="TC05_Document_DocumentLocation_Nagative_Flow">
+						<parameter name="ManualTCName" value="BCOM_Document_Docinfo_TC05" />
+					</include>
+					</methods> 
+				</class> 
+					 
+
+				
+			 
+			<class name="app.testcases.BCOM_6479_getPptDeferralInfoVO">
+				<methods>
+				<include name="TC01_6479_getPptDeferralInfoVO_PositiveFlow">
+						<parameter name="ManualTCName"
+							value="BCOM_6479_getPptDeferralInfoVO_TC01"></parameter>
+					</include>
+					
+					<include name="TC02_6479_getPptDeferralInfoVO_NegativeFlow">
+						<parameter name="ManualTCName"
+							value="BCOM_6479_getPptDeferralInfoVO_TC02"></parameter>
+					</include>
+					
+					</methods>
+				</class>  
+	 	 <class name="app.investment.DEFC17471_InvestmentWebserviceTestCases">
+				<methods>
+				<include name="TC01_DEFC17471_investmentService_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="DEFC-17471_InvestmentServices_TC01"></parameter>
+					</include>
+					
+					
+					</methods>
+				</class>
+		
+		
+		<class name="app.testcases.BCOM_6536PartServicesTestCases">
+				<methods>
+				<include name="TC01_6536_PartService_partEventStepInfoExist_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6536_partServices_partEventStepInfoExist_TC01"></parameter>
+					</include>
+					<include name="TC02_6536_PartService_partEventStepInfoExist_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6536_partServices_partEventStepInfoExist_TC02"></parameter>
+					</include>
+					
+					</methods>
+				</class>
+				 
+				
+		<class name="app.trsservices.DeferralsAuto_6437">
+				<methods>
+				<include name="TC01_BCOM_6437_DeferralsAutoPositive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6437_deferralsAuto_TC01"></parameter>
+					</include>
+					<include name="TC02_BCOM_6437_DeferralsAutoNegative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6437_deferralsAuto_TC02"></parameter>
+					</include>  
+					
+					<include name="TC03_BCOM_6437_DeferralsAutoPositive_FlowException">
+						<parameter name="ManualTCName"
+							value="BCOM-6437_deferralsAuto_TC03"></parameter>
+					</include>
+					
+					
+					<include name="TC04_BCOM_6437_DeferralsAuto_PostRequest_FlowInsteadOfGet">
+						<parameter name="ManualTCName"
+							value="BCOM-6437_deferralsAuto_TC04"></parameter>
+					</include>
+					
+					</methods>
+				</class>
+		<class name="app.trsservices.TrsFlexAccountsInfoTestCases">
+				<methods>
+				<include name="TC01_6398_TrsFlexAccountsInfoPositive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6398_getTrsFlexAccountsInfo_TC01"></parameter>
+					</include> 
+					<include name="TC04_6398_TrsFlexAccountsInfoPositive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6398_getTrsFlexAccountsInfo_TC04"></parameter>
+					</include> 
+					<include name="TC05_6398_TrsFlexAccountsInfoPositive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6398_getTrsFlexAccountsInfo_TC05"></parameter>
+					</include> 
+					<include name="TC02_6398_TrsFlexAccountsInfoNegativetive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6398_getTrsFlexAccountsInfo_TC02"></parameter>
+					</include> 
+					<include name="TC03_6398_TrsFlexAccountsInfoNegativetive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6398_getTrsFlexAccountsInfo_TC03"></parameter>
+					</include> 
+					
+					</methods>
+				</class>
+				
+				
+	<class name="app.investment.BCOM_6456_InvestmentServiceTestCases">
+				<methods>
+				<include name="TC01_BCOM_6456_investmentService_Positive_Flow">
+						<parameter name="ManualTCName" value="BCOM-6456_Investment Services_TC01"></parameter>
+					</include> 
+					
+				<include name="TC02_BCOM_6456_investmentService_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6456_Investment Services_TC02"></parameter>
+					</include> 
+					<include name="TC03_BCOM_6456_investmentService_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6456_Investment Services_TC03"></parameter>
+					</include> 
+				
+					</methods>
+				</class>
+		<class name="app.groupaccount.BCOM_6441_groupAccountEnabled">
+				<methods>
+				<include name="TC01_BCOM_6441_groupAccountEnabled_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_6441_groupAccountEnabled_TC01"></parameter>
+					</include> 
+					<include name="TC02_BCOM_6441_groupAccountEnabled_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_6441_groupAccountEnabled_TC02"></parameter>
+					</include> 
+					
+					
+					
+					</methods>
+				</class>
+			
+		<class name="app.beneficiary.LogStepDTOTestCases">
+				<methods>
+				<include name="TC01_LogStepDTO_6475_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6475_LogStepDTO_TC01"></parameter>
+					</include> 
+					<include name="TC02_LogStepDTO_6475_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6475_LogStepDTO_TC02"></parameter>
+					</include>
+					
+					
+					</methods>
+				</class>
+		
+		<class name="app.beneficiary.LogNewEvent">
+				<methods>
+				<include name="TC01_LogNewEvent_6475_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6475_logNewEvent_TC01"></parameter>
+					</include> 
+					
+					<include name="TC02_LogNewEvent_6475_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6475_logNewEvent_TC02"></parameter>
+					</include> 
+					
+					<include name="TC03_LogNewEvent_6475_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6475_logNewEvent_TC03"></parameter>
+					</include> 
+					
+					<include name="TC04_LogNewEvent_6475_PostRequest_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM-6475_logNewEvent_TC04"></parameter>
+					</include>
+					
+					</methods>
+				</class>
+	<class name="app.beneficiary.BeneficiaryServices">
+				<methods>
+				<include name="TC01_Tranfer_6129_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_DEFC16691_Benificary_TC01"></parameter>
+					</include> 
+					<include name="TC02_DEFC16691_Benificary_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_DEFC16691_Benificary_TC02"></parameter>
+					</include>
+				
+					<include name="TC03_Tranfer_6129_Positive_Flow_ExceptionMessages">
+						<parameter name="ManualTCName"
+							value="BCOM_DEFC16691_Benificary_TC03"></parameter>
+					</include>
+					
+					<include name="TC04_DEFC16691_Benificary_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_DEFC16691_Benificary_TC04"></parameter>
+					</include>
+					<include name="TC05_Tranfer_6129_PostRequest_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_DEFC16691_Benificary_TC05"></parameter>
+					</include>
+					
+					</methods>
+				</class> 
+			 
+		<class name="app.tranfers.BCOM_6129_TranferTestCases">
+				<methods>
+				<include name="TC01_Tranfer_6129_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_Tranfers_6129_TC01"></parameter>
+					</include>
+					<include name="TC02_Tranfer_6129_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_Tranfers_6129_TC02"></parameter>
+					</include>
+					<include name="TC03_Tranfer_6129_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_Tranfers_6129_TC03"></parameter>
+							</include>
+							<include name="TC04_Tranfer_6129_PostRequest_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_Tranfers_6129_TC04"></parameter>
+								</include>
+							
+					</methods> 
+				</class>
+			
+			<class name="app.nq.NQDistributionTestCases">
+				<methods>
+					<include name="TC01_BCOM_NQ_Distribution_view_table_results">
+						<parameter name="ManualTCName"
+							value="TC01_BCOM_NQ_Distribution_view_table_results"></parameter>
+					</include>
+					<include name="TC01_BCOM_NQ_Get_Plan_Rules">
+						<parameter name="ManualTCName" value="TC01_BCOM_NQ_Get_Plan_Rules"></parameter>
+					</include>
+					<include name="TC03_BCOM_NQ_Get_Account_Based_Defferal_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_NQ_Get_Account_Based_Deferral_Positive_Flow"></parameter>
+					</include>
+					<include name="TC03_01_BCOM_NQ_Get_Account_Based_Defferal_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_NQ_Get_Account_Based_Deferral_Negative_Flow"></parameter>
+					</include> 
+					<include
+						name="TC04_01_BCOM_NQ_NonQual_Get_Part_Disb_Deferral_Elections_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_NQ_NonQual_Get_Part_Disb_Deferral_Elections_Positive_Flow"></parameter>
+					</include>
+					<include
+						name="TC04_02_BCOM_NQ_NonQual_Get_Part_Disb_Deferral_Elections_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_NQ_NonQual_Get_Part_Disb_Deferral_Elections_Negative_Flow"></parameter>
+					</include>
+					<include name="TC01_BCOM_NQ_Save_Nq_Enrollment_Info">
+						<parameter name="ManualTCName" value="BCOM_NQ_Save_Nq_Enrollment_Info"></parameter>
+					</include>
+				</methods>
 			</class>
+			 
+			<class name="app.sponsorcampaign.GroupAccountCampaignTestCases">
+				<methods>
+				
+				<include name="TC03_GroupAccountCampaign_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_GroupAccountCampaign_TC03"></parameter>
+					</include> 
+				<include name="TC02_GroupAccountCampaign_Status_OFF_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_GroupAccountCampaign_TC02"></parameter>
+					</include> 
+					 <include name="TC01_GroupAccountCampaign_Status_ON_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_GroupAccountCampaign_TC01"></parameter>
+					</include>
+					 <include name="TC04_GroupAccountCampaign_Status_OFF_And_ON_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_GroupAccountCampaign_TC04"></parameter>
+					</include>  
+					<include name="TC05_GroupAccountCampaign_PostRequest_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_GroupAccountCampaign_TC05"></parameter>
+					</include>  
+				
+					
+					</methods>
+					</class>
+		  
+	 
+	<class name="app.sponsorcampaign.GroupAccountTestCases">
+				<methods>
+					<include name="TC01_GroupAccount_Service_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_GroupAccount_TC01"></parameter>
+					</include> 
+					
+					<include name="TC02_GroupAccount_Service_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_GroupAccount_TC02"></parameter>
+					</include>
+					<include name="TC03_GroupAccount_Negative_Flow">
+						<parameter name="ManualTCName"
+							value="BCOM_GroupAccount_TC03"></parameter>
+					</include>
+					</methods>
+					</class>  
+					
+				<class name="app.loans.LoansTestCases">
+			 
+				<methods>
+				
+				<include name="TC01_Grp_Loan_Struc_Loan_Reason_Positive_Flow">
+						<parameter name="ManualTCName" value="BCOM_LOAN_ grpLoanStrucLoanReason_TC01" />
+					</include>
+					<include name="TC02_Grp_Loan_Struc_Loan_Reason_Negative_Flow">
+						<parameter name="ManualTCName" value="BCOM_LOAN_ grpLoanStrucLoanReason_TC02" />
+					</include>
+					
+				<include name="TC03_Loan_Account_Summary_Positive_Flow">
+						<parameter name="ManualTCName" value="BCOM_LOAN_loanAcctSummary_TC01"/>
+					</include>
+					<include name="TC04_Loan_Account_Summary_Negative_Flow">
+						<parameter name="ManualTCName" value="BCOM_LOAN_loanAcctSummary_TC06"/>
+					</include>	
+				
+				 <include name="TC05_Loan_Account_Summary_Positive_Flow">
+						<parameter name="ManualTCName" value="BCOM_LOAN_loanAmountAndTerm_TC07"/>
+					</include>
+				<include name="TC06_Loan_Account_Summary_Negative_Flow">
+						<parameter name="ManualTCName" value="BCOM_LOAN_loanAmountAndTerm_TC08" />
+					</include>
+					
+					<include name="TC07_Loan_Account_Summary_MadePostRequest_InsteadOfGet">
+						<parameter name="ManualTCName" value="BCOM_LOAN_loanAmountAndTerm_TC09" />
+					</include>
+					<include name="TC08_Loan_Account_Summary_Positive_Flow">
+						<parameter name="ManualTCName" value="BCOM_LOAN_loanAmountAndTerm_TC10" />
+					</include>  
+
+				</methods>
+			</class>
+			<!-- <class name="app.webservice.participantEnrollmentInfo.TestPptEnrollmentInfo">
+			 
+				<methods>
+				
+				<include name="testPptEnrollmentInfo">
+						<parameter name="ManualTCName" value="test_PptEnrollmentInfo" />
+					</include>
+					
+			</methods>
+			</class>
+			<class name="app.webservice.saveAssetInfoList.TestAssetsDataService">
+			 
+				<methods>
+				<include name="testSaveAssetInfoList">
+						<parameter name="ManualTCName" value="testSaveAssetInfoList" />
+					</include>
+					
+			</methods>
+			</class>  -->
 		</classes>
 	</test>
 </suite>

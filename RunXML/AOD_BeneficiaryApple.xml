@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+
+	<test name="AOD_Beneficiary">
+		<classes>
+			<class	name="app.pptweb.testcases.aod.BeneficiariesTestcases">
+				<methods>
+					<!-- Bene Link should not show -->
+					<include name="AOD_Beneficiaries_DDTC_30781_TC_03_verify_If_WNBEN_and_WUBENE_is_ON_and_no_bene_on_card_AOD_page_should_display_beneficiaries_card_with_the_text_None_on_file_and_with_the_link_Add_now">
+						<parameter name="ManualTCName" 
+						value="DDTC-30781 TC_03_verify If WNBEN and WUBENE is ON and no bene on card AOD page should display beneficiaries card with the text None on file and with the link Add now">
+						</parameter>
+					</include>
+					<include name="AOD_Beneficiaries_DDTC_30782_TC_04_To_verify_If_WNBEN_is_ON_WUBENE_is_ON_and_greater_than_1_bene_on_card_AOD_page_should_display_beneficiaries_card_with_the_AddEdit_link">
+						<parameter name="ManualTCName" 
+						value="DDTC-30782 TC_04_To verify If WNBEN is ON WUBENE is ON and greater than 1 bene on card AOD page should display beneficiaries card with the AddEdit link">
+						</parameter>
+					</include>
+					
+					<!-- Below 3 TC's should not change the order of execution -->
+					<include name="AOD_Beneficiaries_DDTC_28318_QA02_PW_21965_Verify_New_Beneficiaries_Card_Account_overview_page_if_benes_are_not_on_file">
+						<parameter name="ManualTCName" 
+						value="DDTC-28318 QA02_PW-21965_Verify New Beneficiaries Card Account overview page if benes are not on file">
+						</parameter>
+					</include>
+					<include name="AOD_Beneficiaries_DDTC_28325_QA03_PW_21965_Verify_Beneficiaries_Card_Account_overview_page_if_a_participant_has_Zero_Beneficiaries_and_editable">
+						<parameter name="ManualTCName" 
+						value="DDTC-28325 QA03_PW-21965_ Verify New Beneficiaries Card Account overview page if a participant has Zero Beneficiaries and editable">
+						</parameter>
+					</include>
+					<include name="AOD_Beneficiaries_DDTC_28317_QA01_PW_21965_Verify_New_Beneficiaries_Card_in_Account_overview_page_if_benes_are_on_file">
+						<parameter name="ManualTCName" 
+						value="DDTC-28317 QA01_PW-21965_Verify New Beneficiaries Card in Account overview page if benes are on file">
+						</parameter>
+					</include>
+										
+					<include name="AOD_Beneficiaries_DDTC_28329_QA06_PW_21965Beneficiaries_Card_Account_overview_page_if_a_participant_has_Multiple_BeneficiariesgreaterthanFive">
+						<parameter name="ManualTCName" 
+						value="DDTC-28329 QA06_PW-21965_Verify New Beneficiaries Card Account overview page if a participant has Multiple Beneficiaries greater than five">
+						</parameter>
+					</include>
+					<include name="AOD_Beneficiaries_DDTC_28328_QA05_PW_21965_New_Beneficiaries_Card_Account_overview_page_if_a_participant_has_Multiple_BeneficiariesLessthanFive">
+						<parameter name="ManualTCName" 
+						value="DDTC-28328 QA05_PW-21965_Verify New Beneficiaries Card Account overview page if a participant has Multiple Beneficiaries Less than five">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

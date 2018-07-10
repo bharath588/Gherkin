@@ -372,12 +372,13 @@ public class ProdvalidationTestCases_LeftNav {
 			statements.clickOnClose();
 			
 			Web.getDriver().switchTo().defaultContent();
+			Web.waitForPageToLoad(Web.getDriver());
 			statements.clickOnInvestmentoption("Activity by Investment Option");
-	statements.verifyTableDisplayed("Transaction Details Table");
-	statements
+			statements.verifyTableDisplayed("Transaction Details Table");
+			statements
 			.verifytableHeaderNotEmpty("Transaction Details Table Header");
-	statements.verifyTableDataDisplayed("Transaction Details Table");
-	statements.clickOnClose();
+			statements.verifyTableDataDisplayed("Transaction Details Table");
+			statements.clickOnClose();
 	
 
 		} catch (Exception e) {

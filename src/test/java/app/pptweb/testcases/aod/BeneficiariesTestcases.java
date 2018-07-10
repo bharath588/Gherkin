@@ -79,6 +79,8 @@ public class BeneficiariesTestcases {
 			lib.Reporter.logEvent(Status.INFO,
 					"Test Data used for this Test Case:", printTestData(),
 					false);
+			AccountOverview myAccountpre = new AccountOverview();
+			myAccountpre.updateBeneficiary(Stock.GetParameterValue("planId"),null);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -238,7 +240,8 @@ public class BeneficiariesTestcases {
 
 					e.printStackTrace();
 				}
-				//Web.clickOnElement(myAccount, "LOGOUT");
+				Web.clickOnElement(myAccount, "LOGOUT");
+				Thread.sleep(3000);
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -453,7 +456,7 @@ public class BeneficiariesTestcases {
 					"Test Data used for this Test Case:", printTestData(),
 					false);
 			AccountOverview myAccountpre = new AccountOverview();
-			myAccountpre.updateBeneficiary(Stock.GetParameterValue("planId"));
+			myAccountpre.updateBeneficiary(Stock.GetParameterValue("planId"),"24-OCT-17");
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);

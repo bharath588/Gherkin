@@ -5,7 +5,7 @@
         <listener class-name="core.framework.TestListener" />
     </listeners>
    
-    <test name="Beneficiaries" >
+    <test name="Beneficiaries" parallel="true" >
 
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">

@@ -10,10 +10,10 @@
 			<class name="app.pptweb.testcases.investments.Investmentstestcases">
 				<methods>
 
-					<include name="DDTC_29169_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype">
+					 <include name="DDTC_29169_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype">
 						<parameter name="ManualTCName"
 							value="SIT_DDTC_29169_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype"></parameter>
-					</include>
+					</include> 
 
 
 					<include
@@ -22,7 +22,7 @@
 							value="SIT_DDTC_29170_Rebal_Only_HMDI_Target_Date_DoesNotOffer_All_Mntype"></parameter>
 					</include>
 
-					<include name="DDTC_22707_Rebal_Only_HMDI_Target_Date_Offer_No_Mntype">
+					<!-- <include name="DDTC_22707_Rebal_Only_HMDI_Target_Date_Offer_No_Mntype">
 						<parameter name="ManualTCName"
 							value="SIT_DDTC_22707_Rebal_Only_HMDI_Target_Date_Offer_No_Mntype"></parameter>
 					</include>
@@ -146,7 +146,7 @@
 					<include name="DDTC_22678_FullRebal_ModelPortfolio">
 						<parameter name="ManualTCName"
 							value="SIT_DDTC_22678_FullRebal_ModelPortfolio"></parameter>
-					</include>
+					</include> -->
 
 				</methods>
 

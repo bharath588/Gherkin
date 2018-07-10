@@ -9,6 +9,25 @@
 		<classes>
 			<class	name="app.pptweb.testcases.withdrawals.withdrawalsrmdtestcases">
 				<methods>
+					<!-- 1st Sprint below 3 TC's-->
+					<include name="Withdrawal_RMD_DDTC_29685_RMD_Verifying_How_is_this_Calculated_Modal_in_RMD_screen">
+						<parameter name="ManualTCName"
+							value="DDTC-29685 RMD - Verifying How is this Calculated Modal in RMD screen">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_RMD_DDTC_29686_RMD_Verifying_Tax_Withholdings_Modal_in_RMD_screen">
+						<parameter name="ManualTCName"
+							value="DDTC-29686 RMD - Verifying Tax Withholdings Modal in RMD screen">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_RMD_DDTC_29759_RMD_Verifying_Delivery_Method_Modal_in_RMD_screen">
+						<parameter name="ManualTCName"
+							value="DDTC-29759 RMD - Verifying Delivery Method Modal in RMD screen">
+						</parameter>
+					</include>
+					
 					<!-- Current year scenarios -->
 					<!-- 2nd Sprint below 6 TC's-->
 					<!-- Non Grace. Self and Full service -->
@@ -61,24 +80,6 @@
 							value="DDTC-29668 RMD Self Service Grace plan Participant required to take an RMD in current calendar year with RMD starting in the Previous calendar year">
 						</parameter>
 					</include>
-					<!-- 1st Sprint below 3 TC's-->
-					<include name="Withdrawal_RMD_DDTC_29685_RMD_Verifying_How_is_this_Calculated_Modal_in_RMD_screen">
-						<parameter name="ManualTCName"
-							value="DDTC-29685 RMD - Verifying How is this Calculated Modal in RMD screen">
-						</parameter>
-					</include>
-					
-					<include name="Withdrawal_RMD_DDTC_29686_RMD_Verifying_Tax_Withholdings_Modal_in_RMD_screen">
-						<parameter name="ManualTCName"
-							value="DDTC-29686 RMD - Verifying Tax Withholdings Modal in RMD screen">
-						</parameter>
-					</include>
-					
-					<include name="Withdrawal_RMD_DDTC_29759_RMD_Verifying_Delivery_Method_Modal_in_RMD_screen">
-						<parameter name="ManualTCName"
-							value="DDTC-29759 RMD - Verifying Delivery Method Modal in RMD screen">
-						</parameter>
-					</include>
 					
 					<!-- RMD Informational Message -->
 					<!-- 2nd Sprint below 4 TC's-->
@@ -103,32 +104,6 @@
 					<include name="Withdrawal_RMD_DDTC_29990_Verifying_Informational_Message_less_than_5_owner_using_uniform_life_table_and_has_No_Spouse_DOB_on_file">
 						<parameter name="ManualTCName"
 							value="DDTC-29990 RMD - Verifying Informational Message less than 5 owner using uniform life table and has no Spouse DOB on file">
-						</parameter>
-					</include>
-					
-					<!-- Pro-Active notification scenarios-->
-					
-					<include name="Withdrawal_RMD_DDTC_29793_PPTWEB_RMD_confirmation_screen_Proactive_enabled_for_RMD_withdrawal">
-						<parameter name="ManualTCName"
-							value="DDTC-29793 PPTWEB_RMD confirmation screen_Proactive enabled for RMD withdrawal">
-						</parameter>
-					</include>
-					
-					<include name="Withdrawal_RMD_DDTC_29938_Request_Current_Year_RMD_with_proactive_notification_type_selected_as_Email">
-						<parameter name="ManualTCName"
-							value="DDTC-29938 RMD - Request Current Year RMD with proactive notification type selected as Email">
-						</parameter>
-					</include>
-					
-					<include name="Withdrawal_RMD_DDTC_29939_RMD_Request_Current_Year_RMD_with_proactive_notification_type_selected_as_Text_Message">
-						<parameter name="ManualTCName"
-							value="DDTC-29939 RMD - Request Current Year RMD with proactive notification type selected as Text Message">
-						</parameter>
-					</include>
-					
-					<include name="Withdrawal_RMD_DDTC_29941_RMD_Request_Current_Year_RMD_with_proactive_notification_type_selected_as_Text_Message_and_Email">
-						<parameter name="ManualTCName"
-							value="DDTC-29941 RMD - Request Current Year RMD with proactive notification type selected as Text Message and Email">
 						</parameter>
 					</include>
 					
@@ -168,8 +143,52 @@
 						value="DDTC-29674 PPTWEB_RMD_Exception Hard Stop scenarios for NextGen PartWeb Withdrawals">
 						</parameter>
 					</include>
-					<!-- 3rd Sprint Ended Total 9 TC's -->
 					
+					<!-- Pro-Active notification scenarios-->
+					<!-- used 000002013ABC for all the TC and once RMD is submitted need to do RVMD -->
+					
+					<include name="Withdrawal_RMD_DDTC_29793_PPTWEB_RMD_confirmation_screen_Proactive_enabled_for_RMD_withdrawal">
+						<parameter name="ManualTCName"
+							value="DDTC-29793 PPTWEB_RMD confirmation screen_Proactive enabled for RMD withdrawal">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_RMD_DDTC_29938_Request_Current_Year_RMD_with_proactive_notification_type_selected_as_Email">
+						<parameter name="ManualTCName"
+							value="DDTC-29938 RMD - Request Current Year RMD with proactive notification type selected as Email">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_RMD_DDTC_29939_RMD_Request_Current_Year_RMD_with_proactive_notification_type_selected_as_Text_Message">
+						<parameter name="ManualTCName"
+							value="DDTC-29939 RMD - Request Current Year RMD with proactive notification type selected as Text Message">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_RMD_DDTC_29941_RMD_Request_Current_Year_RMD_with_proactive_notification_type_selected_as_Text_Message_and_Email">
+						<parameter name="ManualTCName"
+							value="DDTC-29941 RMD - Request Current Year RMD with proactive notification type selected as Text Message and Email">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_RMD_DDTC_29931_RMD_Request_Current_Year_RMD_with_Regular_Mail_Delivery_Method">
+						<parameter name="ManualTCName" 
+						value="DDTC-29931 RMD - Request Current Year RMD with Regular Mail Delivery Method">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_29934_RMD_Request_Current_Year_RMD_with_Expedited_Mail_Delivery_Method">
+						<parameter name="ManualTCName" 
+						value="DDTC-29934 RMD - Request Current Year RMD with Expedited Mail Delivery Method">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_29936_RMD_Request_Current_Year_RMD_with_ACH_Mail_Delivery_Method">
+						<parameter name="ManualTCName" 
+						value="DDTC-29936 RMD - Request Current Year RMD with ACH Mail Delivery Method">
+						</parameter>
+					</include>		
+					
+					<!-- 3rd Sprint Ended Total 9 TC's -->
+					<!-- Below 5 TC's used  '000000160ABC and it will logout during this we need to RVMD -->
 					<!-- 4th Sprint Misc -->
 					<include name="Withdrawal_RMD_DDTC_29912_RMD_Citizenship_screen_validations">
 						<parameter name="ManualTCName"
@@ -196,22 +215,8 @@
 						value="DDTC-29907 RMD - Request Current Year RMD with Terminated Participant 5 percent owner RMD begin year is current year">
 						</parameter>
 					</include>
-					<!-- Low Below 1 -->
-					<include name="Withdrawal_RMD_DDTC_29931_RMD_Request_Current_Year_RMD_with_Regular_Mail_Delivery_Method">
-						<parameter name="ManualTCName" 
-						value="DDTC-29931 RMD - Request Current Year RMD with Regular Mail Delivery Method">
-						</parameter>
-					</include>
-					<include name="Withdrawal_RMD_DDTC_29934_RMD_Request_Current_Year_RMD_with_Expedited_Mail_Delivery_Method">
-						<parameter name="ManualTCName" 
-						value="DDTC-29934 RMD - Request Current Year RMD with Expedited Mail Delivery Method">
-						</parameter>
-					</include>
-					<include name="Withdrawal_RMD_DDTC_29936_RMD_Request_Current_Year_RMD_with_ACH_Mail_Delivery_Method">
-						<parameter name="ManualTCName" 
-						value="DDTC-29936 RMD - Request Current Year RMD with ACH Mail Delivery Method">
-						</parameter>
-					</include>				
+					
+							
 				</methods>
 			</class>
 		</classes>

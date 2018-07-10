@@ -270,6 +270,39 @@ public class withdrawalsrmdtestcases {
 				+ Common.getSponser() + "_" + Stock.getConfigParam("BROWSER"));
 		lib.Reporter.logEvent(Status.INFO,
 				"Test Data used for this Test Case:", printTestData(), false);
+		String[] updateProactive = Stock.getTestQuery("updateProActiveNotification");
+		int proActive=0;
+		updateProactive[0] = Common.getParticipantDBName(Stock
+				.GetParameterValue("userName"))
+				+ "DB_"
+				+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		
+			if(Stock.getConfigParam("AUT").contains("apple"))
+			{
+				System.out.println("In Apple proActive");
+				proActive = DB.executeUpdate(updateProactive[0],
+						updateProactive[1], "24-APR-2017", Stock.GetParameterValue("planId"));
+			}
+			else
+			{
+				System.out.println("In Empower proActive");
+				proActive = DB.executeUpdate(updateProactive[0],
+						updateProactive[1], null, Stock.GetParameterValue("planId"));
+			}
+				
+		if(proActive>1)
+		{
+			Reporter.logEvent(Status.PASS,
+					"Verify proActvie notification is set or not",
+					"ProActive Notification is set", true);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL,
+					"Verify proActvie notification is set or not",
+					"ProActive Notification is not set, Need to check the number of ID's have updated in DB", true);
+		}
+		
 		LoginPage login = new LoginPage();
 		TwoStepVerification mfaPage = new TwoStepVerification(login);
 		LandingPage homePage = new LandingPage(mfaPage);
@@ -287,7 +320,6 @@ public class withdrawalsrmdtestcases {
 		requestWithdrawal_rmd.verifyRMDDetails();
 		requestWithdrawal_rmd.validateHowIsThisCalculatedLink(Stock.GetParameterValue("getBalanceAmountDB"),
 				Stock.GetParameterValue("userName"));
-		
 		//requestWithdrawal_rmd.getRMDDetails();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -358,6 +390,12 @@ public class withdrawalsrmdtestcases {
 
 		} finally {
 			try {
+				RequestWithdrawal_RMD requestWithdrawal_rmd = new RequestWithdrawal_RMD();
+				if(Web.isWebElementDisplayed(requestWithdrawal_rmd, "Cancel TAX Modal"))
+				{
+					System.out.println("Inside finally block of TAX modal");
+					Web.clickOnElement(requestWithdrawal_rmd, "Cancel TAX Modal");
+				}
 				RequestWithdrawal.resetTotalValues();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
@@ -512,6 +550,11 @@ public class withdrawalsrmdtestcases {
 			LeftNavigationBar lftNavBar = new LeftNavigationBar(myAccountPage);
 			RequestWithdrawal_RMD requestWithdrawal_rmd = new RequestWithdrawal_RMD(
 					lftNavBar);
+			if(Stock.getConfigParam("AUT").contains("apple"))
+			{
+				System.out.println("Refreshing to upgrade the RVMD");
+				Web.getDriver().navigate().refresh();
+			}
 			requestWithdrawal_rmd.get();
 			requestWithdrawal_rmd.selectRMDBy(Stock.GetParameterValue("selectRMDBy"),Stock.GetParameterValue("selectDeliveryMethod"));
 			requestWithdrawal_rmd.citizenShipValidation(Stock.GetParameterValue("SSN"));
@@ -584,6 +627,11 @@ public class withdrawalsrmdtestcases {
 			LeftNavigationBar lftNavBar = new LeftNavigationBar(myAccountPage);
 			RequestWithdrawal_RMD requestWithdrawal_rmd = new RequestWithdrawal_RMD(
 					lftNavBar);
+			if(Stock.getConfigParam("AUT").contains("apple"))
+			{
+				System.out.println("Refreshing to upgrade the RVMD");
+				Web.getDriver().navigate().refresh();
+			}
 			requestWithdrawal_rmd.get();
 			requestWithdrawal_rmd.selectRMDBy(Stock.GetParameterValue("selectRMDBy"),Stock.GetParameterValue("selectDeliveryMethod"));
 			requestWithdrawal_rmd.citizenShipValidation(Stock.GetParameterValue("SSN"));
@@ -1671,11 +1719,7 @@ public class withdrawalsrmdtestcases {
 
 		} finally {
 			try {
-				if(Stock.getConfigParam("AUT").contains("apple"))
-				{
-					RequestWithdrawal requestWithdrawal = new RequestWithdrawal();
-					Web.clickOnElement(requestWithdrawal, "LOGOUT");
-				}
+				
 			    Reporter.finalizeTCReport();
 				
 			} catch (Exception e1) {
@@ -1736,6 +1780,11 @@ public class withdrawalsrmdtestcases {
 						lftNavBar);
 				RequestWithdrawal requestWithdrawal = new RequestWithdrawal(
 						lftNavBar);
+				if(Stock.getConfigParam("AUT").contains("apple"))
+				{
+					System.out.println("Refreshing to upgrade the RVMD");
+					Web.getDriver().navigate().refresh();
+				}
 				lftNavBar.clickNavigationLink("REQUEST A WITHDRAWAL");
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());
@@ -1792,11 +1841,7 @@ public class withdrawalsrmdtestcases {
 
 		} finally {
 			try {
-				if(Stock.getConfigParam("AUT").contains("apple"))
-				{
-					RequestWithdrawal requestWithdrawal = new RequestWithdrawal();
-					Web.clickOnElement(requestWithdrawal, "LOGOUT");
-				}
+				
 				RequestWithdrawal.resetTotalValues();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
@@ -1855,6 +1900,11 @@ public class withdrawalsrmdtestcases {
 						myAccountPage);
 				RequestWithdrawal requestWithdrawal = new RequestWithdrawal(
 						lftNavBar);
+				if(Stock.getConfigParam("AUT").contains("apple"))
+				{
+					System.out.println("Refreshing to upgrade the RVMD");
+					Web.getDriver().navigate().refresh();
+				}
 				requestWithdrawal.get();
 				if (Web.isWebElementDisplayed(requestWithdrawal,
 						"Request A Withdrawal", true))
@@ -1892,12 +1942,7 @@ public class withdrawalsrmdtestcases {
 
 		} finally {
 			try {
-				if(Stock.getConfigParam("AUT").contains("apple"))
-				{
-					RequestWithdrawal requestWithdrawal = new RequestWithdrawal();
-					Web.clickOnElement(requestWithdrawal, "LOGOUT");
-				}
-					
+				
 				RequestWithdrawal.resetTotalValues();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
@@ -1956,6 +2001,11 @@ public class withdrawalsrmdtestcases {
 				LeftNavigationBar lftNavBar = new LeftNavigationBar(myAccountPage);
 				RequestWithdrawal_RMD requestWithdrawal_rmd = new RequestWithdrawal_RMD(
 						lftNavBar);
+				if(Stock.getConfigParam("AUT").contains("apple"))
+				{
+					System.out.println("Refreshing to upgrade the RVMD");
+					Web.getDriver().navigate().refresh();
+				}
 				requestWithdrawal_rmd.get();
 				
 				Web.clickOnElement(requestWithdrawal_rmd, "Request My RMD Button");
@@ -1988,11 +2038,7 @@ public class withdrawalsrmdtestcases {
 
 		} finally {
 			try {
-				if(Stock.getConfigParam("AUT").contains("apple"))
-				{
-					RequestWithdrawal requestWithdrawal = new RequestWithdrawal();
-					Web.clickOnElement(requestWithdrawal, "LOGOUT");
-				}
+				
 				RequestWithdrawal.resetTotalValues();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
@@ -2053,6 +2099,11 @@ public class withdrawalsrmdtestcases {
 						lftNavBar);
 				RequestWithdrawal requestWithdrawal = new RequestWithdrawal(
 						lftNavBar);
+				if(Stock.getConfigParam("AUT").contains("apple"))
+				{
+					System.out.println("Refreshing to upgrade the RVMD");
+					Web.getDriver().navigate().refresh();
+				}
 				lftNavBar.clickNavigationLink("REQUEST A WITHDRAWAL");
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());
@@ -2118,11 +2169,6 @@ public class withdrawalsrmdtestcases {
 				
 				pptOwnerShip = DB.executeUpdate(updateOwnerShip[0],
 						updateOwnerShip[1],null,"6", Stock.GetParameterValue("ind_ID") ,gcId[0]);
-				if(Stock.getConfigParam("AUT").contains("apple"))
-				{
-					RequestWithdrawal requestWithdrawal = new RequestWithdrawal();
-					Web.clickOnElement(requestWithdrawal, "LOGOUT");
-				}
 				RequestWithdrawal.resetTotalValues();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
@@ -2188,6 +2234,11 @@ public class withdrawalsrmdtestcases {
 					lftNavBar);
 			RequestWithdrawal requestWithdrawal = new RequestWithdrawal(
 					lftNavBar);
+			if(Stock.getConfigParam("AUT").contains("apple"))
+			{
+				System.out.println("Refreshing to upgrade the RVMD");
+				Web.getDriver().navigate().refresh();
+			}
 			lftNavBar.clickNavigationLink("REQUEST A WITHDRAWAL");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());

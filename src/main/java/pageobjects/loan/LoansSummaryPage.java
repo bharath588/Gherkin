@@ -49,6 +49,9 @@ public class LoansSummaryPage extends LoadableComponent<RequestLoanPage> {
 	private List<WebElement> loanRows;
 	@FindBy(xpath = "//tr[@id='loanSummaryData']/td[@id='loanNo']")
 	private List<WebElement> loanRowsId;
+	@FindBy(xpath = "//tr[@id='loanSummaryData']/td[@id='loanBal']")
+	private List<WebElement> lstLoanBal;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 	@FindBy(id = "legacyFeatureIframe")
 	private WebElement iframeLegacyFeature;
 	
@@ -112,7 +115,7 @@ public class LoansSummaryPage extends LoadableComponent<RequestLoanPage> {
 		}
 
 	}
-
+	
 	@Override
 	protected void load() {
 		this.parent.get();
@@ -170,7 +173,7 @@ public class LoansSummaryPage extends LoadableComponent<RequestLoanPage> {
 					"Participant is taken to loan summary page", true);
 		
 	}
-	public void verifyLoanSummaryPage()
+	public void verifyLoanSummaryPage(String sLoanBalance)
 	{
 		Web.waitForElement(iframeLegacyFeature);
 		Web.getDriver().switchTo().frame(iframeLegacyFeature);
@@ -186,19 +189,35 @@ public class LoansSummaryPage extends LoadableComponent<RequestLoanPage> {
 		
 		if(loanRows.size()>1)
 		{
+			float sParAmount=0;
 			for(int i=0;i<loanRows.size();i++)
 			{
-				Reporter.logEvent(Status.PASS,
-						"There are multiple loans summary available",
-						"Load ID for the "+i+1+"st summary is "+loanRowsId.get(i).getText(), true);
+				sParAmount += Web.getIntegerCurrency(lstLoanBal.get(i).getText());
 			}
+			System.out.println("Loan summary total amount:"+ sParAmount);
+			int retval = Float.compare(sParAmount, Web.getIntegerCurrency(sLoanBalance));
+			
+			if(retval==0)
+				Reporter.logEvent(Status.PASS,
+						"Verify if Loan amount from Account overview loan card matches the loan amount from Loan summary page",
+						"Balance Loan amount matches. Expected: "+Web.getIntegerCurrency(sLoanBalance)+" Actual: "+sParAmount, false);
+			else if(retval<0 || retval>0)
+				Reporter.logEvent(Status.FAIL,
+						"Verify if Loan amount from Account overview loan card matches the loan amount from Loan summary page",
+						"Balance Loan amount matches. Expected: "+Web.getIntegerCurrency(sLoanBalance)+" Actual: "+sParAmount, true);
 			
 		}
 		else if(loanRows.size()==1)
 		{
-			Reporter.logEvent(Status.PASS,
-					"There is only one multiple loans summary available",
-					"Load ID for the summary is "+loanRowsId.get(0).getText(), true);
+			if(lstLoanBal.get(0).getText().equalsIgnoreCase(sLoanBalance))
+				Reporter.logEvent(Status.PASS,
+						"Verify if Loan amount from Account overview loan card matches the loan amount from Loan summary page",
+						"Balance Loan amount matches. Expected: "+sLoanBalance+" Actual: "+lstLoanBal.get(0), false);
+			
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify if Loan amount from Account overview loan card matches the loan amount from Loan summary page",
+						"Balance Loan amount matches. Expected: "+sLoanBalance+" Actual: "+lstLoanBal.get(0), true);
 		}
 		else
 		{
@@ -206,5 +225,7 @@ public class LoansSummaryPage extends LoadableComponent<RequestLoanPage> {
 					"Verify if loan summary is available",
 					"There is no loans summary available", true);
 		}
+		Web.getDriver().switchTo().defaultContent();
 	}
+	
 }
