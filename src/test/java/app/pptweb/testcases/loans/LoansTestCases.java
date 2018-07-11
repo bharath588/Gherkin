@@ -4247,10 +4247,6 @@ public class LoansTestCases {
 			 * Validate 'Continue' button is enabled only when the min and max amt values are met else
 			 *  display the min,max amt error in red text if the criteria is not met.
 			 */
-			/*requestLoan.verifyLoanMinimumIsDisplayed();
-			requestLoan.verifyLoanMinimumErrorMessageIsDisplayed("10");
-			
-			*/
 			Thread.sleep(5000);
 			requestLoan.EnterLoanAmount(Stock.GetParameterValue("loanAmount"));			
 			requestLoan.verifyWebElementIsDisplayed("Link How Is This Calculated");
@@ -4268,7 +4264,7 @@ public class LoansTestCases {
 			
 			Web.waitForElement(requestLoan, "Repayment Term Table");
 			requestLoan.verifyWebElementIsDisplayed("Repayment Term Table");
-//			requestLoan.verifyDefaultRepyamentTermPrincipalResidence();
+			requestLoan.verifyDefaultRepyamentTermPrincipalResidence();
 			
 			/**
 			 * Step 14 - select the repayment radio button
@@ -4329,10 +4325,15 @@ public class LoansTestCases {
 			 * Step 19 - Verify the contact information/pls confirm your address page
 			 * PPT correct primary address is displayed with no issues 
 			 */
-			requestLoan.verifyWebElementIsDisplayed("ProActive Notification Screen");
-			requestLoan.verifyWebElementIsDisplayed("EmailId Input Field");
-			requestLoan.verifyWebElementIsDisplayed("Phone No Input Field");
-			
+			try{
+				requestLoan.isTextFieldDisplayed("ProActive Notification Screen");
+				requestLoan.verifyWebElementIsDisplayed("EmailId Input Field");
+				requestLoan.verifyWebElementIsDisplayed("Phone No Input Field");
+				requestLoan.clickContinueButton();
+			}catch(Exception e){
+				lib.Reporter.logEvent(Status.INFO, "Verifying Contact Verification page is displayed", 
+							"Contact Verification Page not displayed/ProActive Notification is not Enabled", false);
+			}
 			
 			/**
 			 * Step 20 - Verify 'Keep me updated on my loans status'section
@@ -4341,8 +4342,15 @@ public class LoansTestCases {
 			 * 'Update me by text message at:
 			 * 'and enter valid email address and or ph numbers US and international options with no issues
 			 */
-			
-			requestLoan.verifyCheckBoxesInAddressPage();
+			try{
+				requestLoan.verifyCheckBoxesInAddressPage();
+				requestLoan.clickContinueButton();
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+			}catch(Exception e){
+				lib.Reporter.logEvent(Status.INFO, "Verifying Contact Verification page is displayed", 
+						"Contact Verification Page not displayed/ProActive Notification is not Enabled", false);
+			}
 			
 			/**
 			 * Step 21 - Enter valid info and hit continue button
@@ -4350,9 +4358,6 @@ public class LoansTestCases {
 			 * values selected in all the previous pages with loan provision link 
 			 * and I agree & submit and back buttons
 			 */
-			requestLoan.clickContinueButton();
-			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.getDriver());
 			requestLoan.verifyPageHeaderIsDisplayed("Header Loan Review");
 			requestLoan.verifyLoanSummarypage();
 			
@@ -4396,7 +4401,7 @@ public class LoansTestCases {
 			 * Step 27 - validate the print button on all the screens including 'Loan provisions' modal
 			 * Able to print functionality works with no issues for all the loans pages selected
 			 */
-			
+			requestLoan.verifyLoanProvisionLink();
 			requestLoan.verifyWebElementIsDisplayed("PRINT LINK");
 			
 			/**
@@ -4512,8 +4517,7 @@ public class LoansTestCases {
 			
 			requestLoan.clickOnRequestANewLoan();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.getDriver());
-			
+			Web.waitForPageToLoad(Web.getDriver());			
 			requestLoan.verifyLoanRequestTypePage();
 			
 			/**
@@ -4607,23 +4611,25 @@ public class LoansTestCases {
 			 * Step 25 - Verify the Mailing address, email address, phone number and hit 'Continue' button
 			 * Loan Summary page should be displayed
 			 */
-			requestLoan.verifyWebElementIsDisplayed("EmailId Input Field");
-			requestLoan.verifyWebElementIsDisplayed("Phone No Input Field");
-			requestLoan.clickContinueButton();
-			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.getDriver());
-			requestLoan.verifyPageHeaderIsDisplayed("Header Loan Review");
-			
+			try{
+				requestLoan.verifyWebElementIsDisplayed("EmailId Input Field");
+				requestLoan.verifyWebElementIsDisplayed("Phone No Input Field");
+				requestLoan.clickContinueButton();
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+				requestLoan.verifyPageHeaderIsDisplayed("Header Loan Review");
+			}catch(Exception e){
+				lib.Reporter.logEvent(Status.INFO, "Verifying Contact Verification page is displayed", 
+						"Contact Verification Page not displayed/ProActive Notification is not Enabled", false);
+			}
 			/**
 			 * Step 26 - Verify My loan summary page
 			 * It should contain all the details of the loan, payment info, Fees, 
 			 * Delivery info which was provided/opted in the earlier screens by the participant
 			 */
-			
+			Thread.sleep(3000);
+			Web.waitForPageToLoad(Web.getDriver());
 			requestLoan.verifyLoanSummarypage();
-			/**
-			 * Step 18 to Step 26 - 
-			 */			
 						
 			/**
 			 * Step 27 - Click 'I agree & submit' button

@@ -1110,7 +1110,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 				.equals(Stock.GetParameterValue("Disclaimer1")))
 			Reporter.logEvent(Status.PASS,
 					"Verify Loans Diclaimer is displayed",
-					" Loans Diclaimer is displayed"
+					" Loans Diclaimer is displayed: "
 							+ txtloanDisclaimer1.getText().toString().trim(),
 					false);
 
@@ -1118,9 +1118,9 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Verify Loans Diclaimer is displayed",
-					" Loans Diclaimer is not matching \nExpected:"
+					" Loans Diclaimer is not matching \nExpected: "
 							+ Stock.GetParameterValue("Disclaimer1")
-							+ "\nActual:"
+							+ "\nActual: "
 							+ txtloanDisclaimer1.getText().toString().trim(),
 					true);
 
@@ -1128,7 +1128,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 				.equals(Stock.GetParameterValue("Disclaimer2")))
 			Reporter.logEvent(Status.PASS,
 					"Verify Loans Diclaimer is displayed",
-					" Loans Diclaimer is displayed"
+					" Loans Diclaimer is displayed: "
 							+ txtloanDisclaimer2.getText().toString().trim(),
 					false);
 
@@ -1136,9 +1136,9 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Verify Loans Diclaimer is displayed",
-					" Loans Diclaimer is not matching \nExpected:"
+					" Loans Diclaimer is not matching \nExpected: "
 							+ Stock.GetParameterValue("Disclaimer2")
-							+ "\nActual:"
+							+ "\nActual: "
 							+ txtloanDisclaimer2.getText().toString().trim(),
 					true);
 
@@ -1146,7 +1146,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 				.equals(Stock.GetParameterValue("Disclaimer3")))
 			Reporter.logEvent(Status.PASS,
 					"Verify Loans Diclaimer is displayed",
-					" Loans Diclaimer is displayed"
+					" Loans Diclaimer is displayed: "
 							+ txtloanDisclaimer3.getText().toString().trim(),
 					false);
 
@@ -1154,9 +1154,9 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Verify Loans Diclaimer is displayed",
-					" Loans Diclaimer is not matching \nExpected:"
+					" Loans Diclaimer is not matching \nExpected: "
 							+ Stock.GetParameterValue("Disclaimer3")
-							+ "\nActual:"
+							+ "\nActual: "
 							+ txtloanDisclaimer3.getText().toString().trim(),
 					true);
 
@@ -1558,7 +1558,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	/**
 	 * <pre>
 	 * Method to Verify Default Repayment Term Options
-	 *
+	 * For General Purpose
 	 * </pre>
 	 * 
 	 *
@@ -1645,8 +1645,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	
 	public void verifyDefaultRepyamentTermPrincipalResidence() {
 		
-		String[] repaymentTerm = { "5years", "10years", "15years",
-				"20years", "25years" };
+		String[] repaymentTerm = { "60months", "120months", "180months", "240months", "300months" };
 		for (int i = 0; i < repaymentTerm.length; i++) {
 			List<WebElement> inpLoanTerm = Web.getDriver().findElements(
 					By.xpath(strRepaymentTerm.replace("rownum",
@@ -4811,18 +4810,30 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 	}
 
+	/**
+	 * @author bbndsh
+	 */
 	public void verifyFrequencyRestrictionMsg() {
 		
 		
 	}
 
+	/**
+	 * @author bbndsh
+	 * @param StepToBeSetInDB
+	 * @throws SQLException
+	 */
 	public void setMortgageOrSpousalStepInDatabase(String StepToBeSetInDB) throws SQLException {
 		ResultSet queryResultSet = null;		
 		String[] sqlQuery = null;
 		
-		sqlQuery = Stock.getTestQuery("checkStepToBeInsertedPresentInDB");
+		if(StepToBeSetInDB.equalsIgnoreCase("Mortgage")){
+			sqlQuery = Stock.getTestQuery("checkStepToBeInsertedPresentInDBMORT");
+		}else{
+			sqlQuery = Stock.getTestQuery("checkStepToBeInsertedPresentInDBSPOC");
+		}
 		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
-		queryResultSet = DB.executeQuery(sqlQuery[0], sqlQuery[1], StepToBeSetInDB);
+		queryResultSet = DB.executeQuery(sqlQuery[0], sqlQuery[1]);
 		
 		if(DB.getRecordSetCount(queryResultSet) == 0){
 			if(StepToBeSetInDB.equalsIgnoreCase("Mortgage")){
@@ -4857,6 +4868,11 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 	}
 	
+	/**
+	 * @author bbndsh
+	 * @param StepToBeSetInDB
+	 * @throws SQLException
+	 */
 	public void ResetMortgageOrSpousalStepInDatabase(String StepToBeSetInDB) throws SQLException {
 		ResultSet queryResultSet = null;
 		String[] sqlQuery = null;
@@ -4897,6 +4913,12 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		}
 	}
 
+	/**
+	 * @author bbndsh
+	 * @param reviewIndicator
+	 * @param ga_id
+	 * @throws SQLException
+	 */
 	public void setMortgagePaperWorkIndicator(String reviewIndicator, String ga_id) throws SQLException {
 		ResultSet queryResultSet = null;		
 		String[] sqlQuery = null;
@@ -4917,6 +4939,66 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 					"Setting Mortgage Paperwork indicator to: "+reviewIndicator, 
 					"Mortgage paperwork Indicator is not set to : "+reviewIndicator+"\nTable Name: grp_loan_struc ", false);
 		}
+	}
+
+	/**
+	 * @author bbndsh
+	 * @param QJSA_Ind
+	 * @param Spousal_Consent_Ind
+	 * @param gc_id
+	 * @throws Exception
+	 */
+	public void setQJSAandSpousalConsentInDatabase(String QJSA_Ind,
+			String Spousal_Consent_Ind, String gc_id) throws Exception {
+		int queryResultSet = 0;		
+		String[] sqlQuery = null;
+		
+		sqlQuery = Stock.getTestQuery("updateQJSAandSPOUSALCONSENTplan");
+		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+
+		queryResultSet = DB.executeUpdate(sqlQuery[0], sqlQuery[1], QJSA_Ind, Spousal_Consent_Ind, gc_id);
+		try {
+			if (queryResultSet > 0) {
+				lib.Reporter.logEvent(Status.INFO, "Setting QJSA and Spousal Consent: ", 
+						"QJSA and Spousal Consent has been updated  \nTable Name: PLAN ", false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Reporter.logEvent(
+					Status.WARNING,
+					"Setting QJSA and Spousal Consent: ", 
+					"QJSA and Spousal Consent has not been updated  \nTable Name: PLAN ", false);
+		}
+		
+	}
+	
+	/**
+	 * @author bbndsh
+	 * @param rl_id
+	 * @param ga_id
+	 * @throws Exception
+	 */
+	public void setRULE_IDInDatabase(String rl_id, String ga_id) throws Exception {
+		int queryResultSet = 0;		
+		String[] sqlQuery = null;
+		
+		sqlQuery = Stock.getTestQuery("updateRULEIDstd_sel");
+		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+
+		queryResultSet = DB.executeUpdate(sqlQuery[0], sqlQuery[1], rl_id, ga_id);
+		try {
+			if (queryResultSet > 0) {
+				lib.Reporter.logEvent(Status.INFO, "Setting RULE_ID: ", 
+						"RULE_ID has been updated  \nTable Name: STD_RL_ID ", false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Reporter.logEvent(
+					Status.WARNING,
+					"Setting RULE_ID: ", 
+					"RULE_ID has not been updated  \nTable Name: STD_RL_ID ", false);
+		}
+		
 	}
 	
 }

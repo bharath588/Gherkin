@@ -6,131 +6,91 @@
 	</listeners>
 	<test name="LOGIN">
 		<classes>
-	 <!--
 			<class name="app.pptweb.testcases.loans.LoansTestCases">
+	 			<!-- TCs' Sireesha	-->
+	 			
 				<methods>
-			 
-					<include
-						name="DDTC_27488_General_Purpose_Loan_Repayment_Term_Page_Verification">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27488_General_Purpose_Loan_Repayment_Term_Page_Verification">
+	<!-- 			<include name="DDTC_27488_General_Purpose_Loan_Repayment_Term_Page_Verification">
+						<parameter name="ManualTCName" value="SIT_DDTC_27488_General_Purpose_Loan_Repayment_Term_Page_Verification">
 						</parameter>
 					</include>
- 
-					<include
-						name="DDTC_27491_General_Purpose_Loan_My_Loan_Page_Verification">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27491_General_Purpose_Loan_My_Loan_Page_Verification">
+					<include name="DDTC_27491_General_Purpose_Loan_My_Loan_Page_Verification">
+						<parameter name="ManualTCName" value="SIT_DDTC_27491_General_Purpose_Loan_My_Loan_Page_Verification">
 						</parameter>
 					</include>
-
-					<include
-						name="DDTC_27500_General_Purpose_Loan_Summary_Page_Verification">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27500_General_Purpose_Loan_Summary_Page_Verification">
+					<include name="DDTC_27500_General_Purpose_Loan_Summary_Page_Verification">
+						<parameter name="ManualTCName" value="SIT_DDTC_27500_General_Purpose_Loan_Summary_Page_Verification">
 						</parameter>
 					</include>
-
 					<include name="DDTC_27594_Loan_Enter_Amount_field_validation">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27594_Loan_Enter_Amount_field_validation">
+						<parameter name="ManualTCName" value="SIT_DDTC_27594_Loan_Enter_Amount_field_validation">
 						</parameter>
 					</include>
-					<include
-						name="DDTC_27611_General_Purpose_Loan_Request_via_Expedited_mail_delivery_method">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27611_General_Purpose_Loan_Request_via_Expedited_mail_delivery_method">
+					<include name="DDTC_27611_General_Purpose_Loan_Request_via_Expedited_mail_delivery_method">
+						<parameter name="ManualTCName" value="SIT_DDTC_27611_General_Purpose_Loan_Request_via_Expedited_mail_delivery_method">
 						</parameter>
 					</include>
-
-					<include
-						name="DDTC_27630_General_Purpose_Loan_Request_via_ACH_delivery_method">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27630_General_Purpose_Loan_Request_via_ACH_delivery_method">
+					<include name="DDTC_27630_General_Purpose_Loan_Request_via_ACH_delivery_method">
+						<parameter name="ManualTCName" value="SIT_DDTC_27630_General_Purpose_Loan_Request_via_ACH_delivery_method">
 						</parameter>
 					</include>
-					
-					<include
-						name="DDTC_27613_General_Purpose_Loan_Request_via_Regular_mail_delivery_method">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27613_General_Purpose_Loan_Request_via_Regular_mail_delivery_method">
+					<include name="DDTC_27613_General_Purpose_Loan_Request_via_Regular_mail_delivery_method">
+						<parameter name="ManualTCName" value="SIT_DDTC_27613_General_Purpose_Loan_Request_via_Regular_mail_delivery_method">
 						</parameter>
 					</include>
-					
-					<include
-						name="DDTC_27628_PreFilled_form_Delivery_for_General_Purpose_Loan_Request_by_participant_with_recent_address_change">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27628_PreFilled_form_Delivery_for_General_Purpose_Loan_Request_by_participant_with_recent_address_change">
+					<include name="DDTC_27628_PreFilled_form_Delivery_for_General_Purpose_Loan_Request_by_participant_with_recent_address_change">
+						<parameter name="ManualTCName" value="SIT_DDTC_27628_PreFilled_form_Delivery_for_General_Purpose_Loan_Request_by_participant_with_recent_address_change">
 						</parameter>
 					</include>
-					<include
-						name="DDTC_27627_Future_Dated_General_Purpose_Loan_Request_by_participant_with_recent_address_change">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27627_Future_Dated_General_Purpose_Loan_Request_by_participant_with_recent_address_change">
+					<include name="DDTC_27627_Future_Dated_General_Purpose_Loan_Request_by_participant_with_recent_address_change">
+						<parameter name="ManualTCName" value="SIT_DDTC_27627_Future_Dated_General_Purpose_Loan_Request_by_participant_with_recent_address_change">
 						</parameter>
 					</include>
-					<include
-						name="DDTC_27686_General_Purpose_Loan_Request_via_ACH_Non_Prenoted_Account_delivery_method">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27686_General_Purpose_Loan_Request_via_ACH_Non_Prenoted_Account_delivery_method">
+					<include name="DDTC_27686_General_Purpose_Loan_Request_via_ACH_Non_Prenoted_Account_delivery_method">
+						<parameter name="ManualTCName" value="SIT_DDTC_27686_General_Purpose_Loan_Request_via_ACH_Non_Prenoted_Account_delivery_method">
 						</parameter>
 					</include>
-					
 					<include name="DDTC_29034_Loans_quote_page_validation">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_29034_Loans_quote_page_validation">
+						<parameter name="ManualTCName" value="SIT_DDTC_29034_Loans_quote_page_validation">
 						</parameter>
 					</include>
 					<include name="DDTC_28043_Verify_Loans_Back_button_GP_loans_flow">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_28043_Verify_Loans_Back_button_GP_loans_flow">
+						<parameter name="ManualTCName" value="SIT_DDTC_28043_Verify_Loans_Back_button_GP_loans_flow">
 						</parameter>
 					</include>
-					<include
-						name="DDTC_27682_General_Purpose_Loan_ProActive_Notification_Opted">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27682_General_Purpose_Loan_ProActive_Notification_Opted">
+					<include name="DDTC_27682_General_Purpose_Loan_ProActive_Notification_Opted">
+						<parameter name="ManualTCName" value="SIT_DDTC_27682_General_Purpose_Loan_ProActive_Notification_Opted">
 						</parameter>
 					</include>
 					<include name="DDTC_28964_Loans_Reason_page_validation">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_28964_Loans_Reason_page_validation">
+						<parameter name="ManualTCName" value="SIT_DDTC_28964_Loans_Reason_page_validation">
 						</parameter>
 					</include>
-					<include
-						name="DDTC_27501_General_Purpose_Loan_Confirmation_Whats_Next_Page_Verification">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27501_General_Purpose_Loan_Confirmation_Whats_Next_Page_Verification">
+					<include name="DDTC_27501_General_Purpose_Loan_Confirmation_Whats_Next_Page_Verification">
+						<parameter name="ManualTCName" value="SIT_DDTC_27501_General_Purpose_Loan_Confirmation_Whats_Next_Page_Verification">
 						</parameter>
 					</include>
-					<include
-						name="DDTC_27555_General_Purpose_Loan_Page_verification_after_submitting_Loan_Request">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27555_General_Purpose_Loan_Page_verification_after_submitting_Loan_Request">
+					<include name="DDTC_27555_General_Purpose_Loan_Page_verification_after_submitting_Loan_Request">
+						<parameter name="ManualTCName" value="SIT_DDTC_27555_General_Purpose_Loan_Page_verification_after_submitting_Loan_Request">
 						</parameter>
 					</include>
-
 					<include name="DDTC_28010_Loans_Screen_6_PR_loan_confirmation_page">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_28010_Loans_Screen_6_PR_loan_confirmation_page">
+						<parameter name="ManualTCName" value="SIT_DDTC_28010_Loans_Screen_6_PR_loan_confirmation_page">
 						</parameter>
 					</include>
-					<include
-						name="DDTC_27502_Principal_Residence_Loan_Repayment_Term_Page_Verification">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27502_Principal_Residence_Loan_Repayment_Term_Page_Verification">
+					<include name="DDTC_27502_Principal_Residence_Loan_Repayment_Term_Page_Verification">
+						<parameter name="ManualTCName" value="SIT_DDTC_27502_Principal_Residence_Loan_Repayment_Term_Page_Verification">
 						</parameter>
-					</include>
-					
+					</include> 
 					-->
 					
-				<!-- 	Test cases - bbndsh	 -->
+					<!-- 	Test cases - bbndsh	 -->
 					
-					<!-- 
+				
 					 <include name="DDTC_27416_Happy_Path_Initiate_Primary_Residence_Loan">
 						<parameter name="ManualTCName" value="SIT_DDTC_27416_Happy_Path_Initiate_Primary_Residence_Loan">
 						</parameter>
-					</include> 
+					</include> 	<!-- 
 					<include name="DDTC_27610_Principal_Residence_Loan_Request_through_Regular_mail_delivery_method">
 						<parameter name="ManualTCName" value="SIT_DDTC_27610_Principal_Residence_Loan_Request_through_Regular_mail_delivery_method">
 						</parameter>
@@ -194,15 +154,13 @@
 					<include name="DDTC_27837_Loans_Participant_Requesting_PR_Loan_After_Maximum_Loans_Allowed_Limit_Is_Reached_For_MORTGAGE_Loan_Reason_Code">
 						<parameter name="ManualTCName" value="SIT_DDTC_27837_Loans_Participant_Requesting_PR_Loan_After_Maximum_Loans_Allowed_Limit_Is_Reached_For_MORTGAGE_Loan_Reason_Code">
 						</parameter>
-					</include>
-					
-
-				</methods>
+					</include> -->
+				</methods>	
 			</class>
-			-->
+			
 			 
 			<class name="app.pptweb.testcases.loans.LoansRefinanceTestCases">
-				<methods>  <!--
+		<!-- 	<methods>  
 					<include name="DDTC_31571_LoansRefinance_Verifying_Loan_Refinance_Option_Is_Offered_To_The_Participant">
 						<parameter name="ManualTCName" value="SIT_DDTC_31571_LoansRefinance_Verifying_Loan_Refinance_Option_Is_Offered_To_The_Participant">
 						</parameter>
@@ -297,6 +255,8 @@
 						</parameter>
 					</include>	-->
 					
+					
+					
 					<!-- Sprint AutoS12 -->
 					<!-- 
 					<include name="DDTC_31590_Verifying_Loan_Refinance_Page_For_Principal_Residence_Loan_Flow_Participant_Has_Not_Exhausted_All_Loans">
@@ -346,12 +306,13 @@
 					<include name="DDTC_27815_Loans_Frequency_Restriction_Participant_Restricted_With_2_Loan_Requests_Per_Plan_Year">
 						<parameter name="ManualTCName" value="SIT_DDTC_27815_Loans_Frequency_Restriction_Participant_Restricted_With_2_Loan_Requests_Per_Plan_Year">
 						</parameter>
-					</include> -->
-				</methods>
-			</class> 
+					</include> 
+				</methods>		 -->
+			</class>
 			
+			<!-- Auto S13 -->
 			<class name="app.pptweb.testcases.loans.SpousalAndMortgageStepTestCases">
-				<methods>
+		<!-- 	<methods>
 					<include name="DDTC_33236_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_MORTGAGE_Step_In_TDL">
 						<parameter name="ManualTCName" value="SIT_DDTC_33236_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_MORTGAGE_Step_In_TDL">
 						</parameter>
@@ -364,7 +325,78 @@
 						<parameter name="ManualTCName" value="SIT_DDTC_33249_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_MORTGAGE_Step_Present_In_TDL_Mortgage_PaperWork_Review_Indicator_N">
 						</parameter>
 					</include>
-				</methods>	
+					<include name="DDTC_33252_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Spousal_MORTGAGE_Steps_In_TDL_QJSA_False_SpousalConsent_True">
+						<parameter name="ManualTCName" value="SIT_DDTC_33252_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Spousal_MORTGAGE_Steps_In_TDL_QJSA_False_SpousalConsent_True">
+						</parameter>
+					</include>
+					<include name="DDTC_33258_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Spousal_MORTGAGE_Steps_In_TDL_QJSA_True">
+						<parameter name="ManualTCName" value="SIT_DDTC_33258_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Spousal_MORTGAGE_Steps_In_TDL_QJSA_True">
+						</parameter>
+					</include>
+					<include name="DDTC_33260_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Spousal_MORTGAGE_Steps_In_TDL_QJSA_True">
+						<parameter name="ManualTCName" value="SIT_DDTC_33260_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Spousal_MORTGAGE_Steps_In_TDL_QJSA_True">
+						</parameter>
+					</include>
+					<include name="DDTC_33261_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Only_MORTGAGE_Steps_In_TDL_QJSA_False_Requiring_Spousal_Consent">
+						<parameter name="ManualTCName" value="SIT_DDTC_33261_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Only_MORTGAGE_Steps_In_TDL_QJSA_False_Requiring_Spousal_Consent">
+						</parameter>
+					</include>
+					<include name="DDTC_33262_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Only_SPOUSAL_Steps_In_TDL_QJSA_False_Requiring_Spousal_Consent">
+						<parameter name="ManualTCName" value="SIT_DDTC_33262_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Only_SPOUSAL_Steps_In_TDL_QJSA_False_Requiring_Spousal_Consent">
+						</parameter>
+					</include>
+					<include name="DDTC_33263_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Only_SPOUSAL_Steps_In_TDL_QJSA_False_Spousal_Consent_Not_Required">
+						<parameter name="ManualTCName" value="SIT_DDTC_33263_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Only_SPOUSAL_Steps_In_TDL_QJSA_False_Spousal_Consent_Not_Required">
+						</parameter>
+					</include>
+					<include name="DDTC_33264_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Only_SPOUSAL_Steps_In_TDL_QJSA_Spousal_Consent_False">
+						<parameter name="ManualTCName" value="SIT_DDTC_33264_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Only_SPOUSAL_Steps_In_TDL_QJSA_Spousal_Consent_False">
+						</parameter>
+					</include> -->
+					
+					<!-- Auto S14 -->
+					<!-- 
+					<include name="DDTC_33299_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_SPOUSAL_Mortgage_Steps_NOT_In_TDL_QJSA_False_Spousal_Consent_Required">
+						<parameter name="ManualTCName" value="SIT_DDTC_33299_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_SPOUSAL_Mortgage_Steps_NOT_In_TDL_QJSA_False_Spousal_Consent_Required">
+						</parameter>
+					</include>
+					<include name="DDTC_33265_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_No_SPOUSAL_Mortgage_Steps_NOT_In_TDL_QJSA_False_Spousal_Consent_False">
+						<parameter name="ManualTCName" value="SIT_DDTC_33265_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_No_SPOUSAL_Mortgage_Steps_NOT_In_TDL_QJSA_False_Spousal_Consent_False">
+						</parameter>
+					</include>
+					<include name="DDTC_33266_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_No_SPOUSAL_Mortgage_Steps_NOT_In_TDL_QJSA_False_Spousal_Consent_NotRequired">
+						<parameter name="ManualTCName" value="SIT_DDTC_33266_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_No_SPOUSAL_Mortgage_Steps_NOT_In_TDL_QJSA_False_Spousal_Consent_NotRequired">
+						</parameter>
+					</include>
+					<include name="DDTC_33292_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_No_SPOUSAL_Mortgage_Steps_NOT_In_TDL_QJSA_False_Spousal_Consent_False">
+						<parameter name="ManualTCName" value="SIT_DDTC_33292_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_No_SPOUSAL_Mortgage_Steps_NOT_In_TDL_QJSA_False_Spousal_Consent_False">
+						</parameter>
+					</include>
+					<include name="DDTC_33293_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_OnlyMortgage_Steps_In_TDL_QJSA_False_Spousal_Consent_NotRequired">
+						<parameter name="ManualTCName" value="SIT_DDTC_33293_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_OnlyMortgage_Steps_In_TDL_QJSA_False_Spousal_Consent_NotRequired">
+						</parameter>
+					</include>
+					<include name="DDTC_33294_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Only_Mortgage_Steps_In_TDL_QJSA_False_Spousal_Consent_False">
+						<parameter name="ManualTCName" value="SIT_DDTC_33294_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Only_Mortgage_Steps_In_TDL_QJSA_False_Spousal_Consent_False">
+						</parameter>
+					</include>
+					<include name="DDTC_33295_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Only_Mortgage_Steps_In_TDL_Both_QJSA_And_Spousal_Consent_False">
+						<parameter name="ManualTCName" value="SIT_DDTC_33295_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Only_Mortgage_Steps_In_TDL_Both_QJSA_And_Spousal_Consent_False">
+						</parameter>
+					</include>
+					<include name="DDTC_33296_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Only_Spousal_And_Mortgage_Steps_In_TDL_QJSA_False_Spousal_Consent_False">
+						<parameter name="ManualTCName" value="SIT_DDTC_33296_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Only_Spousal_And_Mortgage_Steps_In_TDL_QJSA_False_Spousal_Consent_False">
+						</parameter>
+					</include>
+					<include name="DDTC_33297_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Spousal_And_Mortgage_Steps_In_TDL_QJSA_False_Spousal_Consent_NotRequired">
+						<parameter name="ManualTCName" value="SIT_DDTC_33297_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Spousal_And_Mortgage_Steps_In_TDL_QJSA_False_Spousal_Consent_NotRequired">
+						</parameter>
+					</include>
+					<include name="DDTC_33298_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Spousal_And_Mortgage_Steps_In_TDL_QJSA_And_Spousal_Consent_False">
+						<parameter name="ManualTCName" value="SIT_DDTC_33298_Spousal_And_Mortgage_Request_Principal_Residence_Loan_With_Spousal_And_Mortgage_Steps_In_TDL_QJSA_And_Spousal_Consent_False">
+						</parameter>
+					</include> 
+				</methods>	-->
 			</class>
 		</classes>
 	</test>
