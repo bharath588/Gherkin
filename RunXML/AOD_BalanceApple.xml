@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+
+	<test name="Balance">
+
+		<classes>
+			<class name="app.pptweb.testcases.aod.BalanceTestcases">
+				<methods>
+					<include
+						name="AOD_Balance_DDTC_27442_TC_01_Verify_New_Balance_card_on_Account_overview_page_for_single_plan_ppt_with_balance_more_than_Zero">
+						<parameter name="ManualTCName"
+							value="DDTC-27442 TC_01 Verify New Balance card on Account overview page for single plan ppt with balance more than zero">
+						</parameter>
+					</include>
+					
+					<include
+						name="AOD_Balance_DDTC_28693_TC_03_Verify_New_Balance_card_on_Account_overview_page_for_single_plan_ppt_with_Zero_or_no_Balance">
+						<parameter name="ManualTCName"
+							value="DDTC-28693 TC_03 Verify New Balance card on Account overview page for single plan ppt with zero or no Balance">
+						</parameter>
+					</include>
+					
+					
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

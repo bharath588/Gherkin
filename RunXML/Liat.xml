@@ -50,6 +50,11 @@
                     </parameter>
                     </include>
                     
+                    <include name="RIP_TC0015_To_Verify_RetirementIncomeTab_Maximizer">
+                    <parameter name="ManualTCName" value="SIT_RIP_TC0015_To_Verify_RetirementIncomeTab_Maximizer">
+                    </parameter>
+                    </include>
+                    
                     </methods>
                     </class>
                     

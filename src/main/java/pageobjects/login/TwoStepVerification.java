@@ -64,10 +64,11 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(xpath=".//*[@id='emailId']") private WebElement inpPersonalEmail;
 	@FindBy(xpath=".//select[contains(@id,'ContactCountryName')]") private WebElement drpCountry;
 	@FindBy(xpath=".//*[@id='phoneNumberIdD']") private WebElement inpPhoneNo;
-	@FindBy(xpath="//span[@class='input-group-addon']") private WebElement txtCountryCode;
+	@FindBy(xpath="//span[contains(@class,'input-group-addon')]") private WebElement txtCountryCode;
 	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'CONTINUE')]]") private WebElement btnContinue1;
-	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'Save')]]") private WebElement btnSave;
-	@FindBy(xpath="//input[contains(@id,'pptConsentForElectronic')]") private List<WebElement> inpPlanNamecheckBox;
+	//@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'Save')]]") private WebElement btnSave;
+	@FindBy(xpath=".//button[contains(text(),'Save')]") private WebElement btnSave;
+	@FindBy(xpath="//input[@id='pptConsentForElectronic']") private List<WebElement> inpPlanNamecheckBox;
 	@FindBy(xpath="//a[contains(text(),'View') and contains(@ng-click,'redirectToNextGen')]") private WebElement btnViewNextGen;
 	@FindBy(xpath="//header[@class='contained-form-header']/h1") private WebElement hdrEnhancedSecurity;
 	
@@ -551,5 +552,41 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		
 		
 		
+	}
+	/**
+	 * <pre>
+	 * Method to verify Save Button is visible in Change Communication Preference page
+	 * </pre>
+	 * @throws InterruptedException 
+	 * 
+	 */
+	public void verifySaveButton() throws InterruptedException {
+		Web.waitForElement(inpPlanName);
+		if(Web.isWebElementDisplayed(btnSave, true))
+			Reporter.logEvent(Status.PASS,
+					"Verify Save button is visible in Change communication preference page",
+					"Save button is visible in Change communication preference page", false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Save button is visible in Change communication preference page",
+					"Save button is not visible in Change communication preference page", true);
+		
+	}
+	/**
+	 * <pre>
+	 * Method to enter contact info after MFA page
+	 * </pre>
+	 * @throws InterruptedException 
+	 * 
+	 */
+	public void enterContactInformation() throws InterruptedException
+	{
+		System.out.println("In ()");
+		Web.setTextToTextBox(inpPersonalEmail, "discard@gwl.com");
+		Web.selectDropDownOption(drpCountry, "UNITED STATES");
+		Web.setTextToTextBox(inpPhoneNo, "9999999999");
+		Thread.sleep(1000);
+		System.out.println("In 2 ()");
+		Web.clickOnElement(btnContinue1);
 	}
 }

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite"  verbose="1">
+<suite name="testsuite" >
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-    <test name="LOGIN">
+    <test name="LOGIN" parallel="classes" >
         <classes>
-           <class name="app.pptweb.testcases.login.logintestcases">
+            <class name="app.pptweb.testcases.login.logintestcases">
+             <parameter name="browser" value="firefox"/>
                 <methods>
                    
-                 <include name="SF01_TC01_Verify_invalid_Userid_and_Password">
+                <include name="SF01_TC01_Verify_invalid_Userid_and_Password">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_01_TC01_Verify_invalid_Userid_and_Password"></parameter>
                     </include> 
                   	
@@ -42,7 +43,7 @@
                     
                   <include name="userName_Login_Sanity">
                     <parameter name="ManualTCName" value="userName_Login_Sanity"></parameter>
-                    </include>
+                    </include> 
                     
                     <include name="Login_001_eDelivery_as_Electronic_Greater_than_180days">
                     <parameter name="ManualTCName" value="SIT_Login_001_eDelivery_as_Electronic_Greater_than_180days"></parameter>
@@ -53,11 +54,11 @@
                  
                     
                 </methods>
-            </class>  
+            </class> 
        
-          <class name="app.pptweb.testcases.login.registrationtestcases">
+           <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                  <include name="SF01_TC01_User_has_PIN">
+               <include name="SF01_TC01_User_has_PIN">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC001_UI_Validation_User_has_PIN"></parameter>
                     </include>
                
@@ -87,7 +88,7 @@
                
                     <include name="AccountLookup_PositiveFlow_WithPIN">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_04_TC002_Functionality_With_PIN__Positive_flow"></parameter>
-                    </include> 
+                    </include>
                
                     <include name="AccountSetup_WithPin_Validate_ContactInfo">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_03_TC001_UI_Validation_WithPin_Contact_information"></parameter>
@@ -166,7 +167,7 @@
 				</methods>
 			</class> 
 		
-         <class name="app.pptweb.testcases.login.authenticationtestcases">
+       <class name="app.pptweb.testcases.login.authenticationtestcases">
                 <methods>
                     <include name="SF01_TC01_SendActivationCodeThroughLoginFlow">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_01_TC03_Send Activation Code by Email through Login flow"></parameter>

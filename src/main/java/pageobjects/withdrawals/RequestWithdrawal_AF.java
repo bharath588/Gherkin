@@ -410,7 +410,7 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 				Web.getDriver().switchTo().window(windowHandles);
 				// Web.waitForPageToLoad(Web.getDriver());
 			}
-			System.out.println(Web.getDriver().getCurrentUrl());
+			System.out.println("Research Investment Link"+Web.getDriver().getCurrentUrl());
 			if (Web.getDriver()
 					.getCurrentUrl()
 					.equalsIgnoreCase(
@@ -732,8 +732,8 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 						"socialSecurityNumber1")));
 
 		//mosin
-		WebElement txtPrmBenf1maskedDOB=Web.getDriver().findElement
-				(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "dateOfBirth1Masked")));
+		/*WebElement txtPrmBenf1maskedDOB=Web.getDriver().findElement
+				(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "dateOfBirth1Masked")));*/
 		WebElement txtPrmBenf1maskedSSN=Web.getDriver().findElement
 				(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "socialSecurityNumber1Masked")));
 		designateBeneficiaries = new DesignateBeneficiaries();
@@ -758,7 +758,7 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		}
 		catch(ElementNotVisibleException e)
 		{
-			txtPrmBenf1maskedDOB.clear();
+			//txtPrmBenf1maskedDOB.clear();
 			
 			Web.setTextToTextBox(txtPrmBenf1DOB, designateBeneficiaries.getdOB());
 		}
@@ -857,9 +857,9 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		WebElement txtPrmBenf1SSN=Web.getDriver().findElement
 				(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "socialSecurityNumber1")));	
 		
-		//mosin
+		/*//mosin
 		WebElement txtPrmBenf1maskedDOB=Web.getDriver().findElement
-				(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "dateOfBirth1Masked")));
+				(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "dateOfBirth1Masked")));*/
 		WebElement txtPrmBenf1maskedSSN=Web.getDriver().findElement
 				(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "socialSecurityNumber1Masked")));
 		
@@ -882,7 +882,7 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		}
 		catch(ElementNotVisibleException e)
 		{
-			txtPrmBenf1maskedDOB.clear();
+			//txtPrmBenf1maskedDOB.clear();
 			
 			Web.setTextToTextBox(txtPrmBenf1DOB, designateBeneficiaries.getdOB());
 		}
@@ -984,8 +984,8 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		
 
 		//mosin
-		WebElement txtPrmBenf2maskedDOB=Web.getDriver().findElement
-				(By.xpath(prmBenf2PersonalDetails.replace("Benf Fields", "dateOfBirth1Masked")));
+		/*WebElement txtPrmBenf2maskedDOB=Web.getDriver().findElement
+				(By.xpath(prmBenf2PersonalDetails.replace("Benf Fields", "dateOfBirth1Masked")));*/
 		WebElement txtPrmBenf2maskedSSN=Web.getDriver().findElement
 				(By.xpath(prmBenf2PersonalDetails.replace("Benf Fields", "socialSecurityNumber1Masked")));
 		
@@ -1009,7 +1009,7 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		}
 		catch(ElementNotVisibleException e)
 		{
-			txtPrmBenf2maskedDOB.clear();
+			//txtPrmBenf2maskedDOB.clear();
 			Web.setTextToTextBox(txtPrmBenf2DOB, designateBeneficiaries.getdOB());
 		}
 		
@@ -1079,8 +1079,8 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 				(By.xpath(contBenf1TypeOrState.replace("Benf Fields", "beneficiaryType1")));
 		
 		//mosin
-		WebElement txtConBenf1maskedDOB=Web.getDriver().findElement
-				(By.xpath(contBenf1PersonalDetails.replace("Benf Fields", "dateOfBirth1Masked")));
+		/*WebElement txtConBenf1maskedDOB=Web.getDriver().findElement
+				(By.xpath(contBenf1PersonalDetails.replace("Benf Fields", "dateOfBirth1Masked")));*/
 		WebElement txtConBenf1maskedSSN=Web.getDriver().findElement
 				(By.xpath(contBenf1PersonalDetails.replace("Benf Fields", "socialSecurityNumber1Masked")));
 				
@@ -1103,7 +1103,7 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		}
 		catch(ElementNotVisibleException e)
 		{
-			txtConBenf1maskedDOB.clear();
+			//txtConBenf1maskedDOB.clear();
 			Web.setTextToTextBox(txtContBenf1DOB, designateBeneficiaries.getdOB());
 		}
 		
@@ -1173,8 +1173,8 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 				(By.xpath(contBenf2TypeOrState.replace("Benf Fields", "beneficiaryType1")));
 		
 		//mosin
-		WebElement txtConBenf2maskedDOB=Web.getDriver().findElement
-				(By.xpath(contBenf2PersonalDetails.replace("Benf Fields", "dateOfBirth1Masked")));
+		/*WebElement txtConBenf2maskedDOB=Web.getDriver().findElement
+				(By.xpath(contBenf2PersonalDetails.replace("Benf Fields", "dateOfBirth1Masked")));*/
 		WebElement txtConBenf2maskedSSN=Web.getDriver().findElement
 				(By.xpath(contBenf2PersonalDetails.replace("Benf Fields", "socialSecurityNumber1Masked")));
 		designateBeneficiaries = new DesignateBeneficiaries();
@@ -1196,7 +1196,7 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		}
 		catch(ElementNotVisibleException e)
 		{
-			txtConBenf2maskedDOB.clear();
+			//txtConBenf2maskedDOB.clear();
 			Web.setTextToTextBox(txtContBenf2DOB, designateBeneficiaries.getdOB());
 		}
 		

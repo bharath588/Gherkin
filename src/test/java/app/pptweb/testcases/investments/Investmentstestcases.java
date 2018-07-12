@@ -9380,12 +9380,12 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			    	   Web.getDriver().switchTo().window(windowHandle);
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   
-			    	   Thread.sleep(10000);
-			    	   Web.waitForElement(investment, "Button Next");
-			    	   if(Web.isWebEementEnabled(investment, "Button Next"))
+			    	   Thread.sleep(5000);
+			    	  
+			    	   /*if(Web.isWebElementDisplayed(investment, "Button Next"))
 			    		   Web.clickOnElement(investment, "Button Next");
 			    	   Web.waitForPageToLoad(Web.getDriver());
-			    	   Thread.sleep(5000);
+			    	   Thread.sleep(5000);*/
 				    	  if(Web.getDriver().getTitle().toString().trim().contains("Financial Engines"))
 				    	  {
 			    		  Reporter.logEvent(Status.PASS,
@@ -9491,10 +9491,10 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			    	   Web.getDriver().switchTo().window(windowHandle);
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   Thread.sleep(10000);
-			    	   Web.waitForElement(investment, "Button Accept");
+			    	 /*  Web.waitForElement(investment, "Button Accept");
 			    	   if(Web.isWebEementEnabled(investment, "Button Accept"))
 			    		   Web.clickOnElement(investment, "Button Accept");
-			    	   Web.waitForPageToLoad(Web.getDriver());
+			    	   Web.waitForPageToLoad(Web.getDriver());*/
 			    	   Thread.sleep(5000);
 			    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advisory Services - Welcome")){
 			    	  
@@ -9583,11 +9583,11 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			    	   Web.getDriver().switchTo().window(windowHandle);
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   
-			    	   Thread.sleep(10000);
-			    	   Web.waitForElement(investment, "Button Next");
+			    	   Thread.sleep(5000);
+			    	  /* Web.waitForElement(investment, "Button Next");
 			    	   if(Web.isWebEementEnabled(investment, "Button Next"))
 			    		   Web.clickOnElement(investment, "Button Next");
-			    	   Web.waitForPageToLoad(Web.getDriver());
+			    	   Web.waitForPageToLoad(Web.getDriver());*/
 			    	   Thread.sleep(5000);
 				    	  if(Web.getDriver().getTitle().toString().trim().contains("Financial Engines"))
 				    	  {
@@ -9679,10 +9679,10 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			    	   Web.getDriver().switchTo().window(windowHandle);
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   Thread.sleep(10000);
-			    	   Web.waitForElement(investment, "Button Accept");
+			    	  /* Web.waitForElement(investment, "Button Accept");
 			    	   if(Web.isWebEementEnabled(investment, "Button Accept"))
 			    		   Web.clickOnElement(investment, "Button Accept");
-			    	   Web.waitForPageToLoad(Web.getDriver());
+			    	   Web.waitForPageToLoad(Web.getDriver());*/
 			    	   Thread.sleep(5000);
 			    	   if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advisory Services - Welcome")){
 					    	  

@@ -52,7 +52,8 @@ public class Balance extends LoadableComponent<Balance> {
 	@FindBy(xpath = "//img[@class='site-logo']") private WebElement lblSponser;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 
-	
+	//Mosin
+	@FindBy(linkText="Home") private WebElement lnkHome;
 	/** Empty args constructor
 	 * 
 	 */
@@ -179,6 +180,10 @@ public class Balance extends LoadableComponent<Balance> {
 				|| fieldName.trim().equalsIgnoreCase("LOGOUT")) {
 			return this.lnkLogout;
 		}
+		//Mosin
+		if (fieldName.trim().equalsIgnoreCase("Home")) {
+			return this.lnkHome;
+		}
 		return null;
 	}
 	private List<WebElement> getWebElementList(String fieldName) {
@@ -277,5 +282,20 @@ public class Balance extends LoadableComponent<Balance> {
 			Reporter.logEvent(Status.FAIL, "verify "+graphName+" is displayed", graphName+" is not displayed",true);
 		Web.getDriver().switchTo().defaultContent();
 	}
-	
+	public void verifyParticipanttakenToBalancePage()
+	{
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(lblBalance);
+		if(Web.isWebElementDisplayed(lblBalance,true))
+			Reporter.logEvent(Status.PASS,
+					"Verify \"View details\" link when clicked will take the participant to the existing balance page",
+					"Participant is taken to balance page", true);
+		
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify \"View details\" link when clicked will take the participant to the existing balance page",
+					"Participant is not taken to balance page", true);
+		
+	}
 }

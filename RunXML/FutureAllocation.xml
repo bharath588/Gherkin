@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" verbose="1" >
-    <listeners>
-        <listener class-name="core.framework.TestListener"/>
-    </listeners>
-    <test name="Investments">
-    <classes>
-      <class name="app.pptweb.testcases.investments.Investmentstestcases">
+<suite name="testsuite">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+	 <!-- <test name="Regression Suite" parallel="classes" thread-count="2"> --> 
+	<test name="Investments Future Allocations">
+		<classes>
+		 <class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
                   
                     <include name="DDTC_2844_DIM_Choose_individual_funds">
@@ -83,6 +84,5 @@
             </class>  
        	
 		</classes>
-	</test> 
-                    	  
+	</test>
 </suite>

@@ -1063,12 +1063,13 @@ public class withdrawalsamericanfundstestcases {
 						"The Alert Message has been displayed \n"+requestWithdrawal.getWebElementText("GENERIC ALERT ICON"), false);
 			requestWithdrawal.isTextFieldDisplayed("Please verify your email address:");		
 			Web.setTextToTextBox("EMAIL FORM FIELD", requestWithdrawal, Stock.GetParameterValue("emailAddress"));
-			Web.clickOnElement(requestWithdrawal, "EMAIL FORM");
+			//Requierd
+			/*Web.clickOnElement(requestWithdrawal, "EMAIL FORM");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			if(Web.isWebElementDisplayed(requestWithdrawal, "PLAN WITHDRAWAL WARNING", true))
 				Reporter.logEvent(Status.INFO, "Verify confirmation page has been displayed", "The confirmation page has been displayed: \n"
-						+requestWithdrawal.getWebElementText("PLAN WITHDRAWAL WARNING"), true);	
+						+requestWithdrawal.getWebElementText("PLAN WITHDRAWAL WARNING"), true);	*/
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1168,12 +1169,13 @@ public class withdrawalsamericanfundstestcases {
 						"The Alert Message has been displayed \n"+requestWithdrawal.getWebElementText("GENERIC ALERT ICON"), false);
 			requestWithdrawal.isTextFieldDisplayed("Please verify your email address:");	
 			Web.setTextToTextBox("EMAIL FORM FIELD", requestWithdrawal, Stock.GetParameterValue("emailAddress"));
-			Web.clickOnElement(requestWithdrawal, "EMAIL FORM");
+			//Requierd
+			/*Web.clickOnElement(requestWithdrawal, "EMAIL FORM");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			if(Web.isWebElementDisplayed(requestWithdrawal, "PLAN WITHDRAWAL WARNING", true))
 				Reporter.logEvent(Status.INFO, "Verify confirmation page has been displayed", "The confirmation page has been displayed: \n"
-						+requestWithdrawal.getWebElementText("PLAN WITHDRAWAL WARNING"), true);		
+						+requestWithdrawal.getWebElementText("PLAN WITHDRAWAL WARNING"), true);	*/	
 			
 
 		} catch (Exception e) {
@@ -1280,7 +1282,7 @@ public class withdrawalsamericanfundstestcases {
 				for (String windowHandles : Web.getDriver().getWindowHandles()) {
 					Web.getDriver().switchTo().window(windowHandles); 
 				}
-				System.out.println(Web.getDriver().getCurrentUrl());
+				System.out.println("IRA CUSTODIAL LINK"+Web.getDriver().getCurrentUrl());
 				if (Web.getDriver()
 						.getCurrentUrl()
 						.equalsIgnoreCase(
@@ -2319,7 +2321,8 @@ public class withdrawalsamericanfundstestcases {
 				RequestWithdrawal.isAmericanFunds = false;
 				RequestWithdrawal.resetTotalValues();
 				RequestWithdrawal_AF.lstBenfDetails.clear();
-
+				RequestWithdrawal requestWithdrawal = new RequestWithdrawal();
+				Web.clickOnElement(requestWithdrawal, "LOG OUT");
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2449,7 +2452,8 @@ public class withdrawalsamericanfundstestcases {
 				RequestWithdrawal.isAmericanFunds = false;
 				RequestWithdrawal.resetTotalValues();
 				RequestWithdrawal_AF.lstBenfDetails.clear();
-
+				RequestWithdrawal requestWithdrawal = new RequestWithdrawal();
+				Web.clickOnElement(requestWithdrawal, "LOG OUT");
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2690,11 +2694,11 @@ public class withdrawalsamericanfundstestcases {
 
 		} finally {
 			try {
-
+				
 				RequestWithdrawal.isAmericanFunds = false;
 				RequestWithdrawal.resetTotalValues();
 				RequestWithdrawal_AF.lstBenfDetails.clear();
-
+				
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -5202,6 +5206,8 @@ public class withdrawalsamericanfundstestcases {
 				RequestWithdrawal.resetTotalValues();
 				RequestWithdrawal_AF.lstBenfDetails.clear();
 				Reporter.finalizeTCReport();
+				RequestWithdrawal requestWithdrawal = new RequestWithdrawal();
+				Web.clickOnElement(requestWithdrawal, "LOG OUT");
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}

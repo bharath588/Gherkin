@@ -16,7 +16,19 @@
 							value="DDTC_22546_Submit Form Data for confirmation_InService PPT">
 						</parameter>
 					</include>
-
+					
+					<include name="Withdrawals_AF_26490_InService_NonUS_Citizen">
+						<parameter name="ManualTCName"
+							value="DDTC_26490 SIT_PPTWEB__Withdrawal for an AF in-service non-US citizen">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawals_AF_22250_Beneficiary_Existing_Account">
+						<parameter name="ManualTCName"
+							value="DDTC_22250_SIT_PPTWEB_Withdrawal_AF beneficiary for existing account">
+						</parameter>
+					</include>
+					
 					<include name="Withdrawals_AF_22547_Submit_Form_Data_SepService">
 						<parameter name="ManualTCName"
 							value="DDTC_22547_Submit Form Data for confirmation_SepService PPT">
@@ -35,19 +47,25 @@
 						</parameter>
 					</include>
 					
+					<include name="Withdrawals_AF_26489_SepService_NonUS_Citizen">
+						<parameter name="ManualTCName"
+							value="DDTC_26489 SIT_PPTWEB_Withdrawal for an AF sep-service non-US citizen">
+						</parameter>
+					</include> 
+
+					<include name="Withdrawals_AF_22183_Married_PPT_Spouse_Beneficiary">
+						<parameter name="ManualTCName"
+							value="DDTC_22183_SIT_PPTWEB_Withdrawal_AF married participant spouse beneficiary">
+						</parameter>
+					</include>
+					
 					<include name="Withdrawals_AF_22235_Married_Ppt_Multiple_Beneficiaries">
 						<parameter name="ManualTCName"
 							value="DDTC_22235_SIT_PPTWEB_Withdrawal_AF married participant multiple beneficiaries">
 						</parameter>
 					</include>
-
-					<include
-						name="Withdrawals_AF_21605_21613_22640_InService_Age59AndHalf_Roth_Only_And_RothNonRoth_Payee_Dropdown">
-						<parameter name="ManualTCName"
-							value="DDTC_21605_21613_22640_SIT_PPTWEB_Withdrawal_In service_591/2_Roth only_And_Roth_And_NonRoth payee dropdown">
-						</parameter>
-					</include>
-
+					
+					
 					<include
 						name="Withdrawals_AF_21616_22643_PWD_Roth_Only_And_RothNonRoth_Payee_Dropdown">
 						<parameter name="ManualTCName"
@@ -61,39 +79,24 @@
 						</parameter>
 					</include>
 
-					<include name="Withdrawals_AF_22183_Married_PPT_Spouse_Beneficiary">
+					<include
+						name="Withdrawals_AF_21605_21613_22640_InService_Age59AndHalf_Roth_Only_And_RothNonRoth_Payee_Dropdown">
 						<parameter name="ManualTCName"
-							value="DDTC_22183_SIT_PPTWEB_Withdrawal_AF married participant spouse beneficiary">
-						</parameter>
-					</include>
-
-					<include name="Withdrawals_AF_22250_Beneficiary_Existing_Account">
-						<parameter name="ManualTCName"
-							value="DDTC_22250_SIT_PPTWEB_Withdrawal_AF beneficiary for existing account">
-						</parameter>
-					</include>
-
-					<include name="Withdrawals_AF_26489_SepService_NonUS_Citizen">
-						<parameter name="ManualTCName"
-							value="DDTC_26489 SIT_PPTWEB_Withdrawal for an AF sep-service non-US citizen">
-						</parameter>
-					</include>
-
-					<include name="Withdrawals_AF_26490_InService_NonUS_Citizen">
-						<parameter name="ManualTCName"
-							value="DDTC_26490 SIT_PPTWEB__Withdrawal for an AF in-service non-US citizen">
-						</parameter>
-					</include>
-
-					<include name="Withdrawal_AF_22252_beneficiary_tool_tips_and_links">
-						<parameter name="ManualTCName"
-							value="DDTC-22252 S_SIT_PPTWEB_Withdrawal_AF beneficiary tool-tips and links">
+							value="DDTC_21605_21613_22640_SIT_PPTWEB_Withdrawal_In service_591/2_Roth only_And_Roth_And_NonRoth payee dropdown">
 						</parameter>
 					</include>
 
 					 <include name="Withdrawals_AF_24984_AF_Confirmation_ScreenChanges">
 						<parameter name="ManualTCName"
 							value="DDTC_24984_PPTWEB_Withdrawal_AF_Confirmation_Screen_Changes">
+						</parameter>
+					</include>
+					
+					<!-- Sprint 1 -->
+					
+					<include name="Withdrawal_AF_22252_beneficiary_tool_tips_and_links">
+						<parameter name="ManualTCName"
+							value="DDTC-22252 S_SIT_PPTWEB_Withdrawal_AF beneficiary tool-tips and links">
 						</parameter>
 					</include>
 
@@ -128,12 +131,7 @@
 						</parameter>
 					</include>
 
-					<include
-						name="PW_18682_PPTWEB_Withdrawal_Select_working_WITH_an_advisor">
-						<parameter name="ManualTCName"
-							value="DDTC-22522 S_PW-18682_PPTWEB_Withdrawal_Select working WITH an advisor">
-						</parameter>
-					</include>
+					<!-- Sprint 2 -->
 
 					<include
 						name="Withdrawal_DDTC_22765_AF_18683_having_both_moneysource_and_working_without_advisor">
@@ -143,16 +141,35 @@
 					</include>
 
 					<include
-						name="Withdrawal_DDTC_22764_AF_18683_IN_SVC_existing_AF_PPT_having_both_money_source_working_without_advisor">
-						<parameter name="ManualTCName"
-							value="DDTC-22764 S_PW-18683_PPTWEB_Withdrawal_Roll IRA set up for IN SVC existing AF PPT having both money source and working without advisor">
-						</parameter>
-					</include>
-
-					<include
 						name="Withdrawal_DDTC_22763_AF_18683_set_up_for_SEP_SVC_existing_AF_PPT_without_advisor">
 						<parameter name="ManualTCName"
 							value="DDTC-22763 S_PW-18683_PPTWEB_Withdrawal_Roth IRA set up for SEP SVC existing AF PPT without advisor">
+						</parameter>
+					</include>
+					
+					<include
+						name="Withdrawal_DDTC_22761_AF_18683_Roll_IRA_set_up_for_SEP_SVC_existing_AF_PPT_without_advisor">
+						<parameter name="ManualTCName"
+							value="DDTC-22761 S_PW-18683_PPTWEB_Withdrawal_Roll IRA set up for SEP SVC existing AF PPT without advisor">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_22759_AF_18683_Roll_IRA_set_up_for_SEP_SVC_new_AF_PPT_having_both_money_source_and_working_without_advisor">
+						<parameter name="ManualTCName"
+							value="DDTC-22759 S_PW-18683_PPTWEB_Withdrawal_Roll IRA set up for SEP SVC new AF PPT having both money source and working without advisor">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_22758_AF_18683_Roll_IRA_set_up_for_IN_SVC_new_AF_PPT_having_both_money_source_and_working_without_advisor">
+						<parameter name="ManualTCName"
+							value="DDTC-22758 S_PW-18683_PPTWEB_Withdrawal_Roll IRA set up for IN SVC new AF PPT having both money source and working without advisor">
+						</parameter>
+					</include>
+					
+					<include
+						name="Withdrawal_DDTC_22764_AF_18683_IN_SVC_existing_AF_PPT_having_both_money_source_working_without_advisor">
+						<parameter name="ManualTCName"
+							value="DDTC-22764 S_PW-18683_PPTWEB_Withdrawal_Roll IRA set up for IN SVC existing AF PPT having both money source and working without advisor">
 						</parameter>
 					</include>
 
@@ -164,20 +181,140 @@
 					</include>
 
 					<include
-						name="Withdrawal_DDTC_22761_AF_18683_Roll_IRA_set_up_for_SEP_SVC_existing_AF_PPT_without_advisor">
-						<parameter name="ManualTCName"
-							value="DDTC-22761 S_PW-18683_PPTWEB_Withdrawal_Roll IRA set up for SEP SVC existing AF PPT without advisor">
-						</parameter>
-					</include>
-
-					<include
 						name="Withdrawal_DDTC_22760_AF_18683_Roll_IRA_set_up_for_In_SVC_existing_AF_PPT_without_advisor">
 						<parameter name="ManualTCName"
 							value="DDTC-22760 S_PW-18683_PPTWEB_Withdrawal_Roll IRA set up for In SVC existing AF PPT without advisor">
 						</parameter>
 					</include>
 
-
+					<!-- 3rd Sprint -->
+					
+					<include name="Withdrawal_DDTC_22757_Roth_IRA_set_up_for_SEP_SVC_new_AF_PPT_without_advisor">
+						<parameter name="ManualTCName"
+							value="DDTC-22757 S_PW-18683_PPTWEB_Withdrawal_Roth IRA set up for SEP SVC new AF PPT without advisor">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_22753_Roll_IRA_set_up_for_SEP_SVC_new_AF_PPT_having_both_money_source_and_working_with_advisor">
+						<parameter name="ManualTCName"
+							value="DDTC-22753 S_PW-18683_PPTWEB_Withdrawal_Roll IRA set up for SEP SVC new AF PPT having both money source and working with advisor">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_22755_Roll_IRA_set_up_for_SEP_SVC_new_AF_PPT_without_advisor">
+						<parameter name="ManualTCName"
+							value="DDTC-22755 S_PW-18683_PPTWEB_Withdrawal_Roll IRA set up for SEP SVC new AF PPT without advisor">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_22751_Roth_IRA_set_up_for_SEP_SVC_new_AF_PPT_with_advisor">
+						<parameter name="ManualTCName"
+							value="DDTC-22751 S_PW-18683_PPTWEB_Withdrawal_Roth IRA set up for SEP SVC new AF PPT with advisor">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_22749_Roll_IRA_set_up_for_SEP_SVC_new_AF_PPT_with_advisor">
+						<parameter name="ManualTCName"
+							value="DDTC-22749 S_PW-18683_PPTWEB_Withdrawal_Roll IRA set up for SEP SVC new AF PPT with advisor">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_22643_PW_18681_PPTWEB_Withdrawal_SEP_Service_RothandNon_Roth_AF_IRA_Dropdown">
+						<parameter name="ManualTCName"
+							value="DDTC-22643 S_PW-18681_PPTWEB_Withdrawal_SEP Service_RothandNon-Roth_AF IRA Dropdown">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_22642_PW_18681_PPTWEB_Withdrawal_SEP_Service_Non_Roth_AF_IRA_Dropdown">
+						<parameter name="ManualTCName"
+							value="DDTC-22642 S_PW-18681_PPTWEB_Withdrawal_SEP Service_Non-Roth_AF IRA Dropdown">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_22641_PW_18681_PPTWEB_Withdrawal_SEP_Service_Roth_AF_IRA_Dropdown">
+						<parameter name="ManualTCName"
+							value="DDTC-22641 S_PW-18681_PPTWEB_Withdrawal_SEP Service_Roth_AF IRA Dropdown">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_23606_PW_18855_PPTWEB_Withdrawal_Sep_Service_PPT_AF_Citizenship_Screen">
+						<parameter name="ManualTCName"
+							value="DDTC-23606 S_PW-18855_PPTWEB_Withdrawals_Sep-Service PPT_AF Citizenship Screen">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_22756_Roth_IRA_set_up_for_In_SVC_new_AF_PPT_without_advisor">
+						<parameter name="ManualTCName"
+							value="DDTC-22756 S_PW-18683_PPTWEB_Withdrawal_Roth IRA set up for In SVC new AF PPT without advisor">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_22754_Roll_IRA_set_up_for_In_SVC_new_AF_PPT_without_advisor">
+						<parameter name="ManualTCName"
+							value="DDTC-22754 S_PW-18683_PPTWEB_Withdrawal_Roll IRA set up for In SVC new AF PPT without advisor">
+						</parameter>
+					</include>
+													
+					<include name="Withdrawal_DDTC_22752_Roll_IRA_set_up_for_In_SVC_new_AF_PPT_having_both_money_source_and_working_with_advisor">
+						<parameter name="ManualTCName"
+							value="DDTC-22752 S_PW-18683_PPTWEB_Withdrawal_Roll IRA set up for In SVC new AF PPT having both money source and working with advisor">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_22750_Roth_IRA_set_up_for_In_SVC_new_AF_PPT_with_advisor">
+						<parameter name="ManualTCName"
+							value="DDTC-22750 S_PW-18683_PPTWEB_Withdrawal_Roth IRA set up for In SVC new AF PPT with advisor">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_22748_Roll_IRA_set_up_for_In_SVC_new_AF_PPT_with_advisor">
+						<parameter name="ManualTCName"
+							value="DDTC-22748 S_PW-18683_PPTWEB_Withdrawal_Roll IRA set up for In SVC new AF PPT with advisor">
+						</parameter>
+					</include>
+									
+					
+					<include name="Withdrawal_22640_PW_18681_PPTWEB_Withdrawal_IN_Service_RothandNon_Roth_AF_IRA_Dropdown">
+						<parameter name="ManualTCName"
+							value="DDTC-22640 S_PW-18681_PPTWEB_Withdrawal_IN Service_RothandNon-Roth_AF IRA Dropdown">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_22639_S_PW_18681_PPTWEB_Withdrawal_IN_Service_Non_Roth_AF_IRA_Dropdown">
+						<parameter name="ManualTCName"
+							value="DDTC-22639 S_PW-18681_PPTWEB_Withdrawal_IN Service_Non-Roth_AF IRA Dropdown">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_DDTC_22614_PW_18681_PPTWEB_Withdrawal_IN_Service_Roth_AF_IRA_Dropdown">
+						<parameter name="ManualTCName"
+							value="DDTC-22639 S_PW-18681_PPTWEB_Withdrawal_IN Service_Non-Roth_AF IRA Dropdown">
+						</parameter>
+					</include>
+															
+					<include name="Withdrawal_DDTC_23605_PW_18855_PPTWEB_Withdrawals_In_Service_PPT_AF_Citizenship_Screen">
+						<parameter name="ManualTCName"
+							value="DDTC-23605 S_PW-18855_PPTWEB_Withdrawals_In-Service PPT_AF Citizenship Screen">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawals_DDTC_22520_PW_18685_Social_Security_and_ROA_account_linking_Non_Roth_only">
+						<parameter name="ManualTCName"
+							value="DDTC-22520 S_PW-18685_PPTWEB_Withdrawals_Social Security and ROA account linking_Non-Roth only">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawals_DDTC_22519_PW_18685_Social_Security_and_ROA_account_linking_Roth_only">
+						<parameter name="ManualTCName"
+							value="DDTC-22519 S_PW-18685_PPTWEB_Withdrawals_Social Security and ROA account linking_Roth">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawals_DDTC_22210_PW_18685_Social_Security_and_ROA_account_linking_multiple_money">
+						<parameter name="ManualTCName"
+							value="DDTC-22210 S_PW-18685_PPTWEB_Withdrawals_Social Security and ROA account linking_multiple money">
+						</parameter>
+					</include>
 				</methods>
 			</class>
 		</classes>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+	 <!-- <test name="Regression Suite" parallel="classes" thread-count="2"> --> 
+	<test name="SSO">
+		<classes>
+		  <class name="app.pptweb.testcases.investments.Investmentstestcases">
+                <methods>
+                
+                 <!-- PRIOR PLAN CONTRIBUTIONS 5 -->
+  
+                      <include name="DDTC_30083_FE_HMDI_Access_Online_Advice">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_30083_FE_HMDI_Access_Online_Advice"></parameter>
+                    </include>
+                    <include name="DDTC_30106_FE_Guidance_HMDI_Access_Online_Advice">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_30106_FE_Guidance_HMDI_Access_Online_Advice"></parameter>
+                    </include>
+                    <include name="DDTC_30104_FE_DIM_Access_Online_Guidance">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_30104_FE_DIM_Access_Online_Guidance"></parameter>
+                    </include>
+                     
+                    <include name="DDTC_30107_FE_Guidance_DIM_Access_Online_Guidance">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_30107_FE_Guidance_DIM_Access_Online_Guidance"></parameter>
+                    </include>
+                     
+                
+                    </methods>
+			</class>
+		</classes>
+	</test>
+</suite>

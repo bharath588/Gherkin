@@ -1,6 +1,7 @@
 package pageobjects.landingpage;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import lib.DB;
@@ -66,6 +67,31 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	private WebElement lnkGuidance;
 	@FindBy(xpath="//button[contains(text(),'Close without enrolling')]") private WebElement btnCloseWithOutEnrolling;
 	
+	@FindBy(xpath="//div[contains(@id,'sidebar')]//*[contains(text(),'Total account balance')]/parent::*/preceding-sibling::*//span[contains(@class,'currency')]") 
+	private WebElement accBalanceLiat;
+	@FindBy(xpath="//*[text()='Total Balance']/following-sibling::div//span[contains(@class,'currency')]") 
+	private WebElement accBalanceMyAcc;
+	
+	//Mosin - Getting multiple plan Amount
+	
+	@FindBy(xpath = "//span[@class='currency pull-right']")
+	private List<WebElement> txtMyAccountBalance;
+	
+	//Mosin - If we get Confirm your contact information page after MFA page
+	
+	@FindBy(xpath="//h1[contains(text(),'Confirm your contact information')]") private WebElement txtConfirmContactInfo;
+	
+	@FindBy(xpath=".//*[@id='emailId']") private WebElement inpPersonalEmail;
+	@FindBy(xpath=".//select[contains(@id,'ContactCountryName')]") private WebElement drpCountry;
+	@FindBy(xpath=".//*[@id='phoneNumberIdD']") private WebElement inpPhoneNo;
+	
+	//Mosin - To get Salary
+	@FindBy(id="progress-to-goal")
+	private WebElement lnkClickGoal;
+	@FindBy(id="todays-salary")
+	private WebElement txtSalary;
+	/*@FindBy(xpath="//*[@data-goal-id='progress-to-goal']") 
+	private WebElement txtSalary;*/
 	
 	private String lnkEnrollNow="//li[./a[contains(@ng-href,'planid')]]//a[./span[contains(text(),'Enrollment now open')]]";
 
@@ -155,6 +181,17 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 			}
 		}
 
+			
+		if(Web.isWebElementDisplayed(txtConfirmContactInfo))
+		{
+		
+			try {
+				(new TwoStepVerification()).enterContactInformation();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		if (Web.isWebElementDisplayed(lnkDismiss)) {
 			this.lnkDismiss.click();
 		}
@@ -446,7 +483,71 @@ public class LandingPage extends LoadableComponent<LandingPage> {
           catch(NoSuchElementException e){
         	  e.printStackTrace();
           }
-  		
-		
 	}
+	/**
+	 * method to get Total Account Balance in Landing Page
+	 */
+	//Bhargav
+	public String getTotalAccountBalance()
+	{
+		String sBalance="";
+		try{
+			
+			sBalance=accBalanceLiat.getText();
+		}
+		catch(NoSuchElementException e){
+			sBalance=accBalanceMyAcc.getText();
+        }
+		if(sBalance.isEmpty() || sBalance.equals(""))
+			Reporter.logEvent(
+					Status.FAIL,
+					"Verify Account Balance is Displayed",
+					"Account Balance is not Displayed in LIAT or My Accounts Page",
+					true);
+		return sBalance;
+	}
+	/**
+	 * method to get Total Account Balance of available plans in Landing Page
+	 */
+	//Mosin
+	public ArrayList<String> getMultipleTotalAccountBalance()
+	{
+		ArrayList<String> lstAmount = new ArrayList<String>();
+		for(int i=0;i<txtMyAccountBalance.size();i++)
+		{
+			lstAmount.add(i, txtMyAccountBalance.get(i).getText());
+		}
+		//System.out.println(lstAmount.get(0)+lstAmount.get(1));
+		return lstAmount;
+	}
+	public String getAccountBalanceByPlan(String sPlanid)
+	{
+		
+		String sAmount = Web.getDriver().findElement(By.xpath
+				(".//*[@class='plan']/*[starts-with(@id,'ga_"+sPlanid+"')]/ancestor::span[@class='plan']/following-sibling::div/span")).getText();
+		System.out.println("Bal by acount id"+sAmount);
+		return sAmount;
+	}
+	/**
+	 * method to get the salary of the ppt in Landing Page
+	 * @throws InterruptedException 
+	 */
+	//Mosin
+	public String getSalary() throws InterruptedException
+	{
+		String sSalary = null;
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.clickOnElement(lnkClickGoal);
+		Thread.sleep(1000);
+		Web.clickOnElement(txtSalary);
+		sSalary = txtSalary.getAttribute("value");
+		if(sSalary.contains("$"))
+			sSalary = String.valueOf(Web.getIntegerCurrency(sSalary));
+		System.out.println("Salary"+sSalary);
+		Web.clickOnElement(lnkCancelGoalSetup);
+		return sSalary;
+	}
+		
+	
 }

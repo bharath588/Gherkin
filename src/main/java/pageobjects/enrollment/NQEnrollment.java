@@ -581,6 +581,8 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 		String actualContributionRate;
 		try {
 			actualContributionRate = lnkContributionRate.getText().trim();
+			if(actualContributionRate.equalsIgnoreCase("0%"))
+				actualContributionRate="%";
 			if (contributionRate.equalsIgnoreCase(actualContributionRate))
 				Reporter.logEvent(
 						Status.PASS,
@@ -601,6 +603,8 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 								+ actualContributionRate, true);
 
 			actualContributionRate = inpSliderThumb.getText().trim();
+			if(actualContributionRate.equalsIgnoreCase("0%"))
+				actualContributionRate="%";
 			if (contributionRate.equalsIgnoreCase(actualContributionRate))
 				Reporter.logEvent(Status.PASS,
 						"Verify Previously Elected Deferral is Same in Slider",

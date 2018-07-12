@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+
+	<test name="AOD_Contributions">
+		<classes>
+			<class name="app.pptweb.testcases.aod.ContribuitionsTestcases">
+				<methods>
+					<!-- 2nd Sprint -->
+					<include name="AOD_Contribution_DDTC_33186_SIT_PPTWEB_Account_overview_Contributions_card_for_Maximize_me_Always_Standard_contribution">
+						<parameter name="ManualTCName"
+							value="DDTC-33186 SIT_PPTWEB_Account overview_Contributions card for Maximize me Always Standard contribution">
+						</parameter>
+					</include>
+					<include name="AOD_Contribution_DDTC_33187_SIT_PPTWEB_Account_overview_Contributions_card_for_Maximize_me_Always_Catchup_contribution">
+						<parameter name="ManualTCName"
+							value="DDTC-33187 SIT_PPTWEB_Account overview_Contributions card for Maximize me Always Catchup contribution">
+						</parameter>
+					</include>
+					<include name="AOD_Contribution_DDTC_29352_SIT_PPTWEB_Account_overview_Contributions_card_with_Base_pay_Catch_up_Bonus_After_tax_and_Variable_contributions">
+						<parameter name="ManualTCName"
+							value="DDTC-29352 SIT_PPTWEB_Account overview_Contributions card with Base pay Catch-up Bonus After tax and Variable contributions">
+						</parameter>
+					</include>
+					<include name="AOD_Contribution_DDTC_33188_SIT_PPTWEB_Account_overview_Contributions_card_for_One_time_Maximizer_for_Standard_contributions">
+						<parameter name="ManualTCName"
+							value="DDTC-33188 SIT_PPTWEB_Account overview_Contributions card for One time Maximizer for Standard contributions">
+						</parameter>
+					</include>
+					
+					<include name="AOD_Contribution_DDTC_33193_SIT_PPTWEB_Account_overview_Apple_Contributions_card_without_Standard_maximizer">
+						<parameter name="ManualTCName"
+							value="DDTC-33193 SIT_PPTWEB_Account overview_Apple Contributions card without Standard maximizer">
+						</parameter>
+					</include>
+					<include name="AOD_Contribution_DDTC_33196_SIT_PPTWEB_Account_overview_Apple_Contributions_card_without_Catchup_maximizer">
+						<parameter name="ManualTCName"
+							value="DDTC-33196 SIT_PPTWEB_Account overview_Apple Contributions card without Catchup maximizer">
+						</parameter>
+					</include>
+					<include name="AOD_Contribution_DDTC_33189_SIT_PPTWEB_Account_overview_Contributions_card_for_One_time_Maximizer_for_Catchup_contributions">
+						<parameter name="ManualTCName"
+							value="DDTC-33189 SIT_PPTWEB_Account overview_Contributions card for One time Maximizer for Catchup contributions">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

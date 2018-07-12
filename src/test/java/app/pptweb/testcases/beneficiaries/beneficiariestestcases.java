@@ -77,6 +77,16 @@ public class beneficiariestestcases {
 		}
 		return testDataForCurrentThread;
 	}
+    public void prepareLoginTestData(String quesryNmae,String... queryParam) {
+		try {
+			TestDataFromDB
+					.getParticipantDataFromDB( quesryNmae, queryParam);
+			//TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
     
     
    private String printTestData() throws Exception {
@@ -591,7 +601,7 @@ public class beneficiariestestcases {
 				if(lib.Web.VerifyText(Stock.GetParameterValue("Alert_message"),alert_msg,true))
 					Reporter.logEvent(Status.PASS, "verify No Spouse Alert Message", "No Spouse Alert Message is matching. Alert messgae : "+alert_msg, false);
 				else
-					Reporter.logEvent(Status.FAIL, "verify No Spouse Alert Message", "No Spouse Alert Message is not matching. Alert message : "+alert_msg, true);
+					Reporter.logEvent(Status.FAIL, "verify No Spouse Alert Message", "No Spouse Alert Message is not matching.\nExpected Alert message : "+Stock.GetParameterValue("Alert_message")+"\nActual Alert message :"+alert_msg, true);
 			}
 			else
 				Reporter.logEvent(Status.FAIL, "verify No Spouse Alert Message", "No Spouse Alert Message is not displayed", true);
@@ -748,11 +758,19 @@ public class beneficiariestestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 
 			participant_SSN = Stock.GetParameterValue("SSN");
 		    first_Name=Stock.GetParameterValue("FIRST_NAME");
+		    MyBeneficiaries beneficiary = new MyBeneficiaries();
+			try {
+				beneficiary.deleteBeneficiariesFromDB(participant_SSN, first_Name+"%");
+				
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -765,7 +783,7 @@ public class beneficiariestestcases {
 //			leftmenu = new LeftNavigationBar(accountPage);
 //		}
 			leftmenu = new LeftNavigationBar(homePage);
-			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
+			 beneficiary = new MyBeneficiaries(leftmenu);
 			
 			beneficiary.get();
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
@@ -842,6 +860,7 @@ public class beneficiariestestcases {
 			Web.getDriver().navigate().refresh();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(5000);
 			if(lib.Web.isWebElementDisplayed(beneficiary,"Alert Warning Msg",true )){
 				String alert_msg= beneficiary.readErrorMessage("Alert Warning Msg");
 				if(lib.Web.VerifyText(Stock.GetParameterValue("Alert_message"),alert_msg,true))
@@ -991,7 +1010,8 @@ public class beneficiariestestcases {
 			Web.getDriver().navigate().refresh();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			
+			Thread.sleep(3000);
+			Web.waitForElement(beneficiary,"Alert Warning Msg");
 			if(lib.Web.isWebElementDisplayed(beneficiary,"Alert Warning Msg" )){
 				String alert_msg= beneficiary.readErrorMessage("Alert Warning Msg");
 				if(lib.Web.VerifyText(Stock.GetParameterValue("Alert_message"),alert_msg,true))
@@ -1049,7 +1069,7 @@ public class beneficiariestestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 
 			participant_SSN = Stock.GetParameterValue("SSN");
@@ -1090,18 +1110,20 @@ public class beneficiariestestcases {
 			Web.clickOnElement(beneficiary, "View Beneficiary Button");
 			Web.waitForElement(beneficiary, "ContinueAndConfirm");
 			if(Web.clickOnElement(beneficiary, "ContinueAndConfirm"))*/
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(beneficiary, "Generic Error Msg");
 			if(lib.Web.isWebElementDisplayed(beneficiary, "Generic Error Msg",true))
-				Reporter.logEvent(Status.PASS, "Verify if Error page is displayed", "Error page is displayed", false);
+				Reporter.logEvent(Status.PASS, "Verify if Error page is displayed", "Error page is displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify if Error page is displayed", "Error page not displayed", true);
 			
 			String error_msg="";
 			error_msg=beneficiary.readErrorMessage("Generic Error Msg");
 			if(lib.Web.VerifyText(Stock.GetParameterValue("Error_msg"), error_msg, true))
-				Reporter.logEvent(Status.PASS, "Verify if Error message is matching", "Error message is matching", false);
+				Reporter.logEvent(Status.PASS, "Verify if Error message is matching", "Error message is matching\n Error Message: "+error_msg, false);
 			else
-				Reporter.logEvent(Status.FAIL, "Verify if Error message is matching", "Error message not matching", true);
+				Reporter.logEvent(Status.FAIL, "Verify if Error message is matching", "Error message not matching\n Expected Error Message: "+Stock.GetParameterValue("Error_msg")+"\nActual Error Message: "+error_msg, true);
 			
 		}
 		catch(Exception e)
@@ -1340,7 +1362,8 @@ public class beneficiariestestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			//prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			TestDataFromDB.getParticipantDataFromDB(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			participant_SSN = Stock.GetParameterValue("SSN");
 		    first_Name=Stock.GetParameterValue("FIRST_NAME");
@@ -1352,6 +1375,7 @@ public class beneficiariestestcases {
 			enrollmentpage.get();
 			enrollmentpage.selectQuickEnroll();
 			Web.clickOnElement(enrollmentpage, "Button I Agree Enroll Now");
+			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(enrollmentpage, "Button View My Account");
 			Web.clickOnElement(enrollmentpage, "Button View My Account");
 			if(Web.isWebElementDisplayed(homePage, "HOME", true)){

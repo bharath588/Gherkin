@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+
+	<test name="Transaction History">
+
+		<classes>
+			<class name="app.pptweb.testcases.aod.TransactionHistoryTestcases">
+				<methods>
+					<include name="AOD_Transaction_DDTC_28854_SIT_PPTWEB_Account_overview_Transaction_History_card_with_less_than_five_transactions">
+						<parameter name="ManualTCName"
+							value="DDTC-28854 SIT_PPTWEB_Account overview_Transaction History card with less than five transactions">
+						</parameter>
+					</include>
+					<include name="AOD_Transaction_DDTC_28702_SIT_PPTWEB_Account_overview_Transaction_History_card_with_greater_than_five_transactions">
+						<parameter name="ManualTCName"
+							value="DDTC-28702 SIT_PPTWEB_Account overview_Transaction History card with greater than five transactions">
+						</parameter>
+					</include>
+					<include name="AOD_Loans_DDTC_28855_SIT_PPTWEB_Account_overview_Transaction_History_card_with_zero_transactions">
+						<parameter name="ManualTCName"
+							value="DDTC-28855 SIT_PPTWEB_Account overview_Transaction History card with zero transactions">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

@@ -9,6 +9,26 @@
 		<classes>
 			<class	name="app.pptweb.testcases.withdrawals.withdrawalsrmdtestcases">
 				<methods>
+				
+					<!-- 1st Sprint below 3 TC's-->
+					<include name="Withdrawal_RMD_DDTC_29685_RMD_Verifying_How_is_this_Calculated_Modal_in_RMD_screen">
+						<parameter name="ManualTCName"
+							value="DDTC-29685 RMD - Verifying How is this Calculated Modal in RMD screen">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_RMD_DDTC_29686_RMD_Verifying_Tax_Withholdings_Modal_in_RMD_screen">
+						<parameter name="ManualTCName"
+							value="DDTC-29686 RMD - Verifying Tax Withholdings Modal in RMD screen">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_RMD_DDTC_29759_RMD_Verifying_Delivery_Method_Modal_in_RMD_screen">
+						<parameter name="ManualTCName"
+							value="DDTC-29759 RMD - Verifying Delivery Method Modal in RMD screen">
+						</parameter>
+					</include>
+					
 					<!-- Current year scenarios -->
 					<!-- 2nd Sprint below 6 TC's-->
 					<!-- Non Grace. Self and Full service -->
@@ -61,24 +81,7 @@
 							value="DDTC-29668 RMD Self Service Grace plan Participant required to take an RMD in current calendar year with RMD starting in the Previous calendar year">
 						</parameter>
 					</include>
-					<!-- 1st Sprint below 3 TC's-->
-					<include name="Withdrawal_RMD_DDTC_29685_RMD_Verifying_How_is_this_Calculated_Modal_in_RMD_screen">
-						<parameter name="ManualTCName"
-							value="DDTC-29685 RMD - Verifying How is this Calculated Modal in RMD screen">
-						</parameter>
-					</include>
 					
-					<include name="Withdrawal_RMD_DDTC_29686_RMD_Verifying_Tax_Withholdings_Modal_in_RMD_screen">
-						<parameter name="ManualTCName"
-							value="DDTC-29686 RMD - Verifying Tax Withholdings Modal in RMD screen">
-						</parameter>
-					</include>
-					
-					<include name="Withdrawal_RMD_DDTC_29759_RMD_Verifying_Delivery_Method_Modal_in_RMD_screen">
-						<parameter name="ManualTCName"
-							value="DDTC-29759 RMD - Verifying Delivery Method Modal in RMD screen">
-						</parameter>
-					</include>
 					
 					<!-- RMD Informational Message -->
 					<!-- 2nd Sprint below 4 TC's-->
@@ -106,7 +109,7 @@
 						</parameter>
 					</include>
 					
-					<!-- Pro-Active notification scenarios-->
+					<!-- Pro-Active notification scenarios--><!-- Non-Apple Below 4 -->
 					
 					<include name="Withdrawal_RMD_DDTC_29793_PPTWEB_RMD_confirmation_screen_Proactive_enabled_for_RMD_withdrawal">
 						<parameter name="ManualTCName"
@@ -131,6 +134,242 @@
 							value="DDTC-29941 RMD - Request Current Year RMD with proactive notification type selected as Text Message and Email">
 						</parameter>
 					</include>
+					<!-- 3rd Sprint Started -->
+					<include name="Withdrawal_RMD_DDTC_29946_screen_with_proactive_notification_not_set_up_for_the_particpants_plan">
+						<parameter name="ManualTCName"
+							value="DDTC-29946 RMD - RMD screen with proactive notification not set up for the particpants plan">
+						</parameter>
+					</include>
+					
+					<!-- Routing logic for request withdrawals -->
+					
+					<include name="Withdrawals_RMD_DDTC_29981_PPT_with_Spousal_Consent_route_to_Withdrawals_flow_and_stops_after_sending_minimally_pre_filled_form_or_email">
+						<parameter name="ManualTCName"
+							value="DDTC-29981 PTWEB_RMD_PPT with Spousal Consent route to Withdrawals flow and stops after sending minimally pre-filled form or email">
+						</parameter>
+					</include>
+					<include name="Withdrawals_RMD_DDTC_29706_PPT_with_QJSA_Consent_route_to_Withdrawals_flow_and_stops_after_sending_minimally_pre_filled_form_or_email">
+						<parameter name="ManualTCName"
+							value="DDTC-29706 PPTWEB_RMD_PPT with QJSA route to Withdrawals flow and stops after sending minimally pre-filled form or email">
+						</parameter>
+					</include>
+					
+					<!-- SDB below 2 Non-Apple -->
+					<include name="Withdrawal_RMD_DDTC_29707_Sep_Service_PPT_with_SDB_route_to_Withdrawals_flow_and_stops_after_sending_minimally_pre_filled_form_or_email">
+						<parameter name="ManualTCName"
+							value="DDTC-29707 PPTWEB_RMD_Sep Service PPT with SDB route to Withdrawals flow and stops after sending minimally pre-filled form or email">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_29766_PPTWEB_RMD_In_Service_PPT_with_SDB_route_to_Withdrawals_flow">
+						<parameter name="ManualTCName"
+							value="DDTC-29766 PPTWEB_RMD_In-Service PPT with SDB route to Withdrawals flow">
+						</parameter>
+					</include>
+					<!-- Below wait period is applicable for plan so Non-Apple 1 -->
+					<include name="Withdrawal_RMD_DDTC_29699_PPT_with_Wait_Period_condition_route_to_Withdrawals_flow">
+						<parameter name="ManualTCName"
+							value="DDTC-29699 PPTWEB_RMD_PPT with Wait Period condition route to Withdrawals flow">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_29637_Routing_to_withdrawal_flow_for_PPT_with_age_less_than_70_and_5_Percent_owner_with_KTMG_enabled_for_RMD">
+						<parameter name="ManualTCName"
+							value="DDTC-29637 PPTWEB_RMD_Routing to withdrawal flow for PPT with age less than 70.5 and 5 Percent owner with KTMG enabled for RMD">
+						</parameter>
+					</include> 
+					<include name="Withdrawal_RMD_DDTC_29636_PPTWEB_RMD_Routing_of_RMD_flow_when_KTMG_service_call_is_successful">
+						<parameter name="ManualTCName"
+							value="DDTC-29636 PPTWEB_RMD_Routing of RMD flow when KTMG service call is successful">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_29625_Routing_to_RMD_flow_qualifies_age_greater_than_70_terminated_and_Mindistr_amt_greater_than_0_with_KTMG_enabled">
+						<parameter name="ManualTCName"
+							value="DDTC-29625 PPTWEB_RMD_Routing to RMD flow for PPT qualifies such as age greater than 70 terminated and Min_distr amt greater than 0 with KTMG enabled">
+						</parameter>
+					</include>
+					
+					
+					<!-- 5th Sprint Confirmation Screen -->
+					
+					<include name="Withdrawal_RMD_DDTC_29671_confirmation_screen_for_current_year_RMD_withdrawal">
+						<parameter name="ManualTCName" 
+						value="DDTC-29671 PPTWEB_RMD confirmation screen_for current year RMD withdrawal">
+						</parameter>
+					</include>
+					<!-- Below 3 Non-Apple -->
+					<include name="Withdrawal_RMD_DDTC_29640_PPTWEB_RMD_Routing_of_regular_WD_flow_when_KTMG_turned_off_for_RMD">
+						<parameter name="ManualTCName" 
+						value="DDTC-29640 PPTWEB_RMD_Routing of regular WD flow when KTMG turned off for RMD">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_29626_routing_of_RMD_doesnot_qualify_RMD_such_as_age_greater_70_and_employed_and_non_5_Owner_with_KTMG_disabled">
+						<parameter name="ManualTCName" 
+						value="DDTC-29626 routing of RMD flow for PPT doesnot qualify RMD such as age greater 70 and employed and non 5 Owner with KTMG disabled">
+						</parameter>
+					</include>
+					
+					<!-- Pin Auth: Dual Iteration -->
+					<include name="Withdrawal_RMD_DDTC_29882_PPT_with_Pin_auth_I_PAE_user_with_inquire_and_update_permissions">
+						<parameter name="ManualTCName" 
+						value="DDTC-29882 PPT with Pin auth I PAE user with inquire and update permissions">
+						</parameter>
+					</include>
+					
+					<!-- Hard Stop / Exception -->
+					
+					<include name="Withdrawal_RMD_DDTC_29674_PPTWEB_RMD_Exception_Hard_Stop_scenarios_for_NextGen_PartWeb_Withdrawals">
+						<parameter name="ManualTCName" 
+						value="DDTC-29674 PPTWEB_RMD_Exception Hard Stop scenarios for NextGen PartWeb Withdrawals">
+						</parameter>
+					</include>
+					<!-- 3rd Sprint Ended Total 9 TC's -->
+					
+					<!-- 4th Sprint Misc -->
+					<include name="Withdrawal_RMD_DDTC_29912_RMD_Citizenship_screen_validations">
+						<parameter name="ManualTCName"
+							value="DDTC-29912 RMD - Citizenship screen validations">
+						</parameter>
+					</include>
+					<include name="Withdrawals_RMD_DDTC_29899_Request_Current_Year_RMD_with_Terminated_Participant_Non_5_percent_owner_RMD_begin_year_is_Previous_year">
+						<parameter name="ManualTCName" 
+						value="DDTC-29899 RMD - Request Current Year RMD with Terminated Participant, Non 5 percent owner and RMD begin year is Previous year or Beyond previous year">
+						</parameter>
+					</include>
+					<include name="Withdrawals_RMD_DDTC_29901_Request_Current_Year_RMD_with_Active_Participant_Non_5_percent_owner_RMD_begin_year_is_current_year">
+						<parameter name="ManualTCName" 
+						value="DDTC-29901 RMD - Request Current Year RMD with Active Participant Non 5 percent owner RMD begin year is current year">
+						</parameter>
+					</include>
+					<include name="Withdrawals_RMD_DDTC_29904_Request_Current_Year_RMD_with_Active_Participant_5_percent_owner_RMD_begin_year_is_current_year">
+						<parameter name="ManualTCName" 
+						value="DDTC-29904 RMD - Request Current Year RMD with Active Participant 5 percent owner RMD begin year is current year">
+						</parameter>
+					</include>
+					<include name="Withdrawals_RMD_DDTC_29907_Request_Current_Year_RMD_with_Terminated_Participant_5_percent_owner_RMD_begin_year_is_current_year">
+						<parameter name="ManualTCName" 
+						value="DDTC-29907 RMD - Request Current Year RMD with Terminated Participant 5 percent owner RMD begin year is current year">
+						</parameter>
+					</include>
+					<!-- Low Below 1 -->
+					<include name="Withdrawal_RMD_DDTC_29931_RMD_Request_Current_Year_RMD_with_Regular_Mail_Delivery_Method">
+						<parameter name="ManualTCName" 
+						value="DDTC-29931 RMD - Request Current Year RMD with Regular Mail Delivery Method">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_29934_RMD_Request_Current_Year_RMD_with_Expedited_Mail_Delivery_Method">
+						<parameter name="ManualTCName" 
+						value="DDTC-29934 RMD - Request Current Year RMD with Expedited Mail Delivery Method">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_29936_RMD_Request_Current_Year_RMD_with_ACH_Mail_Delivery_Method">
+						<parameter name="ManualTCName" 
+						value="DDTC-29936 RMD - Request Current Year RMD with ACH Mail Delivery Method">
+						</parameter>
+					</include>
+					
+					<!-- 
+					Starting of Grace and Current Year
+					
+					<include name="Withdrawal_RMD_DDTC_30934_PPTWEB_Grace_RMD_Request_both_Current_and_Grace_for_delivery_methods_as_Regular_mail_and_Direct_Deposit">
+						<parameter name="ManualTCName" 
+						value="DDTC-30934 PPTWEB_Grace RMD - Request RMD with both Current and Grace for delivery methods selected as Regular mail and Direct Deposit">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_30932_PPTWEB_Grace_RMD_Request_both_Current_and_Grace_for_delivery_methods_as_Regular_mail_and_Expedite_Deposit">
+						<parameter name="ManualTCName" 
+						value="DDTC-30932 PPTWEB_Grace RMD - Request RMD with both Current and Grace for delivery methods selected as Regular mail and Expedite Deposit">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_30933_PPTWEB_Grace_RMD_Request_both_Current_and_Grace_for_delivery_methods_as_Expedite_mail_and_Direct_Deposit">
+						<parameter name="ManualTCName" 
+						value="DDTC-30933 PPTWEB_Grace RMD - Request RMD with both Current and Grace for delivery methods selected as Expedite mail and Direct Deposit">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_30837_PPTWEB_Grace_RMD_Confirmation_page_with_only_Grace_RMD_submit">
+						<parameter name="ManualTCName" 
+						value="DDTC-30837 PPTWEB_Grace RMD - Confirmation page with only Grace RMD submit">
+						</parameter>
+					</include>
+					
+					6th Sprint
+					<include name="Withdrawal_RMD_DDTC_29689_PPTWEB_Grace_RMD_Confirmation_page_with_both_Grace_RMD_and_Current_year_RMD_submit">
+						<parameter name="ManualTCName" 
+						value="DDTC-29689 PPTWEB_Grace RMD - Confirmation page with both Grace RMD and Current year RMD submit">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_30931_PPTWEB_Grace_RMD_Request_RMD_with_both_delivery_methods_selected_as_Direct_Deposit">
+						<parameter name="ManualTCName" 
+						value="DDTC-30931 PPTWEB_Grace RMD - Request RMD with both delivery methods selected as Direct Deposit">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_30913_PPTWEB_Grace_RMD_Request_Previous_Year_RMD_with_Direct_deposit_Payment_Method">
+						<parameter name="ManualTCName" 
+						value="DDTC-30913 PPTWEB_Grace RMD - Request Previous Year RMD with Direct deposit Payment Method">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_29642_Grace_Full_Service_plan_Participant_take_RMD_in_Prev_year_with_RMD_starting_in_the_Previous_year">
+						<parameter name="ManualTCName" 
+						value="DDTC-29642 Grace RMD - Full Service plan Participant required to take RMD in Prev calendar year with RMD starting in the Previous calendar year">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_29670_Grace_Self_Service_plan_Participant_take_RMD_in_Prev_year_with_RMD_starting_in_the_Previous_year">
+						<parameter name="ManualTCName" 
+						value="DDTC-29670 Grace RMD - Self Service plan Participant required to take RMD in Prev calendar year with RMD starting in the Previous calendar year">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_29687_Grace_Year_RMD_with_Terminated_Participant_Non_5_percent_owner_and_RMD_begin_year_is_Previous_year">
+						<parameter name="ManualTCName" 
+						value="DDTC-29687 Grace RMD - Request Grace Year RMD with Terminated Participant Non 5 percent owner and RMD begin year is Previous year">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_30830_Grace_Year_RMD_with_Terminated_Participant_5_percent_owner_and_RMD_begin_year_is_Previous_year">
+						<parameter name="ManualTCName" 
+						value="DDTC-30830 Grace RMD - Request Grace Year RMD with Terminated Participant 5 percent owner and RMD begin year is Previous year">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_30831_Grace_Year_RMD_with_Active_Participant_5_percent_owner_and_RMD_begin_year_is_Previous_year">
+						<parameter name="ManualTCName" 
+						value="DDTC-30831 Grace RMD - Request Grace Year RMD with Active Participant 5 percent owner and RMD begin year is Previous year">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_30833_Grace_Year_and_Current_Year_with_Active_Participant_5_percent_owner_and_RMD_begin_year_is_Previous_year">
+						<parameter name="ManualTCName" 
+						value="DDTC-30833 Grace RMD - Request Grace Year and Current Year RMD with Active Participant 5 percent owner and RMD begin year is Previous year">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_30835_Grace_Year_and_Current_Year_with_Terminated_Participant_5_percent_owner_and_RMD_begin_year_is_Previous_year">
+						<parameter name="ManualTCName" 
+						value="DDTC-30835 Grace RMD - Request Grace Year and Current Year RMD with Terminated Participant 5 percent owner and RMD begin year is Previous year">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_30836_Grace_Year_and_Current_Year_with_Terminated_Participant_Non_5_percent_owner_and_RMD_begin_year_is_Previous_year">
+						<parameter name="ManualTCName" 
+						value="DDTC-30836 Grace RMD - Request Grace Year and Current Year RMD with Terminated Participant Non 5 percent owner and RMD begin year is Previous year">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_30952_Grace_RMD_Verify_the_Federal_Tax_withholding_amount_in_the_Confirmation_page">
+						<parameter name="ManualTCName" 
+						value="DDTC-30952 Grace RMD - Verify the Federal Tax withholding amount in the Confirmation page">
+						</parameter>
+					</include>
+					
+					RMD Submit fail
+					<include name="Withdrawal_RMD_DDTC_30927_Grace_RMD_Submit_Failure_Confirmation_page_display_when_GRACE_RMD_transaction_submitted_to_EASY_Fails">
+						<parameter name="ManualTCName" 
+						value="DDTC-30927 Grace RMD Submit Failure - Confirmation page display when GRACE RMD transaction submitted to EASY Fails">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_30914_GRACE_RMD_and_Current_year_RMD_transactions_are_submitted_to_EASY_the_GRACE_RMD_fails">
+						<parameter name="ManualTCName" 
+						value="DDTC-30914 - GRACE RMD and Current year RMD transactions are submitted to EASY the GRACE RMD fails">
+						</parameter>
+					</include>
+					<include name="Withdrawal_RMD_DDTC_30928_GRACE_and_Current_yr_RMD_transactions_are_submitted_to_EASY_and_Current_yr_RMD_submit_Fails">
+						<parameter name="ManualTCName" 
+						value="DDTC-30928 Current yr RMD Submit Fail - GRACE and Current yr RMD transactions are submitted to EASY and Current yr RMD submit Fails">
+						</parameter>
+					</include>
+					 -->
+					
 				</methods>
 			</class>
 		</classes>

@@ -2,10 +2,10 @@
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
 <suite name="testsuite" verbose="1">
     <listeners>
-        <listener class-name="core.framework.TestListener"/>
+        <listener class-name="core.framework.TestListener" />
     </listeners>
    
-    <test name="Beneficiaries" >
+    <test name="Beneficiaries" parallel="true" >
 
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
@@ -72,8 +72,6 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC017_Ability to remove a beneficiary"></parameter>
                     </include>
                
-                   
-                
                     <include name="Beneficiary_TC006_Married_no_allocations_for_beneficiaries_error_message">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC006_Married no allocations for beneficiaries error message"></parameter>
                     </include>

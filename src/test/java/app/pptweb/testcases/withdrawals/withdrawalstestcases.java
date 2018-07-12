@@ -222,13 +222,23 @@ import core.framework.Globals;
 				Map<String, String> testdata) {
 	
 			try {
+				
 				boolean isLabelDisplayed = false;
+				int pptOwnerShip=0;
+				String[] updateTermDate = Stock
+						.getTestQuery("updateGDRStopDate");
 				Reporter.initializeReportForTC(itr,
 						Globals.GC_MANUAL_TC_NAME + "_" + Common.getSponser() + "_"
 								+ Stock.getConfigParam("BROWSER"));
 				lib.Reporter.logEvent(Status.INFO,
 						"Test Data used for this Test Case:", printTestData(),
 						false);
+				updateTermDate[0] = Common.getParticipantDBName(Stock
+						.GetParameterValue("userName"))
+						+ "DB_"
+						+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+				pptOwnerShip = DB.executeUpdate(updateTermDate[0],
+						updateTermDate[1], "07-SEP-16");
 				LoginPage login = new LoginPage();
 				TwoStepVerification mfaPage = new TwoStepVerification(login);
 				LandingPage homePage = new LandingPage(mfaPage);
@@ -288,8 +298,17 @@ import core.framework.Globals;
 	
 			} finally {
 				try {
+					String value=null;
+					String[] updateTermDate = Stock
+							.getTestQuery("updateGDRStopDate");
 					RequestWithdrawal.resetTotalValues();
 					Reporter.finalizeTCReport();
+					updateTermDate[0] = Common.getParticipantDBName(Stock
+							.GetParameterValue("userName"))
+							+ "DB_"
+							+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+							DB.executeUpdate(updateTermDate[0],
+							updateTermDate[1], value);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -1852,6 +1871,9 @@ import core.framework.Globals;
 				int itr, Map<String, String> testdata) {
 	
 			try {
+				int spousalRowUpdated = 0;
+				String[] updateQuery = Stock.getTestQuery("getSpousalConsentPpt");
+				String gcId[]=Stock.GetParameterValue("planId").split("-");
 				boolean isLabelDisplayed = false;			
 				Reporter.initializeReportForTC(itr,
 						Globals.GC_MANUAL_TC_NAME + "_" + Common.getSponser() + "_"
@@ -1859,6 +1881,19 @@ import core.framework.Globals;
 				lib.Reporter.logEvent(Status.INFO,
 						"Test Data used for this Test Case:", printTestData(),
 						false);
+				updateQuery[0] = Common.getParticipantDBName(Stock
+						.GetParameterValue("userName"))
+						+ "DB_"
+						+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+				spousalRowUpdated = DB.executeUpdate(updateQuery[0],
+						updateQuery[1], "N", "N", gcId[0]);
+				if (spousalRowUpdated > 0) {
+					System.out.println("Spousal consent Data is ready");
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify Spousal Consent Data is Set Up for the participant",
+							"Spousal Consent Data is Set up for this participant",
+							false);
 				LoginPage login = new LoginPage();
 				TwoStepVerification mfaPage = new TwoStepVerification(login);
 				LandingPage homePage = new LandingPage(mfaPage);
@@ -1892,7 +1927,15 @@ import core.framework.Globals;
 				requestWithdrawal.verifyWithdrawalSummary(Stock.GetParameterValue("deliveryMethod"),true);			
 				requestWithdrawal.verifyWithdrawalConfirmation(Stock.GetParameterValue("withdrawalType"),Stock.GetParameterValue("ind_ID"),
 						Stock.GetParameterValue("withdrawalMethod"),Stock.GetParameterValue("deliveryMethod"));
-							
+				}
+				else
+				{
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify Spousal Consent Data is Set Up for the participant",
+							"Spousal Consent Data is not Set up for this participant",
+							true);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				Globals.exception = e;
@@ -4156,8 +4199,8 @@ import core.framework.Globals;
 				requestWithdrawal.citizenShipValidation(Stock.GetParameterValue("SSN"));
 				requestWithdrawal.verifyWithdrawalMethodPage(Stock.GetParameterValue("withdrawalTypeFrom"),Stock.GetParameterValue("withdrawalMethodFrom"),
 						Stock.GetParameterValue("emailAddress"),Stock.GetParameterValue("rollingOverAccountFrom"));
-				requestWithdrawal.verifyFWD_PartialPayment_MailDeliveryTypeAndWithDrawalSummary(Stock.GetParameterValue("PTSDeliveryMethodFrom"),
-						Stock.GetParameterValue("rollOverDeliveryMethodFrom"));			
+				/*requestWithdrawal.verifyFWD_PartialPayment_MailDeliveryTypeAndWithDrawalSummary(Stock.GetParameterValue("PTSDeliveryMethodFrom"),
+						Stock.GetParameterValue("rollOverDeliveryMethodFrom"));	*/		
 				
 				//Caching Scenario
 				requestWithdrawal.clickOnBackButton();	
@@ -4958,11 +5001,11 @@ import core.framework.Globals;
 					
 				
 				
-				/*requestWithdrawal.selectWithdrawalTypeForSepService(Stock.GetParameterValue("withdrawalTypeTo"));
-				requestWithdrawal.unSelectWithdrawalType_SepService(Stock.GetParameterValue("isRothAvailTo"), 
-						Stock.GetParameterValue("isNonRothAvailTo"));	
+				requestWithdrawal.selectWithdrawalTypeForSepService(Stock.GetParameterValue("withdrawalTypeTo"));
+				/*requestWithdrawal.unSelectWithdrawalType_SepService(Stock.GetParameterValue("isRothAvailTo"), 
+						Stock.GetParameterValue("isNonRothAvailTo"));	*/
 				requestWithdrawal.enterWithdrawlAmountForSepService(Stock.GetParameterValue("withdrawalTypeTo"),Stock.GetParameterValue("isRothAvailTo"), 
-						Stock.GetParameterValue("isNonRothAvailTo"));*/
+						Stock.GetParameterValue("isNonRothAvailTo"));
 				requestWithdrawal.citizenShipValidation(Stock.GetParameterValue("SSN"));			
 				requestWithdrawal.verifyWithdrawalMethodPage(Stock.GetParameterValue("withdrawalTypeTo"),
 						Stock.GetParameterValue("withdrawalMethodTo"), Stock.GetParameterValue("emailAddress"));			

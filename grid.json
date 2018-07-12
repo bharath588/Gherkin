@@ -1,6 +1,0 @@
-[ {
-       "Browser": "chrome",
-       "Port": "http://10.120.36.245:5555/wd/hub",
-       "Platform": "Windows.xp"
-}
-]

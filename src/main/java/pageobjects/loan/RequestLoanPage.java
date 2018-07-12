@@ -19,7 +19,9 @@ import lib.Stock;
 import lib.Web;
 
 import org.apache.commons.lang3.StringUtils;
+
 import org.apache.xalan.lib.sql.SQLQueryParser;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -298,10 +300,30 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private WebElement mailingAddressValue;
 	
 	@FindBy(xpath = "//p[@class='addr-holding-error']") private WebElement errAddressHold;
+
+	@FindBy(xpath = "//p[@class='defaulted-addr-error']") private WebElement errDefaultedAddress;
 	@FindBy(xpath = "//span[contains(text(),'BR_479')]/..") private WebElement errBR_479;
 	@FindBy(xpath = "//span[contains(text(),'BR_480')]/..") private WebElement errBR_480;
 	@FindBy(xpath = "//span[contains(text(),'BR_481')]/..") private WebElement errBR_481;
-	
+	@FindBy(xpath = "//span[contains(text(),'BR_484')]/..") private WebElement errBR_484;
+	@FindBy(xpath = "//span[contains(text(),'BR_486')]/..") private WebElement errBR_486;
+	@FindBy(xpath = "//span[contains(text(),'BR_467')]/..") private WebElement errBR_467;
+	@FindBy(xpath = "//span[contains(text(),'BR_468')]/..") private WebElement errBR_468;
+	@FindBy(xpath = "//span[contains(text(),'BR_478')]/..") private WebElement errBR_478;
+	@FindBy(xpath = "//span[contains(text(),'BR_510')]/..") private WebElement errBR_510;
+	@FindBy(xpath = "//div[@class='modal-content'][./div[@id='rulesViolationsModal']]") private WebElement modalBR_510;
+	@FindBy(xpath = "//span[contains(text(),'BR_473')]/..") private WebElement errBR_473;
+	@FindBy(xpath = "//span[contains(text(),'BR_488')]/..") private WebElement errBR_488;
+	@FindBy(xpath = "//span[contains(text(),'BR_485')]/..") private WebElement errBR_485;
+	@FindBy(xpath = "//span[contains(text(),'BR_474')]/..") private WebElement errBR_474;
+	@FindBy(xpath = "//span[contains(text(),'BR_470')]/..") private WebElement errBR_470;
+	@FindBy(xpath = "//span[contains(text(),'BR_487')]/..") private WebElement errBR_487;
+	@FindBy(xpath = "//span[contains(text(),'BR_489')]/..") private WebElement errBR_489;
+	@FindBy(xpath = "//span[contains(text(),'BR_471')]/..") private WebElement errBR_471;
+	@FindBy(xpath = "//span[contains(text(),'BR_482')]/..") private WebElement errBR_482;
+	@FindBy(xpath = "//div[@id='rulesViolationsModal']//li") private WebElement errcheckMailed;
+	@FindBy(xpath = "//div[./b[contains(text(),'MAILING ADDRESS:')]]/following-sibling::div") private WebElement txtcheckMailed;
+
 	
 	
 	private String loanQuote = "//*[contains(text(),'webElementText')]";
@@ -413,6 +435,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private WebElement errorMsgExhaustedLoans;
 	
 	Actions keyBoardEvent = new Actions(Web.getDriver());
+	
 
 	/**
 	 * Default Constructor
@@ -430,7 +453,10 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	public RequestLoanPage(LoadableComponent<?> parent) {
 		this.parent = parent;
 		PageFactory.initElements(lib.Web.getDriver(), this);
-	}
+		
+		}
+		
+	
 
 	@Override
 	protected void isLoaded() throws Error {
@@ -1602,6 +1628,46 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 * </pre>
 	 * 
 	 *
+	 *//*
+	public void verifyDefaultRepamentTermForLoanRefinance() {
+	//	String[] repaymentTerm = { "12months", "24months", "36months", "37months"};
+		String[] repaymentTerm = { "12months", "24months", "36months"};
+		for (int i = 0; i < repaymentTerm.length; i++) {
+			List<WebElement> inpLoanTerm = Web.getDriver().findElements(
+					By.xpath(strRepaymentTermRefinance.replace("rownum",
+							Integer.toString(i+1))));
+//			int j = inpLoanTerm.size();
+			String actualLoanTerm = inpLoanTerm.get(0).getText().toString()
+					.trim()
+					+ inpLoanTerm.get(1).getText().toString().trim();
+
+			if (repaymentTerm[i].contains(actualLoanTerm)) {
+				lib.Reporter
+						.logEvent(
+								Status.PASS,
+								"Verify Repayment Term is Displayed in Ascending Order",
+								"Repayment Term " + (i+1)+" :" + actualLoanTerm, false);
+
+			} else {
+
+				lib.Reporter
+						.logEvent(
+								Status.FAIL, 
+								"Verify Repayment Term is Displayed in Ascending Order",
+								"Repayment Term is not displayed as expected\nExpected:"
+										+ repaymentTerm[i] + "\nActual:"
+										+ actualLoanTerm, true);
+
+			}
+		}
+	}*/
+	/**
+	 * <pre>
+	 * Method to Verify Default Repayment Term Options for Loan Refinancing
+	 *
+	 * </pre>
+	 * 
+	 *
 	 */
 	public void verifyDefaultRepamentTermForLoanRefinance() {
 	//	String[] repaymentTerm = { "12months", "24months", "36months", "37months"};
@@ -2634,6 +2700,37 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		}
 	}
 
+	
+	/**
+	 * <pre>
+	 * Method to Verify  Loan Amount is Matching in Confirmation Page
+	 *
+	 * </pre>
+	 *
+	 *//*
+	public void verifyLoanAmountInConfirmationPageForRefinance() {
+
+		String expectedLoanTotal = RequestLoanPage.getTotalLoanAmount();
+		String actualLoanTotal = getLoanAmountFromLoanConfirmationPage().replace(",", "");
+
+		if (actualLoanTotal.contains(expectedLoanTotal)) {
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify 'Loan Total' Amount is Same",
+					"'Loan Total' Amount is Same\nLoan Total="
+							+ actualLoanTotal, false);
+
+		} else {
+
+			lib.Reporter
+					.logEvent(Status.FAIL,
+							"Verify 'Loan Total' Amount is Same",
+							"'Loan Total' Amount is Not Same\nExpected:"
+									+ expectedLoanTotal + "\nActual:"
+									+ actualLoanTotal, true);
+
+		}
+	}
+*/
 	/**
 	 * <pre>
 	 * Method to Verify Loan Request Received Section in Confirmation Page for General Purpose Loan
@@ -3633,6 +3730,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 */
 	public void verifyFeesAndTaxesSectionInConfirmationPage() throws Exception {
 		verifyOriginationFeeFromLoansLandingPage();
+
 		
 	}
 	
@@ -3653,8 +3751,29 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 					"\nExpected: "+expectedOriginationFeeValue+"\nActual: "+actualOriginationFeeValue,
 					true);
 		}
+
 		
 	}
+	
+	/*private void verifyOriginationFeeFromLoansLandingPage() {
+		
+		String expectedOriginationFeeValue = this.originationFee;
+		String actualOriginationFeeValue = txtOriginationFeeInConfirmationPage.getText().trim();
+		
+		if(expectedOriginationFeeValue.equalsIgnoreCase(actualOriginationFeeValue)){
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify Origination Fee",
+					"Origination fee is displayed as same as in Loans landing Page: "+expectedOriginationFeeValue,
+					false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify Origination Fee",
+					"Origination fee is displayed is not same as in Loans landing Page: "+
+					"\nExpected: "+expectedOriginationFeeValue+"\nActual: "+actualOriginationFeeValue,
+					true);
+		}
+		
+	}*/
 
 	/**
 	 * <pre>
@@ -4254,6 +4373,9 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 		
 		verifyRequestLoanButtonsAreDisabled();
+
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
 		
 		
 	}
@@ -4286,7 +4408,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 		
 		verifyRequestLoanButtonsAreDisabled();
-		
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
 		
 	}
 	/**
@@ -4317,7 +4440,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 		
 		verifyRequestLoanButtonsAreDisabled();
-		
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
 		
 	}
 	/**
@@ -4348,7 +4472,139 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 		
 		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
 		
+	}
+	
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_484
+	 */
+	public void verifyPPTRequestLoanPageWithBR_484() {
+		
+		String expectedErrorMsg="You are not eligible to take a loan.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errBR_484, true)){
+		 actualErrorMsg=errBR_484.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_484' is Displayed",
+						"Error Message for 'BR_484' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_484' is Displayed",
+						"Error Message for 'BR_484' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_484' is Displayed",
+					"Error Message for 'BR_484' is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+	}
+	
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_486
+	 */
+	public void verifyPPTRequestLoanPageWithBR_486() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errBR_486, true)){
+		 actualErrorMsg=errBR_486.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_486' is Displayed",
+						"Error Message for 'BR_486' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_486' is Displayed",
+						"Error Message for 'BR_486' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_486' is Displayed",
+					"Error Message for 'BR_486' is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_467
+	 */
+	public void verifyPPTRequestLoanPageWithBR_467() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan. "
+				+ "Please call a participant services representative for additional information.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errBR_467, true)){
+		 actualErrorMsg=errBR_467.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_467' is Displayed",
+						"Error Message for 'BR_467' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_467' is Displayed",
+						"Error Message for 'BR_467' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_467' is Displayed",
+					"Error Message for 'BR_467' is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_468
+	 */
+	public void verifyPPTRequestLoanPageWithBR_468() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errBR_468, true)){
+		 actualErrorMsg=errBR_468.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_468' is Displayed",
+						"Error Message for 'BR_468' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_468' is Displayed",
+						"Error Message for 'BR_468' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_468' is Displayed",
+					"Error Message for 'BR_468' is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
 		
 	}
 	/**
@@ -4381,6 +4637,1049 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 		
 	}
+
+	/**
+	 * Method to get Pending loans for PPT
+	 * 
+	 * @param username
+	 * @return noofLoans
+	 * @throws SQLException
+	 */
+	public boolean getPendingLoans(String userName) throws SQLException {
+
+		String[] sqlQuery = null;
+		ResultSet Plan = null;
+		boolean pendingLoan=false;
+		try {
+			sqlQuery = Stock.getTestQuery("GetPPTPendingLoanRequestData");
+		
+		sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		Plan = DB.executeQuery(sqlQuery[0], sqlQuery[1], Common.getParticipantID(userName.substring(0, userName.length() - 3)));
+	
+			if(DB.getRecordSetCount(Plan) > 0)
+
+			pendingLoan=true;
+		}	
+		 catch (SQLException e) {
+			e.printStackTrace();
+			Reporter.logEvent(
+					Status.WARNING,
+					"Query getGetPPTPendingLoanRequestData :" + sqlQuery[0],
+					"The Query did not return any results. Please check participant test data as the appropriate data base.",
+					false);
+		}
+
+		return pendingLoan;
+	
+}
+	
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_478
+	 */
+	public void verifyPPTRequestLoanPageWithBR_478() {
+		
+		String expectedErrorMsg="Due to a pending transaction, you are unable to request a loan.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errBR_478, true)){
+		 actualErrorMsg=errBR_478.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_478' is Displayed",
+						"Error Message for 'BR_478' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_478' is Displayed",
+						"Error Message for 'BR_478' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_478' is Displayed",
+					"Error Message for 'BR_478' is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_510
+	 */
+	public void verifyPPTRequestLoanPageWithBR_510() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan.";
+		String actualErrorMsg="";
+		Web.clickOnElement(inputLonatypeGeneral);
+		Web.waitForElement(modalBR_510);
+		if(Web.isWebElementDisplayed(errBR_510, true)){
+		 actualErrorMsg=errBR_510.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_510' is Displayed in Modal Dialog",
+						"Error Message for 'BR_510' is Displayed in Modal Dialog\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_510' is Displayed in Modal Dialog",
+						"Error Message for 'BR_510' is Not Matching in Modal Dialog\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_510' is Displayed in Modal Dialog",
+					"Error Message for 'BR_510' is Not Displayed in Modal Dialog", true);
+		
+		Web.clickOnElement(btnOK);
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_473
+	 */
+	public void verifyPPTRequestLoanPageWithBR_473() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are eligible to take a loan on the basis of hardship only. "
+				+ "You are required to complete a loan application and submit with supporting documentation for processing. "
+				+ "The form is located in the Plan Information section of your account.";
+		String actualErrorMsg="";
+		
+		if(Web.isWebElementDisplayed(errBR_473, true)){
+		 actualErrorMsg=errBR_473.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_473' is Displayed",
+						"Error Message for 'BR_473' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_473' is Displayed",
+						"Error Message for 'BR_473' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_473' is Displayed",
+					"Error Message for 'BR_473' is Not Displayed", true);
+		
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_488
+	 */
+	public void verifyPPTRequestLoanPageWithBR_488() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan. "
+				+ "Please call a participant services representative for additional information.";
+		String actualErrorMsg="";
+		
+		if(Web.isWebElementDisplayed(errBR_488, true)){
+		 actualErrorMsg=errBR_488.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_488' is Displayed",
+						"Error Message for 'BR_488' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_488' is Displayed",
+						"Error Message for 'BR_488' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_488' is Displayed",
+					"Error Message for 'BR_488' is Not Displayed", true);
+		
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_485
+	 */
+	public void verifyPPTRequestLoanPageWithBR_485() {
+		
+		String expectedErrorMsg="You are not currently eligible to request a loan.";
+		String actualErrorMsg="";
+		Web.clickOnElement(inputLonatypeGeneral);
+		Web.waitForElement(modalBR_510);
+		if(Web.isWebElementDisplayed(errBR_485, true)){
+		 actualErrorMsg=errBR_485.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_485' is Displayed in Modal Dialog",
+						"Error Message for 'BR_485' is Displayed in Modal Dialog\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_485' is Displayed in Modal Dialog",
+						"Error Message for 'BR_485' is Not Matching in Modal Dialog\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_485' is Displayed in Modal Dialog",
+					"Error Message for 'BR_485' is Not Displayed in Modal Dialog", true);
+		
+		Web.clickOnElement(btnOK);
+		verifyRequestLoanButtonsAreDisabled();
+		
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_474
+	 */
+	public void verifyPPTRequestLoanPageWithBR_474() {
+		
+		String expectedErrorMsg="You are not currently eligible to request a loan. "
+				+ "Please call a participant services representative for additional information.";
+		String actualErrorMsg="";
+		Web.clickOnElement(inputLonatypeGeneral);
+		Web.waitForElement(modalBR_510);
+		if(Web.isWebElementDisplayed(errBR_474, true)){
+		 actualErrorMsg=errBR_474.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_474' is Displayed in Modal Dialog",
+						"Error Message for 'BR_474' is Displayed in Modal Dialog\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_474' is Displayed in Modal Dialog",
+						"Error Message for 'BR_474' is Not Matching in Modal Dialog\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_474' is Displayed in Modal Dialog",
+					"Error Message for 'BR_474' is Not Displayed in Modal Dialog", true);
+		
+		Web.clickOnElement(btnOK);
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_470
+	 */
+	public void verifyPPTRequestLoanPageWithBR_470() {
+		
+		String expectedErrorMsg="You are not eligible to request a loan because you have reached the maximum number of loans allowed.";
+		String actualErrorMsg="";
+		Web.clickOnElement(inputLonatypeGeneral);
+		Web.waitForElement(modalBR_510);
+		if(Web.isWebElementDisplayed(errBR_470, true)){
+		 actualErrorMsg=errBR_470.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_470' is Displayed in Modal Dialog",
+						"Error Message for 'BR_470' is Displayed in Modal Dialog\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_470' is Displayed in Modal Dialog",
+						"Error Message for 'BR_470' is Not Matching in Modal Dialog\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_470' is Displayed in Modal Dialog",
+					"Error Message for 'BR_470' is Not Displayed in Modal Dialog", true);
+		
+		Web.clickOnElement(btnOK);
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+		
+	}
+	
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_487
+	 */
+	public void verifyPPTRequestLoanPageWithBR_487() {
+		
+		String expectedErrorMsg="You are not eligible to request a loan because you have reached the maximum number of loans allowed.";
+		String actualErrorMsg="";
+		Web.clickOnElement(inputLonatypeGeneral);
+		Web.waitForElement(modalBR_510);
+		if(Web.isWebElementDisplayed(errBR_487, true)){
+		 actualErrorMsg=errBR_487.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_487' is Displayed in Modal Dialog",
+						"Error Message for 'BR_487' is Displayed in Modal Dialog\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_487' is Displayed in Modal Dialog",
+						"Error Message for 'BR_487' is Not Matching in Modal Dialog\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_487' is Displayed in Modal Dialog",
+					"Error Message for 'BR_487' is Not Displayed in Modal Dialog", true);
+		
+		Web.clickOnElement(btnOK);
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_489
+	 */
+	public void verifyPPTRequestLoanPageWithBR_489() {
+		
+		String expectedErrorMsg="You are not eligible to request a loan because you have reached the maximum number of loans allowed.";
+		String actualErrorMsg="";
+		Web.clickOnElement(inputLonatypeGeneral);
+		Web.waitForElement(modalBR_510);
+		if(Web.isWebElementDisplayed(errBR_489, true)){
+		 actualErrorMsg=errBR_489.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_489' is Displayed in Modal Dialog",
+						"Error Message for 'BR_489' is Displayed in Modal Dialog\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_489' is Displayed in Modal Dialog",
+						"Error Message for 'BR_489' is Not Matching in Modal Dialog\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_489' is Displayed in Modal Dialog",
+					"Error Message for 'BR_489' is Not Displayed in Modal Dialog", true);
+		
+		Web.clickOnElement(btnOK);
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_471
+	 */
+	public void verifyPPTRequestLoanPageWithBR_471() {
+		
+		String expectedErrorMsg="You are not currently eligible to request a loan. Please call a participant services representative for additional information.";
+		String actualErrorMsg="";
+		Web.clickOnElement(inputLonatypeGeneral);
+		Web.waitForElement(modalBR_510);
+		if(Web.isWebElementDisplayed(errBR_471, true)){
+		 actualErrorMsg=errBR_471.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_471' is Displayed in Modal Dialog",
+						"Error Message for 'BR_471' is Displayed in Modal Dialog\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_471' is Displayed in Modal Dialog",
+						"Error Message for 'BR_471' is Not Matching in Modal Dialog\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_471' is Displayed in Modal Dialog",
+					"Error Message for 'BR_471' is Not Displayed in Modal Dialog", true);
+		
+		Web.clickOnElement(btnOK);
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+	}
+	
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_482
+	 */
+	public void verifyPPTRequestLoanPageWithBR_482() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errBR_482, true)){
+		 actualErrorMsg=errBR_482.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_482' is Displayed",
+						"Error Message for 'BR_482' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_482' is Displayed",
+						"Error Message for 'BR_482' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_482' is Displayed",
+					"Error Message for 'BR_482' is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+	}
+	
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for Default code in Address Table
+	 */
+	public void verifyPPTRequestLoanPageWithDefaultedAddress() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan. "
+				+ "Please call a participant services representative for additional information.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errDefaultedAddress, true)){
+		 actualErrorMsg=errDefaultedAddress.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for Defaulted Address is Displayed",
+						"Hard Stop Error Message for Defaulted Address is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for Defaulted Address is Displayed",
+						"Hard Stop Error Message for Defaulted Address is not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for Defaulted Address is Displayed",
+					"Error Message for Defaulted Address is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Your loan check will be mailed to your employer in request Loan Page
+	 */
+	public void verifyCheckMailedToEmployerErrorMsg() {
+		
+		String expectedErrorMsg="Your loan check will be mailed to your employer.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errcheckMailed, true)){
+		 actualErrorMsg=errcheckMailed.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message is Displayed",
+						"Error Message is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message is Displayed",
+						"Error Message is not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message is Displayed",
+					"Error Message is Not Displayed for Check Mailed to Employer", true);
+		
+		Web.clickOnElement(btnOK);
+		Web.waitForElement(inputLoanAmount);
+		
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Your loan check will be mailed to your employer in confirmation Page
+	 */
+	public void verifyDeliveryInformationSectionInConfirmationPageForCheckMailedToEmployer() {
+		
+		String expectedErrorMsg="Your loan check will be mailed to your employer.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(txtcheckMailed, true)){
+		 actualErrorMsg=txtcheckMailed.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify 'Your loan check will be mailed to your employer' Message is Displayed in Confirmation Page",
+						" Message is Displayed\n Mailing Address:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify 'Your loan check will be mailed to your employer' Message is Displayed in Confirmation Page",
+						" Message is Not Displayed\n Expected Mailing Address: "+expectedErrorMsg+"\nActual  Mailing Address: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'Your loan check will be mailed to your employer' Message is Displayed in Confirmation Page",
+					" Message is Not Displayed", true);
+		
+	
+	}
+
+/*	public static String getDeliveryMethodSelected() {
+		return deliveryMethodSelected;
+	}
+
+	public void setDeliveryMethodSelected() {
+		if(inpRegularMail.isSelected()){
+			RequestLoanPage.deliveryMethodSelected = "Regular mail";
+		}
+		else if(inpExpressMail.isSelected()){
+			RequestLoanPage.deliveryMethodSelected = "Expedited mail";
+		}else{
+//			RequestLoanPage.deliveryMethodSelected = "Regular mail";
+		}
+	}
+
+	public void verifyRepaymentTerm() {
+		WebElement txtRepaymentTerm = Web.getDriver().findElement(By.xpath(repaymentTerm.replace("loanType", Stock.GetParameterValue("loanTypeForRepaymentTerm"))));
+		if(txtRepaymentTerm.isDisplayed()){
+			Reporter.logEvent(Status.PASS,
+					"Verify Repayment term information under 'PRIMARY RESIDENCE LOAN'",
+					"Repayment term information under 'PRIMARY RESIDENCE LOAN' is displayed "+txtRepaymentTerm.getText().toString(), false);
+		}else{
+			Reporter.logEvent(Status.FAIL,
+					"Verify Repayment term information under 'PRIMARY RESIDENCE LOAN'",
+					"Repayment term information under 'PRIMARY RESIDENCE LOAN' is not displayed ", true);
+		}
+	}
+
+	public void verifyMaxLoanThresholdLimitErrorMsgIsDisplayed() {
+		String expectedErrorMsg = Stock.GetParameterValue("PendingTransactionErrorMsg");
+		String actualErrorMsg = null;
+		
+		if(txtPendingTransactionError.isDisplayed()){
+			actualErrorMsg = txtPendingTransactionError.getText().toString();
+			if(actualErrorMsg.equalsIgnoreCase(expectedErrorMsg)){
+				Reporter.logEvent(Status.PASS,
+						"Verifying Error message is Displayed",
+						"Error Message is displayed: "+actualErrorMsg, true);
+			}else{
+				Reporter.logEvent(Status.FAIL,
+						"Verifying Error message is Displayed",
+						"Error Message is not displayed as expected: "+
+						"\nExpected: "+expectedErrorMsg+
+						"\nActual: "+actualErrorMsg, true);
+			}
+		}
+		
+	}
+
+	public boolean verifyLoanRefinancingPageLoad() {
+		boolean isPageLoaded = false;
+		try {
+
+			if(Web.isWebElementDisplayed(loanRefinancingSection, true)){
+				isPageLoaded = true; 
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return isPageLoaded;		
+	}
+
+	public void selectRefinanceExistingLoanButton() {
+		Web.clickOnElement(btnRefinanceExistingLoan);		
+	}
+	
+	public void selectRequestANewLoan() {
+		Web.clickOnElement(btnNewLoanRefinance);		
+	}
+
+	*//**
+	 * @author bbndsh
+	 * @param noofLoans
+	 * 
+	 *//*
+	public void selectActiveLoanCheckBox(int noofLoans)  {
+		try{
+			for(int i=0;i<noofLoans;i++){
+		
+		Web.clickOnElement(refinanceLoanChkBox.get(i));	
+		
+			}
+	}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public void verifyLoanRefinancePage() {
+		String font_weight = null;
+		
+		try{
+			Thread.sleep(3000);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		if(refinancePageTitle.isDisplayed()){
+			font_weight = refinancePageTitle.getCssValue("font-weight");
+			if(Integer.parseInt(font_weight) >= 700){
+				lib.Reporter.logEvent(Status.PASS, "Verifying page Title of Loan Refinance page", "Page Title is displayed and is in BOLD: "+
+						refinancePageTitle.getText().toString().trim(),  false);
+			}else{
+				lib.Reporter.logEvent(Status.FAIL, "Verifying page Title of Loan Refinance page", "Page Title is not displayed properly: "+
+						refinancePageTitle.getText().toString().trim(), true);
+			}
+		}
+		
+		if(txtNewLoanRefinance.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS, "Verifying options for Loan Refinance page is displayed", "Options for 'New Loan' Loan Refinance page is displayed: "+
+					txtNewLoanRefinance.getText().toString().trim(),  false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL, "Verifying options for Loan Refinance page is displayed", "Options for 'New Loan' Loan Refinance page is not displayed", true);
+		}
+		
+		if (txtRefinanceExistingLoan.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS, "Verifying options for Loan Refinance page is displayed", "Options for 'Refinance Existing Loans' Loan Refinance page is displayed: "+
+					txtRefinanceExistingLoan.getText().toString().trim(),  false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL, "Verifying options for Loan Refinance page is displayed", "Options for 'Refinance Existing Loans' Loan Refinance page is not displayed", true);
+		}
+	}
+
+	public void verifyRefinanceRepaymentTermAfterAddingNewTerm(String ...newLoanTerm) {
+		
+		*//**
+		 * repayment term body
+		 *//*
+		List<String> repaymentTermList = new ArrayList<>();
+	//	repaymentTermList.addAll(Arrays.asList("12months", "24months", "36months"));
+		repaymentTermList.addAll(Arrays.asList("60months", "83months"));
+		
+		for(String str:newLoanTerm){
+			repaymentTermList.add(repaymentTermList.size(), str+" months");
+		}
+		
+		for (int i = 0; i < repaymentTermList.size(); i++) {
+			List<WebElement> refinanceRepaymentTerm = Web.getDriver().findElements(
+					By.xpath(refinanceExistingLoansTableRepaymentTerm.replace("rownum",	Integer.toString(i+1))));
+			
+			lib.Reporter.logEvent(Status.PASS, "Verifying Repayment Loan Term ", "Repayment Loan Term "+
+					refinanceRepaymentTerm.get(0).getText().toString(), false);
+			
+		}	
+	}
+	
+	public void verifyRefinanceRepaymentTerm(String repaymentTerms) {
+		
+		List<String> repaymentTermList = new ArrayList<>();
+		for(int i = 0; i < repaymentTermList.size(); i++){
+			repaymentTermList.add(repaymentTerms.split(",")[i]);
+		}
+		*//**
+		 * repayment term Header verifying
+		 *//*
+		for (int i = 0; i < repaymentTermList.size(); i++) {
+			List<WebElement> repaymentLoanTermHeader = Web.getDriver().findElements(
+					By.xpath(refinanceExistingLoansTableHeader.replace("colNum",Integer.toString(i+1))));
+			
+			lib.Reporter.logEvent(Status.INFO, "Verifying Repayment Loan Term header", "Repayment Loan Term header value: "+
+					repaymentLoanTermHeader.get(0).getText().toString().trim(), false);
+		}
+		
+		*//**
+		 * repayment term body
+		 *//*
+		List<String> repaymentTermList = new ArrayList<>();
+		repaymentTermList.addAll(Arrays.asList("12months", "24months"));//, "36months"));
+		
+		
+		for (int i = 0; i < repaymentTermList.size(); i++) {
+			List<WebElement> refinanceRepaymentTerm = Web.getDriver().findElements(
+					By.xpath(refinanceExistingLoansTableRepaymentTerm.replace("rownum",	Integer.toString(i+1))));
+			
+			lib.Reporter.logEvent(Status.PASS, "Verifying Repayment Loan Term ", "Repayment Loan Term "+
+					refinanceRepaymentTerm.get(0).getText().toString(), false);
+			
+		}	
+	}
+
+	public void clickOnEnterYourOwnLoanTerm(String newLoanTerm) {
+
+		if(lnkEnterYourOwnTerm.isDisplayed()){
+			lnkEnterYourOwnTerm.click();
+			if(popOverEnterYourOwnLoanTerm.isDisplayed()){
+				Web.setTextToTextBox(loanTermInput, newLoanTerm);
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				btnAddEnterYourOwnLoanTerm.click();
+			}
+		}
+		
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
+		
+		
+	}
+
+	public void verifyAS_212ErrorMessage() {
+		
+		try{
+			Web.waitForElement(errorMsgAS_212);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		if(errorMsgAS_212.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS, "verifying AS_212 error message is displayed when Invalid Loan Term entered",
+					"AS_212 error message is displayed "+errorMsgAS_212.getText().toString().trim(), true);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL, "verifying AS_212 error message is displayed when Invalid Loan Term entered",
+					"AS_212 error message is not displayed ", true);
+		}
+	}
+
+	public void verifyErrorMsgForInvalidLoanAmount(String amountToBeEntered) {
+		
+		EnterLoanAmount(amountToBeEntered);
+		
+		try{
+			Web.waitForElement(errorBlockForInvalidAmountEntered);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		if(errorBlockForInvalidAmountEntered.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS, "Verifying Error message for Invalid Amount Entered is Displayed",
+					"Error message for Invalid Amount entered is displayed: "+
+							errorBlockForInvalidAmountEntered.getText().toString().trim(), false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL, "Verifying Error message for Invalid Amount Entered is Displayed",
+					"Error message for Invalid Amount entered is not displayed: ", true);
+		}
+
+	}
+
+	public void clearInputLoanAmountField() {
+		
+		try{
+			inputLoanAmount.clear();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void verifyNewLoanRefinanceisSelected() {
+		
+		if (btnNewLoanRefinance.isDisplayed() && btnNewLoanRefinance.isSelected()) {
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify 'New Loan' Radio Button is Selected By Default",
+					"'New Loan' Radio Button is Selected By Default", false);
+
+		} else {
+
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify 'New Loan' Radio Button is Selected By Default",
+					"'New Loan' Radio Button is Not Selected By Default",
+					true);
+
+		}
+		
+	}
+
+	public void verifyActiveLoansDetailsHeaderSectionForRefinance(){
+		
+		if(txtActiveLoansHeader.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS, "Verifying Active Loans Header text is Displayed Section ", "Active Loans Header text is Displayed: "+
+					txtActiveLoansHeader.getText().toString(), false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL, "Verifying Active Loans Header text is Displayed Section ", "Active Loans Header text is not Displayed", true);
+			
+		}
+	}
+	
+	//TODO
+	public void verifyActiveLoansDetailsSectionForRefinance(String headers) {
+		
+		
+		for (int i = 0; i < 5; i++) {
+			List<WebElement> activeLoansHeader = Web.getDriver().findElements(
+					By.xpath(activeLoansDetailTableHeaderGP.replace("colNum",	Integer.toString(i+1))));
+			
+			lib.Reporter.logEvent(Status.PASS, "Verifying Active Loans Details Section ", "Active Loans Details header "+
+					activeLoansHeader.get(0).getText().toString(), false);
+			
+			WebElement activeLoansBody = Web.getDriver().findElement(
+					By.xpath(activeLoansDetailTableBodyGP.replace("dataHeader", StringUtils.capitalize(activeLoansHeader.get(0).getText().toString().trim))));
+			
+			lib.Reporter.logEvent(Status.PASS, "Verifying Active Loans Details Section ", "Active Loans Details Body "+
+					activeLoansBody.getText().toString(), false);
+			
+		}
+		
+	}
+	
+	public void verifyActiveLoansDetailsSectionForRefinancePR() {
+		
+		for (int i = 0; i < 5; i++) {
+			List<WebElement> activeLoansHeader = Web.getDriver().findElements(
+					By.xpath(activeLoansDetailTableHeaderPR.replace("colNum",	Integer.toString(i+1))));
+			
+			lib.Reporter.logEvent(Status.PASS, "Verifying Active Loans Details Section ", "Active Loans Details header "+
+					activeLoansHeader.get(0).getText().toString(), false);
+			
+			WebElement activeLoansBody = Web.getDriver().findElement(
+					By.xpath(activeLoansDetailTableBodyPR.replace("dataHeader", StringUtils.capitalize(activeLoansHeader.get(0).getText().toString().trim()))));
+			
+			lib.Reporter.logEvent(Status.PASS, "Verifying Active Loans Details Section ", "Active Loans Details Body "+
+					activeLoansBody.getText().toString(), false);
+			
+		}
+		
+	}
+	
+	
+
+	public void verifyCurrentActiveLoanBalanceIsDisplayed() {
+		
+		if(refinanceCurrentBalance.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS, "Verifying current active loan balance is displayed", 
+						"current active loan balance is displayed: "+refinanceCurrentBalance.getText().toString().trim(), false);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL, "Verifying current active loan balance is displayed", 
+					"current active loan balance is displayed: ", true);
+		}
+		
+	}
+
+	public void validateToolTipForLoanOutstandingBalance() {
+		
+		keyBoardEvent.moveToElement(refinanceCurrentBalance).build().perform();
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		String expectedtext = "PAYMENT AMOUNT";
+		String actualText = toolTipCurrentBalPaymentAmount.getText().toString()
+				.trim();
+		if (expectedtext.equalsIgnoreCase(actualText)) {
+			Reporter.logEvent(Status.PASS,
+					"Verify ToolTip Text for CURRENT BALANCE is displayed",
+					"Tooltip Text is displayed for CURRENT BALANCE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, false);
+			Reporter.logEvent(Status.PASS,	"Verifying Value",
+					"Value is displayed: "+toolTipCurrentBalPaymentAmountValue.getText().toString().trim(), false);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify ToolTip Text for CURRENT BALANCE is displayed",
+					"Tooltip Text is not displayed for CURRENT BALANCE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, true);
+		}
+
+		expectedtext = "MATURITY DATE";
+		actualText = toolTipCurrentBalMaturityDate.getText().toString().trim() ;
+		
+		if (expectedtext.equalsIgnoreCase(actualText)) {
+			Reporter.logEvent(Status.PASS,
+					"Verify ToolTip Text for CURRENT BALANCE is displayed",
+					"Tooltip Text is displayed for INTEREST RATE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, false);
+			Reporter.logEvent(Status.PASS,	"Verifying Value",
+					"Value is displayed: "+toolTipCurrentBalMaturityDateValue.getText().toString().trim(), false);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify ToolTip Text for CURRENT BALANCE is displayed",
+					"Tooltip Text is not displayed for INTEREST RATE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, true);
+		}
+
+		expectedtext = "LOAN TERM REMAINING";
+		actualText = toolTipCurrentBalLoanTermRemaining.getText().toString().trim() ;
+		
+		if (expectedtext.equalsIgnoreCase(actualText)) {
+			Reporter.logEvent(Status.PASS,
+					"Verify ToolTip Text for CURRENT BALANCE is displayed",
+					"Tooltip Text is displayed for CURRENT BALANCE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, false);
+			Reporter.logEvent(Status.PASS,	"Verifying Value",
+					"Value is displayed: "+toolTipCurrentBalLoanTermRemainingValue.getText().toString().trim(), false);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify ToolTip Text for CURRENT BALANCE is displayed",
+					"Tooltip Text is not displayed for CURRENT BALANCE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, true);
+		}
+		//TODO
+		keyBoardEvent.release(toolTipCurrentBalMaturityDate);
+		
+	}
+
+	public void verifyOutstandingBalance() {
+		
+		if(outstandingBalanceValue.isDisplayed()){
+			lib.Reporter.logEvent(Status.PASS, "Verifying Outstanding balance after selecting 'Refinance existing loan'", 
+					"Outstanding Balance is : "+outstandingBalanceValue.getText().toString().trim(), true);
+		}else{
+			lib.Reporter.logEvent(Status.FAIL, "Verifying Outstanding balance after selecting 'Refinance existing loan'", 
+					"Outstanding Balance is not displayed: ", true);
+		}
+		
+	}
+
+	public void verifyInformationalMessageForExhaustedloans() {
+		String expectedMsg = "You have reached the maximum number of loans allowed by your plan. You may still be able to borrow more by refinancing another loan.";
+		String actualMsg = null;
+		
+		try{
+			if(errorMsgExhaustedLoans.isDisplayed()){
+				actualMsg = errorMsgExhaustedLoans.getText().toString().trim();
+				if(actualMsg.equalsIgnoreCase(expectedMsg)){
+					lib.Reporter.logEvent(Status.PASS, "Verify the informational message at the top of the  active loan details table", 
+							"Informational message is displayed: "+actualMsg, false);
+				}
+			}
+		}catch(Exception e){
+			lib.Reporter.logEvent(Status.FAIL, "Verify the informational message at the top of the  active loan details table", 
+					"Informational message is not displayed as expected: "+
+							"\nActual: "+actualMsg+"\nExpected: "+expectedMsg+"\n"+e.getMessage(), true);
+		}
+		
+	}
+
+	public void verifyFrequencyRestrictionMsg() {
+		
+		
+	}
+
+	public void setMortgageOrSpousalStepInDatabase(String StepToBeSetInDB) throws SQLException {
+		ResultSet queryResultSet = null;		
+		String[] sqlQuery = null;
+		
+		sqlQuery = Stock.getTestQuery("checkStepToBeInsertedPresentInDB");
+		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		queryResultSet = DB.executeQuery(sqlQuery[0], sqlQuery[1], StepToBeSetInDB);
+		
+		if(DB.getRecordSetCount(queryResultSet) == 0){
+			if(StepToBeSetInDB.equalsIgnoreCase("Mortgage")){
+				try {
+					sqlQuery = Stock.getTestQuery("insertStepIntoDB_Mortgage");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}else{
+				try {
+					sqlQuery = Stock.getTestQuery("insertStepIntoDB_Spousal");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		
+			sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+			queryResultSet = DB.executeQuery(sqlQuery[0], sqlQuery[1]);
+			try {
+				if (DB.getRecordSetCount(queryResultSet) > 0) {
+					lib.Reporter.logEvent(Status.INFO, "Inserting 'Mortgage/Spousal' Step in TDL", "No of rows inserted: "+DB.getRecordSetCount(queryResultSet), false);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				Reporter.logEvent(
+					Status.WARNING,
+					"Query to insert 'Mortgage/Spousal' step:" + sqlQuery[0],
+					"The Query did not return any results.",
+					false);
+			}
+		}
+		
+	}
+	
+	public void ResetMortgageOrSpousalStepInDatabase(String StepToBeSetInDB) throws SQLException {
+		ResultSet queryResultSet = null;
+		String[] sqlQuery = null;
+		
+		sqlQuery = Stock.getTestQuery("checkStepToBeDeletedInDB");
+		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		queryResultSet = DB.executeQuery(sqlQuery[0], sqlQuery[1], StepToBeSetInDB);
+		
+		if(DB.getRecordSetCount(queryResultSet) > 0){
+		if(StepToBeSetInDB.equalsIgnoreCase("Mortgage")){
+			try {
+				sqlQuery = Stock.getTestQuery("deleteStepFromDB_Mortgage");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else{
+			try {
+				sqlQuery = Stock.getTestQuery("deleteStepFromDB_Spousal");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		queryResultSet = DB.executeQuery(sqlQuery[0], sqlQuery[1]);
+		try {
+			if (DB.getRecordSetCount(queryResultSet) > 0) {
+				lib.Reporter.logEvent(Status.INFO, "Deleting 'Mortgage/Spousal' Step in TDL", "No of rows deleted: "+DB.getRecordSetCount(queryResultSet), false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Reporter.logEvent(
+					Status.WARNING,
+					"Query to delete 'Mortgage/Spousal' step:" + sqlQuery[0],
+					"The Query did not return any results.",
+					false);
+		}
+		}
+	}
+
+	public void setMortgagePaperWorkIndicator(String reviewIndicator, String ga_id) throws SQLException {
+		ResultSet queryResultSet = null;		
+		String[] sqlQuery = null;
+		
+		sqlQuery = Stock.getTestQuery("setMortgagePaperworkIndicator");
+		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+
+		queryResultSet = DB.executeQuery(sqlQuery[0], sqlQuery[1], reviewIndicator, ga_id);
+		try {
+			if (DB.getRecordSetCount(queryResultSet) > 0) {
+				lib.Reporter.logEvent(Status.INFO, "Setting Mortgage Paperwork indicator to: "+reviewIndicator, 
+						"Mortgage paperwork Indicator is set to : "+reviewIndicator+"\nTable Name: grp_loan_struc ", false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Reporter.logEvent(
+					Status.WARNING,
+					"Setting Mortgage Paperwork indicator to: "+reviewIndicator, 
+					"Mortgage paperwork Indicator is not set to : "+reviewIndicator+"\nTable Name: grp_loan_struc ", false);
+		}
+	}
+}*/
+
+
+
 
 	public static String getDeliveryMethodSelected() {
 		return deliveryMethodSelected;

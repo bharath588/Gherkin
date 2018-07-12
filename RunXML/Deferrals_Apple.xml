@@ -10,7 +10,7 @@
     <!-- PART 1 -->
   
         <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+            <class name="app.pptweb.testcases.deferrals.DeferralstestcasesModifi">
                 <methods>
                 
                  <!-- PRIOR PLAN CONTRIBUTIONS 5 -->

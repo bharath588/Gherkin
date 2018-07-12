@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+
+	<test name="Statements">
+
+		<classes>
+			<class name="app.pptweb.testcases.aod.StatementsTestcases">
+				<methods>
+					<include name="AOD_Statements_DDTC_28696_TC_01_Verify_Statements_card_present_on_Account_overview_page">
+						<parameter name="ManualTCName"
+							value="DDTC-28696 TC_01 Verify Statements card present on Account overview page">
+						</parameter>
+					</include>				
+					<include name="AOD_Statements_DDTC_28697_TC_02_Test_to_Verify_functionality_of_Show_more_link_present_on_Statements_card">
+						<parameter name="ManualTCName"
+							value="DDTC-28697 TC_02 Test to Verify functionality of Show more link present on Statements card">
+						</parameter>
+					</include>
+					<include name="AOD_Statements_DDTC_28698_TC_03_Test_to_Verify_message_displayed_on_statements_card_when_participant_does_not_have_any_statements">
+						<parameter name="ManualTCName"
+							value="DDTC-28698 TC_03 Test to Verify message displayed on statements card when participant does not have any statements">
+						</parameter>
+					</include>
+					<include name="AOD_Statements_DDTC_28703_TC_04_Test_to_Verify_functionality_of_e_delivery_button_present_on_Statements_card">
+						<parameter name="ManualTCName"
+							value="DDTC-28703 TC_04 Test to Verify functionality of e-delivery button present on Statements card">
+						</parameter>
+					</include>		
+					<include name="AOD_Statements_DDTC_31381_TC_04_Verify_functionality_of_e_delivery_button_when_personal_e_mail_id_is_not_present_for_ppt">
+						<parameter name="ManualTCName"
+							value="DDTC-31381 TC_04 Test to Verify functionality of e-delivery button present on Statements card when personal e-mail id is not present for ppt">
+						</parameter>
+					</include>	
+					<include name="AOD_Statements_DDTC_28728_TC_05_Verify_message_displayed_when_participant_participant_has_already_opted_in_for_e_delivery">
+						<parameter name="ManualTCName"
+							value="DDTC-28728 TC_05Test to Verify message displayed on statements card when participant participant has already opted in for e-delivery">
+						</parameter>
+					</include>
+					<include name="AOD_Statements_DDTC_28730_TC_06_Test_to_Verify_functionality_of_link_present_on_Statements_card">
+						<parameter name="ManualTCName"
+							value="DDTC-28730 TC_06 Test to Verify functionality of link present on Statements card">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

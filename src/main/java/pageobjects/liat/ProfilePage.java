@@ -107,7 +107,8 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 	@FindBy(xpath = ".//*[text()[normalize-space()='Cancel']]")
 	private WebElement lnkCancel;
 
-	@FindBy(xpath = "//div[@class='form-group has-error']/span[@class='help-block']")
+	//@FindBy(xpath = "//div[@class='form-group has-error']/span[@class='help-block']")
+	@FindBy(xpath = "//div[@class='form-group has-error ng-scope']/span[@class='help-block ng-binding']")
 	private WebElement lblErrorCurrentPassword;
 
 	@FindBy(xpath = "//a[text()='Home']")
@@ -124,16 +125,16 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 	private WebElement txtPersonalEmail;
 	@FindBy(id = "phoneNumberIdD")
 	private WebElement txtPersonalPhoneNum;
-	@FindBy(xpath = "//p[@class='success']")
+	@FindBy(xpath = "//p[@class='success ng-binding ng-scope']")
 	private List<WebElement> lstsuccessMsg;
-	@FindBy(xpath = "//ng-message[@class='form-validation-rule' or contains(text(),'Username is required')]")
+	@FindBy(xpath = "//ng-message[@class='form-validation-rule ng-binding ng-scope' or contains(text(),'Username is required')]")
 	private List<WebElement> lstErrorMsg;
 	public static String userFromDatasheet = null;
 	private String textField = "//*[contains(text(),'webElementText')]";
 	private List<WebElement> lstErrorMessages;
 
 	// Username and Password - Profile page
-	@FindBy(xpath = "//div[@class='col-sm-4 profile-username']")
+	@FindBy(xpath = "//div[@class='col-sm-4 profile-username ng-binding']")
 	private WebElement lblUsernameProfilePage;
 
 	@FindBy(xpath = "//strong[contains(text(),'Password')]/following-sibling::div[@class='col-sm-4']")
@@ -156,7 +157,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 	@FindBy(xpath = "//label[following-sibling::input[@id='stline2Id']]")
 	private WebElement lblAddressLine2;
 
-	@FindBy(xpath = "//label[@class='control-label'][following-sibling::input[@id='cityId']]")
+	@FindBy(xpath = "//label[@class='control-label ng-binding'][following-sibling::input[@id='cityId']]")
 	private WebElement lblAddressCity;
 
 	@FindBy(xpath = "//label[./following-sibling::div[./select[@id='state']]]")
@@ -181,7 +182,11 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 
 	@FindBy(xpath = "//div[@class='profile-information home-information'][preceding-sibling::div[@class='profile-information work-information']]//h2")
 	private WebElement lblHomeMailingAddressOnWorkContact;
-
+	
+	//Mosin - Communication Preference
+	@FindBy(xpath = "//div[contains(@ng-show,'YES_CONSENT_ANY_ELECTRONIC')]")
+	private WebElement lblDeliveryMethod;
+	
 	/*
 	 * List<WebElement> lstErrorMsg = Web .getDriver() .findElements( By.xpath(
 	 * "//ng-message[@class='form-validation-rule' or contains(text(),'Username is required')]"
@@ -445,11 +450,14 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 		if (fieldName.trim().equalsIgnoreCase("CHANGE HOME ADDRESS COUNTRY")) {
 			return this.lblAddressCountry;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Delivery Method")) {
+			return this.lblDeliveryMethod;
+		}
 		if (fieldName.trim().equalsIgnoreCase(
 				"HOME ADDRESS ON WORK INFORMATION")) {
 			return this.lblHomeMailingAddressOnWorkContact;
 		}
-
+		
 		if (fieldName.trim()
 				.equalsIgnoreCase("HOME ADDRESS LABEL PROFILE PAGE")) {
 			return this.lblHomeAddress;
@@ -525,7 +533,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 		String sEmail = rs_Email.getString("email_address");
 
 		System.out.println("From DataBase: " + sEmail + " and " + sPhoneNum);
-
+		Web.isWebElementDisplayed(txtPersonalEmailAdd,true);
 		if (txtPersonalEmailAdd.getText().equalsIgnoreCase(sEmail)) {
 			Reporter.logEvent(Status.PASS,
 					" Verify 'Profile' Page is displayed",
@@ -546,7 +554,9 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 		}
 		Thread.sleep(3000);
 		lnkChangeContact.click();
-		Thread.sleep(2000);
+		Thread.sleep(4000);
+		Web.isWebElementDisplayed(txtPersonalEmail,true);
+		Web.isWebElementDisplayed(txtPersonalPhoneNum, true);
 		// System.out.println("Email" + txtPersonalEmail.getAttribute("value"));
 		// System.out.println("Phone" +
 		// txtPersonalPhoneNum.getAttribute("value"));
@@ -1001,4 +1011,28 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 
 		return isTextDisplayed;
 	}
+	
+	//Mosin - To check the Delivery Method of the Communication preference
+	public void verifyDeliveryMethod(String sOption)
+	{
+		Web.isWebElementDisplayed(lblDeliveryMethod, true);
+		if(lblDeliveryMethod.getText().equalsIgnoreCase(sOption))
+			Reporter.logEvent(Status.PASS,
+					"Verify Delivery Method is displayed",
+					"Delivery Method is matching. Expected: "+sOption+" Actual: "+lblDeliveryMethod.getText(), false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Delivery Method is displayed",
+					"Delivery Method is not matching. Expected: "+sOption+" Actual: "+lblDeliveryMethod.getText(), true);
+	}
+	// To click on home button
+	public void clickOnHomeButton() throws InterruptedException
+	{
+		Web.isWebElementDisplayed(lblHome, true);
+		Thread.sleep(2000);
+		this.lblHome.click();
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
+	}
+	
 }
