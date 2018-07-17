@@ -166,13 +166,17 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	
 	@FindBy(how=How.ID,using="empInfoEditLinkNextGen")
 	private WebElement empInformationEditLink;
+	
+	//objects in employment information section
+	
 	@FindBy(how=How.XPATH,using="//label[normalize-space()='Union:']")
 	private WebElement empInformationUnionLabel;
 	@FindBy(how=How.XPATH,using="//label[normalize-space()='Insider:']")
 	private WebElement empInformationInsiderLabel;
 	@FindBy(how=How.XPATH,using="//label[normalize-space()='Super officer:']")
 	private WebElement empInformationSuperOfficerLabel;
-	@FindBy(how=How.XPATH,using="//label[normalize-space()='FT/PT employee:']")
+	//@FindBy(how=How.XPATH,using="//label[normalize-space()='FT/PT employee:']")
+	@FindBy(how=How.XPATH,using="//label[contains(text(),'Full time/Part time:') or contains(text(),'FT/PT employee:')]")
 	private WebElement empInformationFTPTemployeeLabel;
 	@FindBy(how=How.XPATH,using="//label[normalize-space()='Job description:']")
 	private WebElement empInformationJobDescriptionLabel;
@@ -185,9 +189,31 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	@FindBy(how=How.XPATH,using="//label[normalize-space()='Employer classification code:']")
 	private WebElement empInformationEmployerClassificationCodeLabel;
 	
-	
 	@FindBy(how=How.LINK_TEXT,using="Details")
 	private WebElement detailsLinkUnderEmploymentHistory;
+	
+	//objects under update employment information section
+	
+	@FindBy(how=How.XPATH,using="//form[@name='employment.step2.form']//label[contains(text(),'Union')]")
+	private WebElement updateEmpInformationUnionLabel;
+	@FindBy(how=How.XPATH,using="//form[@name='employment.step2.form']//label[contains(text(),'Insider')]")
+	private WebElement updateEmpInformationInsiderLabel;
+	@FindBy(how=How.XPATH,using="//form[@name='employment.step2.form']//label[contains(text(),'Super officer')]")
+	private WebElement updateEmpInformationSuperOfficerLabel;
+	//@FindBy(how=How.XPATH,using="//label[normalize-space()='FT/PT employee:']")
+	@FindBy(how=How.XPATH,using="//form[@name='employment.step2.form']//label[contains(text(),'Full time/Part time') or contains(text(),'FT/PT employee')]")
+	private WebElement updateEmpInformationFTPTemployeeLabel;
+	@FindBy(how=How.XPATH,using="//form[@name='employment.step2.form']//label[normalize-space()='Job description']")
+	private WebElement updateEmpInformationJobDescriptionLabel;
+	@FindBy(how=How.XPATH,using="//form[@name='employment.step2.form']//label[normalize-space()='Employment type']")
+	private WebElement updateEmpInformationEmploymentTypeLabel;
+	@FindBy(how=How.XPATH,using="//form[@name='employment.step2.form']//label[normalize-space()='Overseas employee']")
+	private WebElement updateEmpInformationOverseasEmployeeLabel;
+	@FindBy(how=How.XPATH,using="//form[@name='employment.step2.form']//label[normalize-space()='Overseas date']")
+	private WebElement updateEmpInformationOverseasDateLabel;
+	@FindBy(how=How.XPATH,using="//form[@name='employment.step2.form']//label[normalize-space()='Employer classification code']")
+	private WebElement updateEmpInformationEmployerClassificationCodeLabel;
+	
 	
 	
 	SimpleDateFormat sdf;
@@ -892,6 +918,82 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 			}
 		return false;
 	}
+	
+	
+	public boolean verifyUpdateEmploymentInformationLabel(List<String> label,
+			boolean displaysOrNot) {
+		if (label.size() <= 0)
+			return false;
+		for (String labelName : label) {
+			if (displaysOrNot) {
+				if (!this.verifyUpdateEmploymentInfoLabel(labelName))
+					return false;
+			} else {
+				if (this.verifyUpdateEmploymentInfoLabel(labelName))
+					return false;
+			}
+
+		}
+		return true;
+
+	}
+	
+	public boolean verifyUpdateEmploymentInfoLabel(String labelName) {	
+		System.out.println(labelName);
+		switch (labelName.trim()) {
+		case "Union":
+			if (Web.isWebElementDisplayed(updateEmpInformationUnionLabel, false))
+				return true;
+			break;
+		case "Insider":
+			if (Web.isWebElementDisplayed(updateEmpInformationInsiderLabel, false))
+				return true;
+			break;
+		case "Super Officer":
+			if (Web.isWebElementDisplayed(updateEmpInformationSuperOfficerLabel,
+					false))
+				return true;
+			break;
+		case "FT/PT Employee":
+			if (Web.isWebElementDisplayed(updateEmpInformationFTPTemployeeLabel,
+					false))
+				return true;
+			break;
+		case "Job description":
+			if (Web.isWebElementDisplayed(
+					updateEmpInformationJobDescriptionLabel, false))
+				return true;
+			break;
+		case "Employment type":
+			if (Web.isWebElementDisplayed(
+					updateEmpInformationEmploymentTypeLabel, false))
+				return true;
+			break;
+		case "Overseas employee":
+			if (Web.isWebElementDisplayed(
+					updateEmpInformationOverseasEmployeeLabel, false))
+				return true;
+			break;
+		case "Overseas date":
+			if (Web.isWebElementDisplayed(updateEmpInformationOverseasDateLabel,
+					false))
+				return true;
+			break;
+		case "Employer classification code":
+			if (Web.isWebElementDisplayed(
+					updateEmpInformationEmployerClassificationCodeLabel, false))
+				return true;
+			break;
+		default: {
+			Reporter.logEvent(Status.INFO, "label name don't match- "
+					+ labelName, "label name don't match- " + labelName,
+					true);
+			return false;
+			}
+
+		}
+	return false;
+}
 	
 	
 
