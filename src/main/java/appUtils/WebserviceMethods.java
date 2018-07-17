@@ -87,7 +87,7 @@ public class WebserviceMethods {
 	public static String getSerToProj()
 	{
 		
-		switch("PROJ_2")
+		switch("PROJ_10")
 		{
 		case "PROJ_1": return "8516";
 		case "PROJ_2": return "8517";

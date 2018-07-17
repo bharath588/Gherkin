@@ -461,7 +461,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 			}
 		}
 
-		// Leave Email Address field empty and then move the cursor out of the
+		/*// Leave Email Address field empty and then move the cursor out of the
 		// field - Email Address is required error message is required
 		this.txtEmail.clear();
 		this.txtEmail.sendKeys(Keys.TAB);
@@ -489,7 +489,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 					"Verify error message is displayed when email field is left blank.",
 					"No error message is displayed for 'Email Address' field",
 					true);
-		}
+		}*/
 
 		// Enter invalid email address and verify for the error message
 		this.txtEmail.clear();

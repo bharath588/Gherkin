@@ -20,8 +20,6 @@ import lib.Web;
 
 import org.apache.commons.lang3.StringUtils;
 
-import org.apache.xalan.lib.sql.SQLQueryParser;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -36,7 +34,7 @@ import pageobjects.landingpage.LandingPage;
 import appUtils.Common;
 
 import com.aventstack.extentreports.Status;
-import com.mongodb.connection.QueryResult;
+
 
 import core.framework.Globals;
 

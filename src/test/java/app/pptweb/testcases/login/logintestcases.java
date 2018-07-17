@@ -1240,11 +1240,11 @@ public class logintestcases {
            //Step5
            Web.getDriver().switchTo().defaultContent();
            Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
-           Thread.sleep(2000);
+           Thread.sleep(5000);
            Common.waitForProgressBar();
            Web.waitForPageToLoad(Web.getDriver());
            Web.waitForElement(twoStepVerification,"Label Communication Preference");
-           Web.waitForElement(twoStepVerification, "EMAIL DROP DOWN");
+           //Web.waitForElement(twoStepVerification, "EMAIL DROP DOWN");
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "Label Communication Preference", true);
            
            if(isMatching){
@@ -1298,7 +1298,7 @@ public class logintestcases {
 						"Verify 'Check Box with plan Name' Is Displayed",
 						"'Check Box with plan Name' Is Not Displayed",true);
 			}
-           isMatching= Web.isWebElementDisplayed(twoStepVerification, "EMAIL DROP DOWN", true);
+           /*isMatching= Web.isWebElementDisplayed(twoStepVerification, "EMAIL DROP DOWN", true);
            
            if(isMatching){
 				lib.Reporter
@@ -1314,7 +1314,7 @@ public class logintestcases {
 						Status.FAIL,
 						"Verify 'Email DropDown' Is Displayed",
 						"'Email DropDown' Is Not Displayed",true);
-			}
+			}*/
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "TEXT AGREEMENT FROM", true);
            
            if(isMatching){
@@ -1614,7 +1614,7 @@ public class logintestcases {
            Common.waitForProgressBar();
            Web.waitForPageToLoad(Web.getDriver());
            Web.waitForElement(twoStepVerification,"Label Communication Preference");
-           Web.waitForElement(twoStepVerification, "EMAIL DROP DOWN");
+          // Web.waitForElement(twoStepVerification, "EMAIL DROP DOWN");
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "Label Communication Preference", true);
            
            if(isMatching){
@@ -1668,7 +1668,7 @@ public class logintestcases {
 						"Verify 'Check Box with plan Name' Is Displayed",
 						"'Check Box with plan Name' Is Not Displayed",true);
 			}
-           isMatching= Web.isWebElementDisplayed(twoStepVerification, "EMAIL DROP DOWN", true);
+          /* isMatching= Web.isWebElementDisplayed(twoStepVerification, "EMAIL DROP DOWN", true);
            
            if(isMatching){
 				lib.Reporter
@@ -1684,7 +1684,7 @@ public class logintestcases {
 						Status.FAIL,
 						"Verify 'Email DropDown' Is Displayed",
 						"'Email DropDown' Is Not Displayed",true);
-			}
+			}*/
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "TEXT AGREEMENT FROM", true);
            
            if(isMatching){
@@ -1982,7 +1982,7 @@ public class logintestcases {
            Common.waitForProgressBar();
            Web.waitForPageToLoad(Web.getDriver());
            Web.waitForElement(twoStepVerification,"Label Communication Preference");
-           Web.waitForElement(twoStepVerification, "EMAIL DROP DOWN");
+           //Web.waitForElement(twoStepVerification, "EMAIL DROP DOWN");
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "Label Communication Preference", true);
            
            if(isMatching){
@@ -2036,7 +2036,7 @@ public class logintestcases {
 						"Verify 'Check Box with plan Name' Is Displayed",
 						"'Check Box with plan Name' Is Not Displayed",true);
 			}
-           isMatching= Web.isWebElementDisplayed(twoStepVerification, "EMAIL DROP DOWN", true);
+           /*isMatching= Web.isWebElementDisplayed(twoStepVerification, "EMAIL DROP DOWN", true);
            
            if(isMatching){
 				lib.Reporter
@@ -2052,7 +2052,7 @@ public class logintestcases {
 						Status.FAIL,
 						"Verify 'Email DropDown' Is Displayed",
 						"'Email DropDown' Is Not Displayed",true);
-			}
+			}*/
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "TEXT AGREEMENT FROM", true);
            
            if(isMatching){
@@ -2324,7 +2324,7 @@ public class logintestcases {
            Common.waitForProgressBar();
            Web.waitForPageToLoad(Web.getDriver());
            Web.waitForElement(twoStepVerification,"Label Communication Preference");
-           Web.waitForElement(twoStepVerification, "EMAIL DROP DOWN"); 
+           //Web.waitForElement(twoStepVerification, "EMAIL DROP DOWN"); 
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "Label Communication Preference", true);
            
            if(isMatching){
@@ -2378,7 +2378,7 @@ public class logintestcases {
 						"Verify 'Check Box with plan Name' Is Displayed",
 						"'Check Box with plan Name' Is Not Displayed",true);
 			}
-           isMatching= Web.isWebElementDisplayed(twoStepVerification, "EMAIL DROP DOWN", true);
+           /*isMatching= Web.isWebElementDisplayed(twoStepVerification, "EMAIL DROP DOWN", true);
            
            if(isMatching){
 				lib.Reporter
@@ -2394,7 +2394,7 @@ public class logintestcases {
 						Status.FAIL,
 						"Verify 'Email DropDown' Is Displayed",
 						"'Email DropDown' Is Not Displayed",true);
-			}
+			}*/
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "TEXT AGREEMENT FROM", true);
            
            if(isMatching){
