@@ -26,6 +26,7 @@ import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
 import appUtils.Common;
 import appUtils.WebService_PPT;
+import appUtils.WebserviceMethods;
 
 import com.aventstack.extentreports.Status;
 
@@ -42,7 +43,7 @@ public class ContribuitionsTestcases {
 	DateFormat dateFormat = new SimpleDateFormat("a");
 	Calendar cal = Calendar.getInstance();
 	String sAMorPM=dateFormat.format(cal.getTime());
-	static String sURLforPayRoll = "http://fss-dapps1:8615//ElectiveDeferralServices/rest/deferralServices/deferrals/participant/defrlType/";
+	public String sURLforPayRoll = "http://fss-dapps1:"+WebserviceMethods.getSerToProj()+"//ElectiveDeferralServices/rest/deferralServices/deferrals/participant/defrlType/";
 		
 	@BeforeClass
 	public void ReportInit() {
@@ -85,7 +86,7 @@ public class ContribuitionsTestcases {
 					false);
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println(payRollType+remainingPayPeriod);
@@ -97,14 +98,14 @@ public class ContribuitionsTestcases {
  			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);	
  			AccountOverview myAccount = new AccountOverview(lftNavBar);
  			myAccount.get();
-			/*Deferrals deferrals = new Deferrals(lftNavBar);
+			Deferrals deferrals = new Deferrals(lftNavBar);
 			deferrals.deleteAllAODDeferrals();
 			deferrals.get();
 			ArrayList<String> ar = new ArrayList<String>();
 			ar.add("Standard Add");
 			ar.add("Catch Up Add");
 			deferrals.addDeferralsForAOD(ar);
-			Web.clickOnElement(myAccount, "Account Overview Link");*/
+			Web.clickOnElement(myAccount, "Account Overview Link");
 			//Step 6
 			myAccount.validateContributionCard(currentYear);
 			//Step 7
@@ -164,7 +165,7 @@ public class ContribuitionsTestcases {
 					false);
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
@@ -176,7 +177,7 @@ public class ContribuitionsTestcases {
  			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);
  			AccountOverview myAccount = new AccountOverview(lftNavBar);
  			myAccount.get();
-			/*Deferrals deferrals = new Deferrals(lftNavBar);
+			Deferrals deferrals = new Deferrals(lftNavBar);
 			deferrals.deleteAllAODDeferrals();
 			deferrals.get();
 			ArrayList<String> ar = new ArrayList<String>();
@@ -184,7 +185,7 @@ public class ContribuitionsTestcases {
 			ar.add("Catch Up Add");
 			deferrals.addDeferralsForAOD(ar);
 			
-			Web.clickOnElement(myAccount, "Account Overview Link");*/
+			Web.clickOnElement(myAccount, "Account Overview Link");
 			//Step 6
 			myAccount.validateContributionCard(currentYear);
 			//Step 7
@@ -244,7 +245,7 @@ public class ContribuitionsTestcases {
 					false);
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
@@ -256,7 +257,7 @@ public class ContribuitionsTestcases {
  			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);	
  			AccountOverview myAccount = new AccountOverview(lftNavBar);
  			myAccount.get();
- 			/*Deferrals deferrals = new Deferrals(lftNavBar);
+ 			Deferrals deferrals = new Deferrals(lftNavBar);
 			deferrals.deleteAllAODDeferrals();
 			deferrals.get();
 			ArrayList<String> ar = new ArrayList<String>();
@@ -265,7 +266,7 @@ public class ContribuitionsTestcases {
 			ar.add("After Tax Add");
 			deferrals.addDeferralsForAOD(ar);
 			Web.clickOnElement(myAccount, "Account Overview Link");
-			Web.waitForPageToLoad(Web.getDriver());*/
+			Web.waitForPageToLoad(Web.getDriver());
  			String sValue[] = Stock.GetParameterValue("CardType").split(",");
  			String sLimit[] = Stock.GetParameterValue("IRSLimit").split(",");
  			for(int i=0;i<sValue.length;i++)
@@ -329,7 +330,7 @@ public class ContribuitionsTestcases {
 					false);
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println(payRollType+remainingPayPeriod);
@@ -423,7 +424,7 @@ public class ContribuitionsTestcases {
 					false);
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
@@ -435,7 +436,7 @@ public class ContribuitionsTestcases {
  			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);	
  			AccountOverview myAccount = new AccountOverview(lftNavBar);
  			myAccount.get();
- 			/*Deferrals deferrals = new Deferrals(lftNavBar);
+ 			Deferrals deferrals = new Deferrals(lftNavBar);
 			deferrals.deleteAllAODDeferrals();
 			deferrals.get();
 			ArrayList<String> ar = new ArrayList<String>();
@@ -443,7 +444,7 @@ public class ContribuitionsTestcases {
 			ar.add("Catch Up Add");
 			deferrals.addDeferralsForAOD(ar);
 			Web.clickOnElement(myAccount, "Account Overview Link");
-			Web.waitForPageToLoad(Web.getDriver());*/
+			Web.waitForPageToLoad(Web.getDriver());
 			//Step 6
 			myAccount.validateContributionCard(currentYear);
 			//Step 7
@@ -519,7 +520,7 @@ public class ContribuitionsTestcases {
  			 */
  			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
@@ -602,7 +603,7 @@ public class ContribuitionsTestcases {
 					false);
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
@@ -703,7 +704,7 @@ public class ContribuitionsTestcases {
 					false);
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
@@ -875,7 +876,7 @@ public class ContribuitionsTestcases {
 					false);
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
@@ -976,7 +977,7 @@ public class ContribuitionsTestcases {
 					false);
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
@@ -1204,7 +1205,7 @@ public class ContribuitionsTestcases {
 					false);
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
@@ -1302,7 +1303,7 @@ public class ContribuitionsTestcases {
 					false);
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
@@ -1496,7 +1497,7 @@ public class ContribuitionsTestcases {
 					false);
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
@@ -1621,7 +1622,7 @@ public class ContribuitionsTestcases {
 					false);
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
@@ -1742,7 +1743,7 @@ public class ContribuitionsTestcases {
 			Common.updatePlanEnrollCode("N",Stock.GetParameterValue("planId"));
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
@@ -1843,7 +1844,7 @@ public class ContribuitionsTestcases {
 					Stock.GetParameterValue("planId"));
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println(payRollType+remainingPayPeriod);
@@ -1869,13 +1870,13 @@ public class ContribuitionsTestcases {
  			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);	
  			AccountOverview myAccount = new AccountOverview(lftNavBar);
  			myAccount.get();
-			/*Deferrals deferrals = new Deferrals(lftNavBar);
+			Deferrals deferrals = new Deferrals(lftNavBar);
 			deferrals.deleteAllAODDeferrals();
 			deferrals.get();
 			ArrayList<String> ar = new ArrayList<String>();
 			ar.add("Standard Add");
 			deferrals.addDeferralsForAOD(ar);
-			Web.clickOnElement(myAccount, "Account Overview Link");*/
+			Web.clickOnElement(myAccount, "Account Overview Link");
 			//Step 6
 			myAccount.validateContributionCard(currentYear);
 			//Step 7
@@ -1936,7 +1937,7 @@ public class ContribuitionsTestcases {
 					Stock.GetParameterValue("planId"));
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println(payRollType+remainingPayPeriod);
@@ -1961,13 +1962,13 @@ public class ContribuitionsTestcases {
  			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);	
  			AccountOverview myAccount = new AccountOverview(lftNavBar);
  			myAccount.get();
-			/*Deferrals deferrals = new Deferrals(lftNavBar);
+			Deferrals deferrals = new Deferrals(lftNavBar);
 			deferrals.deleteAllAODDeferrals();
 			deferrals.get();
 			ArrayList<String> ar = new ArrayList<String>();
 			ar.add("Standard Add");
 			deferrals.addDeferralsForAOD(ar);
-			Web.clickOnElement(myAccount, "Account Overview Link");*/
+			Web.clickOnElement(myAccount, "Account Overview Link");
 			//Step 6
 			myAccount.validateContributionCard(currentYear);
 			//Step 7
@@ -2046,7 +2047,7 @@ public class ContribuitionsTestcases {
 					Stock.GetParameterValue("planId"));
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println(payRollType+remainingPayPeriod);
@@ -2058,13 +2059,13 @@ public class ContribuitionsTestcases {
  			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);	
  			AccountOverview myAccount = new AccountOverview(lftNavBar);
  			myAccount.get();
-			/*Deferrals deferrals = new Deferrals(lftNavBar);
+			Deferrals deferrals = new Deferrals(lftNavBar);
 			deferrals.deleteAllAODDeferrals();
 			deferrals.get();
 			ArrayList<String> ar = new ArrayList<String>();
 			ar.add("Standard Add");
 			deferrals.addDeferralsForAOD(ar);
-			Web.clickOnElement(myAccount, "Account Overview Link");*/
+			Web.clickOnElement(myAccount, "Account Overview Link");
 			//Step 6
 			myAccount.validateContributionCard(currentYear);
 			//Step 7
@@ -2129,7 +2130,7 @@ public class ContribuitionsTestcases {
 			 */
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web
+			ArrayList<String> payRoll = WebService_PPT
 					.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
@@ -2696,7 +2697,7 @@ public class ContribuitionsTestcases {
 					false);
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
@@ -2837,7 +2838,7 @@ public class ContribuitionsTestcases {
 					Stock.GetParameterValue("planId"));
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println(payRollType+remainingPayPeriod);
@@ -2849,13 +2850,13 @@ public class ContribuitionsTestcases {
  			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);	
  			AccountOverview myAccount = new AccountOverview(lftNavBar);
  			myAccount.get();
-			/*Deferrals deferrals = new Deferrals(lftNavBar);
+			Deferrals deferrals = new Deferrals(lftNavBar);
 			deferrals.deleteAllAODDeferrals();
 			deferrals.get();
 			ArrayList<String> ar = new ArrayList<String>();
 			ar.add("Standard Add");
 			deferrals.addDeferralsForAOD(ar);
-			Web.clickOnElement(myAccount, "Account Overview Link");*/
+			Web.clickOnElement(myAccount, "Account Overview Link");
 			//Step 6
  			myAccount.validateContributionCard(currentYear);
 			//Step 7
@@ -2934,7 +2935,7 @@ public class ContribuitionsTestcases {
 					Stock.GetParameterValue("planId"));
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println(payRollType+remainingPayPeriod);
@@ -2946,13 +2947,13 @@ public class ContribuitionsTestcases {
  			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);	
  			AccountOverview myAccount = new AccountOverview(lftNavBar);
  			myAccount.get();
-			/*Deferrals deferrals = new Deferrals(lftNavBar);
+			Deferrals deferrals = new Deferrals(lftNavBar);
 			deferrals.deleteAllAODDeferrals();
 			deferrals.get();
 			ArrayList<String> ar = new ArrayList<String>();
 			ar.add("Standard Add");
 			deferrals.addDeferralsForAOD(ar);
-			Web.clickOnElement(myAccount, "Account Overview Link");*/
+			Web.clickOnElement(myAccount, "Account Overview Link");
 			//Step 6
 			myAccount.validateContributionCard(currentYear);
 			//Step 7
@@ -3025,7 +3026,7 @@ public class ContribuitionsTestcases {
 					Stock.GetParameterValue("planId"));
 			WebService_PPT web = new WebService_PPT();
 			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = web.getPayPeriodsRemainingInYear(sJSONResponse);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println(payRollType+remainingPayPeriod);
@@ -3037,13 +3038,18 @@ public class ContribuitionsTestcases {
  			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);	
  			AccountOverview myAccount = new AccountOverview(lftNavBar);
  			myAccount.get();
-			/*Deferrals deferrals = new Deferrals(lftNavBar);
+			Deferrals deferrals = new Deferrals(lftNavBar);
 			deferrals.deleteAllAODDeferrals();
 			deferrals.get();
-			ArrayList<String> ar = new ArrayList<String>();
-			ar.add("Standard Add");
-			deferrals.addDeferralsForAOD(ar);
-			Web.clickOnElement(myAccount, "Account Overview Link");*/
+			deferrals.clickAddEditButton("Standard Add");
+			deferrals.click_Select_Your_Contribution_Rate();
+			Web.waitForElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
+			deferrals.myContributions_Confirmation_Page();
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			Thread.sleep(3000);
+			deferrals.checkEffectiveDate();
+			Web.clickOnElement(myAccount, "Account Overview Link");
 			//Step 6
  			myAccount.validateContributionCard(currentYear);
 			//Step 7

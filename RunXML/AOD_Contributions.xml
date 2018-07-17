@@ -137,7 +137,7 @@
 					</include>
 					<!-- Bhargav -->
 					
-					<include
+					<!-- <include
 						name="AOD_Contribution_DDTC_29600SIT_PPTWEB_Account_overview_Editing_contributions_through_Contributions_card_with_View_only_deferrals">
 						<parameter name="ManualTCName"
 							value="DDTC-29600_SIT_PPTWEB_Account_overview_Editing_contributions_through_Contributions_card_with_View_only_deferrals">
@@ -160,7 +160,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-29603_SIT_PPTWEB_Account_overview_Editing_contributions_through_Contributions_card_for_terminated_participant">
 						</parameter>
-					</include>
+					</include> -->
 
 				</methods>
 			</class>

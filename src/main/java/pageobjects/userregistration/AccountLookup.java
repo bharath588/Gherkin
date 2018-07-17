@@ -39,7 +39,8 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	@FindBy(xpath=".//*[@id='login-help-submit']") private WebElement btnContinueDoNotHavePin;
 	@FindBy(xpath="//button[./span[text()='CONTINUE']]") private WebElement btnContinuehavePlanEnrollCode;
 	//@FindBy(xpath=".//*[@id='submit']") private WebElement btnContinue;
-	@FindBy(xpath=".//*[@id='registrationContent']/.//*[normalize-space()='CONTINUE' and @id='submit']") private WebElement btnContinue;
+	//@FindBy(xpath=".//*[@id='registrationContent']/.//*[normalize-space()='CONTINUE' and @id='submit']") private WebElement btnContinue;
+	@FindBy(xpath=".//*[@id='registrationContent']/.//*[normalize-space()='CONTINUE']") private WebElement btnContinue;
 	@FindBy(id="groupIdInput") private WebElement inpPlanNumber;
 	@FindBy(id="planEnrollmentCodeInput") private WebElement inpPlanEnrollmentCode;
 	@FindBy(xpath="//label[contains(text(),'Social Security Number')]//following-sibling::ng-include//ng-message[contains(text(),'Social Security number')]") private WebElement lblSSNErrMsg;
@@ -51,6 +52,9 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	@FindBy(xpath=".//*[@class='form-group has-error ng-scope'][1] | .//*[@class='form-group has-error'][1]") private WebElement lblMainErrMsg;
 	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
 	private WebElement lblSponser;
+    @FindBy(xpath="//div[contains(@class,'modal-content') and contains(@class,'ng-scope')]//button[contains(text(),'I agree, continue')]") private WebElement btnIAgreeandContinue;
+    @FindBy(xpath="//div[contains(@class,'modal-content') and contains(@class,'ng-scope')]//button[contains(text(),' Skip, mail PIN')]") private WebElement btnSkipMailPin;
+
 	@FindBy(xpath=".//*[@id='passwordInput' and @name='password']") private WebElement txtPassword;
 	@FindBy(xpath="//label[contains(text(),'Social Security Number')]//following-sibling::ng-include//ng-message[contains(text(),'Social Security number')]") private List<WebElement> lblSSNErrMsgs;
 	@FindBy(xpath="//label[contains(text(),'Group Id / Plan Number')]//following-sibling::ng-messages/ng-message/span") private WebElement lblGroupIdErrMsg;
@@ -206,7 +210,14 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		if (fieldName.trim().equalsIgnoreCase("ERR_Plan Enrollment Code")) {
 			return this.lblPlanEnrollmentCodeErrMsg;
 		}
-		
+		if (fieldName.trim().equalsIgnoreCase("I Agree Continue")) {
+			return this.btnIAgreeandContinue;
+		}
+
+		if (fieldName.trim().equalsIgnoreCase("Skip mail PIN")) {
+			return this.btnSkipMailPin;
+		}
+
 		//Continue button
 		if (fieldName.trim().equalsIgnoreCase("CONTINUE")) {
 			if (this.getActiveTabName().equalsIgnoreCase("I have a plan enrollment code")) {
@@ -350,7 +361,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		} else {
 			activeTab = "";
 		}
-		
+		System.out.println("activeTab"+activeTab);
 		return activeTab;
 	}
 
@@ -540,5 +551,29 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 			
 		}
 	}
+
+	/**
+	 * Clicks on button in Modal Popup"
+	 * 
+	 * @param fieldName
+	 *
+	 */
+	public void clickOnButtoninModalPopup(String fieldName) {
+		WebElement element = null;
+		try {
+			if (fieldName.trim().equalsIgnoreCase("I Agree Continue")) {
+				element = this.getWebElement(fieldName);
+				element.click();
+			} else if (fieldName.equalsIgnoreCase("Skip mail PIN")) {
+				element = this.getWebElement(fieldName);
+				element.click();
+			}
+
+		} catch (NoSuchElementException e) {
+			e.printStackTrace();
+		}
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
+}
 
 }

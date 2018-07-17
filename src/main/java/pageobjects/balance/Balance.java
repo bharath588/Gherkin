@@ -54,6 +54,7 @@ public class Balance extends LoadableComponent<Balance> {
 
 	//Mosin
 	@FindBy(linkText="Home") private WebElement lnkHome;
+	@FindBy(linkText="My Accounts") private WebElement lnkMyAccount;
 	/** Empty args constructor
 	 * 
 	 */
@@ -183,6 +184,9 @@ public class Balance extends LoadableComponent<Balance> {
 		//Mosin
 		if (fieldName.trim().equalsIgnoreCase("Home")) {
 			return this.lnkHome;
+		}
+		if (fieldName.trim().equalsIgnoreCase("My Accounts")) {
+			return this.lnkMyAccount;
 		}
 		return null;
 	}

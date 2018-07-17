@@ -26,6 +26,9 @@ public class WebserviceMethods {
 	static String authCode;
 	static int randomId=0;
 	
+	public String serviceAuthURL = "http://fss-dapps1:"+getSerToProj()+"/security/authenticate/participant";
+	//public static String serviceAODURL  = "http://fss-dapps1:"+getSerToProj()+"//ElectiveDeferralServices/rest/deferralServices/deferrals/participant/defrlType/";
+	
 	/**<pre>
 	 * This method executes the Enrollment webservice and verify the success response
 	 * </pre>
@@ -42,11 +45,8 @@ public class WebserviceMethods {
 		agntserv.setAccuCode("Empower");
 		agntserv.setAccuAccessTypeCode("PPT_WEB");
 		jsonRequestStringAuth = JsonUtil.writeToJson(agntserv);
-		
-//		8516-Proj-1
-//		8517-Proj-2
-//		8615-Proj-10
-		HttpResponse httpResponseForAuth = web.getResponseasJsonforPostRequest(web.getAuthURL(), jsonRequestStringAuth);
+
+		HttpResponse httpResponseForAuth = web.getResponseasJsonforPostRequest(serviceAuthURL, jsonRequestStringAuth);
 		
 		System.out.println(httpResponseForAuth.toString());
 		authCode = httpResponseForAuth.getFirstHeader("Authorization").getValue();
@@ -84,5 +84,19 @@ public class WebserviceMethods {
 		
 		return jsonResponseString;
 	}
-
+	public static String getSerToProj()
+	{
+		
+		switch("PROJ_2")
+		{
+		case "PROJ_1": return "8516";
+		case "PROJ_2": return "8517";
+		case "PROJ_3": return "8618";
+		case "PROJ_6": return "8611";
+		case "PROJ_9": return "8614";
+		case "PROJ_10": return "8615";
+		case "PROJ_8" : return "8613";
+		}
+		return "";
+	}
 }

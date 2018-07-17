@@ -2595,6 +2595,9 @@ return expectedCompanyMatch;
 				System.out.println("Updated");
 			}
 		}
+	}
+	public void checkPendingLable() throws Exception
+	{
 		if(Web.isWebElementDisplayed(Web.getDriver().findElement
 				(By.xpath(pendingDeferral.replace("DeferralType", Stock.GetParameterValue("Contribution_type")))), false))
 		{

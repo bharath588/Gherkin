@@ -25,7 +25,7 @@ public class WebService_PPT {
 		
 		return jsonResponseString;
 	}
-	public ArrayList<String> getPayPeriodsRemainingInYear(String jsonResponseString) throws Exception
+	public static ArrayList<String> getPayPeriodsRemainingInYear(String jsonResponseString) throws Exception
 	{
 		ArrayList<String> ar = new ArrayList<String>();
 		String payPeriod = null,payPeriodYearOrMonth= null,sServiceLevel= null;

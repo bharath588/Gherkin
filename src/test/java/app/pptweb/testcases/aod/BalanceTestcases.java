@@ -129,9 +129,9 @@ public class BalanceTestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
  			LandingPage homePage = new LandingPage(mfaPage);
- 			homePage.get();
- 			String sAmount = homePage.getAccountBalanceByPlan(Stock.GetParameterValue("ga_PlanId"));
  			MyAccountsPage myAccount = new MyAccountsPage();
+ 			myAccount.get();
+ 			String sAmount = homePage.getAccountBalanceByPlan(Stock.GetParameterValue("ga_PlanId"));
  			myAccount.clickPlanNameByGAID(Stock.GetParameterValue("ga_PlanId"));
  			Balance myBalance=new Balance();
 			AccountOverview myAccountOverview=new AccountOverview();
@@ -237,9 +237,9 @@ public class BalanceTestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
  			LandingPage homePage = new LandingPage(mfaPage);
- 			homePage.get();
- 			String sAmount = homePage.getAccountBalanceByPlan(Stock.GetParameterValue("ga_PlanId"));
  			MyAccountsPage myAccount = new MyAccountsPage();
+ 			myAccount.get();
+ 			String sAmount = homePage.getAccountBalanceByPlan(Stock.GetParameterValue("ga_PlanId"));
  			myAccount.clickPlanNameByGAID(Stock.GetParameterValue("ga_PlanId"));
  			Balance myBalance=new Balance();
 			AccountOverview myAccountOverview=new AccountOverview();
@@ -251,7 +251,7 @@ public class BalanceTestcases {
 				myAccountOverview.clickOnBalanceCardViewDeatilsLink();
 				
 				myBalance.verifyParticipanttakenToBalancePage();
-				Web.clickOnElement(myBalance, "Home");
+				Web.clickOnElement(myBalance, "My Accounts");
 			}
 			Thread.sleep(5000);
 		} catch (Exception e) {

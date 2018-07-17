@@ -2070,8 +2070,13 @@ public class registrationtestcases {
 					"Enter participant details and click on Continue button.",
 					"Submitted participant details and clicked on Continue button",
 					false);
-
+			if (Stock.GetParameterValue("TabName").trim()
+					.equalsIgnoreCase("I do not have a PIN")) {
+			Web.waitForPageToLoad(Web.getDriver());
 			Thread.sleep(5000);
+			Web.waitForPageToLoad(Web.getDriver());
+			accLookup.clickOnButtoninModalPopup("I Agree Continue");
+			}
 			// Verify set up your account page is displayed
 			hdrBlockText = accSetup.getAccountSetupHeaderBlockText();
 			if (hdrBlockText == null) {
@@ -2610,6 +2615,7 @@ public class registrationtestcases {
 					"Submitted participant details and clicked on Continue button",
 					false);
 			Thread.sleep(5000);
+			accLookup.clickOnButtoninModalPopup("I Agree Continue");
 			// Verify set up your account page is displayed
 			hdrBlockText = accSetup.getAccountSetupHeaderBlockText();
 			

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+
+	<test name="AOD_Modules">
+		
+		<classes>
+			<class name="app.pptweb.testcases.aod.LoansBalanceTestcases">
+				<methods>
+					<include name="AOD_Loans_DDTC_28724_SIT_PPTWEB_Account_overview_Loan_Balance_card_multiple_loans">
+						<parameter name="ManualTCName"
+							value="DDTC-28724 SIT_PPTWEB_Account overview_Loan Balance card multiple loans">
+						</parameter>
+					</include>
+					<include name="AOD_Loans_DDTC_28725_SIT_PPTWEB_Account_overview_Loan_Balance_card_no_loans">
+						<parameter name="ManualTCName"
+							value="DDTC-28725 SIT_PPTWEB_Account overview_Loan Balance card no loans">
+						</parameter>
+					</include>
+					<include name="AOD_Loans_DDTC_28723_SIT_PPTWEB_Account_overview_Loan_Balance_card_single_loan">
+						<parameter name="ManualTCName"
+							value="DDTC-28723 SIT_PPTWEB_Account overview_Loan Balance card single loan">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+			
+			<class name="app.pptweb.testcases.aod.RateofReturnTestCases">
+				<methods>
+					<include
+						name="AOD_ROR_DDTC_28555_SIT_PPTWEB_AOD_ROR_card_Rate_of_return_not_available">
+						<parameter name="ManualTCName"
+							value="DDTC-28555_SIT_PPTWEB_Account overview_Rate of return card - Rate of return not available">
+						</parameter>
+					</include>
+					<include
+						name="AOD_ROR_DDTC_28526_SIT_PPTWEB_Account_overview_ROR_card_annualized">
+						<parameter name="ManualTCName"
+							value="DDTC-28526_SIT_PPTWEB_Account overview_Rate of return card - annualized">
+						</parameter>
+					</include>
+					<include
+						name="AOD_ROR_DDTC_29480_SIT_PPTWEB_Account_overview_ROR_card_not_displayed">
+						<parameter name="ManualTCName"
+							value="DDTC-29480_SIT_PPTWEB_Account overview_Rate of return card not displayed ">
+						</parameter>
+					</include>
+					<include
+						name="AOD_ROR_DDTC_28870_SIT_PPTWEB_Account_overview_ROR_card_multiple_plans">
+						<parameter name="ManualTCName"
+							value="DDTC-28870_SIT_PPTWEB_Account overview_Rate of return card - multiple plans">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+			
+			<class name="app.pptweb.testcases.aod.StatementsTestcases">
+				<methods>
+					<include name="AOD_Statements_DDTC_28696_TC_01_Verify_Statements_card_present_on_Account_overview_page">
+						<parameter name="ManualTCName"
+							value="DDTC-28696 TC_01 Verify Statements card present on Account overview page">
+						</parameter>
+					</include>				
+					<include name="AOD_Statements_DDTC_28697_TC_02_Test_to_Verify_functionality_of_Show_more_link_present_on_Statements_card">
+						<parameter name="ManualTCName"
+							value="DDTC-28697 TC_02 Test to Verify functionality of Show more link present on Statements card">
+						</parameter>
+					</include>
+					<include name="AOD_Statements_DDTC_28698_TC_03_Test_to_Verify_message_displayed_on_statements_card_when_participant_does_not_have_any_statements">
+						<parameter name="ManualTCName"
+							value="DDTC-28698 TC_03 Test to Verify message displayed on statements card when participant does not have any statements">
+						</parameter>
+					</include>
+					<include name="AOD_Statements_DDTC_28703_TC_04_Test_to_Verify_functionality_of_e_delivery_button_present_on_Statements_card">
+						<parameter name="ManualTCName"
+							value="DDTC-28703 TC_04 Test to Verify functionality of e-delivery button present on Statements card">
+						</parameter>
+					</include>		
+					<include name="AOD_Statements_DDTC_31381_TC_04_Verify_functionality_of_e_delivery_button_when_personal_e_mail_id_is_not_present_for_ppt">
+						<parameter name="ManualTCName"
+							value="DDTC-31381 TC_04 Test to Verify functionality of e-delivery button present on Statements card when personal e-mail id is not present for ppt">
+						</parameter>
+					</include>	
+					<include name="AOD_Statements_DDTC_28728_TC_05_Verify_message_displayed_when_participant_participant_has_already_opted_in_for_e_delivery">
+						<parameter name="ManualTCName"
+							value="DDTC-28728 TC_05Test to Verify message displayed on statements card when participant participant has already opted in for e-delivery">
+						</parameter>
+					</include>
+					<include name="AOD_Statements_DDTC_28730_TC_06_Test_to_Verify_functionality_of_link_present_on_Statements_card">
+						<parameter name="ManualTCName"
+							value="DDTC-28730 TC_06 Test to Verify functionality of link present on Statements card">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+			
+			<class name="app.pptweb.testcases.aod.TransactionHistoryTestcases">
+				<methods>
+					<include name="AOD_Transaction_DDTC_28854_SIT_PPTWEB_Account_overview_Transaction_History_card_with_less_than_five_transactions">
+						<parameter name="ManualTCName"
+							value="DDTC-28854 SIT_PPTWEB_Account overview_Transaction History card with less than five transactions">
+						</parameter>
+					</include>
+					<include name="AOD_Transaction_DDTC_28702_SIT_PPTWEB_Account_overview_Transaction_History_card_with_greater_than_five_transactions">
+						<parameter name="ManualTCName"
+							value="DDTC-28702 SIT_PPTWEB_Account overview_Transaction History card with greater than five transactions">
+						</parameter>
+					</include>
+					<include name="AOD_Loans_DDTC_28855_SIT_PPTWEB_Account_overview_Transaction_History_card_with_zero_transactions">
+						<parameter name="ManualTCName"
+							value="DDTC-28855 SIT_PPTWEB_Account overview_Transaction History card with zero transactions">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+			<class name="app.pptweb.testcases.aod.BalanceTestcases">
+				<methods>
+					<include
+						name="AOD_Balance_DDTC_27442_TC_01_Verify_New_Balance_card_on_Account_overview_page_for_single_plan_ppt_with_balance_more_than_Zero">
+						<parameter name="ManualTCName"
+							value="DDTC-27442 TC_01 Verify New Balance card on Account overview page for single plan ppt with balance more than zero">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_27443_TC_02_Verify_New_Balance_card_on_Account_overview_page_for_multiple_plan_ppt_has_Balance_more_than_zero">
+						<parameter name="ManualTCName"
+							value="DDTC-27443 TC_02 Verify New Balance card on Account overview page for multiple plan ppt and both plan has Balance more than zero">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_28693_TC_03_Verify_New_Balance_card_on_Account_overview_page_for_single_plan_ppt_with_Zero_or_no_Balance">
+						<parameter name="ManualTCName"
+							value="DDTC-28693 TC_03 Verify New Balance card on Account overview page for single plan ppt with zero or no Balance">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_28694_TC_04_Verify_New_Balance_card_on_Account_overview_page_for_multiple_plan_ppt_when_one_of_plan_has_no_Balance">
+						<parameter name="ManualTCName"
+							value="DDTC-28694 TC_04 Verify New Balance card on Account overview page for multiple plan ppt when one of plan has no Balance">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_29378_TC_05_Verify_New_Balance_card_on_Account_overview_page_for_participant_from_401A_plan">
+						<parameter name="ManualTCName"
+							value="DDTC-29378 TC_05 Verify New Balance card on Account overview page for participant from 401A plan">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_29379_TC_06_Verify_New_Balance_card_on_Account_overview_page_for_participant_from_403b_plan">
+						<parameter name="ManualTCName"
+							value="DDTC-29379TC_06 Verify New Balance card on Account overview page for participant from 403b plan">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_29380TC_07_Verify_New_Balance_card_on_Account_overview_page_for_participant_from_457_special_catchup_plan">
+						<parameter name="ManualTCName"
+							value="DDTC-29380 TC_07 Verify New Balance card on Account overview page for participant from 457 special catchup plan">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_2938_TC_08_Verify_New_Balance_card_on_Account_overview_page_for_participant_from_NQ_plan">
+						<parameter name="ManualTCName"
+							value="DDTC-29381 TC_08 Verify New Balance card on Account overview page for participant from NQ plan">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_29383_TC_09_Verify_New_Balance_card_not_display_on_Account_overview_page_for_participant_when_DB_plan_selected">
+						<parameter name="ManualTCName"
+							value="DDTC-29383 TC_09 Verify New Balance card not display on Account overview page for participant when DB plan selected">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_29384_TC_10_Verify_New_Balance_card_not_display_on_Account_overview_page_when_TRS_FLEX_Annuity_plan_is_selected">
+						<parameter name="ManualTCName"
+							value="DDTC-29384 TC_10 Verify New Balance card not display on Account overview page for participant when TRS FLEX Annuity plan is selected">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_29385_TC_11_Verify_New_Balance_card_not_display_on_Account_overview_when_TRS_cash_balance_plan_selected">
+						<parameter name="ManualTCName"
+							value="DDTC-29385 TC_11 Verify New Balance card not display on Account overview page for participant when TRS cash balance plan selected">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+			<class	name="app.pptweb.testcases.aod.BeneficiariesTestcases">
+				<methods>
+					<!-- Bene Link should not show -->
+					<include name="AOD_Beneficiaries_DDTC_30783_TC_05_To_verify_If_WNBEN_is_OFF_Bene_card_should_not_show">
+						<parameter name="ManualTCName" 
+						value="DDTC-30783 TC_05_To verify If WNBEN is OFF Bene card should not show">
+						</parameter>
+					</include>
+					<include name="AOD_Beneficiaries_DDTC_28387_QA07_PW_21965_Verify_New_Beneficiaries_Card_Account_overview_page_beneficiary_turned_off_at_the_plan_level">
+						<parameter name="ManualTCName" 
+						value="DDTC-28387 QA07_PW-21965_Verify New Beneficiaries Card Account overview page if participant has beneficiary turned off at the plan level">
+						</parameter>
+					</include>
+					<include name="AOD_Beneficiaries_DDTC_30779_TC_01_verify_If_WNBEN_is_ON_WUBENE_is_OFF_there_is_at_least_one_beneficiary_card_the_link_should_say_View_details">
+						<parameter name="ManualTCName" 
+						value="DDTC-30779 TC_01_To verify If WNBEN is ON WUBENE is OFF and there is at least one beneficiary card the link should say View details">
+						</parameter>
+					</include>
+					
+					<include name="AOD_Beneficiaries_DDTC_30781_TC_03_verify_If_WNBEN_and_WUBENE_is_ON_and_no_bene_on_card_AOD_page_should_display_beneficiaries_card_with_the_text_None_on_file_and_with_the_link_Add_now">
+						<parameter name="ManualTCName" 
+						value="DDTC-30781 TC_03_verify If WNBEN and WUBENE is ON and no bene on card AOD page should display beneficiaries card with the text None on file and with the link Add now">
+						</parameter>
+					</include>
+					<include name="AOD_Beneficiaries_DDTC_30782_TC_04_To_verify_If_WNBEN_is_ON_WUBENE_is_ON_and_greater_than_1_bene_on_card_AOD_page_should_display_beneficiaries_card_with_the_AddEdit_link">
+						<parameter name="ManualTCName" 
+						value="DDTC-30782 TC_04_To verify If WNBEN is ON WUBENE is ON and greater than 1 bene on card AOD page should display beneficiaries card with the AddEdit link">
+						</parameter>
+					</include>
+					
+					<!-- Below 3 TC's should not change the order of execution -->
+					<include name="AOD_Beneficiaries_DDTC_28318_QA02_PW_21965_Verify_New_Beneficiaries_Card_Account_overview_page_if_benes_are_not_on_file">
+						<parameter name="ManualTCName" 
+						value="DDTC-28318 QA02_PW-21965_Verify New Beneficiaries Card Account overview page if benes are not on file">
+						</parameter>
+					</include>
+					<include name="AOD_Beneficiaries_DDTC_28325_QA03_PW_21965_Verify_Beneficiaries_Card_Account_overview_page_if_a_participant_has_Zero_Beneficiaries_and_editable">
+						<parameter name="ManualTCName" 
+						value="DDTC-28325 QA03_PW-21965_ Verify New Beneficiaries Card Account overview page if a participant has Zero Beneficiaries and editable">
+						</parameter>
+					</include>
+					<include name="AOD_Beneficiaries_DDTC_28317_QA01_PW_21965_Verify_New_Beneficiaries_Card_in_Account_overview_page_if_benes_are_on_file">
+						<parameter name="ManualTCName" 
+						value="DDTC-28317 QA01_PW-21965_Verify New Beneficiaries Card in Account overview page if benes are on file">
+						</parameter>
+					</include>
+					<!-- Bene card should not display -->
+					<include name="AOD_Beneficiaries_DDTC_30780_TC_02_To_verify_If_WNBEN_is_ON_WUBENE_is_OFF_and_there_is_NO_beneficiary_on_file_Bene_card_should_not_display">
+						<parameter name="ManualTCName" 
+						value="DDTC-30780 TC_02_To verify If WNBEN is ON WUBENE is OFF and there is NO beneficiary on file Bene card should not display">
+						</parameter>
+					</include>
+					<include name="AOD_Beneficiaries_DDTC_28326_QA04_PW_21965_New_Beneficiaries_Card_Account_overview_page_if_a_participant_has_Zero_Beneficiaries_un_editable">
+						<parameter name="ManualTCName" 
+						value="DDTC-28326 QA04_PW-21965 Verify New Beneficiaries Card Account overview page if a participant has Zero Beneficiaries un-editable">
+						</parameter>
+					</include>
+					
+					
+					<include name="AOD_Beneficiaries_DDTC_28329_QA06_PW_21965Beneficiaries_Card_Account_overview_page_if_a_participant_has_Multiple_BeneficiariesgreaterthanFive">
+						<parameter name="ManualTCName" 
+						value="DDTC-28329 QA06_PW-21965_Verify New Beneficiaries Card Account overview page if a participant has Multiple Beneficiaries greater than five">
+						</parameter>
+					</include>
+					<include name="AOD_Beneficiaries_DDTC_28328_QA05_PW_21965_New_Beneficiaries_Card_Account_overview_page_if_a_participant_has_Multiple_BeneficiariesLessthanFive">
+						<parameter name="ManualTCName" 
+						value="DDTC-28328 QA05_PW-21965_Verify New Beneficiaries Card Account overview page if a participant has Multiple Beneficiaries Less than five">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

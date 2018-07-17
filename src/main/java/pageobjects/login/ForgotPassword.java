@@ -173,13 +173,13 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 		} 
 		
 		if (Web.isWebElementDisplayed(this.lblLastName)) {
-			if (!this.lblLastName.getText().equalsIgnoreCase("LAST NAME")) {
+			if (!this.lblLastName.getText().equalsIgnoreCase("Last Name (Generally includes suffix)")) {
 				iselementDisplayed = false;
 			}
 		} 
 		
 		if (Web.isWebElementDisplayed(this.lblDateofBirth)) {
-			if (!this.lblDateofBirth.getText().equalsIgnoreCase("DATE OF BIRTH")) {
+			if (!this.lblDateofBirth.getText().equalsIgnoreCase("DATE OF BIRTH MM/DD/YYYY")) {
 				iselementDisplayed = false;
 			}
 		}
