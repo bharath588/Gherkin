@@ -120,15 +120,18 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	
 	public boolean correctLabelForAssetAlocation(String label){
 		commonLib = new CommonLib(webDriver);
-		commonLib.FrameSwitchONandOFF(true, planFrame);
+		Web.FrameSwitchONandOFF(true, planFrame);
+		//commonLib.FrameSwitchONandOFF(true, planFrame);
 		if(commonLib.isWebElementDisplayed(modelPortfolioAssetAllocation, true)){
 			String tabLabel = modelPortfolioAssetAllocation.getText();
 			if(tabLabel.equalsIgnoreCase(label)){
-				commonLib.FrameSwitchONandOFF(false, planFrame);
+				//commonLib.FrameSwitchONandOFF(false, planFrame);
+				Web.FrameSwitchONandOFF(false);
 				return true;
 			}
 		}
-		commonLib.FrameSwitchONandOFF(false, planFrame);
+		//commonLib.FrameSwitchONandOFF(false, planFrame);
+		Web.FrameSwitchONandOFF(false);
 		return false;
 	}
 

@@ -31,6 +31,8 @@ public class PlanProvisionsPage extends LoadableComponent<PlanProvisionsPage> {
 	
 	LoadableComponent<?> parent;
 	CommonLib commonLib;
+	@FindBy(how=How.CLASS_NAME,using="planheading")
+	private WebElement planAnalytics;
 	
 	@FindBy(how=How.XPATH,using="//*[@id='newMenu']//a[text()='Plan']")
 	private WebElement tabPlanMenu;
@@ -39,10 +41,12 @@ public class PlanProvisionsPage extends LoadableComponent<PlanProvisionsPage> {
 	@FindBy(how=How.LINK_TEXT,using="Plan provisions")
 	private WebElement planProvisionsLinkUnderPlanMenu;
 	@FindBy(how=How.XPATH,using="//*[@class='breadcrumb']/i")
-	private WebElement planProvisionsBreadcrumb;
+	private WebElement breadcrumb1;
 	@FindBy(how=How.XPATH,using="//*[@id='tabForm:navPlan']//div[@class='breadcrumb']/i")
-	private WebElement planProvisionsBreadcrumb2;
+	private WebElement breadcrumb2;
 	
+	@FindBy(how=How.XPATH,using="//label[contains(text(),'General information')]")
+	private WebElement labelGeneralInformation;
 	
 	@FindBy(how=How.ID,using="frameb")
 	private WebElement planFrame;
@@ -61,6 +65,8 @@ public class PlanProvisionsPage extends LoadableComponent<PlanProvisionsPage> {
 	private WebElement buttonPageText;
 	@FindBy(how=How.LINK_TEXT,using="Return to plan provisions")
 	private WebElement returnToPlanProvisionsLink;
+	@FindBy(how=How.XPATH,using="(//table[@class='blueBox ui-corner-all']//tr/td[2])[5]//tr[1]//span")
+	private WebElement vestingServiceLevel;
 	
 	//@FindBy(xpath = ".//div[contains(@class,'page-title') or contains(@class,'headcontainer') or contains(@class,'headcontainer ng-scope')]")
 	
@@ -93,21 +99,54 @@ public class PlanProvisionsPage extends LoadableComponent<PlanProvisionsPage> {
 	@Override
 	protected void isLoaded() throws Error {
 		// if (Web.isWebElementDisplayed(planProvisionsBreadcrumb, true))
-		Web.actionsClickOnElement(planProvisionsBreadcrumb);
-		String text = planProvisionsBreadcrumb.getText();
+		//Web.actionsClickOnElement(breadcrumb1);
+		Web.waitForElement(breadcrumb1);
+		String text = breadcrumb1.getText();
 		if (text.equals(""))
-			text = planProvisionsBreadcrumb2.getText();
+			text = breadcrumb2.getText();
 		Assert.assertTrue(text.trim().equals("Plan provisions"));
+		
 	}
 	
 	public WebElement getWebElement(String fieldName) {
-		if (fieldName.trim().equalsIgnoreCase("Breadcrumb")) {
-			return this.planProvisionsBreadcrumb;
+		if (fieldName.trim().equalsIgnoreCase("Breadcrumb1")) {
+			return this.breadcrumb1;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Breadcrumb2")) {
+			return this.breadcrumb2;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Plan Menu")) {
+			return this.tabPlanMenu;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Loan Information")) {
+			return this.loanInformationLink;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Plan Frame")) {
+			return this.planFrame;
+		}
+		
 		return null;
 	}
 
-	
+	public void clickOnLoanButton() {
+		Web.FrameSwitchONandOFF(false);
+		Web.FrameSwitchONandOFF(true, planFrame);
+		if (Web.isWebElementDisplayed(loanInformationLink, true)) {
+			Web.clickOnElement(loanInformationLink);
+			Web.nextGenDriver.waitForAngular();
+
+		}
+	}
+	public boolean isPlanAnalyticsSectionDiplays(){
+		Web.nextGenDriver.waitForAngular();
+		Web.FrameSwitchONandOFF(false);
+		Web.FrameSwitchONandOFF(true, planFrame);
+		if (Web.isWebElementDisplayed(planAnalytics, true))
+			return true;
+		return false;
+		
+	}
+
 	public String gettingButtonPageName(String buttonName){
 		
 		
@@ -149,5 +188,32 @@ public class PlanProvisionsPage extends LoadableComponent<PlanProvisionsPage> {
 		Web.getDriver().switchTo().defaultContent();
 		return pageNameText;
 	}
+	
+	public boolean verifyVestingServiceLevel(String vestingServiceLevel) {
+		Web.waitForElement(planFrame);
+		Web.FrameSwitchONandOFF(false);
+		Web.FrameSwitchONandOFF(true, planFrame);
+		if (Web.isWebElementDisplayed(this.vestingServiceLevel, true)) {
+			if (this.vestingServiceLevel.getText().trim()
+					.equalsIgnoreCase(vestingServiceLevel.trim())) {
+				Web.FrameSwitchONandOFF(false);
+				return true;
+			}
+
+		}
+		Web.FrameSwitchONandOFF(false);
+		return false;
+	}
+	public boolean isPlanProvisionPage(){
+		Web.waitForElement(planFrame);
+		Web.FrameSwitchONandOFF(false);
+		Web.FrameSwitchONandOFF(true, planFrame);
+		if (Web.isWebElementDisplayed(labelGeneralInformation, true)) {
+			return true;
+		}
+		return false;
+		
+	}
+
 
 }

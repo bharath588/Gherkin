@@ -16,6 +16,7 @@ import java.util.List;
 
 import java.util.Set;
 
+
 //import org.bdd.psc.pageobjects.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -116,6 +117,28 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	
 	@FindBy(xpath = ".//*[strong[contains(text(),'help')]]/following-sibling::p[1]")
 	private WebElement contactUsPreLogin;
+	
+	@FindBy(xpath = "//*[contains(text(),'New Look') or contains(text(),'added new resources')]")
+	private List<WebElement> bannerSectionText;
+	@FindBy(xpath = "//a[text()='Read more »']")
+	private WebElement bannerSectionReadMoreLink;
+	@FindBy(xpath = "//img[contains(@src,'MetLife-logo')]")
+	private WebElement logoMetLife;
+	
+	
+	@FindBy(xpath = "//img[@alt='Woman working in an office']")
+	private WebElement pictureWomanWorkingInOffice;
+	@FindBy(xpath = "//img[@alt='A group of professionals in discussion at a meeting']")
+	private WebElement pictureGroupOfDiscussion;
+	@FindBy(xpath = "//img[@alt='American flag in front of government building']")
+	private WebElement pictureAmericanFlag;
+	@FindBy(xpath = "//a[contains(@href,'retireready')]")
+	private WebElement learnMoreLink;
+	@FindBy(xpath = "//a[contains(@href,'benefittrends')]")
+	private WebElement readReportLink;
+	@FindBy(xpath = "//a[contains(@href,'Contribution-Limits')]")
+	private WebElement viewLimitsLink;
+	
 
 	LoadableComponent<?> parent;
 	public static String URL;
@@ -434,6 +457,9 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 						return true;
 				}
 			} else if (Web.isWebElementDisplayed(sysReqDiv)) {
+				System.out.println(marketingText.trim());
+				System.out.println("--------------------------------------------------------");
+				System.out.println(sysReqDiv.getText().trim());
 				if (sysReqDiv.getText().trim()
 						.equalsIgnoreCase(marketingText.trim()))
 					return true;
@@ -449,7 +475,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
 		try {
 			String fundProsContent = "";
-			CommonLib.FrameSwitchONandOFF(true, prospectusFrame);
+			//CommonLib.FrameSwitchONandOFF(true, prospectusFrame);
+			Web.FrameSwitchONandOFF(true, prospectusFrame);
 			Web.waitForElements(fundProspectusContent);
 			for (WebElement ele : fundProspectusContent) {
 				fundProsContent += ele.getText() + "\n\n";
@@ -463,7 +490,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 						"Fund prospectus content displayed",
 						"Fund prospectus content not displayed", true);
 			}
-			CommonLib.FrameSwitchONandOFF(false, prospectusFrame);
+			//CommonLib.FrameSwitchONandOFF(false, prospectusFrame);
+			Web.FrameSwitchONandOFF(false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -648,6 +676,85 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		String input=textContent.trim().replace("\n", "");
 		
 		if(input.trim().equalsIgnoreCase(actual.trim()))
+			return true;
+		return false;
+		
+	}
+	
+	public boolean isBannerSectionDisplays(){
+		if(Web.isWebElementsDisplayed(bannerSectionText, true))
+			return true;
+		return false;	
+	}
+	public boolean ismetLifeLogoDisplays(){
+		if(Web.isWebElementDisplayed(logoMetLife, true)){
+			System.out.println(logoMetLife.getSize());
+			System.out.println(logoMetLife.getSize());
+			return true;
+		}
+			
+		return false;	
+	}
+	
+	
+	public boolean isSameTextDisplaysInBannerSection(String textContent){
+		String actual=bannerSectionText.get(0).getText()+"\n"+bannerSectionText.get(1).getText();
+		String input=textContent.trim();
+		System.out.println(actual);
+		System.out.println(input);
+		if(input.trim().equalsIgnoreCase(actual.trim()))
+			return true;
+		return false;
+		
+	}
+	
+	public boolean isPreLoginTilesPictureDisplays(){
+		if(Web.isWebElementDisplayed(pictureWomanWorkingInOffice, true)
+				&& Web.isWebElementDisplayed(pictureGroupOfDiscussion, true)
+				&&Web.isWebElementDisplayed(pictureAmericanFlag, true))
+			return true;
+		return false;
+		
+	}
+	
+	public boolean verifyingPreLoginContentTilesPicturesTextAndLink(
+			String expectedText, String expectedLink) {
+		if (expectedLink.contains("retireready")) {
+			if (expectedText.equals(learnMoreLink.getText().trim()
+					.replace("\n", " "))
+					&& learnMoreLink.getAttribute("href")
+							.contains(expectedLink))
+				return true;
+		}
+		if (expectedLink.contains("benefittrends")) {
+			if (expectedText.equals(readReportLink.getText().trim()
+					.replace("\n", " "))
+					&& readReportLink.getAttribute("href").contains(
+							expectedLink))
+				return true;
+
+		}
+		if (expectedLink.contains("Limits")) {
+			if (expectedText.equals(viewLimitsLink.getText().trim()
+					.replace("\n", " "))
+					&& viewLimitsLink.getAttribute("href").contains(
+							expectedLink))
+				return true;
+
+		}
+		return false;
+
+	}
+	public void clickOnBannerSectionReadMoreLink() throws InterruptedException{
+		if(lib.Web.isWebElementDisplayed(bannerSectionReadMoreLink, true))
+			Web.clickOnElement(bannerSectionReadMoreLink);
+		Thread.sleep(2000);
+	}
+	public boolean verifyMetLifeLogoAndLink(String expLink){
+		System.out.println(expLink.trim());
+		System.out.println(Web.getDriver().getCurrentUrl().replace("proj2-", "").trim());
+		if(Web.isWebElementDisplayed(logoMetLife, true)
+				&& Web.getDriver().getCurrentUrl().replace("proj2-", "").contains(expLink))
 			return true;
 		return false;
 		

@@ -19,6 +19,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
 import pscBDD.userVerification.UserVerificationPage;
+import bdd_gwgwebdriver.How;
 import bdd_lib.Web;
 import bdd_reporter.Reporter;
 
@@ -45,6 +46,9 @@ public class HomePage extends LoadableComponent<HomePage> {
 	
 	@FindBy(id = "planDropDown")
 	private WebElement planDropDownMenu;
+	
+	@FindBy(xpath ="//*[span[text()='navPlan']]//h3[@id='headerInfo_xhtml']")
+	private WebElement planNumberOnPageHeader;
 	
 	@FindBy(id = "angularProfileLink")
 	private WebElement myProfileLink;
@@ -389,6 +393,18 @@ public class HomePage extends LoadableComponent<HomePage> {
 			if(breadCrumb.getText().trim().equalsIgnoreCase("My Profile"))
 				return true;
 		return false;
+		
+	}
+	
+	public String getPlanNumberFromPageHeader(){
+		Web.FrameSwitchONandOFF(false);
+		if(Web.isWebElementDisplayed(planNumberOnPageHeader, true)){
+			String planNo=planNumberOnPageHeader.getText();
+			int startIndex=planNo.trim().indexOf('-');
+			planNo=planNo.substring(startIndex+1).trim();
+			return planNo;
+		}
+		return null;
 		
 	}
 

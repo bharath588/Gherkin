@@ -27,6 +27,7 @@ import java.util.stream.Stream;
 
 
 
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -109,7 +110,8 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	
 	@FindBy(how=How.ID,using="aedrvalue1")
 	private WebElement enterDefElectionInDeflInformForBeforeTax;
-	@FindBy(how=How.NAME,using="customDate1")
+	//@FindBy(how=How.NAME,using="customDate1")
+	@FindBy(how=How.XPATH,using="//*[input[@id='aedrvalue1']]/following-sibling::div//select")
 	private WebElement enterDateInDeflInformForBeforeTax;
 	@FindBy(how=How.XPATH,using=".//div[*[*[@id='aedrvalue1']]]//button[@id='two']")
 	private WebElement dollarButtonInDeflInformForBeforeTax;
@@ -121,7 +123,8 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	
 	@FindBy(how=How.ID,using="aedrvalue2")
 	private WebElement enterDefElectionInDeflInformForRoth;
-	@FindBy(how=How.NAME,using="customDate2")
+	//@FindBy(how=How.NAME,using="customDate2")
+	@FindBy(how=How.XPATH,using="//*[input[@id='aedrvalue2']]/following-sibling::div//select")
 	private WebElement enterDateInDeflInformForRoth;
 	@FindBy(how=How.XPATH,using=".//div[*[*[@id='aedrvalue2']]]//button[@id='two']")
 	private WebElement dollarButtonInDeflInformForRoth;
@@ -146,6 +149,46 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	private WebElement maximumAmountTextBoxBeforeTax;
 	@FindBy(how=How.ID,using="scheduleContinueButton")
 	private WebElement scheduleContinueButton;
+	
+	@FindBy(how=How.LINK_TEXT,using="Vesting")
+	private WebElement vestingLink;
+	@FindBy(how=How.XPATH,using="//*[contains(text(),'Vesting balance information')]")
+	private WebElement vestingSectionNoData;
+	@FindBy(how=How.ID,using="vestingForm:vestingPanel_content")
+	private WebElement vestingFormDataNewWindow;
+	@FindBy(how=How.XPATH,using="//*[@id='vestingDialog']/preceding-sibling::div//span[text()='close']")
+	private WebElement vestingFormDataNewWindowCloseButton;
+	@FindBy(how=How.XPATH,using="//*[@id='vestingDashboard']/table")
+	private WebElement vestingInformationTableData;
+	
+	@FindBy(how=How.XPATH,using="//*[@id='overviewtable_data']/tr/td[1]/a")
+	private List<WebElement> planNumberInAccountBalanceSection;
+	
+	@FindBy(how=How.ID,using="empInfoEditLinkNextGen")
+	private WebElement empInformationEditLink;
+	@FindBy(how=How.XPATH,using="//label[normalize-space()='Union:']")
+	private WebElement empInformationUnionLabel;
+	@FindBy(how=How.XPATH,using="//label[normalize-space()='Insider:']")
+	private WebElement empInformationInsiderLabel;
+	@FindBy(how=How.XPATH,using="//label[normalize-space()='Super officer:']")
+	private WebElement empInformationSuperOfficerLabel;
+	@FindBy(how=How.XPATH,using="//label[normalize-space()='FT/PT employee:']")
+	private WebElement empInformationFTPTemployeeLabel;
+	@FindBy(how=How.XPATH,using="//label[normalize-space()='Job description:']")
+	private WebElement empInformationJobDescriptionLabel;
+	@FindBy(how=How.XPATH,using="//label[normalize-space()='Employment type:']")
+	private WebElement empInformationEmploymentTypeLabel;
+	@FindBy(how=How.XPATH,using="//label[normalize-space()='Overseas employee:']")
+	private WebElement empInformationOverseasEmployeeLabel;
+	@FindBy(how=How.XPATH,using="//label[normalize-space()='Overseas date:']")
+	private WebElement empInformationOverseasDateLabel;
+	@FindBy(how=How.XPATH,using="//label[normalize-space()='Employer classification code:']")
+	private WebElement empInformationEmployerClassificationCodeLabel;
+	
+	
+	@FindBy(how=How.LINK_TEXT,using="Details")
+	private WebElement detailsLinkUnderEmploymentHistory;
+	
 	
 	SimpleDateFormat sdf;
 	Calendar c;
@@ -239,7 +282,7 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 		Web.waitForProgressBar();
 	}
 
-	private boolean isSearchResultDisplayed() {
+	public boolean isSearchResultDisplayed() {
 		try {
 			Thread.sleep(3000);
 			Web.FrameSwitchONandOFF(true, employeeFrame);
@@ -256,6 +299,7 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	public void clickOnFirstNameLinkInSearchResult() {
 		if (isSearchResultDisplayed()) {
 			Web.clickOnElement(firstNameLink);
+			Web.waitForProgressBar();
 		}
 	}
 
@@ -276,6 +320,57 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 			Reporter.logEvent(Status.INFO,
 					"Employee Detail tab is not displayed",
 					"Employee Detail tab is not displayed", true);
+	}
+	public boolean isEmployeeDetailsPage(){
+		if (Web.isWebElementDisplayed(employeeDetailTab))
+			return true;
+		return false;
+		
+	}
+
+	public void clickOnEmpInfoEditLink() {
+		if (Web.isWebElementDisplayed(empInformationEditLink, true)) {
+			Web.clickOnElement(empInformationEditLink);
+			Web.nextGenDriver.waitForAngular();
+		}
+		
+	}
+	public void clickOnDetailsLinkUnderEmploymentHistory() {
+		if (Web.isWebElementDisplayed(detailsLinkUnderEmploymentHistory, true)) {
+			Web.clickOnElement(detailsLinkUnderEmploymentHistory);
+			Web.nextGenDriver.waitForAngular();
+		}
+		
+	}
+	
+	public void clickOnVestingLink(){
+		if(Web.isWebElementDisplayed(vestingLink, true))
+			Web.clickOnElement(vestingLink);
+	}
+	
+	public boolean verifyVestingSectionMessage(String input){
+		if(Web.isWebElementDisplayed(vestingSectionNoData, true)){
+			if(vestingSectionNoData.getText().trim().equalsIgnoreCase(input.trim()))
+				return true;
+		}
+			
+		return false;
+		
+	}
+	public boolean verifyVestingWindow() throws InterruptedException{
+		if(Web.isWebElementDisplayed(vestingFormDataNewWindow, true)){
+			Web.actionsClickOnElement(vestingFormDataNewWindowCloseButton);
+			Thread.sleep(3000);
+			return true;
+		}
+		return false;
+		
+	}
+	public boolean verifyVestingSectionDisplays(){
+		if(Web.isWebElementDisplayed(vestingInformationTableData, true))
+			return true;
+		return false;
+		
 	}
 
 	public void clickOnViewButtonOfPlan(String planNumber) {
@@ -400,13 +495,15 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 			Web.setTextToTextBox(enterDefElectionInDeflInformForBeforeTax, "50");
 			Web.clickOnElement(dollarButtonInDeflInformForBeforeTax);
 			if(deferralDate.length>0)
-				Web.setTextToTextBox(enterDateInDeflInformForBeforeTax, this.getDateFormat(deferralDate[0]));
+				Web.selectDropDownOption(enterDateInDeflInformForBeforeTax, this.getDateFormat(deferralDate[0]), true);
+				//Web.setTextToTextBox(enterDateInDeflInformForBeforeTax, this.getDateFormat(deferralDate[0]));
 		}
 		if(type.trim().equalsIgnoreCase("Roth")){
 			Web.setTextToTextBox(enterDefElectionInDeflInformForRoth, "50");
 			Web.clickOnElement(dollarButtonInDeflInformForRoth);
 			if(deferralDate.length>0)
-				Web.setTextToTextBox(enterDateInDeflInformForRoth, this.getDateFormat(deferralDate[0]));
+				Web.selectDropDownOption(enterDateInDeflInformForRoth, this.getDateFormat(deferralDate[0]), true);
+				//Web.setTextToTextBox(enterDateInDeflInformForRoth, this.getDateFormat(deferralDate[0]));
 		}
 		Web.clickOnElement(ongoingContinueButton);
 		Web.nextGenDriver.waitForAngular();
@@ -448,7 +545,7 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 			Matcher matcher = Pattern.compile(regexp).matcher(inputDate);
 			while (matcher.find()) {
 				dateCount = matcher.group();
-				System.out.print(dateCount);
+				System.out.println(dateCount);
 			}
 			int COUNT = Integer.parseInt(dateCount);
 			sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -688,5 +785,114 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 		return false;
 		
 	}
+
+	String balanceXpath="";
+	String viewButtonXpath="";
+
+	public boolean verifyAccountBalanceSuppressed(String planNo) {
+		Web.nextGenDriver.waitForAngular();
+		int i = 0;
+		if (Web.isWebElementsDisplayed(planNumberInAccountBalanceSection, true)) {
+			for (WebElement element : planNumberInAccountBalanceSection) {
+				if (element.getText().trim().equals(planNo)) {
+					i++;
+					balanceXpath = "//*[@id='overviewtable_data']/tr[" + i
+							+ "]/td[3]/span";
+					viewButtonXpath = "//*[@id='overviewtable_data']/tr[" + i
+							+ "]//button";
+
+					if (Web.nextGenDriver.findElement(By.xpath(balanceXpath))
+							.getText().trim().equals("N/A"))
+						return true;
+				}
+			}
+		}
+		return false;
+	}
+	public boolean verifyViewButtonSuppressed(){
+		try{
+			Web.nextGenDriver.findElement(By.xpath(viewButtonXpath));
+			return false;
+		}catch(Exception e){
+			return true;
+		}
+	}
+	
+	public boolean verifyEmploymentInformationLabel(List<String> label,
+			boolean displaysOrNot) {
+		if (label.size() <= 0)
+			return false;
+		for (String labelName : label) {
+			if (displaysOrNot) {
+				if (!this.verifyEmploymentInfoLabel(labelName))
+					return false;
+			} else {
+				if (this.verifyEmploymentInfoLabel(labelName))
+					return false;
+			}
+
+		}
+		return true;
+
+	}
+	
+	public boolean verifyEmploymentInfoLabel(String labelName) {	
+			System.out.println(labelName);
+			switch (labelName.trim()) {
+			case "Union":
+				if (Web.isWebElementDisplayed(empInformationUnionLabel, false))
+					return true;
+				break;
+			case "Insider":
+				if (Web.isWebElementDisplayed(empInformationInsiderLabel, false))
+					return true;
+				break;
+			case "Super Officer":
+				if (Web.isWebElementDisplayed(empInformationSuperOfficerLabel,
+						false))
+					return true;
+				break;
+			case "FT/PT Employee":
+				if (Web.isWebElementDisplayed(empInformationFTPTemployeeLabel,
+						false))
+					return true;
+				break;
+			case "Job description":
+				if (Web.isWebElementDisplayed(
+						empInformationJobDescriptionLabel, false))
+					return true;
+				break;
+			case "Employment type":
+				if (Web.isWebElementDisplayed(
+						empInformationEmploymentTypeLabel, false))
+					return true;
+				break;
+			case "Overseas employee":
+				if (Web.isWebElementDisplayed(
+						empInformationOverseasEmployeeLabel, false))
+					return true;
+				break;
+			case "Overseas date":
+				if (Web.isWebElementDisplayed(empInformationOverseasDateLabel,
+						false))
+					return true;
+				break;
+			case "Employer classification code":
+				if (Web.isWebElementDisplayed(
+						empInformationEmployerClassificationCodeLabel, false))
+					return true;
+				break;
+			default: {
+				Reporter.logEvent(Status.INFO, "label name don't match- "
+						+ labelName, "label name don't match- " + labelName,
+						true);
+				return false;
+				}
+
+			}
+		return false;
+	}
+	
+	
 
 }

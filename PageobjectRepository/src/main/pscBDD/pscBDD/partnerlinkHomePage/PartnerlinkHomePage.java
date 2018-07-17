@@ -32,13 +32,18 @@ import core.framework.ThrowException.TYPE;
  */
 public class PartnerlinkHomePage extends LoadableComponent<PartnerlinkHomePage> {
 	
+	@FindBy(xpath="//a[contains(text(),'Partner')]")
+	private WebElement partnerLinkTab;
+	
 	@FindBy(xpath=".//*[contains(@id,'content')]/h2")
 	private WebElement welcomeToPartnerLink;
 	@FindBy(id="framea")
 	private WebElement landingPageFrame;
-	@FindBy(xpath=".//*[contains(@id,'menu')]//li/a//span[text()='Implementation']")
+	//@FindBy(xpath=".//*[contains(@id,'menu')]//li/a//span[text()='Implementation']")
+	@FindBy(xpath="//a[contains(text(),'Partner')]/following-sibling::ul//*[text()='Implementation']")
 	private WebElement implementationMenu;
-	@FindBy(xpath="//a/span/span[text()='Plan Express']")
+	//@FindBy(xpath="//a/span/span[text()='Plan Express']")
+	@FindBy(xpath="//a[contains(text(),'PlanExpress')]")
 	private WebElement planExpressSubMenu;
 	@FindBy(xpath="html/body/div[1]/div[1]")
 	private WebElement welcomeToPlanExpress;
@@ -98,9 +103,11 @@ public class PartnerlinkHomePage extends LoadableComponent<PartnerlinkHomePage> 
 									userVeriPg, "HERITAGE SEC QUESTN")).getText()
 									.trim()) };
 					userVeriPg.performVerificationHeritage(userVeriData);
-					CommonLib.FrameSwitchONandOFF(true, landingPageFrame);
+					//CommonLib.FrameSwitchONandOFF(true, landingPageFrame);
+					Web.FrameSwitchONandOFF(true, landingPageFrame);
 					Web.waitForElement(welcomeToPartnerLink);
-					CommonLib.FrameSwitchONandOFF(false, landingPageFrame);
+					//CommonLib.FrameSwitchONandOFF(false, landingPageFrame);
+					Web.FrameSwitchONandOFF(false);
 
 				}
 			}
@@ -130,7 +137,10 @@ public class PartnerlinkHomePage extends LoadableComponent<PartnerlinkHomePage> 
 	}
 	
 	private void clickOnImplementationMenu(){
-		CommonLib.FrameSwitchONandOFF(false);
+		//CommonLib.FrameSwitchONandOFF(false);
+		Web.FrameSwitchONandOFF(false);
+		if(Web.isWebElementDisplayed(partnerLinkTab, true))
+			Web.actionsClickOnElement(partnerLinkTab);
 		if(Web.isWebElementDisplayed(implementationMenu, true)){
 			Web.actionsClickOnElement(implementationMenu);
 		}
@@ -141,7 +151,7 @@ public class PartnerlinkHomePage extends LoadableComponent<PartnerlinkHomePage> 
 		/*Web.getDriver().switchTo().activeElement();
 		act = new Actions(Web.getDriver());
 		act.moveByOffset(getCoordinates()[0], getCoordinates()[1]).doubleClick(planExpressSubMenu);*/
-		String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');"
+		/*String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');"
 				+ "evObj.initEvent('mouseover',"
 				+ "true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject)"
 				+ "{ arguments[0].fireEvent('onmouseover');}";
@@ -154,7 +164,10 @@ public class PartnerlinkHomePage extends LoadableComponent<PartnerlinkHomePage> 
 						+ "{ arguments[0].fireEvent('onclick');}";
 				jse = (JavascriptExecutor)Web.getDriver();
 				jse.executeScript(mouseOverScript, planExpressSubMenu);
-				jse.executeScript(onClickScript, planExpressSubMenu);
+				jse.executeScript(onClickScript, planExpressSubMenu);*/
+		if(Web.isWebElementDisplayed(planExpressSubMenu, true))
+			Web.actionsClickOnElement(planExpressSubMenu);
+		Thread.sleep(3000);
 		/*WebDriverWait wait = new WebDriverWait(Web.getDriver(),30);
 		wait.until(ExpectedConditions.elementToBeClickable(planExpressSubMenu));
 		//Thread.sleep(4000);
@@ -163,7 +176,8 @@ public class PartnerlinkHomePage extends LoadableComponent<PartnerlinkHomePage> 
 	
 	public boolean isPlanExpressPage() throws InterruptedException{
 		this.clickOnPlanExpressSubMenu();
-		CommonLib.FrameSwitchONandOFF(true, landingPageFrame);
+		//CommonLib.FrameSwitchONandOFF(true, landingPageFrame);
+		Web.FrameSwitchONandOFF(true, landingPageFrame);
 		if(Web.isWebElementDisplayed(welcomeToPlanExpress, true))
 			return true;
 		return false;

@@ -2,7 +2,7 @@ package pscBDD.planPage;
 
 import java.lang.reflect.Method;
 
-import lib.Web;
+import bdd_lib.Web;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

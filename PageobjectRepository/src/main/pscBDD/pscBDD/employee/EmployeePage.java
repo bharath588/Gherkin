@@ -214,6 +214,9 @@ public class EmployeePage extends LoadableComponent<EmployeePage> {
 	private WebElement txtNameInfo;
 	@FindBy(id="IPB_CONTACT_4")
 	private WebElement empInfoEditPageRadioBtn;
+	
+	
+	
 
 	LoadableComponent<?> parent;
 	public static WebDriver webDriver;
