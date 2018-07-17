@@ -19,7 +19,7 @@ import cucumber.api.testng.TestNGCucumberRunner;
 		//format = { "json", "json:target/cucumber.json" },strict = false, //for behavePro
 		plugin = {"pretty","html:target/cucumber-html-report"} ,
 		monochrome = true
-		,tags = {"@SWEB-17181"})
+		,tags = {"@SWEB-18056"})
 
 
 

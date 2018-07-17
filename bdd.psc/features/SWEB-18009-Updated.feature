@@ -20,7 +20,7 @@
 Feature: Update Calendar Logic
 
 Narrative: As a sponsor, I want my deferral requested dates to include holidays and weekends.
-
+# any future date
 	Scenario: Verify that the requested date listed on the deferral review page is the same date the user entered when future dating.
 	Given user enters a <future date> contribution for a <deferral type>.
 	|accuCode|username|password|plan_no|deferral_type|future_date|
@@ -36,6 +36,8 @@ Narrative: As a sponsor, I want my deferral requested dates to include holidays 
 	|PlanEmpower|1INST|testing1|194193-01|Roth|
 	When user clicks 'continue' on the deferral contribution screen.
 	Then the effective date listed on the deferral review page is the current date.
+	
+	
 	
 	
 	
@@ -57,6 +59,10 @@ Narrative: As a sponsor, I want my deferral requested dates to include holidays 
     When user adds a scheduled automatic increase.
     Then the dropdown list should populate with list of dates including weekend dates.
     And user should be able to add a schedule.
+    
+    
+    
+    
 
 	  Scenario: Verify user can select a <date> when scheduling a deferral contribution.
     Given plan is set up with <sdsv subcode>  

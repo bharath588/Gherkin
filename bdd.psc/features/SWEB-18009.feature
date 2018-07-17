@@ -63,7 +63,7 @@ Feature: Update Calendar Logic
       | accuCode    | username | password | plan_no   | deferral_type | sdsv subcode | weekend date |
       | PlanEmpower | 1INST    | testing1 | 194193-01 | Before Tax    | GENERIC      | 06/09/2018   |
       | PlanEmpower | 1INST    | testing1 |           | Before Tax    | ADJRUNDATE   |              |
-      | PlanEmpower | 1INST    | testing1 |           | Before Tax    | (null)       |              |
+      #| PlanEmpower | 1INST    | testing1 |           | Before Tax    | (null)       |              |
   
 
   Scenario Outline: Verify user can select a "<date>" when scheduling a deferral contribution.

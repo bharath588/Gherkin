@@ -13,7 +13,7 @@ import pscBDD.forgotPassword.ForgotPasswordPage;
 import pscBDD.homePage.HomePage;
 import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
-
+import pscBDD.planPage.LoanInformationPage;
 import pscBDD.planPage.PlanDMBACustomSitePage;
 import pscBDD.userVerification.UserVerificationPage;
 import bdd_lib.CommonLib;
@@ -24,16 +24,6 @@ import com.aventstack.extentreports.Status;
 import bdd_core.framework.Globals;
 import gherkin.formatter.model.Scenario;
 import bdd_reporter.Reporter;
-
-import pscBDD.userVerification.UserVerificationPage;
-import bdd_core.framework.Globals;
-import bdd_lib.Web;
-import bdd_reporter.Reporter;
-
-import com.aventstack.extentreports.Status;
-
-import gherkin.formatter.model.Scenario;
-
 import cucumber.api.DataTable;
 import cucumber.api.Delimiter;
 import cucumber.api.PendingException;
@@ -60,6 +50,7 @@ public class HomeStepDefinitions {
 	JumpPage jumpPage;
 	HomePage homePage;
 	PlanDMBACustomSitePage planDmbaPage;
+	
 	static int pertinentPopups = 0;
 	static int homePageVisits = 0;
 	public static int forgotPwdPageVisits = 0;
@@ -71,6 +62,7 @@ public class HomeStepDefinitions {
 			Globals.scenarioName = scenario.getName();
 			System.out.println(scenario.getId());
 			homePage = new HomePage();
+			
 			Globals.currentIteration = Integer.valueOf(scenario.getId().split(
 					";")[scenario.getId().split(";").length - 1]) - 1;
 			System.out.println("Current iteration is: "+Globals.currentIteration);
@@ -582,6 +574,19 @@ public class HomeStepDefinitions {
 					"My Profile page isn't displays", true);
 		}
     }
+	
+	@When("^user changes to \"([^\"]*)\" plan$")
+    public void user_changes_to_given_plan_number(String nonpartgroupPlanNo) throws Throwable {
+		homePage.switchPlan(nonpartgroupPlanNo);
+    }
+	 @Then("^\"([^\"]*)\" plan home page is displayed$")
+	    public void given_plan_home_page_is_displayed(String planNo) throws Throwable {
+		 if(homePage.getPlanNumberFromPageHeader().equals(planNo.trim())){
+				Reporter.logEvent(Status.PASS, planNo+" plan home page displays",planNo+" plan home page displays", true);
+			}else{		
+				Reporter.logEvent(Status.FAIL, planNo+" plan home page displays", planNo+" plan home page isn't displays", true);
+			}
+	    }
 
 
 

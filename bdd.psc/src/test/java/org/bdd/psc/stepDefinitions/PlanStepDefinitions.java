@@ -2,12 +2,17 @@
 
 package org.bdd.psc.stepDefinitions;
 
+import gherkin.formatter.model.Scenario;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import pscBDD.homePage.HomePage;
 import pscBDD.login.LoginPage;
 import pscBDD.planPage.InvestmentsPerformancePage;
+import pscBDD.planPage.LoanInformationPage;
 import pscBDD.planPage.PlanPage;
 import pscBDD.planPage.PlanProvisionsPage;
 import pscBDD.userVerification.UserVerificationPage;
@@ -16,25 +21,13 @@ import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
 
-
-
-
-
-
-
-
-
-
-
-
-
+import cucumber.api.DataTable;
 import cucumber.api.Delimiter;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import gherkin.formatter.model.Scenario;
 
 /**
  * @author rvpndy
@@ -42,6 +35,7 @@ import gherkin.formatter.model.Scenario;
  */
 public class PlanStepDefinitions {
 	
+	private static final Class String = null;
 	public static String featureName=null;
 	public static String scenarioName=null;
 	public static Scenario scenario=null;
@@ -52,6 +46,7 @@ public class PlanStepDefinitions {
 	PlanPage planPage;
 	PlanProvisionsPage provisionsPage;
 	InvestmentsPerformancePage investmentPage;
+	LoanInformationPage loanInfoPage;
 	private static HashMap<Integer,String> buttonPageName=new HashMap<Integer,String>();
 	
 	@Before
@@ -61,6 +56,7 @@ public class PlanStepDefinitions {
 	    System.out.println(scenario.getId());
 	    provisionsPage=new PlanProvisionsPage();
 	    investmentPage=new InvestmentsPerformancePage();
+	     loanInfoPage=new LoanInformationPage();
 	    Reporter.initializeModule(featureName);
 	}
 	
@@ -217,6 +213,137 @@ public class PlanStepDefinitions {
 			Reporter.logEvent(Status.FAIL, "The "+interestRate+" label should displays", "The "+interestRate+" tab isn't displays", true);
 		}
     }
+	
+	@When("^user clicks Loan Information button on Plan Provision page$")
+    public void user_clicks_loan_information_button_on_plan_provision_page() throws Throwable {
+		loanInfoPage.get();
+    }
+	
+	@Then("^the Loan Information page should be displayed$")
+    public void the_loan_information_page_should_be_displayed() throws Throwable {
+		if(loanInfoPage.isLoanInformationPage()){
+			Reporter.logEvent(Status.PASS, "Loan Information page should displays", "Loan Information page is displays", true);
+		}else{		
+			Reporter.logEvent(Status.FAIL, "Loan Information page should displays", "Loan Information page isn't displays", true);
+		}
+    }
+	@Then("^the selected \"([^\"]*)\" should be displayed on the page$")
+    public void the_selected_planno_should_be_displayed_on_the_page(String planno) throws Throwable {
+		if(homePage.getPlanNumberFromPageHeader().equals(planno.trim())){
+			Reporter.logEvent(Status.PASS, "selected plan number should displays", "selected plan number is displays", true);
+		}else{		
+			Reporter.logEvent(Status.FAIL, "selected plan number should displays", "selected plan number isn't displays", true);
+		}
+    }
+	
+	@Then("^the expected_text label should displays$")
+    public void the_expectedtext_label_should_displays(DataTable dt) throws Throwable {
+       List<Map<String,String>> input=Web.rawValues(dt);
+       List<String> labelInput=new ArrayList<String>();
+       for(int i=0;i<input.size();i++)
+    	   labelInput.add(input.get(i).get("expected_text"));
+        if(loanInfoPage.isLabelDisplaysInLoanInformationPage(labelInput)){
+			Reporter.logEvent(Status.PASS, "selected plan number should displays", "selected plan number is displays", true);
+		}else{		
+			Reporter.logEvent(Status.FAIL, "selected plan number should displays", "selected plan number isn't displays", true);
+		}
+    }
+	String maxLoanValue="";
+	@When("^in DB max_loans_allowed column of table GRP_LOAN_TERM is Null for \"([^\"]*)\"$")
+	public void in_db_maxloansallowed_column_of_table_grploanterm_is_null_for_planNo(
+			String planno, String query) throws Throwable {
+		maxLoanValue=loanInfoPage.get_max_loans_allowed(query,planno);
+
+	}
+	@When("^in DB max_loans_allowed column of table GRP_LOAN_TERM is not Null for \"([^\"]*)\"$")
+    public void in_db_maxloansallowed_column_of_table_grploanterm_is_not_null_for_planNo(String planno, String query) throws Throwable {
+		maxLoanValue=loanInfoPage.get_max_loans_allowed(query,planno);
+    }
+
+
+	@Then("^the Restriction on number of loans allowed should display \"([^\"]*)\"$")
+	public void the_restriction_on_number_of_loans_allowed_should_display_NA(
+			String expValue) throws Throwable {
+		if (loanInfoPage.verifyRestrictionNumberOfLoansAllowedValue(expValue)) {
+			Reporter.logEvent(Status.PASS,
+					"Restriction on number of loans allowed displays N/A",
+					"Restriction on number of loans allowed displays N/A", true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Restriction on number of loans allowed displays N/A",
+					"Restriction on number of loans allowed don't displays N/A",
+					true);
+		}
+	}
+
+	@Then("^the Restriction on number of loans allowed should display the corresponding value in DB$")
+	public void the_restriction_on_number_of_loans_allowed_should_display_the_corresponding_value_in_db()
+			throws Throwable {
+		if (loanInfoPage.verifyRestrictionNumberOfLoansAllowedValue(maxLoanValue)) {
+			Reporter.logEvent(Status.PASS,
+					"Restriction on number of loans allowed displays the value in DB",
+					"Restriction on number of loans allowed displays the value in DB", true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Restriction on number of loans allowed displays the value in DB",
+					"Restriction on number of loans allowed DON'T displays the value in DB", true);
+		}
+	}
+	@When("^user clicks Plan, Plan Provisions$")
+    public void user_clicks_plan_plan_provisions() throws Throwable {
+		provisionsPage.get();
+    }
+	@Then("^the Plan Provision page is displayed$")
+    public void the_plan_provision_page_is_displayed() throws Throwable {
+		if(provisionsPage.isPlanProvisionPage()){
+			Reporter.logEvent(Status.PASS, " Plan Provision page displays"," Plan Provision page displays", true);
+		}else{		
+			Reporter.logEvent(Status.FAIL, " Plan Provision page displays"," Plan Provision page isn't displays", true);
+		}
+    }
+	
+	@When("^user clicks Loans button$")
+    public void user_clicks_loans_button() throws Throwable {
+		provisionsPage.clickOnLoanButton();
+    }
+
+	@Then("^Loan provision page is displayed$")
+	public void loan_provision_page_is_displayed() throws Throwable {
+		if (loanInfoPage.isLoanInformationPage()) {
+			Reporter.logEvent(Status.PASS, " Loan provision page displays",
+					" Loan provision page displays", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, " Loan provision page displays",
+					" Loan provision page isn't displays", true);
+		}
+	}
+
+	@Then("^The \"([^\"]*)\" value is displayed on header$")
+	public void the_LoanRequiredPriorToHardship_value_is_displays(
+			String value) throws Throwable {
+		if (loanInfoPage.verifyLoanRequiredPriorToHardshipValue(value)) {
+			Reporter.logEvent(Status.PASS, " Loans required prior to hardship value displays",
+					" Loans required prior to hardship value displays", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, " Loans required prior to hardship value displays",
+					" Loans required prior to hardship value is't displays", true);
+		}
+	}
+	@Then("^The \"([^\"]*)\" value is displayed$")
+	public void the_LoanRestrictionHardshipReasons_value_is_displays(
+			String value) throws Throwable {
+		if (loanInfoPage.verifyLoanRestrictionHardshipReasonsValue(value)) {
+			Reporter.logEvent(Status.PASS, " Loan restrictions to hardship reasons value displays",
+					" Loan restrictions to hardship reasons value displays", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, " Loan restrictions to hardship reasons value displays",
+					" Loan restrictions to hardship reasons value is't displays", true);
+		}
+	}
+
+
+
 
 }
 

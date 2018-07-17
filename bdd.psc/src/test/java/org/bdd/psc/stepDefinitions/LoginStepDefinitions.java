@@ -23,13 +23,6 @@ import bdd_core.framework.Globals;
 
 import bdd_reporter.Reporter;
 
-import bdd_core.framework.Globals;
-import bdd_lib.Web;
-import bdd_reporter.Reporter;
-
-import com.aventstack.extentreports.Status;
-
-
 import cucumber.api.DataTable;
 import cucumber.api.Delimiter;
 import cucumber.api.Scenario;
@@ -321,6 +314,22 @@ public class LoginStepDefinitions {
 		Thread.sleep(2000);
 		Reporter.logEvent(Status.INFO, "Scroll down to footer section",
 				"Scroll down to footer section", true);
+	}
+	@When("^user scroll down to Pre-Login Banner section$")
+	public void user_scroll_down_to_banner_section() throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		Web.scrollDown();
+		Thread.sleep(2000);
+		Reporter.logEvent(Status.INFO, "Scroll down to Banner section",
+				"Scroll down to Banner section", true);
+	}
+	@When("^user scroll down to Pre-Login Content Tiles section$")
+	public void user_scroll_down_to_content_tiles_section() throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		Web.scrollDown();
+		Thread.sleep(2000);
+		Reporter.logEvent(Status.INFO, "Scroll down to Banner section",
+				"Scroll down to Banner section", true);
 	}
 
 	@Then("^the Terms and Conditions link should not be displayed in the footer system tray$")
@@ -703,8 +712,77 @@ public class LoginStepDefinitions {
 		}
 	}
 
-
+	@Then("^the PreLogin Banner should be displayed$")
+	public void the_prelogin_banner_should_be_displayed() throws Throwable {
+		if (login.isBannerSectionDisplays()) {
+			Reporter.logEvent(Status.PASS, "PreLogin Banner section displays",
+					"PreLogin Banner section displays", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, "PreLogin Banner section displays",
+					"PreLogin Banner section isn't displays", true);
+		}
+	}
 	
+	@Then("^the following text should be displayed in Banner Section$")
+    public void the_following_text_should_be_displayed_in_banner_section(String text) throws Throwable {
+		if(login.isSameTextDisplaysInBannerSection(text)){
+			Reporter.logEvent(Status.PASS,
+					" the following text  displays in banner section: "+text,
+					"the text is displays: "+text, true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					" the following text  displays in banner section: "+text,
+					"the text isn't displays: "+text,
+					true);
+		}
+    }
+
+	 @Then("^the PreLogin Content Tiles pictures should be displayed$")
+	    public void the_prelogin_content_tiles_pictures_should_be_displayed() throws Throwable {
+		 if (login.isPreLoginTilesPictureDisplays()) {
+				Reporter.logEvent(Status.PASS, "PreLogin Content Tiles pictures displays",
+						"PreLogin Content Tiles pictures displays", true);
+			} else {
+				Reporter.logEvent(Status.FAIL, "PreLogin Content Tiles pictures displays",
+						"PreLogin Content Tiles pictures isn't displays", true);
+			}
+	    }
+	 
+	 @Then("^the \"([^\"]*)\" should be displayed with each \"([^\"]*)\" for that text$")
+	    public void the_expected_text_should_be_displayed_with_each_link_to_for_that_text(String followingtext, String linkto) throws Throwable {
+		 if (login.verifyingPreLoginContentTilesPicturesTextAndLink(followingtext, linkto)){
+				Reporter.logEvent(Status.PASS, "PreLogin Content Tiles text displays with link",
+						"PreLogin Content Tiles text displays with link", true);
+			} else {
+				Reporter.logEvent(Status.FAIL, "PreLogin Content Tiles text displays with link",
+						"PreLogin Content Tiles text isn't displays with link", true);
+			}
+	    }
+	 
+	 @When("^user clicks on Pre-login banner$")
+	    public void user_clicks_on_prelogin_banner() throws Throwable {
+	       login.clickOnBannerSectionReadMoreLink();
+	    }
+	 
+	 @Then("^a page like this link is displayed \"([^\"]*)\" and is branded for MetLife$")
+	    public void a_page_like_this_link_is_displayed_and_is_branded_for_metlife(String expLink) throws Throwable {
+		 if (login.verifyMetLifeLogoAndLink(expLink)) {
+				Reporter.logEvent(Status.PASS, "navigated to "+expLink+" and metLife logo displays",
+						"navigated to "+expLink+" and metLife logo displays", true);
+			} else {
+				Reporter.logEvent(Status.FAIL, "navigated to "+expLink+" and metLife logo displays",
+						"navigated to "+expLink+" and metLife logo isn't displays", true);
+			} 
+	    }
+	 @When("^MetLife logo is displayed$")
+	    public void metlife_logo_is_displayed() throws Throwable {
+	        if(!login.ismetLifeLogoDisplays())
+	        	login.get();
+	    }
+	/* @Then("^the logo is as approved by client, has Max-width of 300 pixels, Max-height of 70 pixels$")
+	    public void the_logo_is_as_approved_by_client_has_maxwidth_of_300_pixels_maxheight_of_70_pixels() throws Throwable {
+	       login.ismetLifeLogoDisplays();
+	    }*/
 	
 	
 }

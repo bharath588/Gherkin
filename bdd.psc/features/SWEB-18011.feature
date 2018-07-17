@@ -32,17 +32,5 @@ Feature: FDD Consistency
     Examples: 
       | accuCode    | username | password | sdsv subcode       | plan_no   | deferral_type |
       | PlanEmpower | 1INST    | testing1 | ADJRUN_PAYROLLDATE | 194000-01 | Before Tax    |
-      | PlanEmpower | 1INST    | testing1 | ADJRUNDATE         | 194000-01 | Before Tax    |
-
-  Scenario Outline: As a user, I want a consistent datepicker experience based on calender datepicker for "<deferral_type>"
-    Given user is on the Home page of "<accuCode>" when user login with correct "<username>" and "<password>"
-    And plan is set up with "<sdsv subcode>" in GA_Service table
-      """
-      select ga_id from ga_service where SDSV_SUBCODE=?
-      """
-    When user switched to "<plan_no>" and navigate to Deferral Contribution screen for Future Dated Ongoing Deferrals
-    Then user should see a "calendar" datepicker for "<deferral_type>"
-
-    Examples: 
-      | accuCode    | username | password | sdsv subcode | deferral_type |plan_no   |
-      | PlanEmpower | 1INST    | testing1 | GENERIC      | Before Tax    |          |
+     # | PlanEmpower | 1INST    | testing1 | ADJRUNDATE         | 194000-01 | Before Tax    |
+      #| PlanEmpower | 1INST    | testing1 | GENERIC            | 194000-01 | Before Tax    |

@@ -1,11 +1,16 @@
 
 package org.bdd.psc.stepDefinitions;
 
+import java.util.List;
+
+import org.testng.Assert;
+
 import pscBDD.employee.EmployeePage;
 import pscBDD.employee.EmployeePages;
 import pscBDD.homePage.HomePage;
 import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
+import pscBDD.planPage.PlanProvisionsPage;
 import pscBDD.userVerification.UserVerificationPage;
 import gherkin.formatter.model.Scenario;
 
@@ -16,8 +21,10 @@ import bdd_lib.Web;
 import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
+import com.gargoylesoftware.htmlunit.javascript.host.media.webkitMediaStream;
 
 import cucumber.api.DataTable;
+import cucumber.api.Delimiter;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -43,6 +50,7 @@ public class EmployeeStepDefinitions {
 	//WebDriver webDriver;
 	EmployeePages empPages;
 	String planNumber=null;
+	PlanProvisionsPage provisionPage;
 
 
 	@Before()
@@ -53,6 +61,8 @@ public class EmployeeStepDefinitions {
 			System.out.println(scenario.getId());
 			Reporter.initializeModule(featureName);
 			empPages=new EmployeePages();
+			provisionPage=new PlanProvisionsPage();
+			homePage=new HomePage();
 		}
 	@After
 	public void after() throws Exception{
@@ -67,6 +77,125 @@ public class EmployeeStepDefinitions {
 		empPage = new EmployeePage(Web.getDriver());
 		empPage.get();
 	}
+	@Given("^User is on Employee Search Page$")
+	public void userNavigateToEmployeeSearchPage() throws Exception{
+		//Reporter.initializeReportForTC(1,scenarioName);
+		empPage = new EmployeePage(Web.getDriver());
+		empPage.get();
+	}
+	@When("^user clicks Employee$")
+    public void user_clicks_on_employee() throws Throwable {
+        
+    }
+	
+	@And("^User search and selects the plan \"([^\"]*)\" with Vesting Service level as \"([^\"]*)\" in Plan Provisions page$")
+	public void user_search_and_selects_the_plan_with_vesting_service_level_in_plan_provisions_page(
+			String planno, String vestinglevel) throws Throwable {
+		homePage.switchPlan(planno);
+		provisionPage.get();
+		if(!provisionPage.verifyVestingServiceLevel(vestinglevel)){
+			Reporter.logEvent(Status.FAIL,
+					"Vesting Service level should set with: " + vestinglevel,
+					"Vesting Service level isn't set with: " + vestinglevel,
+					true);
+		Assert.assertTrue(false);
+		}
+			
+	}
+
+	@When("^User is landing on Employee Search Page$")
+	public void user_is_landing_on_Employee_SearchPage() throws Exception {
+		// Reporter.initializeReportForTC(1,scenarioName);
+		//empPage = new EmployeePage(Web.getDriver());
+		empPages.get();
+	}
+
+	@When("^User search employee by \"([^\"]*)\"  and select an employee with \"([^\"]*)\"$")
+	public void user_search_employee_by_dropdown_value_and_select_an_employee(
+			String searchBy, String searchVal) throws Throwable {
+		empPages.searchEmployeeBy(searchBy, searchVal);
+		empPages.clickOnFirstNameLinkInSearchResult();
+	}
+
+	@When("^user search for an employee using \"([^\"]*)\" having loan_type loans with \"([^\"]*)\"$")
+	public void user_search_for_an_employee_using_ind_id_having_loantype_loans_with_something(
+			String indid, String searchBy) throws Throwable {
+		empPages.searchEmployeeBy(searchBy, indid);
+	}
+
+
+	@Then("^employee detail page is displayed$")
+	public void when_employee_detail_page_is_displayed() throws Throwable {
+		if(empPages.isEmployeeDetailsPage()){
+			Reporter.logEvent(Status.PASS, "employee detail page displays", 
+					"employee detail page displays", true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "employee detail page displays", 
+					"employee detail page don't displays", true);
+		}
+	}
+	@When("^user clicks on Vesting link$")
+    public void user_clicks_on_vesting_link() throws Throwable {
+        empPages.clickOnVestingLink();
+    }
+
+	@Then("^a new window opens with Vesting historical data$")
+	public void a_new_window_opens_with_vesting_historical_data()
+			throws Throwable {
+		if(empPages.verifyVestingWindow()){
+			Reporter.logEvent(Status.PASS, "new window opens with Vesting historical data", 
+					"new window opens with Vesting historical data", true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "new window opens with Vesting historical data", 
+					"new window don't opens with Vesting historical data", true);
+		}
+
+	}
+
+	@Then("^information displayed on Vesting section should be \"([^\"]*)\"$")
+	public void information_displayed_on_vesting_section_should_be_message(
+			String inputMessage) throws Throwable {
+		if(empPages.verifyVestingSectionMessage(inputMessage)){
+			Reporter.logEvent(Status.PASS, "information displays on Vesting section: "+inputMessage, 
+					"information displays on Vesting section: "+inputMessage, true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "information displays on Vesting section: "+inputMessage, 
+					inputMessage+" :don't displays on Vesting section", true);
+		}
+
+	}
+
+	@Then("^Vesting information should be available under Vesting section$")
+	public void vesting_information_should_be_available_under_vesting_section()
+			throws Throwable {
+		if(empPages.verifyVestingSectionDisplays()){
+			Reporter.logEvent(Status.PASS, "Vesting information displays under Vesting section", 
+					"Vesting information displays under Vesting section", true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "Vesting information displays under Vesting section", 
+					"Vesting information don't displays under Vesting section", true);
+		}
+
+	}
+	 @Then("^Vesting section should be suppressed$")
+	    public void vesting_section_should_be_suppressed() throws Throwable {
+		 if(!empPages.verifyVestingSectionDisplays()){
+				Reporter.logEvent(Status.PASS, "Vesting section should be suppressed", 
+						"Vesting section is suppressed", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL, "Vesting section should be suppressed", 
+						"Vesting section don't suppressed", true);
+			}
+
+	    }
+
+
+	
 
 	@When("^I select SSN from search filter drop down down$")
 	public void selectSSNINFilterSelect(){
@@ -132,6 +261,18 @@ public class EmployeeStepDefinitions {
 		empPage.clickOnEditLink();
 		Reporter.logEvent(Status.INFO, "User is on employee detail edit page", 
 				"User is on employee detail edit page", true);
+	}
+	@And("^user click on Edit button of Employment information$")
+	public void clickEditEmpInfoLink(){
+		empPages.clickOnEmpInfoEditLink();
+		Reporter.logEvent(Status.INFO, "User is on employment information page", 
+				"User is on employment information page", true);
+	}
+	@And("^user click on Details link under Employment history$")
+	public void click_Details_Link_Under_EmploymentHistory(){
+		empPages.clickOnDetailsLinkUnderEmploymentHistory();
+		Reporter.logEvent(Status.INFO, "User is on employment history section", 
+				"User is on employment history section", true);
 	}
 
 	@And("^I update the last name$")
@@ -324,9 +465,104 @@ public class EmployeeStepDefinitions {
 					+ " datepicker isn't displays for the user", true);
 		}
     }
+	
+	@Given("^User search and selects plan \"([^\"]*)\"$")
+	public void userSelectPlan(String planNo) throws Exception{
+		new HomePage().switchPlan(planNo);
+	}
 
+	@When("^clicks on the search result to open employee detail page$")
+    public void clicks_on_the_search_result_to_open_employee_detail_page() throws Throwable {
+		empPages.clickOnFirstNameLinkInSearchResult();
+    }
+	@When("^clicks on View button on Loan Section$")
+    public void clicks_on_view_button_on_loan_section() throws Throwable {
+        
+    }
 
+	/*@Then("^Loan details page is displayed$")
+	public void loan_detail_page_is_displayed() throws Throwable {
+		if(empPages.isEmployeeDetailsPage()){
+			Reporter.logEvent(Status.PASS, "employee detail page displays", 
+					"employee detail page displays", true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "employee detail page displays", 
+					"employee detail page don't displays", true);
+		}
+	}*/
+	@Then("^Plan Analytics are suppressed$")
+    public void plan_analytics_are_suppressed() throws Throwable {
+		if(!provisionPage.isPlanAnalyticsSectionDiplays()){
+			Reporter.logEvent(Status.PASS, "Plan Analytics are suppressed", 
+					"Plan Analytics are suppressed", true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "Plan Analytics are suppressed", 
+					"Plan Analytics aren't suppressed", true);
+		}
+    }
 
+	@Then("^Employee account balance and view account history button is suppressed for \"([^\"]*)\" plan$")
+	public void employee_account_balance_is_suppressed_for_hsa_plan(
+			String hsaPlan) throws Throwable {
+		if (empPages.verifyAccountBalanceSuppressed(hsaPlan) && empPages.verifyViewButtonSuppressed()) {
+			Reporter.logEvent(
+					Status.PASS,
+					"Employee account balance and view account history button are suppressed",
+					"Employee account balance and view account history button are suppressed",
+					true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Employee account balance and view account history button are suppressed",
+					"Employee account balance and view account history button aren't suppressed",
+					true);
+		}
+	}
+	
 
+	@Then("^the Employee Information section should not include \"([^\"]*)\"$")
+	public void the_employee_information_section_should_not_include_label(
+			@Delimiter(",") List<String> labels) throws Throwable {
+		if (empPages.verifyEmploymentInformationLabel(labels,false)) {
+			Reporter.logEvent(
+					Status.PASS,
+					"the Employee Information section do not include label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					"the Employee Information section not include label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"the Employee Information section do not include label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					"the Employee Information section include all or one of the label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					true);
+		}
+	}
+	@Then("^the Employee Information section should include \"([^\"]*)\"$")
+	public void the_employee_information_section_should_include_label(
+			@Delimiter(",") List<String> labels) throws Throwable {
+		if (!empPages.verifyEmploymentInformationLabel(labels,true)) {
+			Reporter.logEvent(
+					Status.PASS,
+					"the Employee Information section include label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					"the Employee Information section include label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"the Employee Information section include label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					"the Employee Information section don't include all or one of the label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					true);
+		}
+	}
 
 }

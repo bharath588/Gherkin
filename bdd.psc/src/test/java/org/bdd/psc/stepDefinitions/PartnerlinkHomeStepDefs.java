@@ -4,6 +4,7 @@
 package org.bdd.psc.stepDefinitions;
 
 
+import gherkin.formatter.model.Scenario;
 import pscBDD.PlanExpress.PlanExpressPage;
 import pscBDD.login.LoginPage;
 import pscBDD.partnerlinkHomePage.PartnerlinkHomePage;
@@ -19,7 +20,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import gherkin.formatter.model.Scenario;
 
 /**
  * @author rvpndy
