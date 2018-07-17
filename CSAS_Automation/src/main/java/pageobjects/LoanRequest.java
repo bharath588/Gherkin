@@ -456,7 +456,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 	@FindBy(xpath = ".//b[contains(text(),'Payment & repayment options')]")
 	private WebElement paymentAndRepaymentOption;
 
-	@FindBy(xpath = ".//a[contains(text(),'View payment & repayment options')]")
+	@FindBy(xpath = ".//*[@id='loanTypePriRes']/div[23]/div[2]")
 	private WebElement viewPaymentAndRepaymentOptionLink;
 
 	@FindBy(xpath = ".//ul[@class='bullet-list'] //span[contains(text(),'Pending Transfer  WR_477')]")
@@ -477,10 +477,10 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 	@FindBy(xpath= ".//ul[@class='bullet-list'] //li[contains(text(),'Unable to locate an account balance')]")
 	private WebElement accountBalErrorMsg;
 	
-	@FindBy(xpath=".//span[contains(@id,'availableToBorrowAmount')]/parent::*/child::a")
+	@FindBy(id="availableToBorrowAmount-MORTGAGE")
 	private WebElement howIsCalculatedLink;
 	
-	@FindBy(xpath = ".//a[contains(@id,'interestRateTooltip')]")
+	@FindBy(id = "interestRateTooltipMORTGAGE")
 	private WebElement intrestRate;
 	
 	@FindBy(xpath = ".//a[contains(text(),'Log Out')]")
@@ -495,7 +495,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 	@FindBy(xpath = ".//td[contains(text(),'12 - 60 Months')]")
 	private WebElement generalPurposeLoanTerm;
 	
-	@FindBy(xpath = ".//td[contains(text(),'61 - 120 Months')]")
+	@FindBy(xpath = ".//td[contains(text(),'61 - 180 Months')]")
 	private WebElement motorGageLoanTerm;
 	
 	@FindBy(xpath = ".//td[contains(text(),'Loans Allowed After Previous Default:')]/parent::*/child::td[2]")
@@ -624,6 +624,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 	}
 
 	public void validating_mobile_phone() {
+		Reporter.logEvent(Status.INFO,"Verifying mobile phone text in loan request page" , "Loan request page displayed with the details", true);
 		Web.waitForElement(mobile_phone);
 
 		verify_ErrorMssage_Email_InputBox("ahghhjhjh",
@@ -639,6 +640,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		verify_ErrorMssage_Email_InputBox(
 				Stock.GetParameterValue("Mobile Phone"), "",
 				"Checking for valid phone number value in mobile number field");
+		Web.clickOnElement(menuSearch);	
 	}
 
 	private void verify_ErrorMssage_Email_InputBox(String sValue,
@@ -707,12 +709,13 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		if (tag_name != "input") {
 			Reporter.logEvent(Status.PASS,
 					"Verifying if the payment method is a non-editable field",
-					"Payment method is a non-editable field", false);
+					"Payment method is a non-editable field", true);
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"Verifying if the payment method is a non-editable field",
-					"Payment method is a editable field", false);
+					"Payment method is a editable field", true);
 		}
+		Web.clickOnElement(menuSearch);	
 
 	}
 
@@ -725,7 +728,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		System.out.println("on entering alphabets in vesting field:" + error1);
 		Reporter.logEvent(Status.INFO,
 				"Checking the vesting field for alphabets",
-				"On entering alphabets in the vesting field:" + error1, false);
+				"On entering alphabets in the vesting field:" + error1, true);
 		Web.setTextToTextBox(vesting1, "*&^%");
 		Web.waitForElement(vesting_error);
 		String error2 = vesting_error.getText();
@@ -735,23 +738,24 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 				Status.INFO,
 				"Checking the vesting field for special characters",
 				"On entering special characters in the vesting field:" + error2,
-				false);
+				true);
 		Web.setTextToTextBox(vesting1, Stock.GetParameterValue("Vesting"));
 		Reporter.logEvent(Status.INFO,
 				"Entering a valid number in the vesting field",
-				"A valid number is added to the vesting field", false);
+				"A valid number is added to the vesting field", true);
 		if (vesting_error.isDisplayed()) {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Verifying if the vesting field is accepting only numerical value",
 					"Vesting field is not accepting only numerical value",
-					false);
+					true);
 		} else {
 			Reporter.logEvent(
 					Status.PASS,
 					"Verifying if the vesting field is accepting only numerical value",
-					"Vesting field is accepting only numerical value", false);
+					"Vesting field is accepting only numerical value", true);
 		}
+		Web.clickOnElement(menuSearch);	
 
 	}
 
@@ -766,7 +770,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		Reporter.logEvent(Status.INFO,
 				"Changing the value in the amount to borrow text box",
 				"Amount has been changed in the amount to borrow text box",
-				false);
+				true);
 		Web.waitForElement(add_button);
 		Web.clickOnElement(add_button);
 		Web.waitForElement(loan_qoute1_radio_button);
@@ -774,7 +778,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 
 		Web.clickOnElement(recalculate_button);
 		Reporter.logEvent(Status.INFO, "clicking on recalculate button",
-				"Recalculate button is clicked", false);
+				"Recalculate button is clicked", true);
 
 		wait(2000);
 
@@ -784,14 +788,15 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		if (amount1.equalsIgnoreCase(amount2)) {
 			Reporter.logEvent(Status.PASS,
 					"Verifying recalculate button functionality",
-					"Recalculate button functionality successfull", false);
+					"Recalculate button functionality successfull", true);
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"Verifying recalculate button functionality",
-					"Recalculate button functionality not successfull", false);
+					"Recalculate button functionality not successfull", true);
 		}
 
 		Web.clickOnElement(eligible_checkbox);
+		Web.clickOnElement(menuSearch);	
 	}
 
 	public void verifying_enable_of_select_button() {
@@ -801,19 +806,19 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Stock.GetParameterValue("Amount to Borrow"));
 			Reporter.logEvent(Status.INFO,
 					"Value to be added into amount to borrow field",
-					"Value is added into amount to borrow field", false);
+					"Value is added into amount to borrow field", true);
 			Web.waitForElement(loan_term);
 			Web.setTextToTextBox(loan_term,
 					Stock.GetParameterValue("Loan Terms"));
 			Reporter.logEvent(Status.INFO,
 					"Value to be added into loan term field",
-					"Value is added into loan term field", false);
+					"Value is added into loan term field", true);
 			// Web.waitForElement(add_button);
 			Web.clickOnElement(add_button);
 			Web.waitForElement(loan_qoute1_radio_button);
 			Web.clickOnElement(loan_qoute1_radio_button);
 			Reporter.logEvent(Status.INFO, "Selecting a loan quote",
-					"First loan quote is selected", false);
+					"First loan quote is selected", true);
 			// Thread.sleep(5000);
 			Web.waitForElement(selected_loan_quote);
 
@@ -821,12 +826,12 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 				Reporter.logEvent(Status.PASS,
 						"Verifying if the green tick appeared",
 						"Green tick appeared for the selected loan quote",
-						false);
+						true);
 			} else {
 				Reporter.logEvent(Status.FAIL,
 						"Verifying if the green tick appeared",
 						"Green tick appeared for the selected loan quote",
-						false);
+						true);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -848,7 +853,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			Reporter.logEvent(Status.INFO,
 					"Changing the value in the amount to borrow text box",
 					"Amount has been changed in the amount to borrow text box",
-					false);
+					true);
 			Web.waitForElement(add_button);
 			Web.clickOnElement(add_button);
 
@@ -915,42 +920,43 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					"Entering the value in the amount to borrow text box",
 					"Amount has been changed in the amount to borrow text box: "
 							+ Stock.GetParameterValue("Amount_to_Borrow"),
-					false);
+					true);
 
 			Web.selectDropDownOption(payment_frequency, "MONTHLY");
 
 			Web.clickOnElement(quick_qoutes_button);
 			Reporter.logEvent(Status.INFO,
 					"Viewing Quick quotes for monthly payment frequency",
-					"Quick quotes for monthly frequency is being viewed", false);
+					"Quick quotes for monthly frequency is being viewed", true);
 			wait(3000);
 
 			Web.clickOnElement(loan_qoute1_radio_button);
 			Reporter.logEvent(Status.INFO, "Selecting a loan quote",
-					"One loan quote has been selected", false);
+					"One loan quote has been selected", true);
 
 			Web.clickOnElement(not_married_radio_button);
 			Reporter.logEvent(Status.INFO, "Selecting maritial status",
-					"\"Not married\" is selected", false);
+					"\"Not married\" is selected", true);
 
 			Web.clickOnElement(continue_button);
 			Reporter.logEvent(
 					Status.INFO,
 					"Clicking Continue to Loan Review and Confirmation button",
 					"Continue to Loan Review and Confirmation button is clicked",
-					false);
+					true);
 			wait(2000);
 
 			Web.clickOnElement(Email_chk_box);
 			Reporter.logEvent(Status.INFO, "Checking Email check box",
-					"Email Check box is selected: discard@gwl.com", false);
+					"Email Check box is selected: discard@gwl.com", true);
 			verifyConfirmationID();
 
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"Verifying Loan amount to be borrowed fields",
-					"Loan amount to be borrowed field not enabled", false);
+					"Loan amount to be borrowed field not enabled", true);
 		}
+		Web.clickOnElement(menuSearch);	
 
 	}
 	public void confirmContactAddressandEditAddress(){
@@ -962,13 +968,14 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 				Reporter.logEvent(Status.PASS,
 						"Confirm Address Message is displayed or not",
 						"Confirm Address Message is displayed\n"
-								+ actualConfirmAddress, false);
+								+ actualConfirmAddress, true);
 				
 			}
 			}
 			
 		verify_EditAddress_Field();
 		verify_HappyPath_PromissoryNote_SetTo_pptID_DeliverForm();
+		Web.clickOnElement(menuSearch);	
 
 	}
 	
@@ -978,13 +985,14 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			Reporter.logEvent(Status.FAIL,
 					"Verifying Edited Address Message is displayed or not",
 					"Edited Address Message is displayed\n"
-							+ AddressEdited_message.getText(), false);
+							+ AddressEdited_message.getText(), true);
 	 }else{
 		 Reporter.logEvent(Status.PASS,
 					"Verifying Edited Address Message is displayed or not",
 					"Edited Address Message is displayed\n"
 							, false);
 	 }
+	 Web.clickOnElement(menuSearch);	
 
 	                                                                                                                                                            
 	 
@@ -1028,19 +1036,20 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 						Status.PASS,
 						"Verifying Recent Address Change Warning",
 						"Recent Address Change Warning is Displayed with yellow warning icon",
-						false);
+						true);
 				verifyText(addressChanged_Alert_msg, sExpText,
 						"Verifying Recent Address Change Warning", true);
 
 			} else {
 				Reporter.logEvent(Status.FAIL,
 						"Verifying Recent Address Change Warning",
-						"Address Change warning is not displayed", false);
+						"Address Change warning is not displayed", true);
 			}
 		} else {
 			Reporter.logEvent(Status.FAIL, "Verifying Edit Address link",
-					"Address link is not enabled", false);
+					"Address link is not enabled", true);
 		}
+		Web.clickOnElement(menuSearch);	
 
 	}
 
@@ -1100,7 +1109,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 						Status.FAIL,
 						"Clicking Continue to Loan Review and Confirmation button",
 						"Continue to Loan Review and Confirmation is not enabled",
-						false);
+						true);
 			}
 
 			Web.clickOnElement(Email_chk_box);
@@ -1124,18 +1133,19 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 				} else {
 					Reporter.logEvent(Status.FAIL,
 							"Confirmation Id for Delivery form",
-							"Confirmation Id is not displayed ", false);
+							"Confirmation Id is not displayed ", true);
 				}
 			} else {
 				Reporter.logEvent(Status.FAIL,
 						"verifying successfull submission of loan request",
-						"Loan request not delivered successfully", false);
+						"Loan request not delivered successfully", true);
 			}
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"verifying successfull Delivering the form",
-					"Form was not delivered successfully", false);
+					"Form was not delivered successfully", true);
 		}
+		Web.clickOnElement(menuSearch);	
 	}
 
 	public void verify_Refinance_Loan_Maximum_Outstanding_Loans() {
@@ -1200,7 +1210,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 						Status.FAIL,
 						"Clicking Continue to Loan Review and Confirmation button",
 						"Continue to Loan Review and Confirmation is not enabled",
-						false);
+						true);
 			}
 			wait(2000);
 
@@ -1224,14 +1234,15 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			} else {
 				Reporter.logEvent(Status.FAIL,
 						"verifying successfull submission of loan request",
-						"Loan request not delivered successfully", false);
+						"Loan request not delivered successfully", true);
 			}
 
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"Verifying participant having outstanding loans",
-					"Outstanding loans are not displayed for paricipant", false);
+					"Outstanding loans are not displayed for paricipant", true);
 		}
+		Web.clickOnElement(menuSearch);	
 	}
 
 	public void verify_Loan_Term() {
@@ -1242,7 +1253,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 						Status.PASS,
 						"Verifying participant has outstanding loans",
 						"Outstanding loans section is displayed, participant has outstanding loans",
-						false);
+						true);
 
 				if (Web.isWebElementDisplayed(eligible_chk_box)) {
 					Web.clickOnElement(eligible_chk_box);
@@ -1255,7 +1266,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 				Web.clickOnElement(select_refinance_btn);
 				Reporter.logEvent(Status.INFO,
 						"Submitting selected loans for Refinancing",
-						"Selected loans for Refinancing are submitted", false);
+						"Selected loans for Refinancing are submitted", true);
 
 				if (Web.isWebElementDisplayed(add_additional_loan_txtbox)) {
 					Web.setTextToTextBox(add_additional_loan_txtbox,
@@ -1275,7 +1286,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Reporter.logEvent(
 							Status.PASS,
 							"Adding additional Loan amount and Viewing Quick quotes ",
-							"New Loan Quotes is being viewed", false);
+							"New Loan Quotes is being viewed", true);
 				}
 				wait(2000);
 
@@ -1290,26 +1301,27 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Reporter.logEvent(
 							Status.INFO,
 							"Loan term for selected refinanced loan amount for payment frequency of: Monthly",
-							"Loan terms in months: " + loan_term_months, false);
+							"Loan terms in months: " + loan_term_months, true);
 					if (myRange.contains(loan_term_months)) {
 						Reporter.logEvent(
 								Status.PASS,
 								"Loan term \nExpected: Principal Residence Loan Term is showing in Months like 61 - 360 Months",
 								"Actual Loan terms in months: "
-										+ loan_term_months, false);
+										+ loan_term_months, true);
 					} else {
 						Reporter.logEvent(
 								Status.FAIL,
 								"Loan term \nExpected: Principal Residence Loan Term is showing in Months like 61 - 360 Months",
 								"Actual Loan terms in months: "
-										+ loan_term_months, false);
+										+ loan_term_months, true);
 					}
 				} else {
 					Reporter.logEvent(Status.FAIL, "Verifying new Loan term ",
-							"Loan term for new quotes not displayed", false);
+							"Loan term for new quotes not displayed", true);
 				}
 
 			}
+			Web.clickOnElement(menuSearch);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1322,19 +1334,19 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Status.INFO,
 					"Verifying participant has multiple outstanding loans",
 					"Multiple Outstanding loans section is displayed, participant has multiple outstanding loans",
-					false);
+					true);
 
 			List<WebElement> checkBoxList = Web.getDriver().findElements(
 					By.className("generalRefinanceChecked"));
 			checkBoxList.get(0).click();
 			Reporter.logEvent(Status.INFO,
 					"Clicking on Eligible Check boxes to Refinance Loans",
-					"Loans has been selected for Refinancing", false);
+					"Loans has been selected for Refinancing", true);
 
 			Web.clickOnElement(select_refinance_btn);
 			Reporter.logEvent(Status.INFO,
 					"Submitting selected loans for Refinancing",
-					"Selected loans for Refinancing are submitted", false);
+					"Selected loans for Refinancing are submitted", true);
 
 			String amt0 = Stock.GetParameterValue("Amount_to_Borrow_0");
 			Web.setTextToTextBox(add_additional_loan_btn_general, amt0);
@@ -1342,12 +1354,12 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Status.INFO,
 					"Entering the value zero(0) in the amount to borrow text box",
 					"Amount has been entered in the amount to borrow text box: "
-							+ amt0, false);
+							+ amt0, true);
 
 			Web.clickOnElement(add_btn_general);
 			Reporter.logEvent(Status.INFO,
 					"Clicking on Add button for additional loan amount",
-					"Add button has been clicked", false);
+					"Add button has been clicked", true);
 
 			String expectedExceptionMsg = " Requested Loan amt must be > 0 AS_200   New Loan Amt for a Refinance must be at least Fee Amt AS_211";
 
@@ -1356,7 +1368,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 						loanReq_Error_msg_invalid_input,
 						expectedExceptionMsg,
 						"Verifying Exception message for Zero(0) amount for Loan",
-						false);
+						true);
 			}
 
 			String amtLessThanMin = Stock
@@ -1367,19 +1379,19 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Status.INFO,
 					"Entering the value less than minimum in the amount to borrow text box",
 					"Amount has been entered in the amount to borrow text box: "
-							+ amtLessThanMin, false);
+							+ amtLessThanMin, true);
 
 			Web.clickOnElement(add_btn_general);
 			Reporter.logEvent(Status.INFO,
 					"Clicking on Add button for additional loan amount",
-					"Add button has been clicked", false);
+					"Add button has been clicked", true);
 
 			expectedExceptionMsg = " New Loan Amt for a Refinance must be at least Fee Amt AS_211";
 			verifyText(
 					loanReq_Error_msg_invalid_input,
 					expectedExceptionMsg,
 					"Verifying Exception message for less than minimum amount for Loan",
-					false);
+					true);
 
 			String amtMin = getMinAmount().toString();
 			Web.setTextToTextBox(add_additional_loan_btn_general, amtMin);
@@ -1387,23 +1399,23 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Status.INFO,
 					"Entering the minimum value in the amount to borrow text box",
 					"Amount has been entered in the amount to borrow text box: "
-							+ amtMin, false);
+							+ amtMin, true);
 
 			Web.clickOnElement(add_btn_general);
 			Reporter.logEvent(Status.INFO,
 					"Clicking on Add button for additional loan amount",
-					"Add button has been clicked", false);
+					"Add button has been clicked", true);
 			wait(2000);
 			if (!(Web.isWebElementDisplayed(loanReq_Error_msg_invalid_input,
 					true))) {
 				Reporter.logEvent(Status.PASS,
 						"Expected: Exception message should not display",
-						"No Exception message id Displayed", false);
+						"No Exception message id Displayed", true);
 			} else {
 				Reporter.logEvent(Status.FAIL,
 						"Expected: Exception message should not display",
 						"Actual: " + loanReq_Error_msg_invalid_input.getText(),
-						false);
+						true);
 			}
 
 			float min_amount = getMinAmount() + 1;
@@ -1414,12 +1426,12 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Status.INFO,
 					"Entering the value which is more than minimum in the amount to borrow text box",
 					"Amount has been entered in the amount to borrow text box: "
-							+ amtMoreThanMin, false);
+							+ amtMoreThanMin, true);
 
 			Web.clickOnElement(add_btn_general);
 			Reporter.logEvent(Status.INFO,
 					"Clicking on Add button for additional loan amount",
-					"Add button has been clicked", false);
+					"Add button has been clicked", true);
 			wait(2000);
 			if (!(Web.isWebElementDisplayed(loanReq_Error_msg_invalid_input,
 					true))) {
@@ -1428,7 +1440,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 						"No Exception message id Displayed", false);
 			} else {
 				Reporter.logEvent(Status.FAIL, "", "Actual: "
-						+ loanReq_Error_msg_invalid_input.getText(), false);
+						+ loanReq_Error_msg_invalid_input.getText(), true);
 			}
 
 			String loan_term_months = loanterm_selected_loan.getText();
@@ -1438,12 +1450,12 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			Reporter.logEvent(Status.INFO,
 					"Enter loan term greater than plan's remaining term",
 					"Loan term of " + loan_term_month
-							+ " months has been entered", false);
+							+ " months has been entered", true);
 
 			Web.clickOnElement(add_btn_general);
 			Reporter.logEvent(Status.INFO,
 					"Clicking on Add button for additional loan amount",
-					"Add button has been clicked", false);
+					"Add button has been clicked", true);
 
 			if ((Web.isWebElementDisplayed(loanReq_Error_msg_invalid_input,
 					true))) {
@@ -1460,8 +1472,9 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Status.FAIL,
 					"Verifying participant has multiple outstanding loans",
 					"Multiple Outstanding loans section is not displayed, participant doesn't have multiple outstanding loans",
-					false);
+					true);
 		}
+		Web.clickOnElement(menuSearch);
 	}
 
 	public void verify_HappyPath_PromissoryNote_SetTo_pptID_DeliverForm() {
@@ -1475,25 +1488,25 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			Reporter.logEvent(
 					Status.INFO,
 					"Verifying message \"This is a two-step loan and requires a promissory note.\" is displayed or not",
-					"The message is displayed", false);
+					"The message is displayed", true);
 
 			Web.setTextToTextBox(amount_to_borrow_txtBox, getMinAmount()
 					.toString());
 			Reporter.logEvent(Status.INFO,
 					"Entering the value in the amount to borrow text box",
-					"Amount entered : " + getMinAmount().toString(), false);
+					"Amount entered : " + getMinAmount().toString(), true);
 
 			Web.selectDropDownOption(payment_frequency, "MONTHLY");
 
 			Web.clickOnElement(quick_qoutes_button);
 			Reporter.logEvent(Status.INFO,
 					"Viewing Quick quotes for monthly payment frequency",
-					"Quick quotes for monthly frequency is being viewed", false);
+					"Quick quotes for monthly frequency is being viewed", true);
 			wait(2000);
 
 			Web.clickOnElement(loan_qoute1_radio_button);
 			Reporter.logEvent(Status.INFO, "Selecting a loan quote",
-					"One loan quote has been selected", false);
+					"One loan quote has been selected", true);
 
 			Web.clickOnElement(first_class_mail_radiobtn);
 			Reporter.logEvent(Status.INFO,
@@ -1502,7 +1515,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 
 			Web.clickOnElement(not_married_radio_button);
 			Reporter.logEvent(Status.INFO, "Selecting maritial status",
-					"\"Not married\" is selected", false);
+					"\"Not married\" is selected", true);
 
 			Web.setTextToTextBox(home_Phone_txtBox,
 					Stock.GetParameterValue("HomePhoneNumber"));
@@ -1519,7 +1532,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					"Entering Mobile Phone number",
 					"Mobile Phone number entered is: "
 							+ Stock.GetParameterValue("MobilePhoneNumber"),
-					false);
+					true);
 
 			Web.setTextToTextBox(personal_email_txtBox,
 					Stock.GetParameterValue("PersonalEmail"));
@@ -1527,27 +1540,28 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Status.INFO,
 					"Entering Personal Email Id",
 					"Personal Email Id entered is: "
-							+ Stock.GetParameterValue("PersonalEmail"), false);
+							+ Stock.GetParameterValue("PersonalEmail"), true);
 
 			Web.clickOnElement(continue_button);
 			Reporter.logEvent(
 					Status.INFO,
 					"Clicking Continue to Loan Review and Confirmation button",
 					"Continue to Loan Review and Confirmation button is clicked",
-					false);
+					true);
 			wait(2000);
 
 			Web.clickOnElement(Email_chk_box);
 			Reporter.logEvent(Status.INFO, "Checking Email check box",
-					"Email Check box is selected: discard@gwl.com", false);
+					"Email Check box is selected: discard@gwl.com", true);
 
 			verifyConfirmationID();
 
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"Verifying promissory note message is displayed or not",
-					"Promissory note message is not displayed", false);
+					"Promissory note message is not displayed", true);
 		}
+		Web.clickOnElement(menuSearch);
 
 	}
 
@@ -1563,7 +1577,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			Reporter.logEvent(
 					Status.INFO,
 					"verifying the message \"This is a two-step loan and requires a promissory note should display.\" is displayed or not",
-					"Promissory note is displayed", false);
+					"Promissory note is displayed", true);
 
 			Web.setTextToTextBox(amount_to_borrow_txtBox, getMinAmount()
 					.toString());
@@ -1585,7 +1599,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			Web.clickOnElement(first_class_mail_radiobtn);
 			Reporter.logEvent(Status.INFO,
 					"Selecting First-Class mail radio button",
-					"\"First-class mail\" is selected", false);
+					"\"First-class mail\" is selected", true);
 
 			Web.setTextToTextBox(home_Phone_txtBox,
 					Stock.GetParameterValue("HomePhoneNumber"));
@@ -1610,14 +1624,14 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Status.INFO,
 					"Entering Personal Email Id",
 					"Personal Email Id entered is: "
-							+ Stock.GetParameterValue("PersonalEmail"), false);
+							+ Stock.GetParameterValue("PersonalEmail"), true);
 
 			Web.clickOnElement(continue_button);
 			Reporter.logEvent(
 					Status.INFO,
 					"Clicking Continue to Loan Review and Confirmation button",
 					"Continue to Loan Review and Confirmation button is clicked",
-					false);
+					true);
 			wait(2000);
 
 			Web.clickOnElement(standardEmailRadioBtn);
@@ -1630,7 +1644,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			Reporter.logEvent(Status.INFO,
 					"Clicking Agree & submit Loan Request ",
 					"Agree & submit Loan Request button has been clicked",
-					false);
+					true);
 
 			if (Web.isWebElementDisplayed(loan_summary_Info, true)) {
 				Reporter.logEvent(Status.PASS,
@@ -1643,14 +1657,15 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			} else {
 				Reporter.logEvent(Status.FAIL,
 						"verifying successfull submission of loan request",
-						"Loan request not delivered successfully", false);
+						"Loan request not delivered successfully", true);
 			}
 
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"Verifying Loan amount to be borrowed fields",
-					"Loan amount to be borrowed field not enabled", false);
+					"Loan amount to be borrowed field not enabled", true);
 		}
+		Web.clickOnElement(menuSearch);
 
 	}
 
@@ -1698,13 +1713,13 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 				Status.INFO,
 				"Entering Personal Email Id",
 				"Personal Email Id entered is: "
-						+ Stock.GetParameterValue("PersonalEmail"), false);
+						+ Stock.GetParameterValue("PersonalEmail"), true);
 
 		Web.clickOnElement(continue_button);
 		Reporter.logEvent(Status.INFO,
 				"Clicking Continue to Loan Review and Confirmation button",
 				"Continue to Loan Review and Confirmation button is clicked",
-				false);
+				true);
 		wait(2000);
 
 		Web.clickOnElement(standardEmailRadioBtn);
@@ -1725,9 +1740,9 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"verifying successfull submission of loan request",
-					"Loan request not delivered successfully", false);
+					"Loan request not delivered successfully", true);
 		}
-
+		Web.clickOnElement(menuSearch);
 	}
 
 	public void verifyBackHyperlink() {
@@ -1738,32 +1753,32 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			Reporter.logEvent(Status.INFO,
 					"Entering the value in the amount to borrow text box",
 					"Amount has been changed in the amount to borrow text box: "
-							+ getMinAmount().toString(), false);
+							+ getMinAmount().toString(), true);
 
 			Web.setTextToTextBox(loanterm_txtBox,
 					Stock.GetParameterValue("loanTermYears"));
 			Reporter.logEvent(Status.INFO, "Entering loan term in years",
 					"Loan term of " + Stock.GetParameterValue("loanTermyears")
-							+ " years has been entered", false);
+							+ " years has been entered", true);
 
 			Web.clickOnElement(add_additional_loan_btn);
 			Reporter.logEvent(Status.PASS,
 					"Adding additional Loan amount and Viewing Quick quotes ",
-					"New Loan Quotes is being viewed", false);
+					"New Loan Quotes is being viewed", true);
 
 			Web.clickOnElement(editAddress_link);
 			Reporter.logEvent(Status.INFO, "Click on Edit Address link",
-					"Editing address link is clicked", false);
+					"Editing address link is clicked", true);
 
 			if (Web.isWebElementDisplayed(Address_change_window)) {
 				Reporter.logEvent(Status.INFO,
 						"Checking if Editing Address window is displayed",
-						"Editing address window is displayed", false);
+						"Editing address window is displayed", true);
 				Web.setTextToTextBox(secondLineMailing,
 						Stock.GetParameterValue("newAddress"));
 				Reporter.logEvent(Status.INFO, "Entering new valid address",
 						"New value for second line mailing address has been entered: "
-								+ Stock.GetParameterValue("newAddress"), false);
+								+ Stock.GetParameterValue("newAddress"), true);
 			}
 
 			Web.clickOnElement(EditAddr_Ok_Btn);
@@ -1774,7 +1789,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Status.INFO,
 					"Entering Home Phone number",
 					"Home Phone number entered is: "
-							+ Stock.GetParameterValue("HomePhoneNumber"), false);
+							+ Stock.GetParameterValue("HomePhoneNumber"), true);
 
 			Web.setTextToTextBox(mobile_Phone_txtBox,
 					Stock.GetParameterValue("MobilePhoneNumber"));
@@ -1783,7 +1798,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					"Entering Mobile Phone number",
 					"Mobile Phone number entered is: "
 							+ Stock.GetParameterValue("MobilePhoneNumber"),
-					false);
+					true);
 
 			Web.setTextToTextBox(personal_email_txtBox,
 					Stock.GetParameterValue("PersonalEmail"));
@@ -1798,12 +1813,12 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Status.INFO,
 					"Clicking Continue to Loan Review and Confirmation button",
 					"Continue to Loan Review and Confirmation button is clicked",
-					false);
+					true);
 			wait(2000);
 
 			Web.clickOnElement(backHyperlink);
 			Reporter.logEvent(Status.INFO, "Clicking Back Hyperlink button",
-					"Back hyperlink button is clicked", false);
+					"Back hyperlink button is clicked", true);
 			wait(2000);
 
 			if (Web.isWebElementDisplayed(quick_qoutes_button, true)) {
@@ -1819,8 +1834,9 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"Verifying Loan amount to be borrowed fields",
-					"Loan amount to be borrowed field not enabled", false);
+					"Loan amount to be borrowed field not enabled", true);
 		}
+		Web.clickOnElement(menuSearch);	
 	}
 
 	public void verifyCheckbox_RefinanceLoanTerm() {
@@ -1849,7 +1865,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 				} else {
 					Reporter.logEvent(Status.FAIL,
 							"Verifying Eligible check box is displyed or not",
-							"Eligible check box is not displayed", false);
+							"Eligible check box is not displayed", true);
 				}
 			}
 
@@ -1870,12 +1886,12 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Reporter.logEvent(
 							Status.FAIL,
 							"Verifying Ineligible check box is displayed or not and color is red",
-							"Ineligible check box is not displayed ", false);
+							"Ineligible check box is not displayed ", true);
 				}
 			} else {
 				Reporter.logEvent(Status.FAIL,
 						"Verifying Ineligible check box is displayed or not",
-						"Ineligible check box is displayed", false);
+						"Ineligible check box is displayed", true);
 			}
 
 			Web.clickOnElement(eligible_chk_box);
@@ -1912,7 +1928,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			} else {
 				Reporter.logEvent(Status.FAIL,
 						"Verifying error message for exceeding loan term",
-						"Error message is not displayed", false);
+						"Error message is not displayed", true);
 			}
 
 		Web.clickOnElement(menuSearch);
@@ -1957,6 +1973,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		Web.clickOnElement(menuSearch);	
 	}
 
 	public void verifyLoanTerm_Under_SelectedLoanQuote() {
@@ -1979,6 +1996,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		Web.clickOnElement(menuSearch);	
 	}
 
 	public void LoanRefinancing_NoAdditionalAmount() {
@@ -2011,7 +2029,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 
 			Web.clickOnElement(loan_qoute1_radio_button);
 			Reporter.logEvent(Status.INFO, "Selecting a loan quote",
-					"One loan quote has been selected", false);
+					"One loan quote has been selected", true);
 
 			Web.setTextToTextBox(home_Phone_txtBox,
 					Stock.GetParameterValue("HomePhoneNumber"));
@@ -2028,7 +2046,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					"Entering Mobile Phone number",
 					"Mobile Phone number entered is: "
 							+ Stock.GetParameterValue("MobilePhoneNumber"),
-					false);
+					true);
 
 			Web.setTextToTextBox(personal_email_txtBox,
 					Stock.GetParameterValue("PersonalEmail"));
@@ -2043,7 +2061,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Status.INFO,
 					"Clicking Continue to Loan Review and Confirmation button",
 					"Continue to Loan Review and Confirmation button is clicked",
-					false);
+					true);
 			wait(2000);
 
 			Web.clickOnElement(submitForProcessing);
@@ -2052,7 +2070,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			Reporter.logEvent(Status.INFO,
 					"Clicking Agree & submit Loan Request ",
 					"Agree & submit Loan Request button has been clicked",
-					false);
+					true);
 
 			if (Web.isWebElementDisplayed(loan_summary_Info, true)) {
 				Reporter.logEvent(Status.PASS,
@@ -2065,7 +2083,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			} else {
 				Reporter.logEvent(Status.FAIL,
 						"verifying successfull submission of loan request",
-						"Loan request not delivered successfully", false);
+						"Loan request not delivered successfully", true);
 			}
 
 		} else {
@@ -2073,8 +2091,9 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Status.INFO,
 					"Verifying participant has multiple outstanding loans",
 					"Multiple Outstanding loans section is displayed, participant has multiple outstanding loans",
-					false);
+					true);
 		}
+		Web.clickOnElement(menuSearch);	
 	}
 
 	public void verify_LoanStructureOverview_Hyperlink() {
@@ -2731,6 +2750,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		// Select loanType as PrincipalResidence.
 		Web.clickOnElement(principalResidence);
 		
+		Web.waitForElement(howIsCalculatedLink);
 		// Verify LoanCalculated link present under loan structure overview.
 		CommonLib.verifyIfWebElementPresent(howIsCalculatedLink, "LoanCalculated link should present under loan structure overview", true);
 		
@@ -2746,9 +2766,11 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		// Click on view loan structure details link and verify loan details.
 		Web.clickOnElement(Loan_StructureDetails_hyperlink);
         String getParentWindow = Web.getDriver().getWindowHandle();
+        String childWindow="";
         for (String windowHandles : Web.getDriver().getWindowHandles()) 
         {
         	if(windowHandles!=getParentWindow){
+        		childWindow = windowHandles;
         		// switch focus of WebDriver to the next found window handle (that's your newly opened window).
                Web.getDriver().switchTo().window(windowHandles); 
         	}
@@ -2758,8 +2780,9 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		CommonLib.verifyIfWebElementTextPresent(loanCatagaries, Stock.GetParameterValue("LoanCategories"), "Loan Type should dispalyed");
 		CommonLib.verifyIfWebElementTextPresent(generalPurposeLoanTerm, Stock.GetParameterValue("GeneralPurposeLoanTerm"), "Loan Type should dispalyed");
 		CommonLib.verifyIfWebElementTextPresent(motorGageLoanTerm, Stock.GetParameterValue("MotorGageLoanTerm"), "Loan Type should dispalyed");
-		Web.getDriver().switchTo().window(getParentWindow);
-		Web.clickOnElement(menuSearch);	
+		Web.getDriver().quit();
+		/*Web.getDriver().switchTo().defaultContent();
+		Web.clickOnElement(menuSearch);	*/
 	}
 	
 	/**

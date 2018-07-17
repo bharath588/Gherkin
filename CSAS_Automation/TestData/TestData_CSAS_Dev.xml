@@ -692,7 +692,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1720824" />
+				<parameter name="PPT_ID" value="11799434" />
 				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
@@ -702,7 +702,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1720824" />
+				<parameter name="PPT_ID" value="11799434" />
 				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
@@ -846,7 +846,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="3818031" />
+				<parameter name="PPT_ID" value="11291658" />
 				<parameter name="Amount_to_Borrow" value="100.00" />
 			</Iteration>
 		</TestCase>
@@ -854,7 +854,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="3818031" />
+				<parameter name="PPT_ID" value="12053669" />
 				<parameter name="Amount_to_Borrow" value="50.00" />
 				<parameter name="newAddress" value="Baker street" />
 			</Iteration>
@@ -896,7 +896,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="3818031" />
+				<parameter name="PPT_ID" value="12053669" />
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
 				<parameter name="PersonalEmail" value="discard@gwl.com" />
@@ -906,7 +906,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="3818031" />		<!-- 10824079, 11300720 -->
+				<parameter name="PPT_ID" value="12053669" />		<!-- 10824079, 11300720 -->
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
 				<parameter name="PersonalEmail" value="discard@gwl.com" />
@@ -916,7 +916,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="3818031" /><!-- inst 7305060 
+				<parameter name="PPT_ID" value="12053669" /><!-- inst 7305060 
 					pnp -->
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
@@ -927,7 +927,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="3818031" />
+				<parameter name="PPT_ID" value="11291658" />
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
 				<parameter name="PersonalEmail" value="discard@gwl.com" />
@@ -1093,12 +1093,12 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="13585062" />
+				<parameter name="PPT_ID" value="11291658" />
 				<parameter name="IntrestRate" value="4.250% fixed" />
 				<parameter name="LoanType" value="Account Reduction" />
 				<parameter name="LoanCategories" value="GENERAL, MORTGAGE" />
 				<parameter name="GeneralPurposeLoanTerm" value="12 - 60 Months" />
-				<parameter name="MotorGageLoanTerm" value="61 - 120 Months" />
+				<parameter name="MotorGageLoanTerm" value="61 - 180 Months" />
 			</Iteration>
 		</TestCase>	
 			<TestCase name="DDTC_25963_Paperless_Loan_Exceptions">
@@ -1113,9 +1113,9 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="3818031" />
+				<parameter name="PPT_ID" value="12053669" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
-				<parameter name="Loan Terms" value="15" />
+				<parameter name="Loan Terms" value="1" />
 				<parameter name="PaymentMethod" value="Payroll" />
 				<parameter name="PaymentFrequency" value="BI-WEEKLY" />
 				<parameter name="PaymentFrequencyChangedMsg" value="Change to the payment frequency requires a form to be sent to and returned by the participant." />
@@ -1134,7 +1134,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="12053669" />
+				<parameter name="PPT_ID" value="11291658" />
 				<parameter name="newAddress" value="Baker street" />
 				<parameter name="confirmAddress" value="Dsseo&#032;4249 FUUHIEDT&#032;JANESVILLE,WI,US&#032;53546-1738" />
 				<parameter name="HomePhoneNumber" value="8797947961" />
@@ -1146,7 +1146,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="12053669" />
+				<parameter name="PPT_ID" value="11291658" />
 			</Iteration>
 		</TestCase>
 	</Module>
