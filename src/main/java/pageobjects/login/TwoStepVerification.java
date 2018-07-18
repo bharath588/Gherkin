@@ -67,7 +67,8 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(xpath="//span[contains(@class,'input-group-addon')]") private WebElement txtCountryCode;
 	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'CONTINUE')]]") private WebElement btnContinue1;
 	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'Save')]]") private WebElement btnSave;
-	//@FindBy(xpath=".//button[contains(text(),'Save')]") private WebElement btnSave;
+	//In Statement and documents AOD we need this xpath for Save
+	@FindBy(xpath=".//button[contains(text(),'Save')]") private WebElement btnSaveChange;
 	@FindBy(xpath="//*[contains(@id,'pptConsentForElectronic')]") private List<WebElement> inpPlanNamecheckBox;
 	@FindBy(xpath="//a[contains(text(),'View') and contains(@ng-click,'redirectToNextGen')]") private WebElement btnViewNextGen;
 	@FindBy(xpath="//header[@class='contained-form-header']/h1") private WebElement hdrEnhancedSecurity;
@@ -520,12 +521,22 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	 * 
 	 */
 	public void clickOnSaveButton() throws InterruptedException {
-		Web.waitForElement(inpPlanName);
-		Actions action = new Actions(Web.getDriver());
-		action.moveToElement(btnSave).build().perform();
-		Thread.sleep(2000);
-		action.click(btnSave).build().perform();
-		
+		if(Web.isWebElementDisplayed(btnSaveChange, true))
+		{
+			Web.waitForElement(inpPlanName);
+			Actions action = new Actions(Web.getDriver());
+			action.moveToElement(btnSaveChange).build().perform();
+			Thread.sleep(2000);
+			action.click(btnSaveChange).build().perform();
+		}
+		else
+		{
+			Web.waitForElement(inpPlanName);
+			Actions action = new Actions(Web.getDriver());
+			action.moveToElement(btnSave).build().perform();
+			Thread.sleep(2000);
+			action.click(btnSave).build().perform();
+		}
 	}
 	
 	
@@ -562,7 +573,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	 */
 	public void verifySaveButton() throws InterruptedException {
 		Web.waitForElement(inpPlanName);
-		if(Web.isWebElementDisplayed(btnSave, true))
+		if(Web.isWebElementDisplayed(btnSaveChange, true))
 			Reporter.logEvent(Status.PASS,
 					"Verify Save button is visible in Change communication preference page",
 					"Save button is visible in Change communication preference page", false);

@@ -1017,7 +1017,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 							"Header is not displayed", false);
 				}
 
-				
+				Thread.sleep(2000);
 				isLabelDisplayed("Personal email address");
 				// Verify 'Email Address' field is displayed
 				if (Web.isWebElementDisplayed(this.txtEmail)) {
