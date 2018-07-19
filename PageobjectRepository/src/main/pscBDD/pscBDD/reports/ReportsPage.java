@@ -40,9 +40,9 @@ public class ReportsPage extends LoadableComponent<ReportsPage> {
 	public static String fileNameValue;
 	
 	public XL_ReadWrite xl;
-	public String downloadPath="C:\\Users\\"+System.getProperty("user.name")+"\\Downloads\\PSCSponsorReportsCatalog.xlsx";
+	//public String downloadPath="C:\\Users\\"+System.getProperty("user.name")+"\\Documents\\PSCSponsorReportsCatalog.xlsx";
+	public String downloadPath="\\fss-devlfs\\"+System.getProperty("user.name")+"\\Downloads\\PSCSponsorReportsCatalog.xlsx";
 	public String sheetNameInReportCatalogFile="Report Catalog";
-
 	@FindBy(how =How.ID, using="framef")
 	private WebElement reportsFrame;
 
@@ -394,6 +394,7 @@ public class ReportsPage extends LoadableComponent<ReportsPage> {
 
 	public void downloadReportCatlogFile(){
 		try{
+			downloadPath="\\"+downloadPath;
 			System.out.println(downloadPath);
 			xl=new XL_ReadWrite(downloadPath);
 			

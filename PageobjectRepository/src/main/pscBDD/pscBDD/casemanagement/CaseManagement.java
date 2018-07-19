@@ -106,9 +106,9 @@ public class CaseManagement extends LoadableComponent<CaseManagement> {
 			this.clickOnPlanSubmenu("Case Management");
 			Web.waitForElement(caseIframe);
 			Thread.sleep(5000);
-			CommonLib.FrameSwitchONandOFF(true,caseIframe);
+			Web.FrameSwitchONandOFF(true,caseIframe);
 			Web.nextGenDriver.waitForAngular();
-			CommonLib.FrameSwitchONandOFF(false);
+			Web.FrameSwitchONandOFF(false);
 		}
 		catch(Exception e){
 			e.printStackTrace();}
@@ -130,13 +130,14 @@ public class CaseManagement extends LoadableComponent<CaseManagement> {
 	}
 
 	public void clickOnViewAllCaseHistroy(){
-		CommonLib.FrameSwitchONandOFF(true,caseIframe);
+		//CommonLib.FrameSwitchONandOFF(true,caseIframe);
+		Web.FrameSwitchONandOFF(true,caseIframe);
 		Web.clickOnElement(viewAllCaseHistory);
 		Web.nextGenDriver.waitForAngular();
 	}
 
 	public void clickOnExcelLink(){
-		CommonLib.FrameSwitchONandOFF(true,caseIframe);
+		Web.FrameSwitchONandOFF(true,caseIframe);
 		String primeWindow = Web.getDriver().getWindowHandle();
 		Web.clickOnElement(excelLink);
 		for(String winHandle : Web.getDriver().getWindowHandles()){
