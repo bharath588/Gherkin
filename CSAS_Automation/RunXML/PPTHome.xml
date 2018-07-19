@@ -11,10 +11,10 @@
 	
 	 <class	name="app.csas.testcases.disbursementhistory.validate_disbursementhistory">
 				<methods>
-					<include name="Verify_DIH_PaymentHistory">
+				<!-- 	<include name="Verify_DIH_PaymentHistory">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Disbursement_Histroy_Payment_History"></parameter>
-					</include>
+					</include> -->
 				<include name="Verify_DIH_Vesting">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Disbursement_Histroy_Vesting"></parameter>

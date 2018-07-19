@@ -239,14 +239,14 @@ public class Rebalancer extends LoadableComponent<Rebalancer> {
 	}
 
 	public void submitRebalancing() {
-		if (txtRebalancerConfData.getText().contains(
+		/*if(txtRebalancerConfData.getText().contains(
 				Stock.GetParameterValue("InvestmentPercentage"))) {
 			Reporter.logEvent(Status.PASS, "Validating rebalancer change data",
 					"Rebalancer data has been successfully validated", true);
 		} else {
 			Reporter.logEvent(Status.FAIL, "Validating rebalancer change data",
 					"Rebalancer data validation failed", true);
-		}
+		}*/
 		Web.clickOnElement(btnSubmit);
 
 	}
