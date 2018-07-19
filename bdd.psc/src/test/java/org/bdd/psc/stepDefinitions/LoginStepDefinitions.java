@@ -767,11 +767,11 @@ public class LoginStepDefinitions {
 	 @Then("^a page like this link is displayed \"([^\"]*)\" and is branded for MetLife$")
 	    public void a_page_like_this_link_is_displayed_and_is_branded_for_metlife(String expLink) throws Throwable {
 		 if (login.verifyMetLifeLogoAndLink(expLink)) {
-				Reporter.logEvent(Status.PASS, "navigated to "+expLink+" and metLife logo displays",
+				Reporter.logEvent(Status.PASS, "navigated to "+expLink+" and can't verify metLife logo ",
 						"navigated to "+expLink+" and metLife logo displays", true);
 			} else {
 				Reporter.logEvent(Status.FAIL, "navigated to "+expLink+" and metLife logo displays",
-						"navigated to "+expLink+" and metLife logo isn't displays", true);
+						"navigated to "+expLink+" and can't verify metLife logo ", true);
 			} 
 	    }
 	 @When("^MetLife logo is displayed$")

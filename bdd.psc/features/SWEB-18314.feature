@@ -25,5 +25,6 @@ Feature: MetLife redirect
     Then "<NextGen_URL>" page should be displayed
 
     Examples: 
-      | Source_URL                                                          | NextGen_URL                                                         |
-      | https://proj1-plan.retirementpartner.com/psc/?accu=PscMetWR | https://plan.empower-retirement.com/static/InstMetLife/welcome.html |
+      | Source_URL                                                  | NextGen_URL                                                         |
+      #| https://proj1-plan.retirementpartner.com/psc/?accu=PscMetWR | https://plan.empower-retirement.com/static/InstMetLife/welcome.html |
+      | https://proj1-plan.retirementpartner.com/psc/?accu=PscMetWR | https://plan-metlife.retirementpartner.com/static/InstMetLife/welcome.html|

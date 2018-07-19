@@ -66,4 +66,4 @@ Feature: Vesting Block for participants with a null balance
     Examples: 
       | accuCode    | username | password | plan_no   | Vesting Level | Account Balance Null | with Account Balance |
       | PlanEmpower | 1ISIS    | testing1 | 932777-01 | NONE          |              8440405 |             11987953 |
-      | PlanEmpower | 1ISIS    | testing1 | 336300-01 | BENE          |             12309313 |             10630117 |
+      #| PlanEmpower | 1ISIS    | testing1 | 336300-01 | BENE          |             12309313 |             10630117 |

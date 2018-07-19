@@ -21,11 +21,9 @@ Feature: InstAF - Rename Investment and Performance to Investment Results
   In the Plan Menu and breadcrumb, rename them to Investment Results for InstAF only.
 
   Background: 
-    Given Open browser and launch PSC application
-    When I enter valid username and password
-      | username |  | password |
-      | 1AF      |  | testing1 |
-    And click on Sign On button
+    Given user is on the Home page of accuCode when user login with correct username and password
+      | accuCode | username |  | password |
+      | InstAF   | 1AF      |  | testing1 |
     Then I should be navigated to home Page
 
   Scenario: Rename Investment and Performance to Investment Results in Plan menu

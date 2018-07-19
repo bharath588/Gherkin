@@ -43,8 +43,8 @@ Feature: InstMetLife - Hero Content
     Examples: 
       | following text                                                  | link to                                                                          |
       | Keep retirement planning top of mind with employees. LEARN MORE | metlife.com/retireready                                                          |
-      | MetLife's 15 Annual Benefit Trends Study. READ REPORT           | benefittrends.metlife.com                                                        |
-      | Maximum Benefits and Contribution Limits for 2018. VIEW LIMITS  | https://www.assets.metlife.com/RPP/public/pdf/IRS-Annual-Contribution-Limits.pdf |
+      | MetLife's 16th Annual Benefit Trends Study. READ REPORT           | benefittrends.metlife.com                                                        |
+      | Maximum Benefits and Contribution Limits for 2018. VIEW LIMITS  | www.metlife.com/content/dam/metlifecom/us/homepage/metlife-resources-plan-sponsor/participant-materials/IRS-Annual-Contribution-Limits-Flyer|
       
       
       

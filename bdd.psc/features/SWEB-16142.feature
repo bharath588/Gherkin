@@ -20,7 +20,8 @@
 Feature: Plan MN NEE custom site
 
   Scenario: User login to MN site with valid credentials and user has transaction PSCSF2 assigned to their access
-    Given Open browser and launch PSC application
+   #Given Open browser and launch PSC application
+   Given user is on the Login page of "PlanMN"
     When I enter valid username and password
       | username | password |
       | 2B9DE    | testing1 |
@@ -32,7 +33,8 @@ Feature: Plan MN NEE custom site
     Then username is displayed on the top right hand corner of the site
 
   Scenario: User login to MN site with valid credentials and with NO transaction code PSCSF2
-    Given Open browser and launch PSC application
+    #Given Open browser and launch PSC application
+    Given user is on the Login page of "PlanMN"
     When I enter valid username and password
       | username | password |
       | 1MN      | testing1 |
@@ -40,7 +42,8 @@ Feature: Plan MN NEE custom site
     Then I should be navigated to home Page
 
   Scenario: User login to MN site with invalid password
-    Given Open browser and launch PSC application
+    #Given Open browser and launch PSC application
+    Given user is on the Login page of "PlanMN"
     When I enter valid username and invalid password
       | username | password |
       | 1mn      | testing  |
@@ -48,7 +51,8 @@ Feature: Plan MN NEE custom site
     Then Error message is displayed
 
   Scenario: User login to MN site with invalid username
-    Given Open browser and launch PSC application
+    #Given Open browser and launch PSC application
+    Given user is on the Login page of "PlanMN"
     When I enter invalid username and invalid password
       | username | password |
       | zminn    | zzzzzzzz |

@@ -525,7 +525,7 @@ public class EmployeeStepDefinitions {
 	@Then("^the Employee Information section should not include \"([^\"]*)\"$")
 	public void the_employee_information_section_should_not_include_label(
 			@Delimiter(",") List<String> labels) throws Throwable {
-		if (empPages.verifyEmploymentInformationLabel(labels,false)) {
+		if (empPages.verifyEmploymentInformationLabel(labels, false)) {
 			Reporter.logEvent(
 					Status.PASS,
 					"the Employee Information section do not include label: "
@@ -543,10 +543,11 @@ public class EmployeeStepDefinitions {
 					true);
 		}
 	}
+
 	@Then("^the Employee Information section should include \"([^\"]*)\"$")
 	public void the_employee_information_section_should_include_label(
 			@Delimiter(",") List<String> labels) throws Throwable {
-		if (!empPages.verifyEmploymentInformationLabel(labels,true)) {
+		if (empPages.verifyEmploymentInformationLabel(labels, true)) {
 			Reporter.logEvent(
 					Status.PASS,
 					"the Employee Information section include label: "
@@ -560,6 +561,55 @@ public class EmployeeStepDefinitions {
 					"the Employee Information section include label: "
 							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
 					"the Employee Information section don't include all or one of the label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					true);
+		}
+	}
+
+	@Then("^the Details and Update employment information section should not include \"([^\"]*)\"$")
+	public void the_details_and_update_employment_information_section_should_not_include_label(
+			@Delimiter(",") List<String> labels) throws Throwable {
+		if (empPages.verifyEmploymentInformationLabel(labels, false)
+				&& empPages.verifyUpdateEmploymentInformationLabel(labels,
+						false)) {
+			Reporter.logEvent(
+					Status.PASS,
+					"the Details and Update employment information section do not include label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					"the Details and Update employment information section not include label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"the Details and Update employment information section do not include label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					"the Details and Update employment information section include all or one of the label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					true);
+		}
+	}
+	
+	
+	@Then("^the Details and Update employment information section should include \"([^\"]*)\"$")
+	public void the_details_and_update_employment_information_section_should_include_label(
+			@Delimiter(",") List<String> labels) throws Throwable {
+		if (empPages.verifyEmploymentInformationLabel(labels, true)
+				&& empPages
+						.verifyUpdateEmploymentInformationLabel(labels, true)) {
+			Reporter.logEvent(
+					Status.PASS,
+					"the Details and Update employment information section include label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					"the Details and Update employment information section include label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"the Details and Update employment information section include label: "
+							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
+					"the Details and Update employment information section don't include all or one of the label: "
 							+ "Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code",
 					true);
 		}
