@@ -503,7 +503,12 @@ public class ContribuitionsTestcases {
 			lib.Reporter.logEvent(Status.INFO,
 					"Test Data used for this Test Case:", printTestData(),
 					false);
-			
+			WebService_PPT web = new WebService_PPT();
+			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
+			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
+			String remainingPayPeriod = payRoll.get(0);
+			String payRollType = payRoll.get(1);
+			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
  			LandingPage homePage = new LandingPage(mfaPage);
@@ -518,12 +523,7 @@ public class ContribuitionsTestcases {
  			/*
  			 * To add predefined contributions for the TC
  			 */
- 			WebService_PPT web = new WebService_PPT();
-			String sJSONResponse = web.getJSONResponse(sURLforPayRoll);
-			ArrayList<String> payRoll = WebService_PPT.getPayPeriodsRemainingInYear(sJSONResponse);
-			String remainingPayPeriod = payRoll.get(0);
-			String payRollType = payRoll.get(1);
-			System.out.println("payRollType from Service"+payRollType+" Remaining payroll from Service"+remainingPayPeriod);
+ 			
  			Deferrals deferrals = new Deferrals(lftNavBar);
 			deferrals.deleteAllAODDeferrals();
 			deferrals.get();

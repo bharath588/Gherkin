@@ -413,7 +413,7 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 			System.out.println("Research Investment Link"+Web.getDriver().getCurrentUrl());
 			if (Web.getDriver()
 					.getCurrentUrl()
-					.equalsIgnoreCase(
+					.contains(
 							Stock.GetParameterValue("Research Investment Options Url")))
 				Reporter.logEvent(Status.PASS,
 						"Research Investment Options Url",

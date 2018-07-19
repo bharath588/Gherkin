@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+
+	<test name="AOD_Apple">
+
+		<classes>
+			<class name="app.pptweb.testcases.aod.BalanceTestcases">
+				<methods>
+					<include
+						name="AOD_Balance_DDTC_27442_TC_01_Verify_New_Balance_card_on_Account_overview_page_for_single_plan_ppt_with_balance_more_than_Zero">
+						<parameter name="ManualTCName"
+							value="DDTC-27442 TC_01 Verify New Balance card on Account overview page for single plan ppt with balance more than zero">
+						</parameter>
+					</include>
+					
+					<include
+						name="AOD_Balance_DDTC_28693_TC_03_Verify_New_Balance_card_on_Account_overview_page_for_single_plan_ppt_with_Zero_or_no_Balance">
+						<parameter name="ManualTCName"
+							value="DDTC-28693 TC_03 Verify New Balance card on Account overview page for single plan ppt with zero or no Balance">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+			<class	name="app.pptweb.testcases.aod.BeneficiariesTestcases">
+				<methods>
+					<!-- Bene Link should not show -->
+					<include name="AOD_Beneficiaries_DDTC_30781_TC_03_verify_If_WNBEN_and_WUBENE_is_ON_and_no_bene_on_card_AOD_page_should_display_beneficiaries_card_with_the_text_None_on_file_and_with_the_link_Add_now">
+						<parameter name="ManualTCName" 
+						value="DDTC-30781 TC_03_verify If WNBEN and WUBENE is ON and no bene on card AOD page should display beneficiaries card with the text None on file and with the link Add now">
+						</parameter>
+					</include>
+					<include name="AOD_Beneficiaries_DDTC_30782_TC_04_To_verify_If_WNBEN_is_ON_WUBENE_is_ON_and_greater_than_1_bene_on_card_AOD_page_should_display_beneficiaries_card_with_the_AddEdit_link">
+						<parameter name="ManualTCName" 
+						value="DDTC-30782 TC_04_To verify If WNBEN is ON WUBENE is ON and greater than 1 bene on card AOD page should display beneficiaries card with the AddEdit link">
+						</parameter>
+					</include>
+					
+					<!-- Below 3 TC's should not change the order of execution -->
+					<include name="AOD_Beneficiaries_DDTC_28318_QA02_PW_21965_Verify_New_Beneficiaries_Card_Account_overview_page_if_benes_are_not_on_file">
+						<parameter name="ManualTCName" 
+						value="DDTC-28318 QA02_PW-21965_Verify New Beneficiaries Card Account overview page if benes are not on file">
+						</parameter>
+					</include>
+					<include name="AOD_Beneficiaries_DDTC_28325_QA03_PW_21965_Verify_Beneficiaries_Card_Account_overview_page_if_a_participant_has_Zero_Beneficiaries_and_editable">
+						<parameter name="ManualTCName" 
+						value="DDTC-28325 QA03_PW-21965_ Verify New Beneficiaries Card Account overview page if a participant has Zero Beneficiaries and editable">
+						</parameter>
+					</include>
+					<include name="AOD_Beneficiaries_DDTC_28317_QA01_PW_21965_Verify_New_Beneficiaries_Card_in_Account_overview_page_if_benes_are_on_file">
+						<parameter name="ManualTCName" 
+						value="DDTC-28317 QA01_PW-21965_Verify New Beneficiaries Card in Account overview page if benes are on file">
+						</parameter>
+					</include>
+										
+					<include name="AOD_Beneficiaries_DDTC_28329_QA06_PW_21965Beneficiaries_Card_Account_overview_page_if_a_participant_has_Multiple_BeneficiariesgreaterthanFive">
+						<parameter name="ManualTCName" 
+						value="DDTC-28329 QA06_PW-21965_Verify New Beneficiaries Card Account overview page if a participant has Multiple Beneficiaries greater than five">
+						</parameter>
+					</include>
+					<include name="AOD_Beneficiaries_DDTC_28328_QA05_PW_21965_New_Beneficiaries_Card_Account_overview_page_if_a_participant_has_Multiple_BeneficiariesLessthanFive">
+						<parameter name="ManualTCName" 
+						value="DDTC-28328 QA05_PW-21965_Verify New Beneficiaries Card Account overview page if a participant has Multiple Beneficiaries Less than five">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+			<class name="app.pptweb.testcases.aod.ContribuitionsTestcases">
+				<methods>
+					<!-- 2nd Sprint -->
+					<include name="AOD_Contribution_DDTC_33186_SIT_PPTWEB_Account_overview_Contributions_card_for_Maximize_me_Always_Standard_contribution">
+						<parameter name="ManualTCName"
+							value="DDTC-33186 SIT_PPTWEB_Account overview_Contributions card for Maximize me Always Standard contribution">
+						</parameter>
+					</include>
+					<include name="AOD_Contribution_DDTC_33187_SIT_PPTWEB_Account_overview_Contributions_card_for_Maximize_me_Always_Catchup_contribution">
+						<parameter name="ManualTCName"
+							value="DDTC-33187 SIT_PPTWEB_Account overview_Contributions card for Maximize me Always Catchup contribution">
+						</parameter>
+					</include>
+					<include name="AOD_Contribution_DDTC_29352_SIT_PPTWEB_Account_overview_Contributions_card_with_Base_pay_Catch_up_Bonus_After_tax_and_Variable_contributions">
+						<parameter name="ManualTCName"
+							value="DDTC-29352 SIT_PPTWEB_Account overview_Contributions card with Base pay Catch-up Bonus After tax and Variable contributions">
+						</parameter>
+					</include>
+					<include name="AOD_Contribution_DDTC_33188_SIT_PPTWEB_Account_overview_Contributions_card_for_One_time_Maximizer_for_Standard_contributions">
+						<parameter name="ManualTCName"
+							value="DDTC-33188 SIT_PPTWEB_Account overview_Contributions card for One time Maximizer for Standard contributions">
+						</parameter>
+					</include>
+					
+					<include name="AOD_Contribution_DDTC_33193_SIT_PPTWEB_Account_overview_Apple_Contributions_card_without_Standard_maximizer">
+						<parameter name="ManualTCName"
+							value="DDTC-33193 SIT_PPTWEB_Account overview_Apple Contributions card without Standard maximizer">
+						</parameter>
+					</include>
+					<include name="AOD_Contribution_DDTC_33196_SIT_PPTWEB_Account_overview_Apple_Contributions_card_without_Catchup_maximizer">
+						<parameter name="ManualTCName"
+							value="DDTC-33196 SIT_PPTWEB_Account overview_Apple Contributions card without Catchup maximizer">
+						</parameter>
+					</include>
+					<include name="AOD_Contribution_DDTC_33189_SIT_PPTWEB_Account_overview_Contributions_card_for_One_time_Maximizer_for_Catchup_contributions">
+						<parameter name="ManualTCName"
+							value="DDTC-33189 SIT_PPTWEB_Account overview_Contributions card for One time Maximizer for Catchup contributions">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>
