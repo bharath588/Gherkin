@@ -640,8 +640,8 @@ public class ContribuitionsTestcases {
 			
 			deferrals.clickAddEditButton("Catch Up Add");
 			deferrals.click_Maximize_IRS_Limit();
-			//deferrals.select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
-			//deferrals.myContributions_Confirmation_Page();
+			deferrals.select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
+			deferrals.myContributions_Confirmation_Page();
 			Web.clickOnElement(deferrals,"MyContribution Button");
 			Thread.sleep(3000);
 			deferrals.checkEffectiveDate();
@@ -1014,8 +1014,8 @@ public class ContribuitionsTestcases {
 			
 			deferrals.clickAddEditButton("Catch Up Add");
 			deferrals.click_Maximize_IRS_Limit();
-			//deferrals.select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
-			//deferrals.myContributions_Confirmation_Page();
+			deferrals.select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
+			deferrals.myContributions_Confirmation_Page();
 			Web.clickOnElement(deferrals,"MyContribution Button");
 			Thread.sleep(3000);
 			deferrals.checkEffectiveDate();

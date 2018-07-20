@@ -173,7 +173,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 		} 
 		
 		if (Web.isWebElementDisplayed(this.lblLastName)) {
-			if (!this.lblLastName.getText().equalsIgnoreCase("Last Name (Generally includes suffix)")) {
+			if (!this.lblLastName.getText().equalsIgnoreCase("Last Name (GENERALLY INCLUDES SUFFIX: E.G., JR, SR, III)")) {
 				iselementDisplayed = false;
 			}
 		} 

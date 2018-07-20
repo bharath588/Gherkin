@@ -849,7 +849,7 @@ public class registrationtestcases {
 			String expectedErrMsg;
 
 			Web.getDriver()
-					.get("https://proj2.retirementpartner.com/participant-web-services/ws/appleRegLanding.do?accu=Apple&token=M0hFuIOjV3nCoTYKOPFd7G5vfErJkEVbKBpNzxGjRgXhYK5dLOh488J7lakZ2TS82NgzgDT5iAdnWkKOXptXxSlYo%2Bf0bRuGaiTU9SqGTio%3D");
+					.get("https://proj10.retirementpartner.com/participant-web-services/ws/appleRegLanding.do?accu=Apple&token=M0hFuIOjV3nCoTYKOPFd7G5vfErJkEVbKBpNzxGjRgXhYK5dLOh488J7lakZ2TS82NgzgDT5iAdnWkKOXptXxSlYo%2Bf0bRuGaiTU9SqGTio%3D");
 			AccountLookup objAccountLookup = new AccountLookup();
 
 			Reporter.logEvent(Status.INFO, "Navigate to Account look-up page.",
