@@ -224,7 +224,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		if (!Web.isWebElementDisplayed(weGreeting, false)) {
+		if (!Web.isWebElementDisplayed(weGreeting, true)) {
 			throw new AssertionError(
 					"Plan service center landing page not loaded.");
 		} else {
@@ -285,6 +285,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 
 				}
 			}
+			Web.waitForPageToLoad(Web.getDriver());
 			if (Stock.getConfigParam("DataType").equals("NonApple")) {
 				Web.isWebElementDisplayed(urlJumpPage, true);
 				Web.clickOnElement(urlJumpPage);

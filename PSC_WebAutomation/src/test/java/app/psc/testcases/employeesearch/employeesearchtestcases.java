@@ -2772,6 +2772,8 @@ public class employeesearchtestcases {
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
+				employeesearch = new EmployeeSearch();
+				employeesearch.logoutFromApplication();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -4803,10 +4805,5 @@ public class employeesearchtestcases {
 		}
 	}
 
-	@AfterSuite
-	public void cleanUpSession() {
-		Web.getDriver().close();
-		Web.getDriver().quit();
-	}
-
+	
 }

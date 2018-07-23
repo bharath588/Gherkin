@@ -511,6 +511,9 @@ public class employeesearchtestcases_db {
 							Stock.getTestQuery("selectDefaultPlanQuery"),
 							Stock.GetParameterValue("username")));
 			employeesearch.get();
+			CommonLib.switchToDefaultPlan();
+			Web.waitForPageToLoad(Web.getDriver());
+			employeesearch.navigateToEmployeeTab();
 			employeesearch.searchEmployeeBySSN(ssn);
 			if (employeesearch.isSearchResultsDisplayed()) {
 				Reporter.logEvent(
@@ -751,6 +754,7 @@ public class employeesearchtestcases_db {
 				employeeId = tempResultSet.getString("IND_ID");
 			}
 			employeesearch.get();
+			 employeesearch.selectPlanFromResultset(resultset);
 			employeesearch.searchByParticipantID(employeeId);
 			if (employeesearch.isSearchResultsDisplayed()) {
 				Reporter.logEvent(Status.PASS,
@@ -854,11 +858,5 @@ public class employeesearchtestcases_db {
 		}
 	}
 
-	@AfterSuite
-	public void cleanUpSession() {
-		lib.Web.removeWebDriverInstance();
-		Web.getDriver().close();
-		Web.getDriver().quit();
-	}
-
+	
 }

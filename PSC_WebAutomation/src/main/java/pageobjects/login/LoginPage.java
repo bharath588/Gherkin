@@ -91,20 +91,26 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	@Override
 	protected void isLoaded() throws Error {
 		//Assert.assertEquals(Web.getDriver().getTitle(), "Empower Retirement - Plan Service Center");
-		if(!Web.isWebElementDisplayed(txtUserName, false)){
+		
+		Web.getDriver().switchTo().defaultContent();
+		CommonLib.FrameSwitchONandOFF(true, frmLogin);
+		if(!Web.isWebElementDisplayed(txtUserName, false) && !Web.isWebElementDisplayed(btnLogin , false)){
 			throw new AssertionError("Plan service center login page not loaded.");
 		}
 		else{
 			Reporter.logEvent(Status.PASS, "Login page loads",""
 					+ "Login page loads",false);
 		}
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	@Override
 	protected void load() {
 		Web.getDriver().get(Stock.getConfigParam("AppURL"+"_"+Stock.getConfigParam("TEST_ENV")));
 		CommonLib.FrameSwitchONandOFF(true, frmLogin);
+		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(txtUserName);
+		Web.waitForElement(btnLogin);
 	}
 
 	/**

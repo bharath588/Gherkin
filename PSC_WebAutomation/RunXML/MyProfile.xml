@@ -11,7 +11,7 @@
 					<include name="TC001_01_SIT_PSC_Update_My_profile_Default_Plan">
 						<parameter name="ManualTCName" value="DDTC-10189_SIT_PSC_Update_My_profile_Default_Plan" />
 					</include>
-					<include name="TC001_02_SIT_PSC_Update_My_profile_Default_Plan">
+					 <include name="TC001_02_SIT_PSC_Update_My_profile_Default_Plan">
 						<parameter name="ManualTCName"
 							value="DDTC-10189_SIT_PSC_Update_My_profile_Default_Plan_Negative" />
 					</include>
@@ -39,7 +39,7 @@
 					</include>
 					<include name="TC006_01_FAQ_DDTC_245">
 						<parameter name="ManualTCName" value="DDTC-245_FAQ_DDTC" />
-					</include>
+					</include> 
 				</methods>
 			</class>
 		</classes>

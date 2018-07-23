@@ -1070,6 +1070,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private List<WebElement> deferrals_columns_firstRecord_Values;
 	@annotations.FindBy(how = How.REPEATER, using = "aedr in editEmployeeDeferralRule", exact = false)
 	private List<WebElement> reviewDefChangesRow;
+	@FindBy(xpath = ".//*[@id='headerInfo_xhtml']")
+	private WebElement planHeaderInfo;
 	/*
 	 * @FindBy(xpath=
 	 * ".//tr[@ng-repeat='aedr in editEmployeeDeferralRule.allowableDeferrals']//td"
@@ -1110,6 +1112,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	// List<String> planNameList;
 	List<String> planNumberList;
 	Map<String, String> employmentDataUI;
+	HomePage home = new HomePage();
 
 	public EmployeeSearch() {
 		Web.getDriver().manage().timeouts()
@@ -1123,7 +1126,22 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	@Override
 	protected void isLoaded() throws Error {
 		// Web.getDriver().switchTo().defaultContent();
+		if(Stock.globalTestdata.get(Thread.currentThread().getId()).containsKey("PLAN NO")
+				&& Stock.GetParameterValue("Plan No") != null){
+				
+				try {
+					CommonLib.switchToFrame(employeeSearchFrame);
+					Assert.assertTrue(Web.VerifyPartialText(Stock.GetParameterValue("Plan No"), planHeaderInfo.getText(), true));
+					Web.getDriver().switchTo().defaultContent();
+					Assert.assertTrue(Web.isWebElementDisplayed(employeeSearchFrame));
+				
+				} catch (Exception e) {
+				Assert.assertTrue(Web.isWebElementDisplayed(employeeSearchFrame));
+					
+				}
+				}	
 		Assert.assertTrue(Web.isWebElementDisplayed(employeeSearchFrame));
+	
 	}
 
 	@Override
@@ -1144,6 +1162,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Web.isWebElementDisplayed(tabEmployees);
 			// Web.clickOnElement(tabEmployees);
 			// Web.waitForElement(drpdwnSearchEmployee);
+			if(Stock.globalTestdata.get(Thread.currentThread().getId()).containsKey("PLAN NO")
+			&& Stock.GetParameterValue("Plan No") != null){
+			
+			home.searchPlanWithIdOrName(Stock.GetParameterValue("Plan No"));
+			}
 			actions = new Actions(Web.getDriver());
 			actions.moveToElement(tabEmployees).click().build().perform();
 			Web.waitForPageToLoad(Web.getDriver());
@@ -1153,6 +1176,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Web.waitForPageToLoad(Web.getDriver());
 			}
 			Thread.sleep(2000);
+			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -2960,14 +2984,23 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Map<String, String> beneficiaryDetails = new HashMap<String, String>();
 		Web.waitForElement(framecA);
 		Web.getDriver().switchTo().frame(framecA);
+		String xpath="";
+		String xpathForBenName="";
+		
 		for (int j = 1; j <= numberOfBene; j++) {
-			String xpath = "//span["
+			if(j==1){
+			 xpath = "//span["
 					+ j
 					+ "]//div[@class='benTableRow']/div[contains(text(),'effective date') or contains(text(),'Percent') or contains(text(),'SSN') or contains(text(),'Birth date')]";
-			String xpathForBenName = "//span["
+			 xpathForBenName = "//span["
 					+ j
 					+ "]//div[contains(text(),'Percent')]/preceding-sibling::div";
-			Thread.sleep(2000);
+			
+			}else{
+				 xpath = "//span[2]/div/div["+(j-1)+"]//div[@class='benTableRow']/div[contains(text(),'effective date') or contains(text(),'Percent') or contains(text(),'SSN') or contains(text(),'Birth date')]";
+				 xpathForBenName = "//span[2]/div/div["+(j-1)+"]//div[contains(text(),'Percent')]/preceding-sibling::div";
+			}
+			Thread.sleep(20060);
 			List<WebElement> benDetails = Web.getDriver().findElements(
 					By.xpath(xpath));
 			WebElement benName = Web.getDriver().findElement(
