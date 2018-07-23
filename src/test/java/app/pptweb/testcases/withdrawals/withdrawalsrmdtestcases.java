@@ -84,7 +84,7 @@ public class withdrawalsrmdtestcases {
 			updateQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName"))+ "DB_"
 					+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 			updateService = DB.executeUpdate(updateQuery[0],
-					updateQuery[1], "01-JAN-2017", Stock.GetParameterValue("planId"));
+					updateQuery[1], Stock.GetParameterValue("rmd_Date"), Stock.GetParameterValue("planId"));
 			if(updateService>0)
 			{
 				Reporter.logEvent(
