@@ -3091,4 +3091,433 @@ public class ContribuitionsTestcases {
 			}
 		}
 	}
+	@Test(dataProvider = "setData")
+	public void AOD_Contribution_DDTC_33257_AOD_for_a_LA_county_participant_is_457_having_deferral_with_NYC_Goal_Flag_NULL_and_pourOverEnabled_false(
+			int itr, Map<String, String> testdata) {
+
+		try {
+					
+			Reporter.initializeReportForTC(itr,
+					Globals.GC_MANUAL_TC_NAME + "_" + Common.getSponser() + "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+ 			LandingPage homePage = new LandingPage(mfaPage);
+ 			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);	
+ 			AccountOverview myAccount = new AccountOverview(lftNavBar);
+ 			myAccount.get();
+			Deferrals deferrals = new Deferrals(lftNavBar);
+			deferrals.deleteAllAODDeferrals();
+			deferrals.get();
+			deferrals.clickAddEditButton("Standard Add");
+			deferrals.click_Select_Your_Contribution_Rate();
+			Web.waitForElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
+			deferrals.myContributions_Confirmation_Page();
+			Web.clickOnElement(myAccount, "Account Overview Link");
+			String sGoalType = Common.getElective_Deferral("nyc_goal_flag");
+			if(sGoalType == null)
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify After adding contributions NYC_Goal is null",
+						"Elective deferral NYC_Goal is null", false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify After adding contributions NYC_Goal is null",
+						"Elective deferral NYC_Goal is not null", false);
+			
+			myAccount.validateContributionCard(currentYear);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+
+		} finally {
+			try {
+				Common.deletePartService(Stock.GetParameterValue("ind_ID"), Stock.GetParameterValue("planId"));
+				AccountOverview myAccount = new AccountOverview();
+				Web.clickOnElement(myAccount,"Go to Home");
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	@Test(dataProvider = "setData")
+	public void AOD_Contribution_DDTC_33255_AOD_for_a_LA_county_participant_is_457_having_deferral_with_NYC_Goal_Flag_H_and_pourOverEnabled_false(
+			int itr, Map<String, String> testdata) {
+
+		try {
+					
+			Reporter.initializeReportForTC(itr,
+					Globals.GC_MANUAL_TC_NAME + "_" + Common.getSponser() + "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+ 			LandingPage homePage = new LandingPage(mfaPage);
+ 			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);	
+ 			AccountOverview myAccount = new AccountOverview(lftNavBar);
+ 			myAccount.get();
+			Deferrals deferrals = new Deferrals(lftNavBar);
+			deferrals.deleteAllAODDeferrals();
+			deferrals.get();
+			deferrals.clickAddEditButton("Standard Add");
+			deferrals.click_Select_Your_Contribution_Rate();
+			Web.waitForElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
+			deferrals.myContributions_Confirmation_Page();
+			Web.clickOnElement(myAccount, "Account Overview Link");
+			Web.waitForPageToLoad(Web.getDriver());
+			Common.waitForProgressBar();
+			Thread.sleep(5000);
+			Common.updateElectiveGoalFlag("H");
+			Web.getDriver().navigate().refresh();
+			String sGoalType = Common.getElective_Deferral("nyc_goal_flag");
+			if(sGoalType.equalsIgnoreCase("H"))
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify After adding contributions NYC_Goal is updated to H",
+						"Elective deferral NYC_Goal is updated to H. Expected: H. Actual: "+sGoalType, false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify After adding contributions NYC_Goal is updated to H",
+						"Elective deferral NYC_Goal is not updated to H. Expected: H. Actual: "+sGoalType, false);
+			
+			myAccount.validateContributionCard(currentYear);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+
+		} finally {
+			try {
+				Common.deletePartService(Stock.GetParameterValue("ind_ID"), Stock.GetParameterValue("planId"));
+				AccountOverview myAccount = new AccountOverview();
+				Web.clickOnElement(myAccount,"Go to Home");
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	@Test(dataProvider = "setData")
+	public void AOD_Contribution_DDTC_33256_AOD_for_a_LA_county_participant_is_457_having_deferral_with_NYC_Goal_Flag_L_and_pourOverEnabled_false(
+			int itr, Map<String, String> testdata) {
+
+		try {
+					
+			Reporter.initializeReportForTC(itr,
+					Globals.GC_MANUAL_TC_NAME + "_" + Common.getSponser() + "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+ 			LandingPage homePage = new LandingPage(mfaPage);
+ 			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);	
+ 			AccountOverview myAccount = new AccountOverview(lftNavBar);
+ 			myAccount.get();
+			Deferrals deferrals = new Deferrals(lftNavBar);
+			deferrals.deleteAllAODDeferrals();
+			deferrals.get();
+			deferrals.clickAddEditButton("Standard Add");
+			deferrals.click_Select_Your_Contribution_Rate();
+			Web.waitForElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
+			deferrals.myContributions_Confirmation_Page();
+			Web.clickOnElement(myAccount, "Account Overview Link");
+			Web.waitForPageToLoad(Web.getDriver());
+			Common.waitForProgressBar();
+			Thread.sleep(5000);
+			Common.updateElectiveGoalFlag("L");
+			Web.getDriver().navigate().refresh();
+			String sGoalType = Common.getElective_Deferral("nyc_goal_flag");
+			if(sGoalType.equalsIgnoreCase("L"))
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify After adding contributions NYC_Goal is updated to L",
+						"Elective deferral NYC_Goal is updated to L. Expected: L. Actual: "+sGoalType, false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify After adding contributions NYC_Goal is updated to L",
+						"Elective deferral NYC_Goal is not updated to L. Expected: L. Actual: "+sGoalType, false);
+			
+			myAccount.validateContributionCardNotDisplayed();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+
+		} finally {
+			try {
+				Common.deletePartService(Stock.GetParameterValue("ind_ID"), Stock.GetParameterValue("planId"));
+				AccountOverview myAccount = new AccountOverview();
+				Web.clickOnElement(myAccount,"Go to Home");
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	@Test(dataProvider = "setData")
+	public void AOD_Contribution_DDTC_33250_AOD_for_a_LA_county_participant_is_401K_having_deferral_with_NYC_Goal_Flag_null_and_pourOverEnabled_false(
+			int itr, Map<String, String> testdata) {
+
+		try {
+					
+			Reporter.initializeReportForTC(itr,
+					Globals.GC_MANUAL_TC_NAME + "_" + Common.getSponser() + "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+ 			LandingPage homePage = new LandingPage(mfaPage);
+ 			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);	
+ 			AccountOverview myAccount = new AccountOverview(lftNavBar);
+ 			myAccount.get();
+			Deferrals deferrals = new Deferrals(lftNavBar);
+			deferrals.deleteAllAODDeferrals();
+			deferrals.get();
+			deferrals.clickAddEditButton("Standard Add");
+			deferrals.click_Select_Your_Contribution_Rate();
+			Web.waitForElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
+			deferrals.myContributions_Confirmation_Page();
+			Web.clickOnElement(myAccount, "Account Overview Link");
+			String sGoalType = Common.getElective_Deferral("nyc_goal_flag");
+			if(sGoalType == null)
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify After adding contributions NYC_Goal is null",
+						"Elective deferral NYC_Goal is null", false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify After adding contributions NYC_Goal is null",
+						"Elective deferral NYC_Goal is not null", false);
+			
+			myAccount.validateContributionCard(currentYear);
+			
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+
+		} finally {
+			try {
+				Common.deletePartService(Stock.GetParameterValue("ind_ID"), Stock.GetParameterValue("planId"));
+				AccountOverview myAccount = new AccountOverview();
+				Web.clickOnElement(myAccount,"Go to Home");
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	@Test(dataProvider = "setData")
+	public void AOD_Contribution_DDTC_33254_AOD_for_a_LA_county_participant_is_401K_having_deferral_with_NYC_Goal_Flag_H_and_pourOverEnabled_false(
+			int itr, Map<String, String> testdata) {
+
+		try {
+					
+			Reporter.initializeReportForTC(itr,
+					Globals.GC_MANUAL_TC_NAME + "_" + Common.getSponser() + "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+ 			LandingPage homePage = new LandingPage(mfaPage);
+ 			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);	
+ 			AccountOverview myAccount = new AccountOverview(lftNavBar);
+ 			myAccount.get();
+			Deferrals deferrals = new Deferrals(lftNavBar);
+			deferrals.deleteAllAODDeferrals();
+			deferrals.get();
+			deferrals.clickAddEditButton("Standard Add");
+			deferrals.click_Select_Your_Contribution_Rate();
+			Web.waitForElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
+			deferrals.myContributions_Confirmation_Page();
+			Web.clickOnElement(myAccount, "Account Overview Link");
+			Web.waitForPageToLoad(Web.getDriver());
+			Common.waitForProgressBar();
+			Thread.sleep(5000);
+			Common.updateElectiveGoalFlag("H");
+			Web.getDriver().navigate().refresh();
+			String sGoalType = Common.getElective_Deferral("nyc_goal_flag");
+			if(sGoalType.equalsIgnoreCase("H"))
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify After adding contributions NYC_Goal is updated to H",
+						"Elective deferral NYC_Goal is updated to H. Expected: H. Actual: "+sGoalType, false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify After adding contributions NYC_Goal is updated to H",
+						"Elective deferral NYC_Goal is not updated to H. Expected: H. Actual: "+sGoalType, false);
+			
+			myAccount.validateContributionCard(currentYear);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+
+		} finally {
+			try {
+				Common.deletePartService(Stock.GetParameterValue("ind_ID"), Stock.GetParameterValue("planId"));
+				AccountOverview myAccount = new AccountOverview();
+				Web.clickOnElement(myAccount,"Go to Home");
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	@Test(dataProvider = "setData")
+	public void AOD_Contribution_DDTC_33253_AOD_for_a_LA_county_participant_is_401K_having_deferral_with_NYC_Goal_Flag_L_and_pourOverEnabled_false(
+			int itr, Map<String, String> testdata) {
+
+		try {
+					
+			Reporter.initializeReportForTC(itr,
+					Globals.GC_MANUAL_TC_NAME + "_" + Common.getSponser() + "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+ 			LandingPage homePage = new LandingPage(mfaPage);
+ 			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);	
+ 			AccountOverview myAccount = new AccountOverview(lftNavBar);
+ 			myAccount.get();
+			Deferrals deferrals = new Deferrals(lftNavBar);
+			deferrals.deleteAllAODDeferrals();
+			deferrals.get();
+			deferrals.clickAddEditButton("Standard Add");
+			deferrals.click_Select_Your_Contribution_Rate();
+			Web.waitForElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
+			deferrals.myContributions_Confirmation_Page();
+			Web.clickOnElement(myAccount, "Account Overview Link");
+			Web.waitForPageToLoad(Web.getDriver());
+			Common.waitForProgressBar();
+			Thread.sleep(5000);
+			Common.updateElectiveGoalFlag("L");
+			Web.getDriver().navigate().refresh();
+			String sGoalType = Common.getElective_Deferral("nyc_goal_flag");
+			if(sGoalType.equalsIgnoreCase("L"))
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify After adding contributions NYC_Goal is updated to L",
+						"Elective deferral NYC_Goal is updated to L. Expected: L. Actual: "+sGoalType, false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify After adding contributions NYC_Goal is updated to L",
+						"Elective deferral NYC_Goal is not updated to L. Expected: L. Actual: "+sGoalType, false);
+			
+			myAccount.validateContributionCardNotDisplayed();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+
+		} finally {
+			try {
+				Common.deletePartService(Stock.GetParameterValue("ind_ID"), Stock.GetParameterValue("planId"));
+				AccountOverview myAccount = new AccountOverview();
+				Web.clickOnElement(myAccount,"Go to Home");
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 }

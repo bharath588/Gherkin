@@ -67,7 +67,8 @@ public class RequestWithdrawal_RMD extends
 	private List<WebElement> RMDHeader;
 	@FindBy(id = "distributionSelection")
 	private WebElement RMDHeaderCheckBox;
-	@FindBy(xpath = ".//h1[text()[normalize-space()='Request a withdrawal']]")
+	@FindBy(xpath = ".//h1[text()[normalize-space()='Withdrawals'] or text()='Request a withdrawal']")
+	
 	private WebElement lblRequestAWithdrawal;
 	
 	@FindBy(xpath = "//div[@id='rmdAmountSec']/p")

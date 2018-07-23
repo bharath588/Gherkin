@@ -1413,107 +1413,141 @@ public static void update_mail_check_to_employer_ind(String indicator,String ga_
      * @param PlanId
      *            type ex:mm-dd-yy
      */
-     public static String getIRSRLCode(String sPlanId)
+	public static String getIRSRLCode(String sPlanId) throws Exception {
+		String sQuery[] = Stock.getTestQuery("getIRSRLCode");
+		sQuery[0] = Common.getParticipantDBName(Stock
+				.GetParameterValue("userName"))
+				+ "DB_"
+				+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		ResultSet getIRSRL = DB.executeQuery(sQuery[0], sQuery[1], sPlanId);
+		getIRSRL.first();
+		String sPlanCode = getIRSRL.getString("IRSRL_CODE");
+		return sPlanCode;
+	}
+
+	/**
+	 * Method is used to update the payroll type(sdsv_subcode)
+	 * 
+	 * @author mhskhn
+	 * @param Code
+	 * @param PlanId
+	 *            type ex:mm-dd-yy
+	 */
+	public static void updatePayRollType(String sPayRollType, String sPlanId)
+			throws Exception {
+		String sQuery[] = Stock.getTestQuery("updateDate picker toDropDown");
+		sQuery[0] = Common.getParticipantDBName(Stock
+				.GetParameterValue("userName"))
+				+ "DB_"
+				+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		DB.executeUpdate(sQuery[0], sQuery[1], sPayRollType, sPlanId);
+
+	}
+
+	/**
+	 * Method is used to verify if 2 String are equal or nots
+	 * 
+	 * @author mhskhn
+	 * @param s1
+	 * @param s2
+	 */
+	public static void verifyTwoStrings(String s1, String s2) {
+		if (s1.equalsIgnoreCase(s2))
+			Reporter.logEvent(Status.PASS,
+					"Verify if the two string's are equal",
+					"Given String's are equal. Expected: " + s1 + " Actual:"
+							+ s2, false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify if the two string's are equal",
+					"Given String's are equal. Expected: " + s1 + " Actual:"
+							+ s2, true);
+	}
+
+	private static String remove = "REMOVE";
+	private static String blank = "BLANK";
+
+	/**
+	 * <pre>
+	 * It returns the request url
+	 * @param baseURL of the request url mostly static part of the url.
+	 * @param params other parameters (mandatory or optional) of the request url
+	 * @return string url
+	 */
+	public static String formRequestURLPPTWeb(String baseURL, String... params) {
+		String requestURL = baseURL;
+		try {
+			if (params.length > 0) {
+				for (String param : params) {
+					if (!(param.contains(remove) || param.contains(blank) || param
+							.contains("?"))) {
+						if (requestURL.endsWith("/")) {
+							requestURL = requestURL + param;
+						} else if (requestURL.endsWith("&")) {
+							requestURL = requestURL + param;
+						} else {
+							requestURL = requestURL + "/" + param;
+						}
+					}
+					if (param.contains(blank)) {
+						param = param.replace(blank, "");
+						requestURL = requestURL + "/" + param;
+					}
+					if (param.contains("?")) {
+						if (requestURL.endsWith("/")) {
+							requestURL = requestURL.substring(0,
+									requestURL.length() - 1).trim();
+						}
+						requestURL = requestURL + param;
+					}
+				}
+				if (requestURL.endsWith("/")) {
+					requestURL = requestURL.substring(0,
+							requestURL.length() - 1).trim();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return requestURL;
+	}
+	/**
+     * Method gets the Elective_Deferral's nyc_goal_flag
+     * 
+     * @author mhskhn
+     * @param sColumn
+     */
+     public static String getElective_Deferral(String sColumn)
                    throws Exception {
-            String sQuery[] = Stock.getTestQuery("getIRSRLCode");
+    	 	String sGoalType = null;
+            String sQuery[] = Stock.getTestQuery("getElectiveGoalFlag");
             sQuery[0] = Common.getParticipantDBName(Stock
                          .GetParameterValue("userName"))
                          + "DB_"
                          + Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
-            ResultSet getIRSRL=DB.executeQuery(sQuery[0], sQuery[1], sPlanId);
+            ResultSet getIRSRL=DB.executeQuery(sQuery[0], sQuery[1], Stock.GetParameterValue("ind_ID"));
             getIRSRL.first();
-            String sPlanCode = getIRSRL.getString("IRSRL_CODE");
-            return sPlanCode;
+            try{
+            	sGoalType = getIRSRL.getString(sColumn);
+            }
+            catch (SQLException e) {
+            	sGoalType = "0";
+    		}
+            return sGoalType;
      }
      /**
-      * Method is used to update the payroll type(sdsv_subcode)
+      * Method updates the Elective_Deferral's nyc_goal_flag to H or L
       * 
-       * @author mhskhn
-      * @param Code
-      * @param PlanId
-      *            type ex:mm-dd-yy
+      * @author mhskhn
+      * @param sColumn
       */
-      public static void updatePayRollType(String sPayRollType, String sPlanId)
+      public static void updateElectiveGoalFlag(String sFlag)
                     throws Exception {
-             String sQuery[] = Stock.getTestQuery("updateDate picker toDropDown");
-             sQuery[0] = Common.getParticipantDBName(Stock
-                          .GetParameterValue("userName"))
-                          + "DB_"
-                          + Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
-             DB.executeUpdate(sQuery[0], sQuery[1],sPayRollType, sPlanId);
-             
+    	String sQuery[] = Stock.getTestQuery("updateElectiveGoalFlag");
+  		sQuery[0] = Common.getParticipantDBName(Stock
+  				.GetParameterValue("userName"))
+  				+ "DB_"
+  				+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+  		DB.executeUpdate(sQuery[0], sQuery[1], sFlag, Stock.GetParameterValue("ind_ID"));
       }
-      /**
-       * Method is used to verify if 2 String are equal or nots
-       * 
-        * @author mhskhn
-       * @param s1
-       * @param s2
-       */
-      public static void verifyTwoStrings(String s1, String s2)
-      {
-    	  if(s1.equalsIgnoreCase(s2))
-    		  Reporter.logEvent(Status.PASS,
-						"Verify if the two string's are equal",
-						"Given String's are equal. Expected: "
-								+ s1 + " Actual:"+ s2, false);
-			else
-				Reporter.logEvent(Status.FAIL,
-						"Verify if the two string's are equal",
-						"Given String's are equal. Expected: "
-								+ s1 + " Actual:"+ s2, true);
-      }
-      private static String remove = "REMOVE";
-      private static String blank = "BLANK";
-        /**<pre>
-    	 * It returns the request url
-    	 * @param baseURL of the request url mostly static part of the url.
-    	 * @param params other parameters (mandatory or optional) of the request url
-    	 * @return string url
-    	 */
-    	public static String formRequestURLPPTWeb(String baseURL, String...params)
-    	{
-    		String requestURL = baseURL;
-    		try
-    		{
-    			if(params.length>0)
-    			{
-    				for(String param : params)
-    				{
-    					if(!(param.contains(remove)||param.contains(blank)||param.contains("?")))
-    					{
-    						if(requestURL.endsWith("/")){
-    							requestURL = requestURL+param;}
-    						else if(requestURL.endsWith("&")){
-    							requestURL=requestURL+param;
-    						}
-    						else{
-    							requestURL = requestURL+"/"+param;
-    						}
-    					}
-    					if(param.contains(blank))
-    					{
-    						param = param.replace(blank, "");
-    						requestURL = requestURL+"/"+param;
-    					}
-    					if(param.contains("?"))
-    					{
-    						if(requestURL.endsWith("/")){
-    							requestURL = requestURL.substring(0,requestURL.length()-1).trim();
-    						}
-    						requestURL = requestURL+param;
-    					}
-    				}
-    				if(requestURL.endsWith("/")){
-    					requestURL = requestURL.substring(0,requestURL.length()-1).trim();
-    				}
-    			}
-    		}
-    		catch(Exception e)
-    		{
-    			e.printStackTrace();
-    		}
-    		return requestURL;
-    	}
-
 }

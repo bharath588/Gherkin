@@ -2594,7 +2594,8 @@ return expectedCompanyMatch;
 				Web.getDriver().navigate().refresh();
 				System.out.println("Updated");
 				//For 457 plan it will goto pending
-			} else if(Stock.GetParameterValue("planId").equalsIgnoreCase("98785-01"))
+			} else if(Stock.GetParameterValue("planId").equalsIgnoreCase("98785-01") ||
+					Stock.GetParameterValue("planId").equalsIgnoreCase("98996-01"))
 			{
 				this.updateEffectiveDate();
 				Web.getDriver().navigate().refresh();
