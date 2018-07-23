@@ -31,10 +31,10 @@ Feature: Employee Overview / Employee Details / Edit Information - show_addition
     Examples: 
       | plan_no    | accuCode     | username | password | IND_ID   | Labels                                                                                                                                          |
       | 341587-01  | InstAF       | 1AF      | testing1 | 14836582 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-      #| 168004-01  | InstJPM      | 1IJPM    | testing1 | 12933870 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-      #| 250306-N1  | InstSunTrust | 1IST     | testing1 | 11032492 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-      #| 453669-01  | InstFTB      | 1FTB     | testing1 |  5371944 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-      #| 1005006-02 | InstMetLife  | 1IML     | testing1 |  3880557 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 168004-01  | InstJPM      | 1IJPM    | testing1 | 12933870 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 250306-N1  | InstSunTrust | 1IST     | testing1 | 11032492 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 453669-01  | InstFTB      | 1FTB     | testing1 |  5371944 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 1005006-02 | InstMetLife  | 1IML     | testing1 |  3880557 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
 
   Scenario Outline: Verify Employee details elements are displayed when the flag = True
     Given user is on the Home page of "<accuCode>" when user login with correct "<username>" and "<password>"
@@ -46,12 +46,12 @@ Feature: Employee Overview / Employee Details / Edit Information - show_addition
 
     Examples: 
       | plan_no    | accuCode    | username | password  | IND_ID   | Labels                                                                                                                                          |
-      #| 150551-01  | PlanApple   | 3VFO3    | testing1  | 11758237 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 150551-01  | PlanApple   | 3VFO3    | testing1  | 11758237 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
       | 1200035-01 | PlanEmpower | 1INST    | testing1  | 14537719 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-      #| 150012-01  | PlanJPM     | 3JPM     | testing1  | 17681800 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-      #| 385076-P1  | PlanDMBA    | 1PDMBA   | Testing@1 | 11539629 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-      #| 98949-01   | PlanMiss    | 1MISS    | testing1  |  8257371 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-     # | 98945-01   | PlanMN      | 1MN      | testing1  |  8993304 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 150012-01  | PlanJPM     | 3JPM     | testing1  | 17681800 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 385076-P1  | PlanDMBA    | 1PDMBA   | Testing@1 | 11539629 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 98949-01   | PlanMiss    | 1MISS    | testing1  |  8257371 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 98945-01   | PlanMN      | 1MN      | testing1  |  8993304 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
 
   Scenario Outline: Verify Edit Employee Information elements are suppressed when the flag = False
     Given user is on the Home page of "<accuCode>" when user login with correct "<username>" and "<password>"
@@ -66,10 +66,10 @@ Feature: Employee Overview / Employee Details / Edit Information - show_addition
     Examples: 
       | plan_no    | accuCode     | username | password | IND_ID   | Labels                                                                                                                                          |
       | 341587-01  | InstAF       | 1AF      | testing1 | 14836582 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-      #| 168004-01  | InstJPM      | 1IJPM    | testing1 | 12933870 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-      #| 250306-N1  | InstSunTrust | 1IST     | testing1 | 11032492 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-      #| 453669-01  | InstFTB      | 1FTB     | testing1 |  5371944 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-      #| 1005006-02 | InstMetLife  | 1IML     | testing1 |  3880557 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 168004-01  | InstJPM      | 1IJPM    | testing1 | 12933870 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 250306-N1  | InstSunTrust | 1IST     | testing1 | 11032492 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 453669-01  | InstFTB      | 1FTB     | testing1 |  5371944 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 1005006-02 | InstMetLife  | 1IML     | testing1 |  3880557 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
 
   Scenario Outline: Verify Edit Employee Information elements are displayed when the flag = True
     Given user is on the Home page of "<accuCode>" when user login with correct "<username>" and "<password>"
@@ -83,9 +83,9 @@ Feature: Employee Overview / Employee Details / Edit Information - show_addition
 
     Examples: 
       | plan_no    | accuCode    | username | password  | IND_ID   | Labels                                                                                                                                          |
-      #| 150551-01  | PlanApple   | 3VFO3    | testing1  | 11758237 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 150551-01  | PlanApple   | 3VFO3    | testing1  | 11758237 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
       | 1200035-01 | PlanEmpower | 1INST    | testing1  | 14537719 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-      #| 150012-01  | PlanJPM     | 3JPM     | testing1  | 17681800 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-      #| 385076-P1  | PlanDMBA    | 1PDMBA   | Testing@1 | 11539629 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-     # | 98949-01   | PlanMiss    | 1MISS    | testing1  |  8257371 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
-      #| 98945-01   | PlanMN      | 1MN      | testing1  |  8993304 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 150012-01  | PlanJPM     | 3JPM     | testing1  | 17681800 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 385076-P1  | PlanDMBA    | 1PDMBA   | Testing@1 | 11539629 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 98949-01   | PlanMiss    | 1MISS    | testing1  |  8257371 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
+      | 98945-01   | PlanMN      | 1MN      | testing1  |  8993304 | Union, Insider, Super Officer, FT/PT Employee, Job description, Employment type, Overseas employee, Overseas date, Employer classification code |
