@@ -244,8 +244,10 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	@FindBy(xpath = "(.//accordion)[1]/div/div")
 	private List<WebElement> historyAccordion;
 	@FindBy(css = "div[ng-if='showDisclaimer'] h4")
+	//@FindBy(xpath = "//h4[text()='Safe Harbor Notice']")
 	private WebElement disclaimer;
 	@FindBy(xpath = ".//div[@ng-if='showDisclaimer']//h4/../following-sibling::div[1]")
+	//@FindBy(xpath = "//*[contains(text(),'To view the most recent version')]")
 	private WebElement disclaimerDesc;
 	@FindBy(xpath = ".//ul[contains(@class,'mainlist')]//div/following-sibling::a")
 	private List<WebElement> doclinks;
@@ -544,6 +546,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 			Web.actionsClickOnElement(administrationSubmenu);
 		this.openSubmenuUnderAdministration("Plan messaging");
 		Web.getDriver().switchTo().defaultContent();
+		Thread.sleep(5000);
 		if (Web.getDriver().findElement(By.tagName("i")).getText()
 				.contains("Plan messaging"))
 			Reporter.logEvent(Status.PASS,
@@ -828,8 +831,14 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 					Reporter.logEvent(Status.FAIL,
 							"Validate print link is displayed.",
 							"Print link is not displayed.", true);
+				Web.clickOnElement(printLink);
+				Thread.sleep(3000);
+				parentWindow = CommonLib.switchToWindow();
+				Web.getDriver().close();
+				Web.getDriver().switchTo().window(parentWindow);
+				
 			} else {
-				Web.clickOnElement(printLinkUnderPlanMenu);
+				Web.clickOnElement(printLinkUnderPlanMenu);			
 				parentWindow = CommonLib.switchToWindow();
 				if (printPriviewWindowHeader.getText().contains(
 						"THIS IS A PRINT PREVIEW")) {
@@ -1548,6 +1557,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 		HomePage homePage = new HomePage();
 		Web.getDriver().switchTo().defaultContent();
 		homePage.navigateToProvidedPage("Plan", "Fiduciary records", "");
+		Thread.sleep(3000);
 		if (CommonLib.isElementExistByXpath(menuQDIA))
 			isDisplayed = false;
 		else
@@ -1609,7 +1619,8 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 						"PDF is not displayed in a seperate window.", true);
 			
 			if (CommonLib.getBrowserName().equalsIgnoreCase("chrome")) {
-				if (printLink.isDisplayed())
+				//if (printLink.isDisplayed())
+				if(Web.isWebElementDisplayed(printLink, true))
 					Reporter.logEvent(Status.PASS,
 							"Validate print link is displayed.",
 							"Print link is displayed.", false);
@@ -1776,6 +1787,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	public void validateFiduciaryRequiredNotices_1() {
 		String expMsg = Stock.GetParameterValue("ExpectedDocMsg");
 		try {
+			Web.waitForElement(safeHarborLink);
 			String docActTitle = safeHarborLink.getText().trim();
 			Web.clickOnElement(safeHarborLink);
 			Web.waitForPageToLoad(Web.getDriver());
@@ -2516,6 +2528,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 		String expConfirmationMsg = Stock.GetParameterValue("ConfirmationMsg");
 		String actConfirmationMsg = "";
 		try {
+			Thread.sleep(3000);
 			Web.clickOnElement(updateLinks.get(0));
 			//Web.waitForPageToLoad(Web.getDriver());
 			Web.getDriver().switchTo().defaultContent();
@@ -2725,7 +2738,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	public boolean searchUser(String[] values, WebElement... filters) {
 		boolean isUserRetrieved = false;
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(1000);
 			CommonLib.switchToFrame(frameb);
 			if (filters.length == values.length) {
 				for (int i = 0; i < filters.length; i++) {
@@ -3293,20 +3306,30 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	}
 
 	private void openSubmenuUnderAdministration(String submenuName) {
+		boolean found=false;
 		if (administrationSubmenus.size() > 0) {
 			for (WebElement submenu : administrationSubmenus) {
-				if (submenu.getText().equalsIgnoreCase(submenuName))
+				if (submenu.getText().trim().equalsIgnoreCase(submenuName)){
 					Web.clickOnElement(submenu);
+					found=true;
+				}
+				if(!found){
+					if(submenu.getText().trim().contains(submenuName))
+						Web.clickOnElement(submenu);
+				}
+					
 			}
 		}
 	}
 
-	public void openAnySubmenuUnderAdministrationMenu(String Submenu) {
+	public void openAnySubmenuUnderAdministrationMenu(String Submenu) throws InterruptedException {
 		if (Web.isWebElementDisplayed(planTab, false))
 			Web.actionsClickOnElement(planTab);
 		if (Web.isWebElementDisplayed(administrationSubmenu, true))
 			Web.actionsClickOnElement(administrationSubmenu);
+		
 		this.openSubmenuUnderAdministration(Submenu);
+		Thread.sleep(3000);
 		if (Web.getDriver().findElement(By.tagName("i")).getText()
 				.contains(Submenu))
 			Reporter.logEvent(Status.PASS,
@@ -3327,12 +3350,14 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 		}
 	}
 	
-	public void openAnySubmenuUnderFiduciary(String Submenu){
+	public void openAnySubmenuUnderFiduciary(String Submenu) throws InterruptedException{
 		if (Web.isWebElementDisplayed(planTab, false))
 			Web.actionsClickOnElement(planTab);
 		if (Web.isWebElementDisplayed(fiduciaryMenu, true))
 			Web.actionsClickOnElement(fiduciaryMenu);
+		Thread.sleep(3000);
 		this.openSubmenuUnderFiduciary(Submenu);
+		Thread.sleep(3000);
 		if (Web.getDriver().findElement(By.tagName("i")).getText()
 				.contains(Submenu))
 			Reporter.logEvent(Status.PASS,

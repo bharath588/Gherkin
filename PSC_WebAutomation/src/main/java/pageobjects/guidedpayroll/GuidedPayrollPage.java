@@ -8,8 +8,10 @@ import java.util.List;
 
 import lib.DB;
 import lib.Reporter;
+
 //import lib.Reporter.Status;
 import com.aventstack.extentreports.*;
+
 import lib.Stock;
 import lib.Web;
 
@@ -51,7 +53,8 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 	private WebElement keyFrame;	
 	@FindBy(id = "profileLink")
 	private WebElement linkProfile;
-	@FindBy(xpath = ".//*[@id='payrollInfoForm']/table/tbody/tr[5]/td/table/tbody/tr[2]/td[4]/div")
+	//@FindBy(xpath = ".//*[@id='payrollInfoForm']/table/tbody/tr[5]/td/table/tbody/tr[2]/td[4]/div")
+	@FindBy(xpath = "//*[@id='estimatedContribAmt']/following-sibling::div")
 	private WebElement errorTextwithoutDiv;
 	@FindBy(xpath = ".//*[@id='payrollInfoForm']/table/tbody/tr[5]/td/table/tbody/tr[3]/td[4]/div")
 	private WebElement errorTextwithDiv;
@@ -65,7 +68,8 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 	private List<WebElement> chkboxMoneySourceTable;
 	@FindBy(id = "moneySourcesContinue")
 	private WebElement btnMoneysrcContinue;
-	@FindBy(xpath = ".//*[@id='updateInfoSection']/table[1]/tbody/tr[3]/td")
+	//@FindBy(xpath = ".//*[@id='updateInfoSection']/table[1]/tbody/tr[3]/td")
+	@FindBy(xpath = "//*[@id='updateInfoSection']//td[contains(text(),'Expected Contribution')]")
 	private WebElement expContrbtnTotal;
 	@FindBy(xpath = ".//*[@id='amount1_0']")
 	private WebElement txtinputContfirst;
@@ -229,9 +233,12 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 		@SuppressWarnings("unused")
 		HomePage homepage = (HomePage) this.parent;
 		LoginPage login = new LoginPage();
-		new HomePage(new UserVerificationPage(login), true, new String[] {
+		/*new HomePage(new UserVerificationPage(login), true, new String[] {
 				Stock.GetParameterValue("userVerificationEmail"), Stock.GetParameterValue("userVerificationAns") })
-						.get();
+						.get();*/
+		new HomePage(login, false, new String[] {
+				Stock.GetParameterValue("username"), Stock.GetParameterValue("password")})
+					.get();
 		Reporter.logEvent(Status.PASS, "Check if the user has landed on homepage", "The user has landed on homepage",
 				true);
 	}
@@ -282,10 +289,12 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 		return null;
 	}
 
-	public String validateContributionTotal(String amount) {
+	public String validateContributionTotal(String amount) throws InterruptedException {
 		String actualMessage = "";
 		Web.getDriver().switchTo().frame(iframeGpp);
-		urlClicktoCont.click();
+		Web.clickOnElement(urlClicktoCont);
+		//urlClicktoCont.click();
+		Thread.sleep(4000);
 		txtExpectedContrTotal.sendKeys(amount);
 		if (Web.isWebElementDisplayed(errorTextwithoutDiv)) {
 			actualMessage = errorTextwithoutDiv.getText();
@@ -298,7 +307,13 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 	}
 
 	public boolean compareContributionTotal(String amount) {
+		Web.getDriver().switchTo().defaultContent();
 		Web.getDriver().switchTo().frame(iframeGpp);
+		try{System.out.println("------------------");
+			System.out.println(expContrbtnTotal.getText());
+		}catch(Exception e){
+			
+		}
 		if (expContrbtnTotal.getText().contains(amount)) {
 			Web.getDriver().switchTo().defaultContent();
 			return true;
@@ -319,12 +334,14 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 	}
 
 	public void createContributionProcessingforSingleMoneySource(String date, String amount) {
-		Web.getDriver().switchTo().frame(iframeGpp);
-		urlClicktoCont.click();
-		txtPayrollDate.sendKeys(date);
-		txtExpectedContrTotal.sendKeys(amount);
-		btnContinue.click();
+		Web.getDriver().switchTo().frame(iframeGpp);	
 		try {
+			Thread.sleep(3000);
+			urlClicktoCont.click();
+			Thread.sleep(4000);
+			txtPayrollDate.sendKeys(date);
+			txtExpectedContrTotal.sendKeys(amount);
+			btnContinue.click();
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -406,7 +423,10 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 		Thread.sleep(1000);
 		tabProcessCenter.click();
 		Web.waitForElement(linkOverview);
+		Thread.sleep(1000);
 		Web.clickOnElement(linkOverview);
+		
+		
 	}
 
 	public void selectmoneysource(String SelectOrVerify) throws Exception {

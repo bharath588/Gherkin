@@ -419,6 +419,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 
 	/**
 	 * The method used to reset password when it is expired
+	 * @throws InterruptedException 
 	 */
 	//	public void resetPassword(String currentPwd, String newPwd, String confirmPwd) {
 	//		createNewPwdfields.get(iLoopCnt).click();
@@ -430,11 +431,12 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	//		btnNext.click();	
 	//	}
 
-	public void resetPassword(String... params) {
+	public void resetPassword(String... params) throws InterruptedException {
 		int iLoopCnt=0;
 		for(String param : params){
 			if(Web.isWebElementDisplayed(createNewPwdfields.get(iLoopCnt), true)
 					&&createNewPwdfields.get(iLoopCnt).isEnabled()){
+				Thread.sleep(2000);
 				createNewPwdfields.get(iLoopCnt).click();
 				Web.setTextToTextBox(createNewPwdfields.get(iLoopCnt),param);
 			}
@@ -605,7 +607,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		}
 		else if(Web.isWebElementDisplayed(linkLogoutAccveri))
 		{
-			Web.actionsClickOnElement(linkLogout);
+			Web.actionsClickOnElement(linkLogoutAccveri);
 
 		}
 		Thread.sleep(3000);

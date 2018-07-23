@@ -34,6 +34,7 @@ public class guidedpayrolltc_regression {
 
 	@DataProvider
 	public Object[][] setData(Method tc) throws Exception {
+		System.out.println(tc);
 		prepTestData(tc);
 		return Stock.setDataProvider(this.testData);
 	}

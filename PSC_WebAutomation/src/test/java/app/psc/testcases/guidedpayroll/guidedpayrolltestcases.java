@@ -63,8 +63,8 @@ public class guidedpayrolltestcases {
 			Reporter.initializeReportForTC(itr, tcName);
 			guidedpayroll = new GuidedPayrollPage().get();	
 			guidedpayroll.navigateToProcessCenter();
-			actualErrorMessage = guidedpayroll.validateContributionTotal(testdata.get("amount"));
-			expectedErrorMessage = testdata.get("ExpectedErrorMessage");
+			actualErrorMessage = guidedpayroll.validateContributionTotal(testdata.get("AMOUNT"));
+			expectedErrorMessage = testdata.get("EXPECTEDERRORMESSAGE");
 			if (expectedErrorMessage.trim().equalsIgnoreCase(actualErrorMessage)) {
 				Reporter.logEvent(Status.PASS, "Check proper error message is displayed for invalid input",
 						"Proper error message is displayed", true);
@@ -99,9 +99,9 @@ public class guidedpayrolltestcases {
 			guidedpayroll.navigateToProcessCenter();
 			Reporter.logEvent(Status.INFO, "Check if the user is landed on Process center page",
 					"The user has landed on guided payroll page", true);
-			guidedpayroll.createContributionProcessingforSingleMoneySource(testdata.get("date"),
-					testdata.get("amount"));
-			isEqual = guidedpayroll.compareContributionTotal(testdata.get("amount"));
+			guidedpayroll.createContributionProcessingforSingleMoneySource(testdata.get("DATE"),
+					testdata.get("AMOUNT"));
+			isEqual = guidedpayroll.compareContributionTotal(testdata.get("AMOUNT"));
 			if (isEqual) {
 				Reporter.logEvent(Status.PASS, "Check if the expected contribution total same as entered one",
 						"The expected cont total equals to the input", true);

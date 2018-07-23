@@ -410,6 +410,8 @@ public class plantestcases {
 			String firstname = Stock.GetParameterValue("FirstName");
 			if (Stock.GetParameterValue("Flow").equals("Positive")) {
 				planPage.openAnySubmenuUnderAdministrationMenu("Username security management");
+				
+				Thread.sleep(6000);
 				if (planPage.searchUser(new String[] { lastname },
 						Web.returnElement(planPage, "USER_LAST_NAME_INPUT")))
 					Reporter.logEvent(Status.PASS,
@@ -434,6 +436,7 @@ public class plantestcases {
 									+ "User is not found.", true);
 			} else {
 				planPage.openAnySubmenuUnderAdministrationMenu("Username security management");
+				Thread.sleep(6000);
 				if (!planPage.searchUser(new String[] { lastname, firstname },
 						Web.returnElement(planPage, "USER_LAST_NAME_INPUT"),
 						Web.returnElement(planPage, "USER_FIRST_NAME_INPUT"))) {
@@ -442,6 +445,8 @@ public class plantestcases {
 							"Search a user with invalid filters\nlast name-"
 									+ lastname + " and first name-" + firstname,
 							"" + "User is not found.", false);
+					if(Web.isWebElementDisplayed(planPage, "NO_SEARCH_RESULTS_TEXT_ELEMENT", true))
+						System.out.println("no records message found displays");
 					String actErrorMsg = Web
 							.returnElement(planPage,
 									"NO_SEARCH_RESULTS_TEXT_ELEMENT").getText()

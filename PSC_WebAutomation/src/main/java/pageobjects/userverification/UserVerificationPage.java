@@ -180,9 +180,10 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	public void performErrorVerification(String[] userVerfiData) throws InterruptedException {
 		new UserVerificationPage();	
 		Thread.sleep(3000);
-		if (Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {			
+		if (Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {
+			//if(!(userVerfiData[0]==null))
 			Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
-			
+			//if(!(userVerfiData[1]==null))
 			Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
 			Web.clickOnElement(btnUserVerificationNext);
 			Web.waitForElement(imgEmpowerPsc);

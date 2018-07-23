@@ -5,48 +5,39 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.Arrays;
-import java.util.LinkedList;
-
-import javax.swing.plaf.synth.SynthOptionPaneUI;
-
-import lib.Reporter;
-
-import com.aventstack.extentreports.*;
 
 import lib.DB;
+import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import pageobjects.accountverification.AccountVerificationPage;
-import pageobjects.employeesearch.EmployeeSearch;
 import pageobjects.login.LoginPage;
 import pageobjects.userverification.UserVerificationPage;
+
+import com.aventstack.extentreports.Status;
+
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
-import framework.util.CommonLib;
 
 public class HomePage extends LoadableComponent<HomePage> {
 	// Object Declarations
@@ -541,7 +532,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 						"Check if five characters are entered in plan search input box",
 						"Five characters from plan number are entered in plan search input box",
 						true);
-				Thread.sleep(2000);
+				Thread.sleep(4000);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

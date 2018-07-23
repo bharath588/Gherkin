@@ -343,7 +343,8 @@ public class CommonLib {
 		if (webElements.size() == 0) {
 			xpathExist = false;
 		} else {
-			xpathExist = false;
+			//xpathExist = false;
+			xpathExist = true;
 		}
 		return xpathExist;
 	}

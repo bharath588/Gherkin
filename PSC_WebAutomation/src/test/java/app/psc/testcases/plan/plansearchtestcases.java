@@ -187,6 +187,7 @@ public class plansearchtestcases {
 					Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password") }).get();
 			homePage.enterPartialPlanNumber();
+			
 			if (homePage.verifyAutocompletePlanSuggestion()) {
 				Reporter.logEvent(
 						Status.PASS,
@@ -366,6 +367,7 @@ public class plansearchtestcases {
 			planPage = new PlanPage(new LoginPage(), false, new String[] {
 					Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password") }).get();
+			Thread.sleep(3000);
 			planPage.navigateToPlanMessagingPage();
 			Thread.sleep(1500);
 			planPage.addNewPlanMessage();
@@ -1021,7 +1023,8 @@ public class plansearchtestcases {
 					.GetParameterValue("planNumber"));
 			/*CommonLib.navigateToProvidedPage("Plan", "Administration",
 					"Viewâˆ•change banking information");*/
-			planPage.openAnySubmenuUnderAdministrationMenu("View∕change banking information");
+			//planPage.openAnySubmenuUnderAdministrationMenu("View∕change banking information");
+			planPage.openAnySubmenuUnderAdministrationMenu("change banking information");
 			planPage.validateBankingInfoAndUpdateLink();
 			planPage.updateBankDetails();
 		} catch (Exception e) {

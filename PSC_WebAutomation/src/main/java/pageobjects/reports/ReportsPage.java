@@ -200,9 +200,18 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 				e.printStackTrace();
 			}
 		if(Web.isWebElementDisplayed(new HomePage(), "Reports Menu", true)){
-			Web.clickOnElement(new HomePage(), "Reports Menu");
-			Web.nextGenDriver.waitForAngular();
-			Web.clickOnElement(new HomePage(), "Standard Reports");
+			
+			try {
+				Web.actionsClickOnElement(Web.returnElement(new HomePage(),
+						"Reports Menu"));
+				//Web.clickOnElement(new HomePage(), "Reports Menu");
+				Web.nextGenDriver.waitForAngular();
+				Web.clickOnElement(new HomePage(), "Standard Reports");
+				Thread.sleep(3000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			Web.nextGenDriver.waitForAngular();
 			Web.waitForElement(reportsFrame);
 			Web.getDriver().switchTo().defaultContent();
@@ -241,6 +250,7 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 	{
 		boolean isReportOrderForm = false;
 		try{
+			
 			this.clickOnStandardReports();
 			Web.nextGenDriver.waitForAngular();
 			this.clickOnStandardReportsTab(Stock.GetParameterValue("tabName"));

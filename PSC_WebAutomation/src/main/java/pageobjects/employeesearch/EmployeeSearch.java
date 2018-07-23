@@ -260,7 +260,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement workAreaCode;
 	@FindBy(id = "workPhoneNumber")
 	private WebElement workPhoneNumber;
-	@FindBy(xpath = "//button[text()='Save']")
+
+	//@FindBy(xpath = "//button[text()='Save']")
+
+	//@FindBy(xpath = "//input[@name='ESC_BASIC_UPDATE_SAVE']")
+	@FindBy(xpath = "//input[@name='ESC_ELIG_UPDATE_SAVE']")
+
 	private WebElement save;
 	@FindBy(xpath = "//input[@value='Cancel']")
 	private WebElement cancel;
@@ -4534,8 +4539,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			actualHead = actualHeaders.toArray(actualHead);
 			Arrays.sort(actualHead);
 			for (String header : expectedHeaders) {
-				if (CommonLib.binarySearch(actualHead, header, 0,
-						actualHead.length) > 0) {
+
+				if (CommonLib.binarySearch(actualHead, header, 0, actualHead.length)>=0) {
+
 					numberOfHeaders++;
 				}
 			}
@@ -4765,7 +4771,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					false);
 			try {
 				Web.clickOnElement(enrolAndEligibltyEditLink);
-				CommonLib.switchToFrame(enrollAndEligEditFrame);
+				//CommonLib.switchToFrame(enrollAndEligEditFrame);
+				Web.waitForPageToLoad(Web.getDriver());
+				Thread.sleep(3000);
+				Web.waitForElement(enrollAndEligEditFrame);
+				Web.getDriver().switchTo().frame(enrollAndEligEditFrame);
 				Select eligibilityCode = new Select(eligiCode);
 				Select inEligibilityCode = new Select(inEligiReasonCode);
 				if (selectedEligiCode.getText().equals("No")) {
@@ -4798,7 +4808,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							"Details are not saved correctly.", true);
 				}
 				Web.clickOnElement(enrolAndEligibltyEditLink);
-				CommonLib.switchToFrame(enrollAndEligEditFrame);
+				//CommonLib.switchToFrame(enrollAndEligEditFrame);
+				Web.waitForPageToLoad(Web.getDriver());
+				Thread.sleep(3000);
+				Web.waitForElement(enrollAndEligEditFrame);
+				Web.getDriver().switchTo().frame(enrollAndEligEditFrame);
+				
 				String participationDate = partDate.getAttribute("value");
 				DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
 				Date dt = dateFormat.parse(participationDate);
@@ -8398,6 +8413,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				enrollAndEligDataUI.put("Suppress Auto Enrollment Indicator",
 						suppressAutoIndicator.getText().trim());
 			}
+			System.out.println("");
 			System.out
 					.println("Enrollment and eligibility data fetched from UI:"
 							+ enrollAndEligDataUI);
