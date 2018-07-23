@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [testsuite]">
+  <listeners>
+    <listener class-name="core.framework.TestListener"/>
+  </listeners>
+  <test name="Orange period execution-1(failed)">
+    <classes>
+      <class name="app.psc.testcases.plan.plantestcases">
+        <methods>
+          <include name="TC24_Investment_Charts_Page" invocation-numbers="0"/>
+          <include name="ReportInit"/>
+          <include name="DriverQuite"/>
+        </methods>
+      </class> <!-- app.psc.testcases.plan.plantestcases -->
+    </classes>
+  </test> <!-- Orange period execution-1(failed) -->
+</suite> <!-- Failed suite [testsuite] -->
