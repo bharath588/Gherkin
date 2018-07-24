@@ -89,11 +89,11 @@
 							value="DDTC-28728 TC_05Test to Verify message displayed on statements card when participant participant has already opted in for e-delivery">
 						</parameter>
 					</include>
-					<include name="AOD_Statements_DDTC_28730_TC_06_Test_to_Verify_functionality_of_link_present_on_Statements_card">
+					<!-- <include name="AOD_Statements_DDTC_28730_TC_06_Test_to_Verify_functionality_of_link_present_on_Statements_card">
 						<parameter name="ManualTCName"
 							value="DDTC-28730 TC_06 Test to Verify functionality of link present on Statements card">
 						</parameter>
-					</include>
+					</include> -->
 				</methods>
 			</class>
 			

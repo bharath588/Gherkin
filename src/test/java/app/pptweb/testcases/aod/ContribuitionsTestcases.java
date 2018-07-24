@@ -90,6 +90,7 @@ public class ContribuitionsTestcases {
 			String remainingPayPeriod = payRoll.get(0);
 			String payRollType = payRoll.get(1);
 			System.out.println(payRollType+remainingPayPeriod);
+			
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
  			LandingPage homePage = new LandingPage(mfaPage);
