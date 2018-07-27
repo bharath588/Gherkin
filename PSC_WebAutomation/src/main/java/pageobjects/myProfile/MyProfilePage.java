@@ -315,6 +315,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 				"Check if the user has landed on homepage",
 				"The user has landed on homepage", true);
 		try {
+			Thread.sleep(3000);
 			WebElement myProfileLink = Web.returnElement(new HomePage(), "MY PROFILE");
 			if(myProfileLink.isDisplayed())
 				actions.moveToElement(myProfileLink).click().build().perform();
