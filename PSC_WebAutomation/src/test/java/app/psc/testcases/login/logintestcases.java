@@ -86,6 +86,8 @@ public class logintestcases {
 					CommonLib.getIterationDataAsString(testdata), false);
 			// Step-1 : Login with internal/external employee credentials
 			login = new LoginPage().get();
+			//below step added by swtcht
+			 if (Web.isWebElementDisplayed(login, "LOGIN FRAME"))
 			login.submitLoginCredentials(new String[] {
 					Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password") });
@@ -861,6 +863,7 @@ public class logintestcases {
 			home = new HomePage();
 			accountverification = new AccountVerificationPage();
 			userverification = new UserVerificationPage();
+			Thread.sleep(2000);
 			userverification.performVerification(new String[] {
 					Stock.GetParameterValue("UserVeriEmail"),
 					Stock.GetParameterValue("UserVeriEmail") });

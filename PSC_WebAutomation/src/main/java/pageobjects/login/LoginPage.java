@@ -65,7 +65,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement linkLogOut;
 	@FindBy(css = "input[class = 'chekbox']")
 	private WebElement chkBoxrememberPassword;
-	@FindBy(css = "div[id = 'errorMessage']")
+	@FindBy(css = "div[id='errorMessage']")
 	private WebElement wePreLoginError;
 	@FindBy(css = "a[class = 'prelogin-pod']")
 	private WebElement lnkPlanFeeds;
@@ -371,7 +371,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	{
 		try{
 			int rows_update=DB.executeUpdate(updateInvalidLogonAttemptQuery[0], updateInvalidLogonAttemptQuery[1], "K_" + userName);
-			if(rows_update>1)
+			if(rows_update>=1)
 			{
 				Reporter.logEvent(Status.PASS, "Execute query to update Invalid_logon_count in ISIS_Password table", 
 						"Query is executed successfully", false);
@@ -393,24 +393,26 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	 * @param termDate
 	 * @param userName
 	 */
-	public void updateTermDateForUser(String[] queryToTerminateUser, String termDate, String userName)
-	{
-		try{
-			int rows_update=DB.executeUpdate(queryToTerminateUser[0], queryToTerminateUser[1], termDate,"K_" + userName);
-			if(rows_update==1)
-			{
-				Reporter.logEvent(Status.PASS, "Execute query to update termdate in Users table", 
+	public void updateTermDateForUser(String[] queryToTerminateUser,
+			String termDate, String userName) {
+		try {
+			SimpleDateFormat format1 = new SimpleDateFormat("MM/dd/yyyy");
+			SimpleDateFormat format2 = new SimpleDateFormat("dd-MMM-yy");
+			Date date = format1.parse(termDate);
+			String termDate1 = format2.format(date);
+			int rows_update = DB.executeUpdate(queryToTerminateUser[0],
+					queryToTerminateUser[1], termDate1, "K_" + userName);
+			if (rows_update == 1) {
+				Reporter.logEvent(Status.PASS,
+						"Execute query to update termdate in Users table",
 						"Query is executed successfully", false);
-			}
-			else
-			{
-				Reporter.logEvent(Status.FAIL, "Execute query to update termdate in Users table", 
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Execute query to update termdate in Users table",
 						"Query did not execut successfully", false);
 
 			}
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

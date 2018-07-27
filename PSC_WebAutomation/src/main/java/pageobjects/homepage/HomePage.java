@@ -117,11 +117,11 @@ public class HomePage extends LoadableComponent<HomePage> {
 	private WebElement verifyJumpPage;
 	@FindBy(id = "planListTable_data")
 	private WebElement planListData;
-	@FindBy(className = "planheading")
+	@FindBy(xpath = "//h2[text()='Plan analytics']")
 	private WebElement planAnalytics;
-	@FindBy(xpath = "(.//*[contains(@class,'planinfopanel')])[2]")
+	@FindBy(xpath = "//div[@id='PlanSummaryMain']//div/div[2]/div[2]//table/thead/tr[1]/th[1]/child::h2")
 	private WebElement planinfoAndStatus;
-	@FindBy(xpath = "(//h2[text() = 'Funds'])[1]")
+	 @FindBy(xpath = "//div[@id='PlanSummaryMain']//div/div[2]/div[4]//table[1]/thead/tr/th[1]/child::h2")
 	private WebElement funds;
 	@FindBy(xpath = ".//*[@id='newMenu']/li[1]/a/following-sibling::ul//a[contains(text(),'Overview')]")
 	private WebElement PlanOverviewTab;
