@@ -507,6 +507,20 @@ public class HomePage extends LoadableComponent<HomePage> {
 		}
 		return planTextDisplayed;
 	}
+	public boolean searchPlanWithSpace(){
+		try{
+			Web.actionsClickOnElement(searchPlansInput);
+			Web.setTextToTextBox(searchPlansInput,
+					"     ");
+			Thread.sleep(3000);
+			Web.clickOnElement(searchPlanButton);
+			Thread.sleep(2000);
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 	public boolean verifyErrorText() {
 		boolean errorVerified = false;

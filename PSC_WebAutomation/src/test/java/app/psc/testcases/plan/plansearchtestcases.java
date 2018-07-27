@@ -133,7 +133,8 @@ public class plansearchtestcases {
 			homePage = new HomePage(new LoginPage(), false, new String[] {
 					Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password") }).get();
-			if (homePage.searchPlan() && homePage.verifyErrorText()) {
+			//if (homePage.searchPlan() && homePage.verifyErrorText()) {
+			if (homePage.searchPlanWithSpace() && homePage.verifyErrorText()) {
 				Reporter.logEvent(
 						Status.PASS,
 						"Verify user is promted with error message if plan number is empty",
