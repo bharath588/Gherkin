@@ -230,8 +230,21 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 	/*
 	 * Web Elements for Re finance test cases
 	 */
-	@FindBy(id = "MORTGAGE_img")
+	@FindBy(id = ".//*[@id='loanTypeValue-MORTGAGE']")
 	private WebElement Principal_residence_radio_btn;
+	
+	/*
+	 * Web Elements for General Purpose Radio Button.
+	 */
+	@FindBy(xpath = ".//*[@id='GENERAL_img']")
+	private WebElement General_purpose_radio_btn_checked;
+	/*
+	 * Web Elements for General Purpose Radio Button.
+	 */
+	@FindBy(xpath = ".//*[@id='loanTypeValue-GENERAL']/preceding-sibling::div")
+	private WebElement General_purpose_radio_btn;
+	
+	
 
 	@FindBy(id = "ajaxErrorRecalculate")
 	private WebElement Refinancing_msg;
@@ -476,9 +489,9 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 	
 	@FindBy(xpath= ".//ul[@class='bullet-list'] //li[contains(text(),'Unable to locate an account balance')]")
 	private WebElement accountBalErrorMsg;
-	
+	/*
 	@FindBy(id="availableToBorrowAmount-MORTGAGE")
-	private WebElement howIsCalculatedLink;
+	private WebElement howIsCalculatedLink;*/
 	
 	@FindBy(id = "interestRateTooltipMORTGAGE")
 	private WebElement intrestRate;
@@ -534,6 +547,33 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 	
 	@FindBy(xpath = ".//input[@name='updateRecord']")
 	private WebElement updateAddressCheckbox;
+	
+	@FindBy(id = "mailingName1Label")
+	private WebElement mailingName;
+	
+	@FindBy(id = "firstLineMailing")
+	private WebElement firstLineMailingAddress;
+	
+	@FindBy(id = "cityState")
+	private WebElement secondLineMailingAddress;
+	
+	@FindBy(id = "zip")
+	private WebElement zipCode;
+	
+	@FindBy(xpath = ".//b[contains(text(),'Available to borrow')]")
+	private WebElement availableToBorrow;
+	
+	@FindBy(xpath = ".//*[@id='loanTypeGeneral']/div[1]/div[1]")
+	private WebElement asOfText;
+	
+	@FindBy(xpath = ".//span[@id='availableToBorrowAmount-GENERAL']/following-sibling::a")
+	private WebElement howIscalculatedLink;
+	
+	@FindBy(xpath = ".//div[@class='panel-heading']")
+	private WebElement loanCalculationWorkSheet;
+	
+	@FindBy(xpath = "//b[contains(text(),'Minimum loan amount')]/parent::div/following-sibling::div")
+	private WebElement minimumLoanAmount;
 	
 	ParticipantHome participantHomeObj;
 
@@ -2750,9 +2790,9 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		// Select loanType as PrincipalResidence.
 		Web.clickOnElement(principalResidence);
 		
-		Web.waitForElement(howIsCalculatedLink);
+		Web.waitForElement(howIscalculatedLink);
 		// Verify LoanCalculated link present under loan structure overview.
-		CommonLib.verifyIfWebElementPresent(howIsCalculatedLink, "LoanCalculated link should present under loan structure overview", true);
+		CommonLib.verifyIfWebElementPresent(howIscalculatedLink, "LoanCalculated link should present under loan structure overview", true);
 		
 		// Verify IntrestRate should displayed under loan structure overview section.
 		CommonLib.verifyIfWebElementTextPresent(intrestRate, Stock.GetParameterValue("IntrestRate"),"IntrestRate should displayed under loan structure overview section");
@@ -2849,4 +2889,76 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 						"Participant's plan balance does not meet the minimum amount required by the plan to take a loan  exception message should display on UI.");*/
 		Web.clickOnElement(menuSearch);
 	}
+	
+	/**
+	 * Method to verify select loan field.
+	 */
+	public void verifySelectLoanField(){
+		// Check if general purpose and and principal residence radio buttons are displayed on loan request page.
+		CommonLib.verifyIfWebElementPresent(General_purpose_radio_btn, "General purpose radio button should displayed on a loan request page" , true);
+		CommonLib.verifyIfWebElementPresent(Principal_residence_radio_btn, "Principal Residence radio button should displayed on a loan request page" , true);
+		
+		//Check if General Purpose radio button checked or not.
+		CommonLib.verifyIfWebElementPresent(General_purpose_radio_btn_checked, "General Purpose radio button is checked", true);
+	}
+	
+	/**
+	 * Method to validate contact information.
+	 */
+	public void verifyContactInformation(){
+		// Verify Mailing Name in loan request page under Confirm Contact information section.
+		CommonLib.verifyIfWebElementTextPresent(mailingName, Stock.GetParameterValue("MailingName"), "MailingName");
+		
+		// Verify FirstLine Mailing Address in loan request page under Confirm Contact information section.
+		CommonLib.verifyIfWebElementTextPresent(firstLineMailingAddress, Stock.GetParameterValue("FirstLineMailingAddress"), "FirstLineMailingAddress");
+		
+		// Verify SecondLine Mailing Address in loan request page under Confirm Contact information section.
+		CommonLib.verifyIfWebElementTextPresent(secondLineMailingAddress, Stock.GetParameterValue("SecondLineMailingAddress"), "SecondLineMailingAddress");
+		
+		// Verify ZipCode in loan request page under Confirm Contact information section.
+		CommonLib.verifyIfWebElementTextPresent(zipCode, Stock.GetParameterValue("ZipCode"), "ZipCode");
+			
+	}
+	
+	/**
+	 * Method to verify Loan Structure overview section.
+	 */
+	public void verifyLoanStructureOverviewSection(){
+		// Verify Available To Borrow field under loan structure overview section.
+		CommonLib.verifyIfWebElementPresent(availableToBorrow, "availableToBorrow field should present in loan request page under loan structure overview section", true);
+		
+		// Verify As of text field under loan structure overview section.
+		CommonLib.verifyIfWebElementPresent(asOfText, "as of text  should present in loan request page under loan structure overview section", true);
+				
+		// Verify HowIsCalculeted? link under loan structure overview section.
+		CommonLib.verifyIfWebElementPresent(asOfText, "HowIsCalculeted? link should present in loan request page under loan structure overview section", true);
+					
+		// Click on HowIsCalculeted? link under loan structure overview section.
+		Web.clickOnElement(howIscalculatedLink);
+		
+		// Verify Clicking on howIsCalculated ink will take you to loan calculated work sheet page.
+		CommonLib.verifyIfWebElementPresent(loanCalculationWorkSheet, "Loan calculated work sheet page should displayed.", true);
+		
+		// Verify minimum loan amount under loan structure overview section.
+		CommonLib.verifyIfWebElementTextPresent(minimumLoanAmount,Stock.GetParameterValue("MinimumLoanAmount"), "Minimum laoan amound should display under loan structure overview section");
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -1678,8 +1678,129 @@ public class LoanRequestTestCases {
 				e1.printStackTrace();
 			}
 		}
+		}
+		
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TESTCASE:  Paperless Loan_Loan Request_Select a Loan Field-Core-22821
+		 * DESCRIPTION: Paperless Loan_Loan Request_Select a Loan Field    
+		 * RETURNS:   VOID   
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author: Saraswathi   Date : 20-07-18  
+		 * 
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * 
+		 * @param <br>
+		 *            CSAS Credential</br>
+		 */
+		@Test(dataProvider = "setData")
+		public void CORE_22821_PaperlessLoan_LoanRequest_SelectALoanField(int itr,
+				Map<String, String> testdata) {
+
+			try {
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+				LoanRequestPage = new LoanRequest();
+				LoanRequestPage.get();
+				LoanRequestPage.verifySelectLoanField();
+				
+
+			} catch (Exception e) {
+				handleFailure(e);
+			} catch (Error ae) {
+				handleError(ae);
+			} finally {
+				try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+	}
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TESTCASE:  Paperless Loan_Loan Request_Confirm Contact Information-Core-22825
+		 * DESCRIPTION: Paperless Loan_Loan Request_Confirm Contact Information 
+		 * RETURNS:   VOID   
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author: Saraswathi   Date : 24-07-18  
+		 * 
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * 
+		 * @param <br>
+		 *            CSAS Credential</br>
+		 */
+		@Test(dataProvider = "setData")
+		public void CORE_22825_PaperlessLoan_LoanRequest_ConfirmContactInformation(int itr,
+				Map<String, String> testdata) {
+
+			try {
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+				LoanRequestPage = new LoanRequest();
+				LoanRequestPage.get();
+				LoanRequestPage.verifyContactInformation();
+				
+
+			} catch (Exception e) {
+				handleFailure(e);
+			} catch (Error ae) {
+				handleError(ae);
+			} finally {
+				try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
 	}
 
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TESTCASE:  Paperless Loan_Loan Request_Loan Structure Overview Section_1 Core-22813
+		 * DESCRIPTION: Paperless Loan_Loan Request_Confirm Contact Information 
+		 * RETURNS:   VOID   
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author: Saraswathi   Date : 27-07-18  
+		 * 
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * 
+		 * @param <br>
+		 *            CSAS Credential</br>
+		 */
+		@Test(dataProvider = "setData")
+		public void CORE_22813_PaperlessLoan_LoanRequest_LoanStructureOverviewSection_1(int itr,
+				Map<String, String> testdata) {
+
+			try {
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+				LoanRequestPage = new LoanRequest();
+				LoanRequestPage.get();
+				LoanRequestPage.verifyLoanStructureOverviewSection();
+				
+
+			} catch (Exception e) {
+				handleFailure(e);
+			} catch (Error ae) {
+				handleError(ae);
+			} finally {
+				try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+	}
 
 
 }

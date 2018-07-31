@@ -8,8 +8,165 @@
 	<test name="Regression Suite">
 
 	<classes> 
+	<class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
+				<methods>
+					<include
+						name="CORE_22825_PaperlessLoan_LoanRequest_ConfirmContactInformation">
+						<parameter name="ManualTCName"
+							value="CORE_22825_PaperlessLoan_LoanRequest_ConfirmContactInformation"></parameter>
+					</include>
+					<include
+						name="CORE_22813_PaperlessLoan_LoanRequest_LoanStructureOverviewSection_1">
+						<parameter name="ManualTCName"
+							value="CORE_22813_PaperlessLoan_LoanRequest_LoanStructureOverviewSection_1"></parameter>
+					</include>
+					<include
+						name="CORE_22821_PaperlessLoan_LoanRequest_SelectALoanField">
+						<parameter name="ManualTCName"
+							value="CORE_22821_PaperlessLoan_LoanRequest_SelectALoanField"></parameter>
+					</include>
+
+				</methods>
+			</class> 
 	
-       
+				<!-- <class name="app.csas.testcases.loanquotepage.validate_loanquotepage">
+				<methods>
+					<include
+						name="Validate_Message_for_Selected_Loan_and_Request_Loan_Quote">
+						<parameter name="ManualTCName"
+							value="Validate_Message_for_Selected_Loan_and_Request_Loan_Quote"></parameter>
+					</include>
+					<include name="Validate_Selected_Loan_Type_Details">
+						<parameter name="ManualTCName" value="Validate_Selected_Loan_Type_Details"></parameter>
+					</include>
+				</methods>
+			</class>  -->
+		
+	 <!-- <class name="app.csas.testcases.aagaccountaccess.AAGAccountAccessTestCases">
+				<methods>
+					  <include name="verifyFinancialEngines_ProspectUser">
+						<parameter name="ManualTCName"
+							value="verifyFinancialEngines_ProspectUser"></parameter>
+				</include> 
+				 <include name="verifyAdvisoryServicesTitle_GuidenceUser">
+						<parameter name="ManualTCName"
+							value="verifyAdvisoryServicesTitle_GuidenceUser"></parameter>
+				</include>
+				
+				</methods>
+			</class>   -->
+	<!-- <class name="app.csas.testcases.fundtofund.validate_fundtofundtransfer">
+				<methods>
+				<include name="Validate_Fund2Fund_Transfer_Restriction_Type_No">
+						<parameter name="ManualTCName" value="CSAS_PPT_Change_Fund_To_Fund_Trnfr_Fund_Restrictions_Message"></parameter>
+					</include>
+					<include name="Validate_Fund2Fund_Transfer_Restriction_Type_Yes">
+						<parameter name="ManualTCName" value="CSAS_PPT_Change_Fund_To_Fund_Trnfr_NO_Fund_Restrictions_Message"></parameter>
+					</include>
+					<include name="Validate_Fund_to_Fund_Basic_Transfer">
+						<parameter name="ManualTCName" value="Basic_Transfer"></parameter>
+					</include>
+					<include name="Validate_Fund2Fund_Transfer_Restriction_Type_grtPriorDayBal">
+						<parameter name="ManualTCName" value="Trnf_with_Dollar_amt_greater_Prior_Day_balance"></parameter>
+					</include>
+				<include name="Validate_Fund2Fund_Transfer_Restriction_Type_grt100Per">
+						<parameter name="ManualTCName" value="Trnf_with_gtr_100_pct"></parameter>
+					</include>
+					<include name="Validate_Fund_to_Fund_Transfer">
+						<parameter name="ManualTCName" value="CSAS_PPT Change_Fund To Fund Trnfr_Invest Options"></parameter>
+					</include>
+					
+					<include name="Validate_Fund_to_Fund_Cancel_Transfer">
+						<parameter name="ManualTCName" value="Cancel_Transfer"></parameter>
+					</include>
+					
+				</methods>
+			</class> 
+	<class name="app.csas.testcases.rebalancer.validate_rebalancer">
+				<methods>
+					<include name="Perform_and_validate_Rebalancer_transferRestriction">
+						<parameter name="ManualTCName" value="CSAS_PPT Change_Custom_Xfer_&amp;_Renewal_Rebalancer_Transfer_Restrictions_display"></parameter>
+					</include>
+					<include name="Perform_and_validate_Rebalancer_Checkbox">
+						<parameter name="ManualTCName" value="CSAS_PPT_Change_Custom_Xfer_&amp;_Renewal_Rebalancer_Redirect_Future_Contribution_Checkbox"></parameter>
+					</include>
+				</methods>
+				
+			</class> 
+	 -->
+		<!--  <class	name="app.csas.testcases.disbursementhistory.validate_disbursementhistory">
+				<methods>
+					<include name="Verify_DIH_PaymentHistory">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Disbursement_Histroy_Payment_History"></parameter>
+					</include>
+				<include name="Verify_DIH_Vesting">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Disbursement_Histroy_Vesting"></parameter>
+					</include>
+					<include name="Verify_DIH_ProcessingDetails">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Disbursement_Histroy_Processing_Details"></parameter>
+					</include> 
+				</methods>
+			</class>   -->
+		
+			<!-- 	<class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
+			<methods>
+				<include name="CORE_22821_PaperlessLoan_LoanRequest_SelectALoanField"> 
+						<parameter name="ManualTCName" value="CORE_22821_PaperlessLoan_LoanRequest_SelectALoanField" />
+					</include>
+				<include name="DDTC_25954_Paperless_Loan_Exceptions"> 
+						<parameter name="ManualTCName" value="DDTC_25954_Paperless_Loan_Exceptions" />
+					</include>
+					<include name="CSAS_Paperless_Loan_TC02_DDTC_26947">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_DeliverForm" />
+					</include>												
+					<include name="CSAS_Paperless_Loan_LoanRequest_Back_Hyperlink_TC20_DDTC_24665">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_Back_Hyperlink"/>						
+					 </include> 
+					 					<include name="CSAS_Paperless_Loan_TC10_DDTC_26925">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_Refinance_LoanTerm"/>						
+					</include>  
+				 	<include name="CSAS_Paperless_Loan_Exceptions_TC12_DDTC_26082">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_Exceptions_Refinance"/>						
+					</include>		
+					<include name="CSAS_Paperless_Loan_LoanRequest_TC22_DDTC_26093">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyEligibleCheckBoxes"/>						
+					</include>	
+					 <include name="CSAS_Paperless_Loan_HappyPath_TC14_DDTC_27970">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_DeliverForm"/>						
+					</include>	
+					<include name="CSAS_Paperless_Loan_HappyPath_TC18_DDTC_27976">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_ACH"/>						
+					</include> 
+					
+					<include name="CSAS_Paperless_Loan_TC06_DDTC_26083">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_Refinance_MultipleLoans"/>						
+					</include>			 
+					<include name="CSAS_Paperless_Loan_TC04_DDTC_26942">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_EditAddress"/>						
+					</include> 			
+					<include name="CSAS_Paperless_Loan_TC08_DDTC_26084">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_Refinance_MaxLoans"/>						
+					</include>	
+					 <include name="CSAS_Paperless_Loan_HappyPath_TC16_DDTC_27971">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_LoanRequest"/>						
+					</include>																				
+				<include name="CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanRefinancing_NO_AddtnlAmount"/>						
+					</include>	
+			<include name="PaperlessLoan_LoanRequest_ConfirmContactInformation_PDI_No_CORE_22807"> 
+						<parameter name="ManualTCName" value="CSAS_ConfirmContactInformation_PDI_No" />
+					</include>   
+	 
+					
+			
+			  </methods>
+			    </class>-->
+		
+	
+       <!-- 
             <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
                 <methods>
                     <include name="Validate_Employment_Status_As_Active_Or_Terminated"/>
@@ -88,7 +245,7 @@
 				</include>
 				
 				</methods>
-			</class>  
+			</class>   -->
         </classes>
         </test>
 			
