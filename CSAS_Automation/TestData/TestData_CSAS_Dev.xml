@@ -1180,6 +1180,20 @@ ORDER BY wb.ga_id,
 				
 			</Iteration>
 		</TestCase>
+		<TestCase name="CORE_22789_PaperlessLoan_LoanRequest_LoanStructureOverviewSection_2">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="11291658" />
+				<parameter name="CurrentRateIntrest" value="4.250% (4.250% = PRIME + 1.000%)" />
+				<parameter name="CurrentRateDate" value="01-FEB-2014 to N/A" />
+				<parameter name="NotApplicableText" value="N/A" />
+				<parameter name="FixedText" value="FIXED" />
+				<parameter name="GeneralPurposeLoanTerm" value="12 - 60 Months" />
+				<parameter name="MotorGageLoanTerm" value="61 - 180 Months" />
+				
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="onlineenrollment">
 		<TestCase name="ValidateGrpId">

@@ -1801,6 +1801,47 @@ public class LoanRequestTestCases {
 				}
 			}
 	}
+		
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TESTCASE:  Paperless Loan_Loan Request_Loan Structure Overview Section_2 Core-22789
+		 * DESCRIPTION: Paperless Loan_Loan Request_Loan Structure Overview Section_2 
+		 * RETURNS:   VOID   
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author: Saraswathi   Date :31-07-18  
+		 * 
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * 
+		 * @param <br>
+		 *            CSAS Credential</br>
+		 */
+		@Test(dataProvider = "setData")
+		public void CORE_22789_PaperlessLoan_LoanRequest_LoanStructureOverviewSection_2(int itr,
+				Map<String, String> testdata) {
+
+			try {
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+				LoanRequestPage = new LoanRequest();
+				LoanRequestPage.get();
+				LoanRequestPage.verifyLoanStructureOverviewSection_2();
+				
+
+			} catch (Exception e) {
+				handleFailure(e);
+			} catch (Error ae) {
+				handleError(ae);
+			} finally {
+				try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+	}
 
 
 }

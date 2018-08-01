@@ -13,6 +13,7 @@ import org.apache.commons.lang3.Range;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.SendKeysAction;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -489,9 +490,9 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 	
 	@FindBy(xpath= ".//ul[@class='bullet-list'] //li[contains(text(),'Unable to locate an account balance')]")
 	private WebElement accountBalErrorMsg;
-	/*
-	@FindBy(id="availableToBorrowAmount-MORTGAGE")
-	private WebElement howIsCalculatedLink;*/
+	
+	@FindBy(xpath=".//a[@id='interestRateTooltipGENERAL']")
+	private WebElement intrestRateLink;
 	
 	@FindBy(id = "interestRateTooltipMORTGAGE")
 	private WebElement intrestRate;
@@ -575,6 +576,25 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 	@FindBy(xpath = "//b[contains(text(),'Minimum loan amount')]/parent::div/following-sibling::div")
 	private WebElement minimumLoanAmount;
 	
+	@FindBy(xpath = ".//*[@id='interestRateTooltipValueGENERAL']/table/tbody/tr[1]/td[2]")
+	private WebElement Currentinterestrate;
+	
+	@FindBy(xpath = ".//*[@id='interestRateTooltipValueGENERAL']/table/tbody/tr[2]/td[2]")
+	private WebElement CurrentRateDate;
+	
+	@FindBy(xpath = ".//*[@id='interestRateTooltipValueGENERAL']/table/tbody/tr[3]/td[2]")
+	private WebElement fixedText;
+	
+	@FindBy(xpath = ".//*[@id='interestRateTooltipValueGENERAL']/table/tbody/tr[4]/td[2]")
+	private WebElement notApplicableText;
+	@FindBy(xpath = ".//*[@id='loanTypeGeneral']/div[4]/div[2]")
+	private WebElement generalPurposeTerm;
+	@FindBy(xpath = ".//*[@id='loanTypeGeneral']/div[5]/div[2]")
+	private WebElement motorGageTerm;
+	
+	
+	
+		
 	ParticipantHome participantHomeObj;
 
 	@Override
@@ -2943,6 +2963,26 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		CommonLib.verifyIfWebElementTextPresent(minimumLoanAmount,Stock.GetParameterValue("MinimumLoanAmount"), "Minimum laoan amound should display under loan structure overview section");
 		
 	}
+	
+	/**
+	 * Method to verify Loan Structure overview section_2.
+	 */
+	public void verifyLoanStructureOverviewSection_2(){
+		// Click on Intrest rate and verify the details.
+		Actions builder = new Actions(Web.getDriver());
+		builder.moveToElement(intrestRateLink).build().perform();
+		
+		// Verify current rate interest details.
+		CommonLib.verifyIfWebElementTextPresent(Currentinterestrate, Stock.GetParameterValue("CurrentRateIntrest"), "Current rate intrest should display on mouse over screen");
+		CommonLib.verifyIfWebElementTextPresent(CurrentRateDate, Stock.GetParameterValue("CurrentRateDate"), "Current rate date should display on mouse over screen");
+		CommonLib.verifyIfWebElementTextPresent(fixedText, Stock.GetParameterValue("FixedText"), "Fixed text should display on mouse over screen");
+		CommonLib.verifyIfWebElementTextPresent(notApplicableText, Stock.GetParameterValue("NotApplicableText"), "Not Applicable text should display on mouse over screen");
+		
+		// Verify general purpose and motorgage loan term details.
+		CommonLib.verifyIfWebElementTextPresent(generalPurposeTerm, Stock.GetParameterValue("GeneralPurposeLoanTerm"), "Loan Type should dispalyed");
+		CommonLib.verifyIfWebElementTextPresent(motorGageTerm, Stock.GetParameterValue("MotorGageLoanTerm"), "Loan Type should dispalyed");
+	}
+	
 	
 	
 	

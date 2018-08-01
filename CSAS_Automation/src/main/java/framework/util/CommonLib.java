@@ -131,10 +131,10 @@ public class CommonLib {
 	public static void verifyIfWebElementTextPresent(WebElement ele, String expectedText,String sMsg){
 		// Check if webelement contains expected text or not
 		String actual = ele.getText();
-		if(ele.getText().equalsIgnoreCase(expectedText)){
-			Reporter.logEvent(Status.PASS,sMsg ,expectedText,true);
+		if(actual.equalsIgnoreCase(expectedText)){
+			Reporter.logEvent(Status.PASS,"Expected webelement text is :" +expectedText+"Actual webelement text is "+actual ,expectedText,true);
 		}else{
-			Reporter.logEvent(Status.FAIL,sMsg,expectedText, true);
+			Reporter.logEvent(Status.FAIL,"Expected webelement text is :" +expectedText+"Actual webelement text is "+actual,expectedText, true);
 		}
 		}
 	
