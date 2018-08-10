@@ -8,9 +8,26 @@
 	<test name="Regression Suite">
 
 	<classes> 
+	
 	<class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
 				<methods>
-					<include
+			
+				<include
+						name="CORE_22826_PaperlessLoan_LoanRequest_First_PaymentDate_ErrorMessage">
+						<parameter name="ManualTCName"
+							value="CORE_22826_PaperlessLoan_LoanRequest_First_PaymentDate_ErrorMessage"></parameter>
+					</include>
+					</methods>
+			</class>
+		<!--  <class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
+				<methods>
+			
+				<include
+						name="CORE_22789_PaperlessLoan_LoanRequest_LoanStructureOverviewSection_2">
+						<parameter name="ManualTCName"
+							value="CORE_22789_PaperlessLoan_LoanRequest_LoanStructureOverviewSection_2"></parameter>
+					</include>
+				<include
 						name="CORE_22825_PaperlessLoan_LoanRequest_ConfirmContactInformation">
 						<parameter name="ManualTCName"
 							value="CORE_22825_PaperlessLoan_LoanRequest_ConfirmContactInformation"></parameter>
@@ -24,10 +41,10 @@
 						name="CORE_22821_PaperlessLoan_LoanRequest_SelectALoanField">
 						<parameter name="ManualTCName"
 							value="CORE_22821_PaperlessLoan_LoanRequest_SelectALoanField"></parameter>
-					</include>
+					</include> 
 
 				</methods>
-			</class> 
+			</class> -->
 	
 				<!-- <class name="app.csas.testcases.loanquotepage.validate_loanquotepage">
 				<methods>
@@ -55,7 +72,7 @@
 				
 				</methods>
 			</class>   -->
-	<!-- <class name="app.csas.testcases.fundtofund.validate_fundtofundtransfer">
+<!-- 	<class name="app.csas.testcases.fundtofund.validate_fundtofundtransfer">
 				<methods>
 				<include name="Validate_Fund2Fund_Transfer_Restriction_Type_No">
 						<parameter name="ManualTCName" value="CSAS_PPT_Change_Fund_To_Fund_Trnfr_Fund_Restrictions_Message"></parameter>
@@ -92,8 +109,8 @@
 					</include>
 				</methods>
 				
-			</class> 
-	 -->
+			</class>  -->
+	
 		<!--  <class	name="app.csas.testcases.disbursementhistory.validate_disbursementhistory">
 				<methods>
 					<include name="Verify_DIH_PaymentHistory">
@@ -111,9 +128,21 @@
 				</methods>
 			</class>   -->
 		
-			<!-- 	<class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
+			<!--	<class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
 			<methods>
-				<include name="CORE_22821_PaperlessLoan_LoanRequest_SelectALoanField"> 
+					 <include name="CSAS_Paperless_Loan_HappyPath_TC14_DDTC_27970">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_DeliverForm"/>						
+					</include>	
+					<include name="CSAS_Paperless_Loan_HappyPath_TC18_DDTC_27976">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_ACH"/>						
+					</include> 
+					<include name="CSAS_Paperless_Loan_LoanRequest_Back_Hyperlink_TC20_DDTC_24665">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_Back_Hyperlink"/>
+						
+							
+											
+					 </include> 
+			 <include name="CORE_22821_PaperlessLoan_LoanRequest_SelectALoanField"> 
 						<parameter name="ManualTCName" value="CORE_22821_PaperlessLoan_LoanRequest_SelectALoanField" />
 					</include>
 				<include name="DDTC_25954_Paperless_Loan_Exceptions"> 
@@ -122,9 +151,7 @@
 					<include name="CSAS_Paperless_Loan_TC02_DDTC_26947">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_DeliverForm" />
 					</include>												
-					<include name="CSAS_Paperless_Loan_LoanRequest_Back_Hyperlink_TC20_DDTC_24665">
-						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_Back_Hyperlink"/>						
-					 </include> 
+					
 					 					<include name="CSAS_Paperless_Loan_TC10_DDTC_26925">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_Refinance_LoanTerm"/>						
 					</include>  
@@ -134,12 +161,7 @@
 					<include name="CSAS_Paperless_Loan_LoanRequest_TC22_DDTC_26093">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyEligibleCheckBoxes"/>						
 					</include>	
-					 <include name="CSAS_Paperless_Loan_HappyPath_TC14_DDTC_27970">
-						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_DeliverForm"/>						
-					</include>	
-					<include name="CSAS_Paperless_Loan_HappyPath_TC18_DDTC_27976">
-						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_ACH"/>						
-					</include> 
+					 
 					
 					<include name="CSAS_Paperless_Loan_TC06_DDTC_26083">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_Refinance_MultipleLoans"/>						
@@ -158,12 +180,15 @@
 					</include>	
 			<include name="PaperlessLoan_LoanRequest_ConfirmContactInformation_PDI_No_CORE_22807"> 
 						<parameter name="ManualTCName" value="CSAS_ConfirmContactInformation_PDI_No" />
-					</include>   
+					</include> 
+					</methods>
+			    </class>
+					
+					 -->  
 	 
 					
 			
-			  </methods>
-			    </class>-->
+			  
 		
 	
        <!-- 

@@ -121,7 +121,7 @@ public class LoanRequestTestCases {
 	}
 
 	@Test(dataProvider = "setData")
-	public void statement_order_update_confirmation(int itr,
+	public void CORE_22802_vieworder_statement_update_confirmation(int itr,
 			Map<String, String> testdata) throws InterruptedException {
 		try {
 			System.out.println("Testing update confirmation page");
@@ -167,7 +167,7 @@ public class LoanRequestTestCases {
 	}
 
 	@Test(dataProvider = "setData")
-	public void validating_vesting_field(int itr, Map<String, String> testdata)
+	public void CORE_24023_validating_vesting_field(int itr, Map<String, String> testdata)
 			throws InterruptedException {
 		try {
 			System.out.println("Validating the vesting field");
@@ -620,7 +620,7 @@ public class LoanRequestTestCases {
 	 *            CSAS Credential</br>
 	 */
 	@Test(dataProvider = "setData")
-	public void CSAS_Paperless_Loan_LoanRequest_Back_Hyperlink_TC20_DDTC_24665(
+	public void CORE_22790_Paperless_Loan_LoanRequest_Back_Hyperlink(
 			int itr, Map<String, String> testdata) {
 
 		try {
@@ -1534,7 +1534,7 @@ public class LoanRequestTestCases {
 	 *            CSAS Credential</br>
 	 */
 	@Test(dataProvider = "setData")
-	public void DDTC_26960_DDTC_26945_Paperless_LoanPaymentFrequenct_PaymentMethod(int itr,
+	public void DDTC_26960_DDTC_26945_CORE_22792_Paperless_LoanPaymentFrequenct_PaymentMethod(int itr,
 			Map<String, String> testdata) {
 
 		try {
@@ -1843,5 +1843,45 @@ public class LoanRequestTestCases {
 			}
 	}
 
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TESTCASE:  Paperless Loan_Loan Request_First Payment Date_Error Message- Core-22826
+		 * DESCRIPTION: Paperless Loan_Loan Request_First Payment Date_Error Message
+		 * RETURNS:   VOID   
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author: Saraswathi   Date :09-08-18  
+		 * 
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * 
+		 * @param <br>
+		 *            CSAS Credential</br>
+		 */
+		@Test(dataProvider = "setData")
+		public void CORE_22826_PaperlessLoan_LoanRequest_First_PaymentDate_ErrorMessage(int itr,
+				Map<String, String> testdata) {
+
+			try {
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+				LoanRequestPage = new LoanRequest();
+				LoanRequestPage.get();
+				LoanRequestPage.verifyFirstPaymentDateErrorMessage();
+				
+
+			} catch (Exception e) {
+				handleFailure(e);
+			} catch (Error ae) {
+				handleError(ae);
+			} finally {
+				try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+	}
 
 }

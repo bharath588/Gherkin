@@ -1,5 +1,9 @@
 package pageobjects;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,6 +13,7 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
+import org.apache.bcel.generic.GETSTATIC;
 import org.apache.commons.lang3.Range;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -156,6 +161,9 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 
 	@FindBy(id = "firstDueDateGENERAL")
 	private WebElement FirstPaymentDateTxtBox;
+	
+	@FindBy(xpath = ".//*[@id='ui-datepicker-div']/div[2]/button[2]")
+	private WebElement doneButton;
 
 	@FindBy(id = "borrowAmount-GENERAL")
 	private WebElement amount_to_borrow_txtBox;
@@ -587,14 +595,28 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 	
 	@FindBy(xpath = ".//*[@id='interestRateTooltipValueGENERAL']/table/tbody/tr[4]/td[2]")
 	private WebElement notApplicableText;
+	
 	@FindBy(xpath = ".//*[@id='loanTypeGeneral']/div[4]/div[2]")
 	private WebElement generalPurposeTerm;
+	
 	@FindBy(xpath = ".//*[@id='loanTypeGeneral']/div[5]/div[2]")
 	private WebElement motorGageTerm;
 	
+	@FindBy(xpath = ".//span[@id='calendarIcon-GENERAL']")
+	private WebElement datePicker;
 	
+	@FindBy(xpath = "//td[@class=' ui-datepicker-unselectable ui-state-disabled ']/span[contains(text(),'6')]")
+	private WebElement disabledDates;
 	
-		
+	@FindBy(xpath = "//td[@class=' ui-datepicker-days-cell-over  ui-datepicker-today']/a")
+	private WebElement currentDate ;
+	
+	@FindBy(xpath = ".//td[@class=' ui-datepicker-week-end ']")
+	private WebElement futureDates ;
+	
+	@FindBy(xpath = ".//*[@id='ajaxMessageAdd']")
+	private WebElement wr_529ErrorMsg ;
+	
 	ParticipantHome participantHomeObj;
 
 	@Override
@@ -1737,7 +1759,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 				"Amount has been changed in the amount to borrow text box: "
 						+ getMinAmount().toString(), false);
 
-		Web.selectDropnDownOptionAsIndex(bankAccountDropDown, "1");
+		//Web.selectDropnDownOptionAsIndex(bankAccountDropDown, "1");
 
 		Web.setTextToTextBox(amount_to_borrow_txtBox, getMinAmount().toString());
 
@@ -2983,7 +3005,42 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		CommonLib.verifyIfWebElementTextPresent(motorGageTerm, Stock.GetParameterValue("MotorGageLoanTerm"), "Loan Type should dispalyed");
 	}
 	
-	
+	/**
+	 * Method to verify FirstPaymentDate error message.
+	 */
+	public void verifyFirstPaymentDateErrorMessage(){
+		// verify Previous dates are in disabled state.
+		Web.clickOnElement(datePicker);
+		CommonLib.verifyIfWebElementPresent(disabledDates,"Previous dates are in disabled state", true);
+		
+		// verify current and future dates are in enabled state.
+		CommonLib.verifyIfWebElementPresent(currentDate, "Todays date in enabled state", true);
+		CommonLib.verifyIfWebElementPresent(futureDates, "Future dates are in enabled state", true);
+		
+		// Select firstPayment date greater than current date.
+		Web.selectDropDownOption(payment_frequency, "MONTHLY");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMMM-yyyy"); 
+		Calendar cal= Calendar.getInstance();
+	    cal.add(Calendar.DATE, 96);	
+	    Date date = cal.getTime();
+	    String newDate =formatter.format(date);
+		Web.setTextToTextBox(FirstPaymentDateTxtBox, newDate);
+		Web.clickOnElement(doneButton);
+		Web.setTextToTextBox(loan_term, "45");
+		Web.waitForElement(add_button);
+		Web.clickOnElement(add_button);
+		
+		// verify error message if payment date is greater  than 90 days.
+		Web.waitForElement(wr_529ErrorMsg);
+		String actualErrorMessage= Web.getWebElementText(wr_529ErrorMsg);
+		if(actualErrorMessage.contains(Stock.GetParameterValue("ErrorMessage"))){
+			Reporter.logEvent(Status.PASS, "Expected error message should dispay on loan request screen:"+actualErrorMessage,actualErrorMessage , false);
+			
+		}else{
+			Reporter.logEvent(Status.FAIL, "Expected error message should not dispayed on loan request screen:"+actualErrorMessage,actualErrorMessage , false);
+		}
+	}
+
 	
 	
 	

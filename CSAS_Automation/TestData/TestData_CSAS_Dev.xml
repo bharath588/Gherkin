@@ -712,7 +712,7 @@ ORDER BY wb.ga_id,
 	<!-- LOAN REQUEST MODULE -->
 
 	<Module name="loanRequest">
-		<TestCase name="csas_TC_16_Statement_Order_Update_Confirmation">
+		<TestCase name="CORE_22802_vieworder_statement_update_confirmation">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="Value" value="General Purpose" />
 				<parameter name="PPT_ID" value="3818031" />
@@ -811,7 +811,7 @@ ORDER BY wb.ga_id,
 				<parameter name="Mobile Phone" value="8220816396" />
 			</Iteration>
 		</TestCase>
-		<TestCase name="csas_TC_24_Validating_Vesting_Field">
+		<TestCase name="CORE_24023_validating_vesting_field">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="Value" value="General Purpose" />
 				<parameter name="PPT_ID" value="3818031" />
@@ -896,7 +896,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="12053669" />
+				<parameter name="PPT_ID" value="11291658" />
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
 				<parameter name="PersonalEmail" value="discard@gwl.com" />
@@ -906,7 +906,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="12053669" />		<!-- 10824079, 11300720 -->
+				<parameter name="PPT_ID" value="11291658" />		<!-- 10824079, 11300720 -->
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
 				<parameter name="PersonalEmail" value="discard@gwl.com" />
@@ -916,7 +916,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="12053669" /><!-- inst 7305060 
+				<parameter name="PPT_ID" value="11291658" /><!-- inst 7305060 
 					pnp -->
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
@@ -1006,7 +1006,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="3818031" />
+				<parameter name="PPT_ID" value="12948872" />
 				<parameter name="ExceptionMessage" value="Participant has Pending Loan WR_487" />
 			</Iteration>
 		</TestCase>
@@ -1084,7 +1084,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="3818031" />
+				<parameter name="PPT_ID" value="12948872" />
 				<parameter name="ExceptionMessage" value="Individual has an outstanding Promissory Note WR_489" />
 				
 			</Iteration>
@@ -1109,7 +1109,7 @@ ORDER BY wb.ga_id,
 				<parameter name="loanHistoryPageURL" value="loanInfoPORTAL" />
 			</Iteration>
 		</TestCase>	
-		<TestCase name="DDTC_26960_DDTC_26945_Paperless_LoanPaymentFrequenct_PaymentMethod">
+		<TestCase name="DDTC_26960_DDTC_26945_CORE_22792_Paperless_LoanPaymentFrequenct_PaymentMethod">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
@@ -1191,6 +1191,18 @@ ORDER BY wb.ga_id,
 				<parameter name="FixedText" value="FIXED" />
 				<parameter name="GeneralPurposeLoanTerm" value="12 - 60 Months" />
 				<parameter name="MotorGageLoanTerm" value="61 - 180 Months" />
+				
+			</Iteration>
+		</TestCase>
+		
+		<TestCase name="CORE_22826_PaperlessLoan_LoanRequest_First_PaymentDate_ErrorMessage">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="5470329" />
+				<parameter name="ErrorMessage" value="Date entered is more than 90 days from the Disbursement Effective Date.WR_529" />
+				<parameter name="LoanTerm" value="45" />
+				
 				
 			</Iteration>
 		</TestCase>
