@@ -1206,6 +1206,17 @@ ORDER BY wb.ga_id,
 				
 			</Iteration>
 		</TestCase>
+		<TestCase name="CORE_22779_PaperlessLoan_Exceptions_CORE_10709">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="SSN" value="830422913" />
+				<parameter name="ErrorMessage" value="Date entered is more than 90 days from the Disbursement Effective Date.WR_529" />
+				<parameter name="LoanTerm" value="45" />
+				
+				
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="onlineenrollment">
 		<TestCase name="ValidateGrpId">

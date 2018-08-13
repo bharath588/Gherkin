@@ -165,6 +165,37 @@
 					<include name="DDTC_26926_Paperless_Loan_Exceptions"> 
 						<parameter name="ManualTCName" value="DDTC_26926_Paperless_Loan_Exceptions" />
 					</include> 
+					<include
+						name="CORE_22779_PaperlessLoan_Exceptions_CORE_10709">
+						<parameter name="ManualTCName"
+							value="CORE_22779_PaperlessLoan_Exceptions_CORE_10709"></parameter>
+					</include>
+				 <include
+						name="CORE_22826_PaperlessLoan_LoanRequest_First_PaymentDate_ErrorMessage">
+						<parameter name="ManualTCName"
+							value="CORE_22826_PaperlessLoan_LoanRequest_First_PaymentDate_ErrorMessage"></parameter>
+					</include>
+					
+					<include
+						name="CORE_22789_PaperlessLoan_LoanRequest_LoanStructureOverviewSection_2">
+						<parameter name="ManualTCName"
+							value="CORE_22789_PaperlessLoan_LoanRequest_LoanStructureOverviewSection_2"></parameter>
+					</include>
+					<include
+						name="CORE_22825_PaperlessLoan_LoanRequest_ConfirmContactInformation">
+						<parameter name="ManualTCName"
+							value="CORE_22825_PaperlessLoan_LoanRequest_ConfirmContactInformation"></parameter>
+					</include>
+					<include
+						name="CORE_22813_PaperlessLoan_LoanRequest_LoanStructureOverviewSection_1">
+						<parameter name="ManualTCName"
+							value="CORE_22813_PaperlessLoan_LoanRequest_LoanStructureOverviewSection_1"></parameter>
+					</include>
+					<include
+						name="CORE_22821_PaperlessLoan_LoanRequest_SelectALoanField">
+						<parameter name="ManualTCName"
+							value="CORE_22821_PaperlessLoan_LoanRequest_SelectALoanField"></parameter>
+					</include> 
 			
 			  </methods>
 			 </class>

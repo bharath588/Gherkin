@@ -119,7 +119,14 @@ public class LoanRequestTestCases {
 			}
 		}
 	}
-
+	
+	/**
+	 * test case to verify view order statement information.
+	 * @param itr
+	 * @param testdata
+	 * @throws InterruptedException
+	 * Author: Saraswathi    Date : 06-08-18  
+	 */
 	@Test(dataProvider = "setData")
 	public void CORE_22802_vieworder_statement_update_confirmation(int itr,
 			Map<String, String> testdata) throws InterruptedException {
@@ -165,7 +172,14 @@ public class LoanRequestTestCases {
 			}
 		}
 	}
-
+	
+	/**
+	 * test case to validate vesting field.
+	 * @param itr
+	 * @param testdata
+	 * @throws InterruptedException
+	 * Author: Saraswathi    Date : 03-08-18  
+	 */
 	@Test(dataProvider = "setData")
 	public void CORE_24023_validating_vesting_field(int itr, Map<String, String> testdata)
 			throws InterruptedException {
@@ -1869,6 +1883,50 @@ public class LoanRequestTestCases {
 				LoanRequestPage = new LoanRequest();
 				LoanRequestPage.get();
 				LoanRequestPage.verifyFirstPaymentDateErrorMessage();
+				
+
+			} catch (Exception e) {
+				handleFailure(e);
+			} catch (Error ae) {
+				handleError(ae);
+			} finally {
+				try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+	}
+		
+
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TESTCASE:  Paperless Loan_Exceptions_CORE_10709
+		 * DESCRIPTION: Paperless Loan_Exceptions_CORE_10709
+		 * RETURNS:   VOID   
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author: Saraswathi   Date :10-08-18  
+		 * 
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * 
+		 * @param <br>
+		 *            CSAS Credential</br>
+		 */
+		@Test(dataProvider = "setData")
+		public void CORE_22779_PaperlessLoan_Exceptions_CORE_10709(int itr,
+				Map<String, String> testdata) {
+
+			try {
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+				participantHomeObj= new ParticipantHome();
+				participantHomeObj.gotoParticipantHomePage();
+				LoanRequestPage = new LoanRequest();
+				LoanRequestPage.gotoLoanRequestPage();
+				LoanRequestPage.verifyOutstandingLoanRefinance();
 				
 
 			} catch (Exception e) {

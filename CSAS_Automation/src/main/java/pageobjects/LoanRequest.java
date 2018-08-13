@@ -672,6 +672,36 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		}
 
 	}
+	public void gotoLoanRequestPage(){
+		Web.mouseHover(menuPPTChanges);
+		if (Web.isWebElementDisplayed(menuLoanRequest)) {
+			Web.clickOnElement(menuLoanRequest);
+
+			Web.waitForElement(inputBorrowAmount);
+
+			// Web.waitForPageToLoad(Web.getDriver());
+			// Web.getDriver().manage().timeouts().pageLoadTimeout(10,TimeUnit.SECONDS);
+
+			if (Web.isWebElementDisplayed(loanRequest, true)) {
+				Reporter.logEvent(Status.PASS,
+						"Check if Loan Request page displayed or not",
+						"Loan Request page displyed successfully", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Check if Loan Request page displayed or not",
+						"Loan Request didn't get displayed successfully",
+						true);
+			}
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Check if Loan Request Link on Participant Changes tab displayed or not",
+					" Loan Request Link on Participant Changes tab didn't get displayed successfully",
+					true);
+		}
+
+	} 
+	
 
 	/*
 	 * @Author : Megha
@@ -3040,6 +3070,96 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			Reporter.logEvent(Status.FAIL, "Expected error message should not dispayed on loan request screen:"+actualErrorMessage,actualErrorMessage , false);
 		}
 	}
+	
+	/**
+	 * Method to verify outstanding  loan refinance.
+	 */
+	public void verifyOutstandingLoanRefinance(){
+		if (Web.isWebElementDisplayed(refinance_loans, true)) {
+			Reporter.logEvent(
+					Status.INFO,
+					"Verifying participant has maximum outstanding loans",
+					"Outstanding loans section is displayed, participant has maximum outstanding loans",
+					false);
+
+			Web.clickOnElement(eligible_chk_box);
+			Reporter.logEvent(Status.INFO,
+					"Clicking on Eligible Check box to Refinance Loans",
+					"Loan has been selected for Refinancing", false);
+
+			Web.clickOnElement(select_refinance_btn);
+			Reporter.logEvent(Status.INFO,
+					"Submitting selected loans for Refinancing",
+					"Selected loans for Refinancing are submitted", false);
+
+			Web.setTextToTextBox(add_additional_loan_txtbox, getMinAmount()
+					.toString());
+			
+
+			Web.clickOnElement(add_additional_loan_btn);
+			Reporter.logEvent(Status.INFO,
+					"Adding additional Loan amount and Viewing Quick quotes ",
+					"New Loan Quotes is displayed", false);
+
+			wait(2000);
+			Web.clickOnElement(addtn_amt_loan_quote);
+			Reporter.logEvent(Status.INFO, "Selecting a loan quote",
+					"One loan quote has been selected", false);
+
+			Web.clickOnElement(not_married_radio_button);
+			Reporter.logEvent(Status.INFO, "Selecting maritial status",
+					"\"Not married\" is selected", false);
+
+			if (Web.isWebElementDisplayed(continue_button)) {
+				Web.clickOnElement(continue_button);
+				Reporter.logEvent(
+						Status.PASS,
+						"Clicking Continue to Loan Review and Confirmation button",
+						"Continue to Loan Review and Confirmation is clicked",
+						false);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Clicking Continue to Loan Review and Confirmation button",
+						"Continue to Loan Review and Confirmation is not enabled",
+						true);
+			}
+			wait(2000);
+
+			Web.clickOnElement(Email_chk_box);
+			Reporter.logEvent(Status.INFO, "Checking Email check box",
+					"Email Check box is selected ", false);
+
+			Web.clickOnElement(deliveryFormBtn);
+			Reporter.logEvent(Status.INFO, "Clicking Delivery Form button",
+					"Delivery Form button has been clicked", false);
+
+			if (Web.isWebElementDisplayed(loan_summary_Info, true)) {
+				Reporter.logEvent(Status.PASS,
+						"verifying successfull submission of loan request",
+						"Loan application was delivered successfully", false);
+				String conf_id = confirmation_id_Refinance_multiple_loans
+						.getText();
+				Reporter.logEvent(Status.PASS,
+						"Confirmation Id from request submission",
+						"Confirmation Id: " + conf_id, false);
+			} 
+			else {
+				Reporter.logEvent(Status.FAIL,
+						"verifying successfull submission of loan request",
+						"Loan request not delivered successfully", true);
+			}
+
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verifying participant having outstanding loans",
+					"Outstanding loans are not displayed for paricipant", true);
+		}
+		
+		Web.clickOnElement(menuSearch);	
+		}
+		
+	}
 
 	
 	
@@ -3058,4 +3178,3 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 	
 	
 	
-}

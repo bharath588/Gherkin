@@ -119,6 +119,9 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	@FindBy(name = "password")
 	private WebElement passWordField;
+	
+	@FindBy(xpath = "//input[@name='searchPartSsn']")
+	private WebElement ssnSearchField;
 
 	// Account Balance..
 
@@ -551,6 +554,15 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			}
 		}
 		return res;
+	}
+	
+	public void gotoParticipantHomePage(){
+		load();
+		isLoaded();
+		Web.waitForElement(ssnSearchField);
+		Web.setTextToTextBox(ssnSearchField, Stock.GetParameterValue("SSN"));
+		Web.clickOnElement(SubmitPPTIdBtn);
+		
 	}
 	
 	/**
