@@ -960,6 +960,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
+				<parameter name="SSN" value="830422913" />
 				<parameter name="PPT_ID" value="5322457" />
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
@@ -1084,7 +1085,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="12948872" />
+				<parameter name="PPT_ID" value="12948898" />
 				<parameter name="ExceptionMessage" value="Individual has an outstanding Promissory Note WR_489" />
 				
 			</Iteration>
@@ -1213,6 +1214,21 @@ ORDER BY wb.ga_id,
 				<parameter name="SSN" value="830422913" />
 				<parameter name="ErrorMessage" value="Date entered is more than 90 days from the Disbursement Effective Date.WR_529" />
 				<parameter name="LoanTerm" value="45" />
+				
+				
+			</Iteration>
+		</TestCase>
+		
+		<TestCase name="CORE_23914_HappyPath_PromissoryNoteMsg_LoanRequest">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="12948898" />
+				<parameter name="ErrorMessage" value="This is a two-step loan and requires a promissory note to be delivered, signed and returned. Once the signed promissory note is recieved in good order, processing can take up to 2 business days." />
+				<parameter name="LoanTerm" value="45" />
+				<parameter name="HomePhoneNumber" value="8797947961" />
+				<parameter name="MobilePhoneNumber" value="8797947961" />
+				<parameter name="PersonalEmail" value="discard@gwl.com" />
 				
 				
 			</Iteration>

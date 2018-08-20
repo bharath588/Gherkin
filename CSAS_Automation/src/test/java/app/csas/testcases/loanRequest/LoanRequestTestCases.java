@@ -794,13 +794,15 @@ public class LoanRequestTestCases {
 	 *            CSAS Credential</br>
 	 */
 	@Test(dataProvider = "setData")
-	public void CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080(int itr,
+	public void CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080_CORE_22740(int itr,
 			Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			participantHomeObj= new ParticipantHome();
+			participantHomeObj.gotoParticipantHomePage();
 			LoanRequestPage = new LoanRequest();
-			LoanRequestPage.get();
+			LoanRequestPage.gotoLoanRequestPage();
 			LoanRequestPage.LoanRefinancing_NoAdditionalAmount();
 
 		} catch (Exception e) {
@@ -1927,6 +1929,47 @@ public class LoanRequestTestCases {
 				LoanRequestPage = new LoanRequest();
 				LoanRequestPage.gotoLoanRequestPage();
 				LoanRequestPage.verifyOutstandingLoanRefinance();
+				
+
+			} catch (Exception e) {
+				handleFailure(e);
+			} catch (Error ae) {
+				handleError(ae);
+			} finally {
+				try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+	}
+		
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TESTCASE:  Paperless Loan_Exceptions_CORE_10709
+		 * DESCRIPTION: Paperless Loan_Exceptions_CORE_10709
+		 * RETURNS:   VOID   
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author: Saraswathi   Date :10-08-18  
+		 * 
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * 
+		 * @param <br>
+		 *            CSAS Credential</br>
+		 */
+		@Test(dataProvider = "setData")
+		public void CORE_23914_HappyPath_PromissoryNoteMsg_LoanRequest(int itr,
+				Map<String, String> testdata) {
+
+			try {
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+				LoanRequestPage = new LoanRequest();
+				LoanRequestPage.get();
+				LoanRequestPage.verifyTwostepLoan();
 				
 
 			} catch (Exception e) {

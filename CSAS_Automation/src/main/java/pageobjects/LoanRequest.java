@@ -529,6 +529,9 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 	@FindBy(xpath = "//input[@class='selectOptions']")
 	private WebElement principalResidence;
 	
+	@FindBy(xpath="//div[@id='promissoryNoteDesc']")
+	private WebElement twoStepLoanMsg;
+	
 	@FindBy(id="pmtFrequencyGENERAL")
 	private WebElement paymentFrequency;
 	
@@ -2115,24 +2118,30 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		if (Web.isWebElementDisplayed(refinance_loans, true)) {
 			Reporter.logEvent(
 					Status.INFO,
-					"Verifying participant has outstanding loans: refinance with NO additl loan amount",
-					"Outstanding loans section is displayed, participant has outstanding loans: refinance with NO additl loan amount",
+					"Verifying participant has maximum outstanding loans",
+					"Outstanding loans section is displayed, participant has maximum outstanding loans",
 					false);
 
-			List<WebElement> checkBoxList = Web.getDriver().findElements(
-					By.className("generalRefinanceChecked"));
-			checkBoxList.get(0).click();
+			Web.clickOnElement(eligible_chk_box);
 			Reporter.logEvent(Status.INFO,
-					"Clicking on Eligible Check boxes to Refinance Loans",
-					"Loans has been selected for Refinancing", false);
+					"Clicking on Eligible Check box to Refinance Loans",
+					"Loan has been selected for Refinancing", false);
 
 			Web.clickOnElement(select_refinance_btn);
 			Reporter.logEvent(Status.INFO,
 					"Submitting selected loans for Refinancing",
 					"Selected loans for Refinancing are submitted", false);
 
-			String amount_to_borrow = getMinAmount().toString();
-			Web.setTextToTextBox(amount_to_borrow_txtBox, amount_to_borrow);
+			Web.setTextToTextBox(add_additional_loan_txtbox, getMinAmount()
+					.toString());
+			
+
+			Web.clickOnElement(add_additional_loan_btn);
+			Reporter.logEvent(Status.INFO,
+					"Adding additional Loan amount and Viewing Quick quotes ",
+					"New Loan Quotes is displayed", false);
+
+			wait(2000);
 
 			Web.clickOnElement(add_btn_general);
 			Reporter.logEvent(Status.PASS,
@@ -3159,7 +3168,105 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		Web.clickOnElement(menuSearch);	
 		}
 		
-	}
+	
+
+public void verifyTwostepLoan(){
+	//verify_HappyPath_PromissoryNote_SetTo_pptID_DeliverForm();
+	if (Web.isWebElementDisplayed(promissory_note, true)) {
+		// String strExp =
+		// " This is a two-step loan and requires a promissory note.";
+		// verifyText(promissory_note, strExp,
+		// "verifying the message \"This is a two-step loan and requires a promissory note should display.\" is displayed or not",
+		// false);
+
+		Reporter.logEvent(
+				Status.INFO,
+				"verifying the message \"This is a two-step loan and requires a promissory note should display.\" is displayed or not",
+				"Promissory note is displayed", true);
+
+		Web.setTextToTextBox(amount_to_borrow_txtBox, getMinAmount().toString());
+		Reporter.logEvent(Status.INFO,
+				"Entering the value in the amount to borrow text box",
+				"Amount has been changed in the amount to borrow text box: "
+						+ getMinAmount().toString(), false);
+		
+		Web.setTextToTextBox(loanterm_txtBox,
+				Stock.GetParameterValue("LoanTerm"));
+		Reporter.logEvent(Status.INFO, "Entering loan term in years",
+				"Loan term of " + Stock.GetParameterValue("LoanTerm")
+						+ " years has been entered", true);
+
+		Web.clickOnElement(add_additional_loan_btn);
+		Reporter.logEvent(Status.PASS,
+				"Adding additional Loan amount and Viewing Quick quotes ",
+				"New Loan Quotes is being viewed", true);
+
+		Web.clickOnElement(quick_qoutes_button);
+		Reporter.logEvent(Status.INFO,
+				"Viewing Quick quotes for monthly payment frequency",
+				"Quick quotes for monthly frequency is being viewed", false);
+		wait(2000);
+
+		Web.clickOnElement(loan_qoute1_radio_button);
+		Reporter.logEvent(Status.INFO, "Selecting a loan quote",
+				"One loan quote has been selected", false);
+
+		Web.clickOnElement(first_class_mail_radiobtn);
+		Reporter.logEvent(Status.INFO,
+				"Selecting First-Class mail radio button",
+				"\"First-class mail\" is selected", true);
+
+		Web.setTextToTextBox(home_Phone_txtBox,
+				Stock.GetParameterValue("HomePhoneNumber"));
+		Reporter.logEvent(
+				Status.INFO,
+				"Entering Home Phone number",
+				"Home Phone number entered is: "
+						+ Stock.GetParameterValue("HomePhoneNumber"), false);
+
+		Web.setTextToTextBox(mobile_Phone_txtBox,
+				Stock.GetParameterValue("MobilePhoneNumber"));
+		Reporter.logEvent(
+				Status.INFO,
+				"Entering Mobile Phone number",
+				"Mobile Phone number entered is: "
+						+ Stock.GetParameterValue("MobilePhoneNumber"),
+				false);
+
+		Web.setTextToTextBox(personal_email_txtBox,
+				Stock.GetParameterValue("PersonalEmail"));
+		Reporter.logEvent(
+				Status.INFO,
+				"Entering Personal Email Id",
+				"Personal Email Id entered is: "
+						+ Stock.GetParameterValue("PersonalEmail"), true);
+		Web.clickOnElement(not_married_radio_button);
+		Reporter.logEvent(Status.INFO, "Selecting maritial status",
+				"\"Not married\" is selected", true);
+
+		Web.clickOnElement(continue_button);
+		Reporter.logEvent(
+				Status.INFO,
+				"Clicking Continue to Loan Review and Confirmation button",
+				"Continue to Loan Review and Confirmation button is clicked",
+				true);
+		wait(2000);
+		if(Web.isWebElementDisplayed(twoStepLoanMsg, true)){
+			Reporter.logEvent(Status.PASS,
+					"verifying two step loan error message",twoStepLoanMsg.getText(), false);
+			
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"verifying two step loan error message",twoStepLoanMsg.getText(), true);
+		}
+			
+		}
+		
+	} 
+
+	
+}
+
 
 	
 	

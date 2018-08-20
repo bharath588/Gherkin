@@ -156,7 +156,7 @@
 					 <include name="CSAS_Paperless_Loan_HappyPath_TC16_DDTC_27971">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_LoanRequest"/>						
 					</include>																				
-				<include name="CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080">
+				<include name="CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080_CORE_22740">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanRefinancing_NO_AddtnlAmount"/>						
 					</include>	
 			<include name="PaperlessLoan_LoanRequest_ConfirmContactInformation_PDI_No_CORE_22807"> 
@@ -196,9 +196,31 @@
 						<parameter name="ManualTCName"
 							value="CORE_22821_PaperlessLoan_LoanRequest_SelectALoanField"></parameter>
 					</include> 
+					
+					<include name="CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080_CORE_22740">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanRefinancing_NO_AddtnlAmount"/>						
+					</include>
 			
-			  </methods>
-			 </class>
+				<include
+						name="CORE_23914_HappyPath_PromissoryNoteMsg_LoanRequest">
+						<parameter name="ManualTCName"
+							value="CORE_23914_HappyPath_PromissoryNoteMsg_LoanRequest"></parameter>
+					</include>
+					<include name="CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080_CORE_22740">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanRefinancing_NO_AddtnlAmount"/>						
+					</include>
+			
+			<include
+						name="CORE_23914_HappyPath_PromissoryNoteMsg_LoanRequest">
+						<parameter name="ManualTCName"
+							value="CORE_23914_HappyPath_PromissoryNoteMsg_LoanRequest"></parameter>
+					</include>
+			
+					</methods>
+			</class>
+	 
+				
+				
 		</classes>
 	</test>
 

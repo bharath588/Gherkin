@@ -11,22 +11,39 @@
 	
 	<class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
 				<methods>
+				<include name="CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080_CORE_22740">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanRefinancing_NO_AddtnlAmount"/>						
+					</include>
 			
-				<include
+			<include
+						name="CORE_23914_HappyPath_PromissoryNoteMsg_LoanRequest">
+						<parameter name="ManualTCName"
+							value="CORE_23914_HappyPath_PromissoryNoteMsg_LoanRequest"></parameter>
+					</include>
+			<!-- <include
+						name="CORE_22779_PaperlessLoan_Exceptions_CORE_10709">
+						<parameter name="ManualTCName"
+							value="CORE_22779_PaperlessLoan_Exceptions_CORE_10709"></parameter>
+					</include>
+				 <include
 						name="CORE_22826_PaperlessLoan_LoanRequest_First_PaymentDate_ErrorMessage">
 						<parameter name="ManualTCName"
 							value="CORE_22826_PaperlessLoan_LoanRequest_First_PaymentDate_ErrorMessage"></parameter>
 					</include>
+					<include name="CORE_22802_vieworder_statement_update_confirmation">
+						<parameter name="ManualTCName" value="CORE_22802_vieworder_statement_update_confirmation" />
+					</include>
+					<include
+						name="CORE_22789_PaperlessLoan_LoanRequest_LoanStructureOverviewSection_2">
+						<parameter name="ManualTCName"
+							value="CORE_22789_PaperlessLoan_LoanRequest_LoanStructureOverviewSection_2"></parameter>
+					</include> -->
 					</methods>
 			</class>
 		<!--  <class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
 				<methods>
 			
-				<include
-						name="CORE_22789_PaperlessLoan_LoanRequest_LoanStructureOverviewSection_2">
-						<parameter name="ManualTCName"
-							value="CORE_22789_PaperlessLoan_LoanRequest_LoanStructureOverviewSection_2"></parameter>
-					</include>
+				
 				<include
 						name="CORE_22825_PaperlessLoan_LoanRequest_ConfirmContactInformation">
 						<parameter name="ManualTCName"
