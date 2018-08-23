@@ -263,10 +263,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 
 	//@FindBy(xpath = "//button[text()='Save']")
 
-	//@FindBy(xpath = "//input[@name='ESC_BASIC_UPDATE_SAVE']")
-	@FindBy(xpath = "//input[@name='ESC_ELIG_UPDATE_SAVE']")
-
+	@FindBy(xpath = "//input[@name='ESC_BASIC_UPDATE_SAVE']")
 	private WebElement save;
+	
+	@FindBy(xpath = "//input[@name='ESC_ELIG_UPDATE_SAVE']")
+	private WebElement enrollAndEligEditFrameSave;
+	
 	@FindBy(xpath = "//input[@value='Cancel']")
 	private WebElement cancel;
 	@FindBy(xpath = "//li[contains(@class,'default')]/a[.='Account detail']")
@@ -337,9 +339,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement balanceColumn;
 	@FindBy(xpath = "//div[@id='overviewtable']//span[contains(text(),'Details')]")
 	private WebElement detailsColumn;
-	@FindBy(xpath = ".//*[@id='overviewtable']//td[1]")
+	@FindBy(xpath = ".//*[@id='overviewtable']/table/tbody[@id='overviewtable_data']/tr/td[1]")
 	private List<WebElement> planNumbersUI;
-	@FindBy(xpath = ".//*[@id='overviewtable']//td[2]")
+	@FindBy(xpath = ".//*[@id='overviewtable']/table/tbody[@id='overviewtable_data']/tr/td[2]")
 	private List<WebElement> planNamesUI;
 	@FindBy(xpath = ".//*[@id='selectedPlanHeaderPanel']//h3")
 	private WebElement selectedPlanHeader;
@@ -798,8 +800,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement conWithoutDeffNgBtn;
 	@FindBy(id = "uses_models_4")
 	private WebElement newAllocRadioButton;
-	@FindBy(xpath = ".//font[@class='important_note']//li"
-			+ "[contains(text(),'First Name contains 1 or more invalid characters.')]")
+	@FindBy(xpath = ".//font[@class='important_note']//li[contains(text(),'First Name contains 1 or more invalid characters.')]")
 	private WebElement fNValidation;
 	@FindBy(xpath = ".//font[@class='important_note']//li[contains(text(),'Field contains invalid characters')]")
 	private WebElement addressValidation;
@@ -1305,8 +1306,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 */
 	public void searchEmployeeBySSN(String SSN) {
 		try {
-			CommonLib.switchToFrame(employeeSearchFrame);
-			Web.isWebElementDisplayed(drpdwnSearchEmployee, true);
+			Web.getDriver().switchTo().frame(employeeSearchFrame);
+			Web.waitForElement(drpdwnSearchEmployee);
+			//CommonLib.switchToFrame(employeeSearchFrame);
+			//Web.isWebElementDisplayed(drpdwnSearchEmployee, true);
 			select = new Select(drpdwnSearchEmployee);
 			select.selectByVisibleText("SSN");
 			Web.isWebElementDisplayed(txtSearchbox, true);
@@ -1439,6 +1442,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * @throws InterruptedException
 	 */
 	public void searchEmployeeByName(String Name) throws InterruptedException {
+		
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		Web.waitForElement(drpdwnSearchEmployee);
 		select = new Select(drpdwnSearchEmployee);
@@ -1684,9 +1688,32 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			actions.moveToElement(tabEmployees).click().build().perform();
 			actions.click(searchEmployeeOptionLink).perform();
 		}
-
+	
 	}
-
+	/**
+	 * This method navigates the user to employee tab and search by Name
+	 * 
+	 * @throws InterruptedException
+	 */
+	public void navigateToEmployeeTabSearchByName()
+	{
+		Web.isWebElementDisplayed(tabEmployees, true);
+		actions = new Actions(Web.getDriver());
+		actions.moveToElement(tabEmployees).click().build().perform();
+		// Web.waitForPageToLoad(Web.getDriver());
+		Web.isWebElementDisplayed(drpdwnSearchEmployee, true);
+		if (!Web.isWebElementDisplayed(employeeSearchFrame, true)) {
+			actions.moveToElement(tabEmployees).click().build().perform();
+			actions.click(searchEmployeeOptionLink).perform();
+		}
+				
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.waitForElement(drpdwnSearchEmployee);
+		select = new Select(drpdwnSearchEmployee);
+		select.selectByVisibleText("Name");
+		Web.isWebElementDisplayed(txtSearchbox, true);
+		Web.getDriver().switchTo().defaultContent();
+	}
 	/**
 	 * <pre>
 	 * This method used to search the employee by Division
@@ -1724,8 +1751,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * @throws InterruptedException
 	 */
 	public void searchByParticipantID(String pptID) throws InterruptedException {
-		CommonLib.switchToFrame(employeeSearchFrame);
+		//CommonLib.switchToFrame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		//Thread.sleep(1000);
 		Web.waitForElement(drpdwnSearchEmployee);
+		
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("Participant ID");
 		Thread.sleep(3000);
@@ -4789,7 +4819,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					updatedEliCode = "No";
 					updatedInEliCode = "Other";
 				}
-				Web.clickOnElement(this.save);
+				Web.clickOnElement(this.enrollAndEligEditFrameSave);
 				CommonLib.switchToFrame(employeeSearchFrame);
 				CommonLib.waitForProgressBar();
 
@@ -7211,7 +7241,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		try {
 			this.navigateToAccountDetailPage();
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
-			if (moneyOutSection.findElement(By.tagName("h1")).getText().trim()
+			/*if (moneyOutSection.findElement(By.tagName("h1")).getText().trim()
 					.equalsIgnoreCase("Money out"))
 				Reporter.logEvent(Status.PASS,
 						"Validate that title Money out is displayed.",
@@ -7219,7 +7249,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			else
 				Reporter.logEvent(Status.PASS,
 						"Validate that title Money out is displayed.",
-						"Money out title is" + " displayed.", true);
+						"Money out title is" + " displayed.", true);*/
 			if (activeLoansLabel.isDisplayed()
 					&& maxLoanAllowedlabel.isDisplayed()
 					&& minAmntLabel.isDisplayed() && maxAmntLabel.isDisplayed())
@@ -8572,6 +8602,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								.getText()
 								.trim()
 								.equalsIgnoreCase(
+										"Marital Status is a required field.")
+						|| errorMsg
+								.getText()
+								.trim()
+								.equalsIgnoreCase(
+										"Gender is a required field.")
+						|| errorMsg
+								.getText()
+								.trim()
+								.equalsIgnoreCase(
 										"Address Line 1 is a required field.")
 						|| errorMsg.getText().trim()
 								.equalsIgnoreCase("City is a required field.")
@@ -8607,7 +8647,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			isPageDisplayed = false;
 
 			Web.setTextToTextBox(first_Name,
-					Stock.GetParameterValue("FirstName") + "12#()@;");
+					Stock.GetParameterValue("First Name") + "12#()@;");
 			Select marital_Status = new Select(maritalSts);
 			marital_Status.selectByVisibleText("SINGLE");
 			Select gender_ = new Select(gender);
@@ -9455,16 +9495,19 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			throws Exception {
 		try {
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
+			int i=0;
 			for (WebElement balance : balanceList) {
 				if (!balance.getText().equals("N/A")) {
 					String bal = balance.getText();
 					System.out.println("Bal on Overview:" + bal);
 					Thread.sleep(2000);
+					i++;
 					String planOnOvwPage = balance
 							.findElement(By.xpath(getPlanxpath)).getText()
 							.trim();
-					Web.clickOnElement(balance.findElement(By
-							.xpath("./../following-sibling::td/button")));
+					String xpath="(.//*[@id='overviewtable']//tr//td/button)["+i+"]";
+					WebElement click=Web.getDriver().findElement(By.xpath(xpath));
+					Web.clickOnElement(click);
 					CommonLib.waitForProgressBar();
 					Web.getDriver().switchTo().defaultContent();
 					Web.getDriver().switchTo().frame(viewAccountDetailFrame);

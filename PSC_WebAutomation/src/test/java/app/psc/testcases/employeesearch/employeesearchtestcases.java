@@ -446,7 +446,7 @@ public class employeesearchtestcases {
 			Thread.sleep(3000);
 			employeesearch.navigateToEmployeeTab();
 			employeesearch.searchByDivision();
-			employeesearch.navigateToEmployeeTab();
+			employeesearch.navigateToEmployeeTabSearchByName();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -848,7 +848,7 @@ public class employeesearchtestcases {
 						"Check if any duplicate record exists",
 						"The search result contains duplicate records", true);
 			}
-			employeesearch.navigateToEmployeeTab();
+			employeesearch.navigateToEmployeeTabSearchByName();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -901,7 +901,7 @@ public class employeesearchtestcases {
 			employeesearch.navigateToEmployeeTab();
 			employeesearch.searchByDivision();
 			employeesearch.dismissErrorBox();
-			employeesearch.navigateToEmployeeTab();
+			employeesearch.navigateToEmployeeTabSearchByName();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -954,7 +954,7 @@ public class employeesearchtestcases {
 			employeesearch.navigateToEmployeeTab();
 			employeesearch.searchByDivision();
 			employeesearch.dismissErrorBox();
-			employeesearch.navigateToEmployeeTab();
+			employeesearch.navigateToEmployeeTabSearchByName();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1232,6 +1232,7 @@ public class employeesearchtestcases {
 			employeesearch.navigateToEmployeeOverViewPage();
 			employeesearch.navigateToEmpDetailPage();
 			employeesearch.verify_Paycheck_ContributionSection();
+			employeesearch.navigateToEmployeeTabSearchByName();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1328,6 +1329,7 @@ public class employeesearchtestcases {
 			employeesearch.searchEmployeeByEmployeeId("");
 			employeesearch.navigateToEmployeeOverViewPage();
 			employeesearch.verifyOverviewScreenElements();
+			employeesearch.navigateToEmployeeTabSearchByName();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2156,7 +2158,7 @@ public class employeesearchtestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Validate Enrollment and Eligibility section"
 								+ " is not displayed for NQ plans.",
-						"Enrollment and Eligibility section is not displayed.",
+						"Enrollment and Eligibility section is displayed.",
 						true);
 			resultset = employeesearch.selectPlanForUser(
 					Stock.getTestQuery("GetDBPlans"),
@@ -2176,7 +2178,7 @@ public class employeesearchtestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Validate Enrollment and Eligibility section"
 								+ " is not displayed for DB plans.",
-						"Enrollment and Eligibility section is not displayed.",
+						"Enrollment and Eligibility section is displayed.",
 						true);
 			employeesearch.logoutFromApplication();
 

@@ -155,6 +155,11 @@ public class HomePage extends LoadableComponent<HomePage> {
 	private WebElement planDropDown;
 	@FindBy(id = "planSearchDropdownButton")
 	private WebElement planSearchDropdownButton;
+	
+	@FindBy(xpath=".//span[text()='Site Bulletin']/following-sibling::a/span")
+    private WebElement CancelNewsBulletin;
+
+
 
 	private WebElement menuElement(String menuName) {
 		return Web.getDriver().findElement(
@@ -281,6 +286,9 @@ public class HomePage extends LoadableComponent<HomePage> {
 				Web.isWebElementDisplayed(urlJumpPage, true);
 				Web.clickOnElement(urlJumpPage);
 			}
+			if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
+                Web.clickOnElement(CancelNewsBulletin); 
+
 			Web.getDriver().switchTo().defaultContent();
 			Web.isWebElementDisplayed(weGreeting, true);
 			Reporter.logEvent(Status.INFO, "Check if Login is successfull",
