@@ -146,8 +146,6 @@ public class HomePage extends LoadableComponent<HomePage> {
 
 				}
 			}
-			if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
-				Web.clickOnElement(CancelNewsBulletin);		
 		} catch (Exception e) {
 			try {
 				throw new Exception(
@@ -165,7 +163,8 @@ public class HomePage extends LoadableComponent<HomePage> {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+		if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
+			Web.clickOnElement(CancelNewsBulletin);	
 	}
 
 	@Override

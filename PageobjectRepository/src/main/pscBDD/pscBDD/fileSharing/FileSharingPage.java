@@ -30,6 +30,12 @@ import java.util.concurrent.TimeUnit;
 
 
 
+
+
+
+
+
+import org.apache.commons.io.FilenameUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -120,12 +126,32 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	private WebElement requiredCheckboxInMoveModalBox;
 	@FindBy(how=How.XPATH,using="//*[*[@class='rowselector']]/following-sibling::td/div[1]/a")
 	private List<WebElement> allFileNameInsideFolder;
+	@FindBy(how=How.XPATH,using="//button[@id='manageFolderNotifications']")
+	private WebElement manageFolderNotifications;
+	
+	@FindBy(how=How.XPATH,using="//div[@id='folderNotificationsModal']")
+	private WebElement notificationFolderModelWindow;
+	@FindBy(how=How.XPATH,using="//div[@id='folderNotificationsModal']//button[text()='Cancel']")
+	private WebElement cancleButtonOnFolderNotificationsModal;
+	
+	
 	
 	private static final String folderRepeater = "folder in fileShareRepo.folders";
 	public List<String> fileNamesOfSelectedCheckbox=new ArrayList<String>();
 
+	@FindBy(how=How.XPATH,using="//li/div[contains(text(),'Auditor')]")
+	private WebElement AuditorFolder;
 
-
+	@FindBy(how=How.XPATH,using="//a/li[contains(text(),'Vault')]")
+	private WebElement VaultFolder;
+	
+	@FindBy(how=How.XPATH,using="//*[@class='ng-binding ng-scope plussign folderlink']")
+	private List<WebElement> plusButtonsInNotificationWindow;
+	@FindBy(how=How.XPATH,using="//div[@ng-show='fileShareRepo.hasDailyDocuments']//ul//li//ul")
+	private List<WebElement> subFoldersList;
+	
+	
+	
 	public FileSharingPage(){
 		Web.getDriver().manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
 		Web.nextGenDriver = new NextGenWebDriver(Web.getDriver() );
@@ -527,6 +553,23 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 			Web.selectDropDownOption(element, valueToSelect);
 	}
 	
+	public Boolean valueExistInselectDropDown(String dropDownName,String valueToCheck){
+		WebElement element = null;
+		if (dropDownName.trim().equalsIgnoreCase("Parent"))
+			element = parentFolderDropdownOfMoveModalBox;
+		if (dropDownName.trim().equalsIgnoreCase("Sub"))
+			element = subFolderDropdownOfMoveModalBox;
+		if(Web.isWebElementDisplayed(element, true))
+		{
+			if(Web.selectDropDownOption(element, valueToCheck))
+			{
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
 	public void checkTheCheckboxInMoveFileModalBox(){
 		if(!(requiredCheckboxInMoveModalBox.isSelected()))
 			Web.clickOnElement(requiredCheckboxInMoveModalBox);
@@ -625,6 +668,396 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 
 	}
 
+	public int getCountOfAllFiles()
+	{
+		
+		try {
+			if (Web.isWebElementsDisplayed(allFileNameInsideFolder, true))
+			{
+				return allFileNameInsideFolder.size();
+			}
+				
+		} catch (Exception e) {
+			Reporter.logEvent(Status.INFO, "Filenames Not Available in Auditor Folder",
+					"Filenames Not Available in Auditor Folder", true);
+		}
+		return 0;
+	}
+	
+	
+	public void clickOnAuditorFolder()
+	{
+		try {
+					if (Web.isWebElementDisplayed(AuditorFolder, true))
+					{
+						Web.clickOnElement(AuditorFolder);
+						//return allFileNameInsideFolder.size();
+					}
+				
+			} catch (Exception e) {
+			Reporter.logEvent(Status.INFO, "Auditor Folder Does Not Exist",
+					"Auditor Folder Does Not Exist", true);
+			}
+	}
+	
+	public void clickOnVaultFolder()
+	{
+		try {
+			
+					if (Web.isWebElementDisplayed(VaultFolder, true))
+					{
+						Web.clickOnElement(VaultFolder);
+						//return allFileNameInsideFolder.size();
+					}
+				
+			} catch (Exception e) {
+			Reporter.logEvent(Status.INFO, "Vault Folder Does Not Exist",
+					"Vault Folder Does Not Exist", true);
+			}
+	}
+	
+	public void displayAllFileNamesInAuditorFolder()
+	{
+		try {
+			
+			if (Web.isWebElementsDisplayed(allFileNameInsideFolder, true))
+			{
+				for(WebElement FileName:allFileNameInsideFolder)
+				{
+					String text = FileName.getText().trim();
+					if (FileName.getText().trim().length() > 0) 
+					{
+						System.out.println(text);
+					}
+				}
+				
+				
+				//return allFileNameInsideFolder.size();
+			}
+				
+		} catch (Exception e) {
+			Reporter.logEvent(Status.INFO, "Filenames Not Available in Auditor Folder",
+					"Filenames Not Available in Auditor Folder", true);
+		}
+	}
+	
+	public Boolean checkFileNamesAreHavingGivenExtension(String extension)
+	{
+		
+		try {
+			
+			if (Web.isWebElementsDisplayed(allFileNameInsideFolder, true))
+			{
+				Boolean selected=false;
+				for(WebElement FileName:allFileNameInsideFolder)
+				{
+					String text = FileName.getText().trim();
+					
+					String FileExtenstion=FilenameUtils.getExtension(FileName.getText().trim());
+					
+					if (FileExtenstion.equalsIgnoreCase(extension)) 
+					{
+						selected=true;break;
+			        }
+
+				}
+				if(selected)
+				{
+					Reporter.logEvent(Status.PASS,extension+" File Should Exist in Auditor Folder Files",
+							extension+" File Exist in Auditor Folder Files",true);
+		        }
+		        else
+		        {
+		        	Reporter.logEvent(Status.FAIL,extension+" File Should Exist in Auditor Folder Files",
+		        			extension+" File not Exist in Auditor Folder Files",true);
+		        }
+		
+				//return allFileNameInsideFolder.size();
+			}
+				
+		} catch (Exception e) {
+			Reporter.logEvent(Status.INFO, "Filenames Not Available in Auditor Folder",
+					"Filenames Not Available in Auditor Folder", true);
+		}
+		return false;
+		
+	}
+
+	public void selectCheckBoxRelatedFileNames(List<String> FileNames)
+	{
+		
+		int NumberOfFiles=getCountOfAllFiles();
+		for(String file: FileNames)
+		{
+			Boolean selected=false;
+			for(int i=0;i<NumberOfFiles;i++)
+			{
+				String ele=allFileNameInsideFolder.get(i).getText().trim();
+				if(ele.equalsIgnoreCase(file))
+				{
+					Web.clickOnElement(allCheckBoxes.get(i));
+					selected=true;
+					break;
+				}
+			}
+			if(selected)
+			{
+				Reporter.logEvent(Status.PASS,file+" File Should Exist and Related Check box Should Click in Auditor Folder Files ",
+						file+" File Exist and Related Check box Clicked in Auditor Folder Files",true);
+	        }
+	        else
+	        {
+	        	Reporter.logEvent(Status.FAIL,file+" File Should Exist and Related Check box Should Click in Auditor Folder Files",
+	        			file+" File not Exist and Related Check box is not Clicked in Auditor Folder Files",true);
+	        }
+		}
+	}
+
+	public void checkFilesAreExistInAuditorFolder(List<String> FileNames)
+	{
+		try{
+			 closeModalBoxPopup("Move");
+			 Thread.sleep(2000);
+		 }
+		 catch(Exception e){
+			 Reporter.logEvent(Status.INFO, "No opened popup available", "No opened popup available", true);
+		 }
+		clickOnAuditorFolder();
+		
+		int NumberOfFiles=getCountOfAllFiles();
+		for(String file: FileNames)
+		{
+			Boolean selected=false;
+			for(int i=0;i<NumberOfFiles;i++)
+			{
+				String ele=allFileNameInsideFolder.get(i).getText().trim();
+				if(ele.equalsIgnoreCase(file))
+				{
+					selected=true;
+					break;
+				}
+			}
+			if(selected)
+			{
+				Reporter.logEvent(Status.PASS,file+" File Should Exist in Auditor Folder Files ",
+						file+" File Exist in Auditor Folder Files",true);
+	        }
+	        else
+	        {
+	        	Reporter.logEvent(Status.FAIL,file+" File Should Exist in Auditor Folder Files",
+	        			file+" File not Exist in Auditor Folder Files",true);
+	        }
+		}
+	}
+	
+	public void checkFilesAreExistInVaultFolder(List<String> FileNames)
+	{
+		
+		try{
+			 closeModalBoxPopup("Move");
+			 Thread.sleep(2000);
+		 }
+		 catch(Exception e){
+			 Reporter.logEvent(Status.INFO, "No opened popup available", "No opened popup available", true);
+		 }
+		clickOnVaultFolder();
+				int NumberOfFiles=getCountOfAllFiles();
+		for(String file: FileNames)
+		{
+			Boolean selected=false;
+			for(int i=0;i<NumberOfFiles;i++)
+			{
+				String ele=allFileNameInsideFolder.get(i).getText().trim();
+				if(ele.equalsIgnoreCase(file))
+				{
+					selected=true;
+					break;
+				}
+			}
+			if(selected)
+			{
+				Reporter.logEvent(Status.PASS,file+" File Should Exist in Vault Folder Files ",
+						file+" File Exist in Vault Folder Files",true);
+	        }
+	        else
+	        {
+	        	Reporter.logEvent(Status.FAIL,file+" File Should Exist in Vault Folder Files",
+	        			file+" File not Exist in Vault Folder Files",true);
+	        }
+		}
+	}
+	
+	public void checkFilesAreDoesNotExistInAuditorFolder(List<String> FileNames)
+	{
+		try{
+			 closeModalBoxPopup("Move");
+			 Thread.sleep(2000);
+		 }
+		 catch(Exception e){
+			 Reporter.logEvent(Status.INFO, "No opened popup available", "No opened popup available", true);
+		 }
+		clickOnAuditorFolder();
+		
+		int NumberOfFiles=getCountOfAllFiles();
+		for(String file: FileNames)
+		{
+			Boolean selected=false;
+			for(int i=0;i<NumberOfFiles;i++)
+			{
+				String ele=allFileNameInsideFolder.get(i).getText().trim();
+				if(ele.equalsIgnoreCase(file))
+				{
+					selected=true;
+					break;
+				}
+			}
+			if(selected)
+			{
+				Reporter.logEvent(Status.FAIL,file+" File Should not Exist in Auditor Folder Files ",
+						file+" File Exist in Auditor Folder Files",true);
+	        }
+	        else
+	        {
+	        	Reporter.logEvent(Status.PASS,file+" File Should not Exist in Auditor Folder Files",
+	        			file+" File Exist in Auditor Folder Files",true);
+	        }
+		}
+	}
+	
+	/*Navigating to File Sharing Tab after Plan Search */
+	
+	public void navigateToFileSharingTab() throws InterruptedException
+	{
+		Web.waitForPageToLoad(Web.getDriver());
+		//CommonLib.waitForProgressBar();
+		Web.waitForElement(tabFileSharing);
+		//Web.clickOnElement(tabEmployees);
+		//Web.waitForElement(drpdwnSearchEmployee);
+		actions = new Actions(Web.getDriver());
+		actions.moveToElement(tabFileSharing).click().build().perform();
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.getDriver().switchTo().frame(fileSharingFrame);
+		if(!Web.isWebElementDisplayed(fileSharingTag, true))
+		{
+			Reporter.logEvent(Status.PASS, "File sharing page loaded", 
+					"File Sharing page loaded", true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "File sharing page loaded", 
+					"File Sharing page not loaded", true);
+		}
+		Thread.sleep(2000);
+	}
+	
+	public boolean isManageFolderNotificationsButtonVisible()
+	{
+		if(Web.isWebElementDisplayed(manageFolderNotifications, true))
+		{
+			Reporter.logEvent(Status.PASS, "User should see the Manage folder notifications link", 
+					"User able to see the Manage folder notifications link", true);
+			return true;
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "User should see the Manage folder notifications link", 
+					"User not able to see the Manage folder notifications link", true);
+			return false;
+		}
+	}
+	
+	public void openFolderNotificationManager()
+	{
+		try {
+			
+				if (Web.isWebElementDisplayed(manageFolderNotifications, true))
+				{
+					Web.clickOnElement(manageFolderNotifications);
+					//return allFileNameInsideFolder.size();
+					if(Web.isWebElementDisplayed(notificationFolderModelWindow, true))
+					{
+						Reporter.logEvent(Status.PASS, "Clicked on Manage folder notifications link ",
+								"Notification manage Folder Window is  opened", true);
+					}
+				}
+				
+			} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL, "Unable to Click Manage folder notifications link ",
+					"Notification manage Folder is not opened", true);
+			}
+	}
+	
+	public boolean isPlusButtonPresentNexttoFolder()
+	{
+		try {
+			
+				if (Web.isWebElementsDisplayed(plusButtonsInNotificationWindow, true))
+				{
+					Reporter.logEvent(Status.PASS, "Plus Button Should Present next to the folder ",
+								"Plus Button is displayed next to the folder ", true);
+					
+					if (Web.isWebElementDisplayed(cancleButtonOnFolderNotificationsModal, true))
+						Web.clickOnElement(cancleButtonOnFolderNotificationsModal);
+					
+					return true;
+					
+				}
+				return true;
+				
+			} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL, "Plus Button Should Present next to the folder ",
+					"Plus Button is not displayed next to the folder ", true);
+				return false;
+			}
+	}
+	
+	public boolean isSubFoldersPresent()
+	{
+		try {
+			if (Web.isWebElementsDisplayed(subFoldersList, true))
+		{
+			Reporter.logEvent(Status.PASS, "User has access to a folder with subfolders", 
+	    			"User is having  access to a folder with subfolders", true);
+			return true;
+			
+		}
+		return true;
+		
+	} catch (Exception e) {
+	Reporter.logEvent(Status.FAIL, "User has access to a folder with subfolders", 
+			"User is not having  access to a folder with subfolders", true);
+		return false;
+	}
+		
+	}
+
+	public void clickOnPlusButtonNexttoFolder()
+	{
+		try {
+				if (Web.isWebElementsDisplayed(plusButtonsInNotificationWindow, true))
+				{
+			
+					Reporter.logEvent(Status.PASS, "Number of Folders is having Subfolders ",
+							" "+plusButtonsInNotificationWindow.size(), false);
+					
+					String PlusFoldername=plusButtonsInNotificationWindow.get(0).getText();
+					Web.clickOnElement(plusButtonsInNotificationWindow.get(0));
+					Reporter.logEvent(Status.PASS, " Clicked on Plus Button Next to "+PlusFoldername +" Folder"," ", false);
+					
+					
+					for(WebElement foldername: plusButtonsInNotificationWindow)
+					{
+						System.out.println(foldername.getText());
+					}
+					
+										
+				}
+	
+		
+			} catch (Exception e) {
+					Reporter.logEvent(Status.FAIL, "Plus Button Should Present next to the folder ",
+								"Plus Button is not displayed next to the folder ", true);
+	
+			}
+	}
 }
 
 
