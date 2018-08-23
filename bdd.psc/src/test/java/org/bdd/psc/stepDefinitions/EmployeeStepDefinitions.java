@@ -21,10 +21,11 @@ import bdd_lib.Web;
 import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
-import com.gargoylesoftware.htmlunit.javascript.host.media.webkitMediaStream;
+//import com.gargoylesoftware.htmlunit.javascript.host.media.webkitMediaStream;
 
 import cucumber.api.DataTable;
 import cucumber.api.Delimiter;
+import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -615,4 +616,67 @@ public class EmployeeStepDefinitions {
 		}
 	}
 
+	
+	
+		@Given("^a mandatory minimum deferral amount is in place$")
+	    public void a_mandatory_minimum_deferral_amount_is_in_place() throws Throwable {
+	        throw new PendingException();
+	    }
+	
+	    @Given("^a \"([^\"]*)\" amount is in place for a \"([^\"]*)\"$")
+	    public void a_something_amount_is_in_place_for_a_something(String strArg1, String strArg2) throws Throwable {
+	        throw new PendingException();
+	    }
+	
+	    @When("^user enters a contribution amount lower than the minimum$")
+	    public void user_enters_a_contribution_amount_lower_than_the_minimum() throws Throwable {
+	        throw new PendingException();
+	    }
+	
+	    @When("^user enters a contribution dollar amount lower than the minimum$")
+	    public void user_enters_a_contribution_dollar_amount_lower_than_the_minimum() throws Throwable {
+	        throw new PendingException();
+	    }
+	
+	    @When("^user enters a contribution percentage lower than the minimum $")
+	    public void user_enters_a_contribution_percentage_lower_than_the_minimum() throws Throwable {
+	        throw new PendingException();
+	    }
+	
+	    @When("^user clicks 'Edit' next to 'Stop all deferrals'$")
+	    public void user_clicks_edit_next_to_stop_all_deferrals() throws Throwable {
+	        throw new PendingException();
+	    }
+	
+	    @Then("^an error message should appear$")
+	    public void an_error_message_should_appear() throws Throwable {
+	        throw new PendingException();
+	    }
+	
+	    @Then("^an error message should appear indicating the user's dollar amount is less than the plan minimum$")
+	    public void an_error_message_should_appear_indicating_the_users_dollar_amount_is_less_than_the_plan_minimum() throws Throwable {
+	        throw new PendingException();
+	    }
+	
+	    @Then("^an error message should appear indicating that the user's percentage value is less than the plan minimum$")
+	    public void an_error_message_should_appear_indicating_that_the_users_percentage_value_is_less_than_the_plan_minimum() throws Throwable {
+	        throw new PendingException();
+	    }
+	
+	    @Then("^the deferral contribution rate is set to $")
+	    public void the_deferral_contribution_rate_is_set_to() throws Throwable {
+	        throw new PendingException();
+	    }
+	
+	    @And("^the contribution should not be processed$")
+	    public void the_contribution_should_not_be_processed() throws Throwable {
+	        throw new PendingException();
+	    }
+	
+	    @And("^clicks 'confirm' on the following screen$")
+	    public void clicks_confirm_on_the_following_screen() throws Throwable {
+	        throw new PendingException();
+	    }
+
+	
 }

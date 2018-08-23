@@ -9,6 +9,7 @@
 #<> (placeholder)
 #""
 ## (Comments)
+@SWEB-18077
 Feature: SWEB-18077 - File Sharing - FileNet file movement
   
   Narrative Description : As a file sharing user, I want to move file(s) to the Vault.
@@ -19,9 +20,9 @@ Feature: SWEB-18077 - File Sharing - FileNet file movement
       | PlanEmpower | 1ISIS    | testing1 |
     And user has upload and delete permissions and access to the Vault folder
     When user selects a file
-    And clicks the 'Move' button that appears
+    And clicks the "Move" button that appears
     Then the Move Files modal box should appear
-    And the folder destination dropdown box should have the 'Vault' option
+    And the folder destination dropdown box should have the "Vault" option
 
   Scenario Outline: Verify <fileGroup> moved to Vault appears in Vault
     Given user has test.txt, test.png, and test.pdf in the Auditor folder

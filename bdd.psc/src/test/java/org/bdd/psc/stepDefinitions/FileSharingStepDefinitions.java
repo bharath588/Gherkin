@@ -5,14 +5,18 @@ package org.bdd.psc.stepDefinitions;
 
 import gherkin.formatter.model.Scenario;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import org.openqa.selenium.interactions.Actions;
 
 import pscBDD.fileSharing.FileSharingPage;
 import pscBDD.forgotPassword.ForgotPasswordPage;
 import pscBDD.homePage.HomePage;
 import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
+import pscBDD.reports.ReportsPage;
 import pscBDD.userVerification.UserVerificationPage;
 import bdd_core.framework.Globals;
 import bdd_lib.Web;
@@ -23,6 +27,7 @@ import com.aventstack.extentreports.Status;
 import cucumber.api.DataTable;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -36,7 +41,7 @@ public class FileSharingStepDefinitions {
 	public static String featureName=null;
 	public static String scenarioName=null;
 	public static Scenario scenario=null;
-	
+	ReportsPage reportsPage;
 	
 
 	LoginPage login;
@@ -591,10 +596,192 @@ public class FileSharingStepDefinitions {
 		
     }
 
+	
+	
+	@When("^user selects a file$")
+    public void user_selects_a_file() throws Throwable {
+        fileSharePage.selectOneOrMoreNonHeaderRowCheckBox(1);
+    }
+		
+	@And("^clicks the \"([^\"]*)\" button that appears$")
+    public void clicks_the_something_button_that_appears(String strArg1) throws Throwable {
+		Web.nextGenDriver.waitForAngular();
+		fileSharePage.clickOnButton(strArg1);
+	       openedPopupName=strArg1;
+    }
+    @Then("^the Move Files modal box should appear$")
+    public void the_move_files_modal_box_should_appear() throws Throwable {
+    	Web.nextGenDriver.waitForAngular();
+        if(fileSharePage.isModalBoxPopupDisplayedOrNot("Move File(s)"))
+        {
+        	Reporter.logEvent(Status.PASS,"The Move Files modal box should appear",
+					"The Move Files modal box is appeared",true);
+        }
+        else
+        {
+        	Reporter.logEvent(Status.FAIL,"The Move Files modal box should appear",
+					"The Move Files modal box is appeared",true);
+        }
+        
+    }
 
-
+    @And("^user has upload and delete permissions and access to the Vault folder$")
+    public void user_has_upload_and_delete_permissions_and_access_to_the_vault_folder() throws Throwable {
+        //throw new PendingException();
+    }
+      
+    @And("^the folder destination dropdown box should have the \"([^\"]*)\" option$")
+    public void the_folder_destination_dropdown_box_should_have_the_something_option(String strArg1) throws Throwable {
+    	if(fileSharePage.valueExistInselectDropDown("Sub",strArg1))
+        {
+        	Reporter.logEvent(Status.PASS,"The folder destination dropdown box should have the Vault Option",
+					"The folder destination dropdown box  Vault Option is Presented",true);
+        }
+        else
+        {
+        	Reporter.logEvent(Status.FAIL,"The folder destination dropdown box should have the Vault Option",
+					"The folder destination dropdown box  Vault Option is Not Presented",true);
+        }
+    	
+    	fileSharePage.closeModalBoxPopup("Move File(s)");
+    	
+    	System.out.println(fileSharePage.getCountOfAllFiles());
+    	
+    	fileSharePage.displayAllFileNamesInAuditorFolder();
+ 
+    	fileSharePage.checkFileNamesAreHavingGivenExtension("txt");
+    	//fileSharePage.checkFileNamesAreHavingGivenExtension("png");
+    	//fileSharePage.checkFileNamesAreHavingGivenExtension("pdf");
+    	
+    	fileSharePage.deselectOneOrMoreNonHeaderRowCheckBox();
+    	List< String > FileNames1 = new ArrayList<>();
+    	FileNames1.add("image.jpg");
+    	fileSharePage.checkFilesAreExistInAuditorFolder(FileNames1);
+    	fileSharePage.selectCheckBoxRelatedFileNames(FileNames1);
+    	
+    	Web.nextGenDriver.waitForAngular();
+		fileSharePage.clickOnButton("Move");
+	       openedPopupName="Move";
+    	fileSharePage.selectDropDownValue("Sub", "Vault");
+    	fileSharePage.checkTheCheckboxInMoveFileModalBox();
+    	fileSharePage.clickOnMoveFiles();
+    	
+    	
+    	fileSharePage.checkFilesAreExistInVaultFolder(FileNames1);
+    	fileSharePage.checkFilesAreDoesNotExistInAuditorFolder(FileNames1);
+    }
+	
     
-   
+    @Given("^user has test.txt, test.png, and test.pdf in the Auditor folder$")
+    public void user_has_testtxt_testpng_and_testpdf_in_the_auditor_folder() throws Throwable {
+       
+    	/*fileSharePage.checkFileNamesAreHavingGivenExtension("txt");
+    	fileSharePage.checkFileNamesAreHavingGivenExtension("png");
+    	fileSharePage.checkFileNamesAreHavingGivenExtension("pdf");*/
+    	
+    	// throw new PendingException();
+    }
 
+    @When("^user moves (.+) to Vault$")
+    public void user_moves_to_vault(String filegroup) throws Throwable {
+        
+    	/*fileSharePage.deselectOneOrMoreNonHeaderRowCheckBox();
+    	List< String > FileNames1 = new ArrayList<>();
+    	FileNames1.add("image.jpg");
+    	fileSharePage.checkFilesAreExistInAuditorFolder(FileNames1);
+    	fileSharePage.selectCheckBoxRelatedFileNames(FileNames1);
+    	
+    	Web.nextGenDriver.waitForAngular();
+		fileSharePage.clickOnButton("Move");
+	       openedPopupName="Move";
+    	fileSharePage.selectDropDownValue("Sub", "Vault");
+    	fileSharePage.checkTheCheckboxInMoveFileModalBox();
+    	fileSharePage.clickOnMoveFiles();
+    	*/
+    	///throw new PendingException();
+    }
 
+    @Then("^the moved (.+) should appear in list of files$")
+    public void the_moved_should_appear_in_list_of_files(String filegroup) throws Throwable {
+        // new PendingException();
+    	
+    	//fileSharePage.checkFilesAreExistInVaultFolder(FileNames1);
+    }
+
+    @And("^the moved (.+) should not be in the Auditor folder$")
+    public void the_moved_should_not_be_in_the_auditor_folder(String filegroup) throws Throwable {
+        //throw new PendingException();
+    	
+    	//fileSharePage.checkFilesAreDoesNotExistInAuditorFolder(FileNames1);
+    }
+	  
+    @And("^User has selected a plan$")
+    public void user_has_selected_a_plan(DataTable plandata ) throws Throwable {
+       // throw new PendingException();
+      	Web.getDriver().switchTo().defaultContent();
+        String plan=Web.rawValues(plandata).get(0).get("plan");
+        Globals.planNumber = plan;
+		homePage = new HomePage();
+		homePage.switchPlan(plan);
+		//fileSharePage.navigateToFileSharingTab();
+    }
+    
+   /* @And("^User has access to File Sharing$")
+    public void user_has_access_to_file_sharing() throws Throwable {
+        //throw new PendingException();
+    }*/
+    
+    @When("^User navigates to the File Sharing tab$")
+    public void user_navigates_to_the_file_sharing_tab() throws Throwable {
+    	fileSharePage.navigateToFileSharingTab();
+    }
+    
+    @Then("^User should see the \"([^\"]*)\" link$")
+    public void user_should_see_the_something_link(String strArg1) throws Throwable {
+        fileSharePage.isManageFolderNotificationsButtonVisible();
+       
+    }
+    
+   /* @SWEB-16663
+    * Scenario: Verify when the Plus Button is present
+    * Given User has access to a folder with subfolders
+    * When The User opens the Notifications Manager
+    * Then There should be a Plus Button next to the folder
+    */
+    
+    @Given("^User has access to a folder with subfolders$")
+    public void user_has_access_to_a_folder_with_subfolders() throws Throwable {
+        //throw new PendingException();
+       	    fileSharePage.isSubFoldersPresent();
+    }
+    @When("^The User opens the Notifications Manager$")
+    public void the_user_opens_the_notifications_manager() throws Throwable {
+        //throw new PendingException();
+        fileSharePage.openFolderNotificationManager();
+     }
+    @Then("^There should be a Plus Button next to the folder$")
+    public void there_should_be_a_plus_button_next_to_the_folder() throws Throwable {
+    	fileSharePage.isPlusButtonPresentNexttoFolder();
+    }
+    
+   /* @SWEB-16663
+    * Scenario: Verify when the Plus Button converts to a Minus Button    
+    * Given User has access to a folder with subfolders
+    * And User had opened the Notifications Manager
+    * When The User clicks on the Plus Button next to the folder     
+    * Then The Plus Button should convert into a Minus Button      
+    * And the Nested Subfolders section for that folder should expand      
+    * And other Nested Subfolder sections should minimize      
+    * And other Minus Buttons should convert into Plus Buttons 
+    * */
+    
+    @And("^User had opened the Notifications Manager$")
+    public void user_had_opened_the_notifications_manager() throws Throwable {
+    	fileSharePage.openFolderNotificationManager();
+    }
+    
+    @When("^The User clicks on the Plus Button next to the folder$")
+    public void the_user_clicks_on_the_plus_button_next_to_the_folder() throws Throwable {
+    	fileSharePage.clickOnPlusButtonNexttoFolder();
+    }
 }
