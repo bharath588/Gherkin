@@ -279,6 +279,11 @@ public class logintestcases {
 					Stock.GetParameterValue("username").trim(),
 					Stock.GetParameterValue("password").trim() });
 			Thread.sleep(4000);
+			if (itr==3){
+			login.verifyErrorforRespectiveLogin(Stock
+						.GetParameterValue("errorMessages").trim() +"\n"+ Stock
+						.GetParameterValue("errorMessages1").trim());
+			}
 			login.verifyErrorforRespectiveLogin(Stock
 					.GetParameterValue("errorMessages"));
 		} catch (Exception e) {
@@ -608,6 +613,7 @@ public class logintestcases {
 	public void TC001_02_SIT_PSC_Sitenavigation_SubMenutabs(int itr,
 			Map<String, String> testdata) {
 		try {
+			
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			Reporter.logEvent(
 					Status.INFO,
@@ -972,7 +978,7 @@ public class logintestcases {
 				Stock.GetParameterValue("password") }).get();
 			Web.waitForPageToLoad(Web.getDriver());
 			jp.jumpPageUIValidation();
-			jp.jumpPageSearchPlanBoxValidation();
+			//jp.jumpPageSearchPlanBoxValidation();
 			jp.logoutPSCFromJumpage();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1160,7 +1166,9 @@ public class logintestcases {
 					new String[] { Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password") }).get();
 			homePage.validateHomeScreenSectionAfterLogin();
+			
 			if (login.checkPlanTabTxnCodes()) {
+				homePage.searchPlanWithIdOrName(Stock.GetParameterValue("PlanNo"));
 				homePage.validatePlanSubmenuBasedOnTxnCodes();
 				homePage.validateOtherHomePageSecutiryTXNCodes();
 				login.deletePlanMenuTxnCodes1();
@@ -1173,6 +1181,7 @@ public class logintestcases {
 				login.insertPlanMenuTxnCodes();
 				login.deletePlanMenuTxnCodes2();
 				homePage.logoutPSC();
+				Thread.sleep(2000);
 				login.submitLoginCredentials(new String[] {
 						Stock.GetParameterValue("username"),
 						Stock.GetParameterValue("password") });

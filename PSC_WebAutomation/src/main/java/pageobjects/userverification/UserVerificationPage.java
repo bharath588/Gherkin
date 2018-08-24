@@ -161,6 +161,7 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		Thread.sleep(3000);
 		if (Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {			
 			Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
+			Thread.sleep(2000);
 			Web.setTextToTextBox(txtUserVerificationSecAns, this.getSecurityAnswer());
 			//Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
 			Web.clickOnElement(btnUserVerificationNext);

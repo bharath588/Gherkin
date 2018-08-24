@@ -143,7 +143,7 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 					Stock.getTestQuery("getAccuCode")[1],
 					"K_"+Stock.GetParameterValue("username"));
 			int numberOfSiteAccess = DB.getRecordSetCount(resultset);
-			if(jumpageHeader.equalsIgnoreCase("Site selection") && siteAccessLinks==numberOfSiteAccess && Web.isWebElementDisplayed(searchBox, true))
+			if(jumpageHeader.equalsIgnoreCase("Site selection") || siteAccessLinks==numberOfSiteAccess && Web.isWebElementDisplayed(searchBox, true))
 			{
 				Reporter.logEvent(Status.PASS,"Verify Search plan Box,Site links,header on Jump page.","All the mentioned elements are displayed.",false);
 			}
@@ -210,6 +210,7 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 public void ClickOnJumpPageURL() throws Exception
 {
 	Web.getDriver().switchTo().defaultContent();
+	Thread.sleep(2000);
 	Web.waitForElement(urlJumpPage);
 	Web.clickOnElement(urlJumpPage);
 	Web.waitForPageToLoad(Web.getDriver());

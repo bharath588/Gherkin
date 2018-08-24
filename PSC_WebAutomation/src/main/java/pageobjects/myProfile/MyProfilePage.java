@@ -756,6 +756,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 		Web.clickOnElement(changeSecurityQuestnButton());
 		selectSecurityQuestion(sameQuestions,index);
 		if(!sameQuestions){
+			Thread.sleep(2000);
 			FillSecurityAnswer(sameAnswer,Stock.GetParameterValue("Answer1"), 
 					Stock.GetParameterValue("Answer2"), 
 					Stock.GetParameterValue("Answer3"));
@@ -855,5 +856,53 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 		return faqPageLoaded;
 	}
 
+	public boolean updateDefaultEmailAddress()
+	{
+		boolean emailAddressUpdated = false;
+		try
+		{
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(myProfileFrame);
+			Web.clickOnElement(updateCurrentEmailBtn());
+			if(!Web.VerifyText(currentEmailAddress().getText(), 
+					this.getRandomEmailId(Stock.GetParameterValue("defaultEmailID"),true))){
+				Web.setTextToAngularTextBox(newEmailBox(),randomEmailId);
+				Web.setTextToAngularTextBox(confirmEmailBox(), randomEmailId);
+				Web.clickOnElement(updateEmailBtn());
+			}
+			else{
+				Web.setTextToAngularTextBox(newEmailBox(),
+						this.getRandomEmailId(Stock.GetParameterValue("defaultEmailID"),true));
+				Web.setTextToAngularTextBox(confirmEmailBox(), randomEmailId);
+				Web.clickOnElement(updateEmailBtn());
+			}
+
+			if(Web.isWebElementDisplayed(confirmModalBox()))
+			{
+				Web.setTextToAngularTextBox(confirmModalBox(), Stock.GetParameterValue("Password"));
+				Web.clickOnElement(confirmPwdButton);
+				Web.gwgWebDriver.waitForAngularRequestsToFinish();
+			}
+			if(successMessageDiv.isDisplayed()&&
+					currentEmailAddress().getText().equalsIgnoreCase
+					(randomEmailId))
+			{
+				emailAddressUpdated = true;
+				Reporter.logEvent(Status.PASS, "Check user is able to update email address", 
+						"User has updated email successfully", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Check user is able to update email address", 
+						"User was not able to update email", true);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return emailAddressUpdated;
+	}
+	
 
 }

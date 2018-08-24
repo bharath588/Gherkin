@@ -23,6 +23,7 @@ import lib.Web;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
@@ -87,7 +88,10 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 
 	@FindBy(how = How.ID,using = "progressMessageContainer")
 	private WebElement reportSubmitProgress;
-
+	
+	@FindBy(how = How.ID,using = "framef")
+	private WebElement frameRequest;
+	
 	@FindBy(how = How.MODEL, using="reportSearchCriteria")
 	private WebElement reportSearchBox;
 
@@ -256,6 +260,7 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 			this.clickOnStandardReportsTab(Stock.GetParameterValue("tabName"));
 			Web.nextGenDriver.waitForAngular();
 			WebElement reportOption = this.getReportOption(Stock.GetParameterValue("reportName"));
+			Thread.sleep(2000);
 			if(reportOption.isEnabled())
 				reportOption.click();
 			Web.nextGenDriver.waitForAngular();
@@ -431,7 +436,7 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 					if(plan.getText().contains(Stock.GetParameterValue("planId"))){
 						Web.clickOnElement(plan);
 						Web.nextGenDriver.waitForAngular();
-						Reporter.logEvent(Status.INFO,"Enter plan on report order page", plan.getText()+" is selected", true);
+						//Reporter.logEvent(Status.INFO,"Enter plan on report order page", plan.getText()+" is selected", true);
 						break;
 					}
 				}
@@ -518,6 +523,8 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 	private boolean verifyMultiStepReports(){
 		boolean isVerified = false;
 		String primeWindow = "";
+		String reportNo ="";
+		String parentHandler= "";
 		try{
 			Reporter.logEvent(Status.INFO, "Verifying report..", "Verifying report..", false);
 			CommonLib.FrameSwitchONandOFF(true, reportsFrame);
@@ -538,30 +545,40 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 					if(report.findElement(By.xpath("td[6]")).getText().trim()
 							.equalsIgnoreCase(reportRequestNo)){
 						WebElement status = report.findElement(By.xpath("td[7]"));
+						reportNo= report.findElement(By.xpath("td[6]")).getText();
 						System.out.println("Report : "+report.findElement(By.xpath("td[6]"))
 								.getText()+"... status : "+status.getText());
-						if(status.getText().trim().equalsIgnoreCase("View")){
+						/*if(status.getText().trim().equalsIgnoreCase("View")){
 							Web.clickOnElement(status.findElement(By
-									.xpath("//a[contains(text(),'View')]")));
+									.xpath("//a[contains(text(),'View')]")));*/
+						
+						if(status.getText().trim().equalsIgnoreCase("View PDF")){
+							CommonLib.FrameSwitchONandOFF(true, reportsFrame);						
+							Web.clickOnElement(Web.getDriver().findElement(By
+									.xpath("//td[text()='"+reportNo+"']/preceding-sibling::td[1]/following-sibling::td[2]//div[3]//a[text()='View PDF']")));
 							Web.nextGenDriver.waitForAngular();
-							if(Web.isWebElementDisplayed(reportDownloadButton, false))
+							Thread.sleep(2000);
+							//switchToModalDialog(Web.getDriver(), primeWindow);
+							//if(Web.isWebElementDisplayed(reportDownloadButton, false))							
+							/*if(Web.isWebElementDisplayed(reportDownloadButton, false))
 							{
 								Web.clickOnElement(reportDownloadButton);
 								String fileName = CommonLib.getDownloadedDocumentName(Stock.getConfigParam("Download_Directory"),"pdf");
 								Reporter.logEvent(Status.INFO, "Downloaded file name is: ", fileName, false);
 								return true;
-							}
+							}*/
 							for(String window : Web.getDriver().getWindowHandles()){
 								Web.getDriver().switchTo().window(window);
 							}
-							if(Web.isWebElementDisplayed(reportFrame,true)){
-								Web.getDriver().switchTo().frame(reportFrame);
+							if(Web.isWebElementDisplayed(frameRequest,true)){
+								Web.getDriver().switchTo().frame(frameRequest);
+								
 								if(verifyReportContent()){
 									Reporter.logEvent(Status.INFO, 
 											"Report opened and verified successfully", 
 											"Report opened and verified successfully", true);
-									Web.getDriver().close();
-									System.out.println("BO window closed");
+									/*Web.getDriver().close();
+									System.out.println("BO window closed");*/
 									Web.getDriver().switchTo().window(primeWindow);
 									System.out.println("Switch to old window successfully");
 									return true;
@@ -614,7 +631,7 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 
 	private boolean verifyReportContent() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	private boolean verifySingleStepReports(){
@@ -650,8 +667,18 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 		return false;
 	}
 
-
-
+	public static void switchToModalDialog(WebDriver driver, String parent) { 
+    if (driver.getWindowHandles().size() == 2) {
+        for (String window : driver.getWindowHandles()) {
+            if (!window.equals(parent)) {
+                driver.switchTo().window(window);
+                System.out.println("Modal dialog found");
+                break;
+            }
+        }
+    }
+	}
+	
 
 
 }

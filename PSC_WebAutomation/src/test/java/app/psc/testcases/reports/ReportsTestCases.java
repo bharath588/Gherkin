@@ -65,7 +65,6 @@ public class ReportsTestCases {
 			else{
 				Reporter.logEvent(Status.FAIL, "Verify report order screen Elements", "Report order form elements are not loaded", true);
 			}
-
 		}
 		catch(Exception e){
 			Globals.exception = e;
@@ -115,7 +114,8 @@ public class ReportsTestCases {
 				rptPage.get();
 				if(rptPage.isReportOrderFormByTxnCodeSearch(Stock.GetParameterValue("txnCode"))){
 					Reporter.logEvent(Status.PASS, "Open report order page", 
-							"Report order page is open. Ordering report...", true);
+							"Report order page i"
+							+ "s open. Ordering report...", true);
 					rptPage.orderReport();
 				}
 				else

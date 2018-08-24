@@ -83,7 +83,6 @@ public class MyProfileTestCases {
 						&& Web.returnElement(myProfPage, "Current Default Plan")
 								.getText()
 								.contains(myProfPage.getDefaultGaIdFromDb())) {
-
 					Reporter.logEvent(
 							Status.PASS,
 							"Verify default plan is updated on my profile page",
@@ -168,6 +167,7 @@ public class MyProfileTestCases {
 			Map<String, String> testData) {
 		String prevEmailAddress = null;
 		String updatedEmailAddress = null;
+		boolean defaultEmailId= false;
 		boolean isEmailUpdatedFromUI = false;
 		try {
 			Reporter.initializeReportForTC(
@@ -191,6 +191,8 @@ public class MyProfileTestCases {
 					Stock.GetParameterValue("username"));
 			if (isEmailUpdatedFromUI
 					&& (!prevEmailAddress.equals(updatedEmailAddress))) {
+				defaultEmailId = myProfPage.updateDefaultEmailAddress();
+				System.out.println(defaultEmailId + "Default email id");
 				Reporter.logEvent(Status.PASS,
 						"Email Id is updated in UI and DB",
 						"Email ID is updated in UI and DB", false);

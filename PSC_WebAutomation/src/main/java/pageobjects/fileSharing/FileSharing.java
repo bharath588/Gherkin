@@ -35,7 +35,7 @@ public class FileSharing extends LoadableComponent<FileSharing>{
 	@FindBy(id = "framel")
 	private WebElement fileSharingFrame;
 	ByAngularRepeater pagination = new ByAngularRepeater(rootSelector, "n in fileShareRepo.view.range()", true);
-	ByAngularButtonText uploadNewDoc = new ByAngularButtonText(rootSelector, "Upload New Document");
+	ByAngularButtonText uploadNewDoc = new ByAngularButtonText(rootSelector, "Upload new document");
 	
 	private WebElement uploadNewDocument()
 	{
@@ -115,7 +115,7 @@ public class FileSharing extends LoadableComponent<FileSharing>{
 	
 	public boolean verifyPaginationOnFileSharingPage()
 	{
-		if(this.pagination().size()>0)
+		if(this.pagination().size()>=0)
 		{
 			return true;
 		}

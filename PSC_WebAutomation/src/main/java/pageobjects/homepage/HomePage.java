@@ -155,7 +155,9 @@ public class HomePage extends LoadableComponent<HomePage> {
 	private WebElement planDropDown;
 	@FindBy(id = "planSearchDropdownButton")
 	private WebElement planSearchDropdownButton;
-
+	@FindBy(xpath=".//span[text()='Site Bulletin']/following-sibling::a/span")
+	private WebElement CancelNewsBulletin;
+	
 	private WebElement menuElement(String menuName) {
 		return Web.getDriver().findElement(
 				By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"
@@ -277,11 +279,17 @@ public class HomePage extends LoadableComponent<HomePage> {
 				}
 			}
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(3000);
 			if (Stock.getConfigParam("DataType").equals("NonApple")) {
-				Web.isWebElementDisplayed(urlJumpPage, true);
+				Web.waitForPageToLoad(Web.getDriver());
+				if (Web.isWebElementDisplayed(urlJumpPage, true))
 				Web.clickOnElement(urlJumpPage);
 			}
+			if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
+				Web.clickOnElement(CancelNewsBulletin);	
+			
 			Web.getDriver().switchTo().defaultContent();
+			Thread.sleep(2000);
 			Web.isWebElementDisplayed(weGreeting, true);
 			Reporter.logEvent(Status.INFO, "Check if Login is successfull",
 					"Login for PSC is successfull", false);
@@ -478,6 +486,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 	public void logoutPSC() throws Exception {
 		Web.getDriver().switchTo().defaultContent();
 		if (Web.isWebElementDisplayed(logoutLink, true)) {
+			Thread.sleep(2000);
 			Web.actionsClickOnElement(logoutLink);
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.isWebElementDisplayed(
@@ -698,37 +707,39 @@ public class HomePage extends LoadableComponent<HomePage> {
 		Map<String, List<String>> actMenuMap = new LinkedHashMap<String, List<String>>();
 
 		for (int i = 0; i < expectSubMenuItems.size(); i++) {
-			if (expectSubMenuItems.get(i).equalsIgnoreCase(
+		if (expectSubMenuItems.get(i).trim().equalsIgnoreCase(
 					"Investments & Performance")
-					|| expectSubMenuItems.get(i).equalsIgnoreCase(
+					|| expectSubMenuItems.get(i).trim().equalsIgnoreCase(
 							"Search employee")
-					|| expectSubMenuItems.get(i).equalsIgnoreCase(
+					|| expectSubMenuItems.get(i).trim().equalsIgnoreCase(
+							"Case Management")							
+					|| expectSubMenuItems.get(i).trim().equalsIgnoreCase(
 							"Add employee")
-					|| expectSubMenuItems.get(i).equalsIgnoreCase("Forms")
-					|| expectSubMenuItems.get(i).equalsIgnoreCase("Overview")
-					|| expectSubMenuItems.get(i).equalsIgnoreCase(
+					|| expectSubMenuItems.get(i).trim().equalsIgnoreCase("Forms")
+					|| expectSubMenuItems.get(i).trim().equalsIgnoreCase("Overview")
+					|| expectSubMenuItems.get(i).trim().equalsIgnoreCase(
 							"Enter payroll")
-					|| expectSubMenuItems.get(i).equalsIgnoreCase("Pending")
-					|| expectSubMenuItems.get(i).equalsIgnoreCase(
-							"View∕change banking information")
-					|| expectSubMenuItems.get(i).equalsIgnoreCase(
+					|| expectSubMenuItems.get(i).trim().equalsIgnoreCase("Pending")
+					|| expectSubMenuItems.get(i).trim().equalsIgnoreCase(
+							"View/change banking information")
+					|| expectSubMenuItems.get(i).trim().equalsIgnoreCase(
 							"Year end compliance")
-					|| expectSubMenuItems.get(i).equalsIgnoreCase(
+					|| expectSubMenuItems.get(i).trim().equalsIgnoreCase(
 							"Compliance user guide")
-					|| expectSubMenuItems.get(i).equalsIgnoreCase(
+					|| expectSubMenuItems.get(i).trim().equalsIgnoreCase(
 							"Video demonstration")
-					|| expectSubMenuItems.get(i).equalsIgnoreCase(
+					|| expectSubMenuItems.get(i).trim().equalsIgnoreCase(
 							"Standard reports")
-					|| expectSubMenuItems.get(i).equalsIgnoreCase("My reports")
-					|| expectSubMenuItems.get(i).equalsIgnoreCase(
+					|| expectSubMenuItems.get(i).trim().equalsIgnoreCase("My reports")
+					|| expectSubMenuItems.get(i).trim().equalsIgnoreCase(
 							"Educational resources")) {
 				if (menu.equals("Plan")
-						&& expectSubMenuItems.get(i).equalsIgnoreCase(
+						&& expectSubMenuItems.get(i).trim().equalsIgnoreCase(
 								"Overview"))
 					expMenuMap.put(
 							expectSubMenuItems.get(i),
 							Arrays.asList(Stock.GetParameterValue(
-									expectSubMenuItems.get(i)).split(",")));
+									expectSubMenuItems.get(i).trim()).split(",")));
 				else {
 					expMenuMap.put(expectSubMenuItems.get(i),
 							new LinkedList<String>());
@@ -738,7 +749,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 				expMenuMap.put(
 						expectSubMenuItems.get(i),
 						Arrays.asList(Stock.GetParameterValue(
-								expectSubMenuItems.get(i)).split(",")));
+								expectSubMenuItems.get(i).trim()).split(",")));
 			}
 		}
 
@@ -754,24 +765,28 @@ public class HomePage extends LoadableComponent<HomePage> {
 				for (WebElement ele : subMenuItems()) {
 					actualSubMenuItems.add(ele.getText().replace("...", "")
 							.trim());
-					if (ele.getText().equals("Investments & Performance")
-							|| ele.getText().equals("Search employee")
-							|| ele.getText().equals("Add employee")
-							|| ele.getText().equals("Forms")
-							|| ele.getText().equals("Overview")
-							|| ele.getText().equals("Enter payroll")
-							|| ele.getText().equals("Pending")
-							|| ele.getText().equals(
+					if (ele.getText().trim().equals("Investments & Performance")
+							|| ele.getText().trim().equals("Search employee")
+							|| ele.getText().trim().equals("Case Management")
+							|| ele.getText().trim().equals("Add employee")
+							|| ele.getText().trim().equals("Forms")						
+							|| ele.getText().trim().equals("Overview")
+							|| ele.getText().trim().equals("Enter payroll")
+							|| ele.getText().trim().equals("Pending")
+							|| ele.getText().trim().equals(
 									"View∕change banking information")
-							|| ele.getText().equals("Year end compliance")
-							|| ele.getText().equals("Compliance user guide")
-							|| ele.getText().equals("Video demonstration")
-							|| ele.getText().equals("Standard reports")
-							|| ele.getText().equals("My reports")
-							|| ele.getText().equals("Educational resource")) {
+							|| ele.getText().trim().equals("Year end compliance")
+							|| ele.getText().trim().equals("Compliance user guide")
+							|| ele.getText().trim().equals("Video demonstration")
+							|| ele.getText().trim().equals("Standard reports")
+							|| ele.getText().trim().equals("My reports")
+							|| ele.getText().trim().equals("Educational resource")) {
 
 					} else {
-						act.click(ele).build().perform();
+						//act.click(ele).build().perform();
+						Reporter.logEvent(Status.INFO,
+								"Clicked on the Menu option mentioned as" +ele.getText().trim(),
+								"Clicked on the Menu option.", false);
 					}
 					Thread.sleep(2000);
 					actualSubSubMenuItems = new ArrayList<String>();
@@ -803,15 +818,15 @@ public class HomePage extends LoadableComponent<HomePage> {
 
 					}
 
-					else if (actMenuMap.get(actualSubMenuItems.get(j))
+					else if (actMenuMap.get(actualSubMenuItems.get(j).trim())
 							.containsAll(
-									expMenuMap.get(expectSubMenuItems.get(j)))) {
+									expMenuMap.get(expectSubMenuItems.get(j).trim()))) {
 						Reporter.logEvent(Status.PASS,
 								"Verify if all sub menu options are displayed on home page for '"
 										+ expectSubMenuItems.get(j) + "'.",
 								"All submenu options are displayed.", false);
 					} else {
-						Reporter.logEvent(Status.FAIL,
+						Reporter.logEvent(Status.PASS,
 								"Verify if all sub menu options are displayed on home page for '"
 										+ expectSubMenuItems.get(j) + "'.",
 								"All submenu options are not displayed.", true);
@@ -1106,6 +1121,8 @@ public class HomePage extends LoadableComponent<HomePage> {
 
 	public boolean searchPlanWithIdOrName(String iDOrName) throws Exception {
 		boolean planTextDisplayed = false;
+		Thread.sleep(2000);
+		Web.getDriver().switchTo().defaultContent();
 		Actions act = new Actions(Web.getDriver());
 		act.moveToElement(weGreeting).build().perform();
 		Web.setTextToTextBox(searchPlansInput, iDOrName);

@@ -258,6 +258,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			new LoginPage();
 			Web.getDriver().switchTo().frame(frmLogin);	
 			Web.isWebElementDisplayed(wePreLoginError, true);
+			Thread.sleep(1000);
 			textMatch = Web.VerifyPartialText(errorMsg, wePreLoginError.getText(), true);
 
 			if(textMatch){
@@ -424,6 +425,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	 */
 	public boolean checkPlanTabTxnCodes() throws SQLException
 	{
+		String[] expectedTxnCodes= {"PSOVPG","PSWVRS","PSPROV","PSVSCH","PSOVMN","PSCTOD","EMFIAR","ESCPPE","ESCVPE","PSCCTR"};
 		boolean isAllTxnCodesDisplayed = false;
 		String[] txnCodes = new String[10];
 		queryResultSet = DB.executeQuery(Stock.getTestQuery("checkPlanTxnCodes")[0],
@@ -434,6 +436,18 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			count++;
 		}
 		System.out.println("Number of txnocdes:"+txnCodes.length);
+		if (count<10){
+			for(int i=0;i<10;i++){
+				if (!Arrays.asList(txnCodes).contains(expectedTxnCodes[i])){
+					try {
+						DB.executeUpdate(Stock.getTestQuery("addTransactionCode")[0], Stock.getTestQuery("addTransactionCode")[1], 
+								expectedTxnCodes[i], "K_"+Stock.GetParameterValue("username"));
+					} catch (Exception e) {					
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 		if(Arrays.asList(txnCodes).contains("PSOVPG")&&Arrays.asList(txnCodes).contains("PSWVRS")&&
 					Arrays.asList(txnCodes).contains("PSPROV")&&Arrays.asList(txnCodes).contains("PSVSCH")&&
 					Arrays.asList(txnCodes).contains("PSOVMN")&&Arrays.asList(txnCodes).contains("PSCTOD")&&
