@@ -13,8 +13,10 @@ import pscBDD.forgotPassword.ForgotPasswordPage;
 import pscBDD.homePage.HomePage;
 import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
+import pscBDD.partnerlinkHomePage.PartnerlinkHomePage;
 import pscBDD.planPage.LoanInformationPage;
 import pscBDD.planPage.PlanDMBACustomSitePage;
+import pscBDD.planPage.PlanPage;
 import pscBDD.userVerification.UserVerificationPage;
 import bdd_lib.CommonLib;
 import bdd_lib.Web;
@@ -50,6 +52,8 @@ public class HomeStepDefinitions {
 	JumpPage jumpPage;
 	HomePage homePage;
 	PlanDMBACustomSitePage planDmbaPage;
+	PlanPage planPage;
+	PartnerlinkHomePage partnerHomePage;
 	
 	static int pertinentPopups = 0;
 	static int homePageVisits = 0;
@@ -62,7 +66,8 @@ public class HomeStepDefinitions {
 			Globals.scenarioName = scenario.getName();
 			System.out.println(scenario.getId());
 			homePage = new HomePage();
-			
+			planPage=new PlanPage();
+			partnerHomePage= new PartnerlinkHomePage();
 			Globals.currentIteration = Integer.valueOf(scenario.getId().split(
 					";")[scenario.getId().split(";").length - 1]) - 1;
 			System.out.println("Current iteration is: "+Globals.currentIteration);
@@ -587,7 +592,153 @@ public class HomeStepDefinitions {
 				Reporter.logEvent(Status.FAIL, planNo+" plan home page displays", planNo+" plan home page isn't displays", true);
 			}
 	    }
+	 
+	 
+	@When("^user selects Plan /Contacts menu$")
+	public void user_selects_plan_contacts_menu() throws Throwable {
+		planPage.clickOnContactsUnderPlanTab();
+	}
 
+	@Then("^No \"([^\"]*)\" menu item is displayed$")
+	public void no_Empower_Contacts_menu_item_is_displayed(String menuOption)
+			throws Throwable {
+		if (planPage.isEmpowerContactsMenu(menuOption)) {
+			Reporter.logEvent(
+					Status.PASS,
+					"Empower Contacts menu option not displayed for Plan/Contacts menu",
+					"Empower Contacts menu option not displayed for Plan/Contacts menu",
+					true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Empower Contacts menu option not displayed for Plan/Contacts menu",
+					"Empower Contacts menu option displayed for Plan/Contacts menu",
+					true);
+		}
 
+	}
 
+	@Then("^the Partnerlink landing page is not branded as Empower$")
+    public void the_partnerlink_landing_page_is_not_branded_as_empower() throws Throwable {
+       if(partnerHomePage.isMetLifeLogo()){
+			Reporter.logEvent(
+					Status.PASS,
+					"PartnerLink landing page is not branded with Empower",
+					"PartnerLink landing page is not branded with Empower",
+					true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"PartnerLink landing page is not branded with Empower",
+					"PartnerLink landing page is branded with Empower",
+					true);
+		}
+
+    }
+	
+	
+	@Then("^three security questions are saved and flow proceeds to post-login page$")
+    public void three_security_questions_are_saved_and_flow_proceeds_to_postlogin_page() throws Throwable {
+		if (homePage.isHomePage()){
+			Reporter.logEvent(
+					Status.PASS,
+					"Verify User proceeds to Homepage after providing security questions",
+					"HomePage displayed",
+					false);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Verify User proceeds to Homepage after providing security questions",
+					"HomePage not displayed",
+					true);
+		}	
+    }
+	
+	 @Given("^user has logged out of their account$")
+	    public void user_has_logged_out_of_their_account() throws Throwable {
+	        homePage.clickLogout();
+	        Reporter.logEvent(
+					Status.INFO,
+					"User logged out successfully",
+					"User logged out successfully",
+					false);
+	    }
+
+	 @When("^user clicks 'More' on the Plan Analytics dashboard.$")
+	    public void user_clicks_more_on_the_plan_analytics_dashboard() throws Throwable {		
+	      planPage.clickOnMOre();		 
+	    }
+	 
+	 
+
+	    @Then("^the MAX Enrollment High Chart will be visible.$")
+	    public void the_max_enrollment_high_chart_will_be_visible() throws Throwable {
+	    	if (planPage.isMAXEnrollmentHighChart()){
+				Reporter.logEvent(
+						Status.PASS,
+						"MAX Enrollment High Chart displayed",
+						"MAX Enrollment High Chart displayed",
+						false);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"MAX Enrollment High Chart not displayed",
+						"MAX Enrollment High Chart not displayed",
+						true);
+			} 
+	    }
+	   
+	    @Then("^the MAX Enrollment High Chart will not be visible.$")
+	    public void the_max_enrollment_high_chart_will_not_be_visible() throws Throwable {	    	
+	    	if (planPage.verifyHighChart()){
+				Reporter.logEvent(
+						Status.PASS,
+						"MAX Enrollment High Chart not displayed",
+						"MAX Enrollment High Chart not  displayed",
+						false);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"MAX Enrollment High Chart displayed",
+						"MAX Enrollment High Chart displayed",
+						true);
+			} 
+	    }
+
+	  	   
+	   
+	    @Given ("^User search and selects \"([^\"]*)\" offers MAX$")
+	    public void user_search_and_selects_something_offers_max(String plan) throws Throwable {
+	    	 homePage.switchPlan(plan);
+	    }
+	    
+	   
+	    @Given("^User search and selects \"([^\"]*)\" does not offers MAX.$")
+	    public void user_search_and_selects_something_does_not_offers_max(String plan) throws Throwable {
+	    	 homePage.switchPlan(plan);
+	    }
+	    
+
+	    @Then("^the Last login field should display the previous login time and in UI date and time should be displayed in Eastern time and LAST_LOGIN_DATE_TIME in USERS table should be saved in Mountain time across all databases with (.+) and (.+) the User has access to$")
+	    public void the_last_login_field_should_display_the_previous_login_time_and_in_ui_date_and_time_should_be_displayed_in_eastern_time_and_lastlogindatetime_in_users_table_should_be_saved_in_mountain_time_across_all_databases_with_and_the_user_has_access_to(@Delimiter(",") List<String> DBname,String username,String query) throws Throwable {
+	    	if (homePage.verifyLastLoginDateEquality(DBname,username,query)) {
+	    		Reporter.logEvent(
+						Status.PASS,
+						"Compare last login date and time from application and database ",
+						"Time displayed on application home page is equal to time stored in database",
+						false);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Compare last login date and time values from application and database ",
+						"Time displayed on application home page is not equal to time stored in database",
+						true);
+				  }
+	    }
+	   
+	    
+	  
+	    
+	    
+	    
 }

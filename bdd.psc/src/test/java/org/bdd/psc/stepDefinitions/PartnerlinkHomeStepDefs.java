@@ -4,6 +4,9 @@
 package org.bdd.psc.stepDefinitions;
 
 
+import java.util.List;
+import java.util.Map;
+
 import gherkin.formatter.model.Scenario;
 import pscBDD.PlanExpress.PlanExpressPage;
 import pscBDD.login.LoginPage;
@@ -15,8 +18,10 @@ import bdd_reporter.Reporter;
 import com.aventstack.extentreports.Status;
 
 import cucumber.api.DataTable;
+import cucumber.api.Delimiter;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -258,13 +263,15 @@ public class PartnerlinkHomeStepDefs {
 	public void user_is_presented_Implementation_Checklist_page()
 			throws Throwable {
 		// Write code here that turns the phrase above into concrete actions
-		if (pePage.isImplementationCheckList())
+		if (pePage.isImplementationCheckList()){
 			Reporter.logEvent(Status.PASS,
 					"user is presented Implementation Checklist page",
 					"user is presented Implementation Checklist page", true);
+		}else{
 		Reporter.logEvent(Status.FAIL,
 				"user is presented Implementation Checklist page",
 				"user is not presented Implementation Checklist page", true);
+		}
 	}
 
 	@When("^selects option (\\d+) Complete Plan Data$")
@@ -308,6 +315,7 @@ public class PartnerlinkHomeStepDefs {
 			throws Throwable {
 		// Write code here that turns the phrase above into concrete actions
 		pePage.clickOnCreateFormsAndUpdate();
+		Web.waitForPageToLoad(Web.getDriver());
 		Reporter.logEvent(
 				Status.INFO,
 				"selects Create forms and update recordkeeping system from Implementation Checklist for that plan",
@@ -325,5 +333,117 @@ public class PartnerlinkHomeStepDefs {
 	    pePage.verifyDBValues(query, Globals.planNumber);
 	}
 	
+	
+	 /* @SWEB-17822
+	  * Given user is on the Home page of "<accuCode>" when user login with correct "<username>" and "<password>" 	    
+	  * When user selects PartnerLink>Implementation>Plan Express	    
+	  * And selects option 2 Complete Plan Data	    
+	  * And selects a plan "<GA_ID>" to complete from list provided	    
+	  * And creates a Frozen money type on pages 5400-5430 using "<Money_Type>" , "<Descr>" and "<Type_Descr>"	    
+	  * And selects Create forms and update recordkeeping system from Implementation Checklist for that plan	    
+	  * Then PXIS runs in background and updates GRP_DEF_MNTY.CLASSIFICATION_CODE is appended with FZ for the money types marked as Frozen money type on pages 5400-5430 and can be verified with sql for "<GA_ID>","<Classification_Code>","<Descr>"
+	*/
+	
+	
+	 @When("^user selects PartnerLink>Implementation>Plan Express$")
+	    public void user_selects_partnerlinkimplementationplan_express() throws Throwable {
+		 if (plHomePage.isPlanExpressPage()) {
+				Reporter.logEvent(Status.PASS, "User is on plan Express page",
+						"User is on plan Express page", true);
+			} else {
+				Reporter.logEvent(Status.FAIL, "User is not on plan Express page",
+						"User is not on plan Express page", true);
+			}  				 
+	    }
+	 
+	 @When("^selects a plan \"([^\"]*)\" to complete from list provided$")
+		public void selects_a_plan_something_to_complete_from_list_provided(String ga_ID)
+				throws Throwable {
+			try {
+				Thread.sleep(3000);
+				Globals.planNumber=ga_ID;
+				pePage.searchPlanNo(ga_ID);
+				pePage.clickOnlegalPlanLink(ga_ID);
+				Reporter.logEvent(Status.INFO,
+						"Clicks on Plan link from list provided",
+						"Clicks on Plan link from list provided", false);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	 
+	 
+	 @Then("^below page 6200 line item on that page the \"([^\"]*)\" are presented$")
+	    public void below_page_6200_line_item_on_that_page_the_are_presented
+	    (@Delimiter(",") List<String> tabs) throws Throwable {
+		 for (String tab : tabs) {
+		 if (pePage.validateTabsInPlanExpress(tab)) {
+				Reporter.logEvent(Status.PASS, "Tab: " +tab+ "is presented below 6200 line items ",
+						"Tab is presented below 6200 line items", false);
+			} else {
+				Reporter.logEvent(Status.FAIL, "Tab:" +tab+ "is presented below 6200 line items ",
+						"Tab is not presented below 6200 line items", true);
+			} 				 
+	    }
+	 }
+	 
+	 @When("^User selects PartnerLink>Plan Visualizer menu tab$")
+	    public void user_selects_partnerlinkplan_visualizer_menu_tab() throws Throwable {
+		 plHomePage.clickOnPlanVisualizer();		 
+	    } 
+	 
+	 @Then("^Plan Visualizer page will open$")
+	    public void plan_visualizer_page_will_open() throws Throwable {
+		 Reporter.logEvent(Status.INFO, "Plan Visualizer page displayed ",
+					"Plan Visualizer page displayed", false);
+	    }
 
+	 @Then("^breadcrumb will update to \"([^\"]*)\"$")
+	    public void breadcrumb_will_update_to_something(String strArg1) throws Throwable {
+	       if( plHomePage.isBreadcrumb(strArg1)){
+	    	   Reporter.logEvent(Status.PASS, "Breadcrumb is updated to PartnerLink / Plan Visualizer ",
+						"Breadcrumb is updated to PartnerLink / Plan Visualizer", false);
+			} else {
+				Reporter.logEvent(Status.FAIL, "Breadcrumb is not updated to PartnerLink / Plan Visualizer",
+						"Breadcrumb is not updated to PartnerLink / Plan Visualizer", true);
+			} 		 
+	    }
+
+	        
+	 @When("^creates a Frozen money type on pages 5400-5430 using \"([^\"]*)\" , \"([^\"]*)\" and \"([^\"]*)\"$")
+	 public void creates_a_frozen_money_type_on_pages_54005430_using_something_something_and_something(String moneyType, String descr, String typeDescr) throws Throwable {
+		 pePage.clickOnFrozenMoneytype();
+		 pePage.addFrozenMoney();
+		 pePage.add5410FrozenMoney(moneyType,descr);
+		 pePage.add5420FrozenMoney(moneyType,typeDescr);
+		 pePage.add5430FrozenMoney(moneyType);
+		 pePage.add5440FrozenMoney();
+		 pePage.add5500FrozenMoney();
+		 pePage.add5600FrozenMoney();
+		 pePage.add5620FrozenMoney();
+		 pePage.add5640Vesting();
+		 pePage.add5645Vesting();
+		 pePage.add5650Vesting();
+		 pePage.add5660Eligibility();
+		 pePage.add5670Eligibility();
+		 pePage.add5685Safeharbor();
+		 pePage.add5685Safeharbor();
+		 pePage.add5685Safeharbor();
+		 pePage.add5800Misc();
+		 pePage.add5900Distribution();
+		 pePage.add6000Loans();
+		 pePage.add6100FeeRecovery();
+		 pePage.add6200Loans();
+		 
+	    }	 
+	 	 
+	 @Then("^PXIS runs in background and updates GRP_DEF_MNTY.CLASSIFICATION_CODE is appended with FZ for the money types marked as Frozen money type on pages 5400-5430 and can be verified with sql for \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
+	    public void pxis_runs_in_background_and_updates_grpdefmntyclassificationcode_is_appended_with_fz_for_the_money_types_marked_as_frozen_money_type_on_pages_54005430_and_can_be_verified_with_sql_for_somethingsomethingsomething(String gaid,String classificationcode,String descr,String query) throws Throwable {
+		 pePage.getFrozenMoneyCreated(query,gaid,classificationcode,descr);	
+	    }
+	 
+	 
+	 
+	 
+	 
 }

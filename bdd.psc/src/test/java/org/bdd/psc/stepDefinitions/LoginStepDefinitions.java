@@ -774,6 +774,7 @@ public class LoginStepDefinitions {
 						"navigated to "+expLink+" and can't verify metLife logo ", true);
 			} 
 	    }
+	 
 	 @When("^MetLife logo is displayed$")
 	    public void metlife_logo_is_displayed() throws Throwable {
 	        if(!login.ismetLifeLogoDisplays())
@@ -784,5 +785,19 @@ public class LoginStepDefinitions {
 	       login.ismetLifeLogoDisplays();
 	    }*/
 	
+	 @Given("^is a first time login to the site$")
+	    public void is_a_first_time_login_to_the_site() throws Throwable {
+		 Reporter.initializeReportForTC(Globals.currentIteration,
+					Globals.scenarioName);
+	        login.clearCookies();
+		 
+	    }
+	 
 	
+	 
+	 
+	 
+	 
+	 
+	 
 }
