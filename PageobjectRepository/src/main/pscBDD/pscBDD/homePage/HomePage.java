@@ -146,8 +146,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 
 				}
 			}
-			if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
-				Web.clickOnElement(CancelNewsBulletin);		
+			
 		} catch (Exception e) {
 			try {
 				throw new Exception(
@@ -161,10 +160,13 @@ public class HomePage extends LoadableComponent<HomePage> {
 		if (Web.isWebElementDisplayed(jumpPage, "JUMP PAGE URL", false))
 			try {
 				Web.clickOnElement(Web.returnElement(jumpPage, "JUMP PAGE URL"));
+				Web.nextGenDriver.waitForAngular();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		if(Web.isWebElementDisplayed(CancelNewsBulletin,true)) 
+			Web.clickOnElement(CancelNewsBulletin);		
 
 	}
 

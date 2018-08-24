@@ -11,14 +11,15 @@ import bdd_core.framework.Globals;
 import java.util.concurrent.TimeUnit;
 
 import bdd_lib.CommonLib;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.LoadableComponent;
-
 import org.testng.Assert;
 
 import pscBDD.homePage.HomePage;
 import pscBDD.login.LoginPage;
 import bdd_reporter.Reporter;
+
 
 
 
@@ -69,6 +70,15 @@ public class PlanProvisionsPage extends LoadableComponent<PlanProvisionsPage> {
 	private WebElement vestingServiceLevel;
 	
 	//@FindBy(xpath = ".//div[contains(@class,'page-title') or contains(@class,'headcontainer') or contains(@class,'headcontainer ng-scope')]")
+	@FindBy(how=How.XPATH,using="//h2[text()='Plan analytics']")
+	private WebElement planAnalyticsHeader;
+	@FindBy(how=How.LINK_TEXT,using="Important information and disclosure")
+	private WebElement importantInformationDisclosureLink;
+	@FindBy(how=How.LINK_TEXT,using="About investment strategies")
+	private WebElement aboutInvestmentStrategiesLink;
+	@FindBy(how=How.XPATH,using="//div[@id='chartMainContainer']//button[text()='More']")
+	private WebElement moreButtonInplanAnalytics;
+	
 	
 	public PlanProvisionsPage(){
 		Web.getDriver().manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
@@ -140,11 +150,60 @@ public class PlanProvisionsPage extends LoadableComponent<PlanProvisionsPage> {
 	public boolean isPlanAnalyticsSectionDiplays(){
 		Web.nextGenDriver.waitForAngular();
 		Web.FrameSwitchONandOFF(false);
+		//Web.actionsClickOnElement(tabPlanMenu);
+		//Web.actionsClickOnElement(tabPlanMenu);
 		Web.FrameSwitchONandOFF(true, planFrame);
 		if (Web.isWebElementDisplayed(planAnalytics, true))
 			return true;
 		return false;
 		
+	}
+	public void clickOnImportantInformationDisclosureLink() throws InterruptedException{
+		if(Web.isWebElementDisplayed(importantInformationDisclosureLink, true)){
+			Web.actionsClickOnElement(importantInformationDisclosureLink);
+			//Web.clickOnElement(importantInformationDisclosureLink);
+			Thread.sleep(2000);
+			Reporter.logEvent(Status.INFO, " clicks on Important information disclosure link ",
+					" clicks on Important information disclosure link", true);
+		}
+			
+	}
+	public void clickOnAboutInvestmentStrategiesLink() throws InterruptedException{
+		Web.FrameSwitchONandOFF(false);
+		Web.FrameSwitchONandOFF(true, planFrame);
+		if(Web.isWebElementDisplayed(moreButtonInplanAnalytics, true))
+			Web.actionsClickOnElement(moreButtonInplanAnalytics);
+			
+		if(Web.isWebElementDisplayed(aboutInvestmentStrategiesLink, true)){
+			Web.actionsClickOnElement(aboutInvestmentStrategiesLink);
+			Thread.sleep(2000);
+			Reporter.logEvent(Status.INFO, " clicks on About investment strategies link ",
+					" clicks on About investment strategies link", true);
+		}
+			
+	}
+	
+	public boolean verifyPdfLinkInPlanAnalyticsSection(String pdfText) {
+		boolean flag = false;
+		try {
+			String parentWindow = Web.nextGenDriver.getWindowHandle();
+			String childWindowID = "";
+
+			for (String windowsID : Web.nextGenDriver.getWindowHandles())
+				childWindowID = windowsID;
+			Web.nextGenDriver.switchTo().window(childWindowID);
+			if (Web.nextGenDriver.getCurrentUrl().contains(".pdf")) {
+				flag = true;
+			}
+			Web.nextGenDriver.close();
+			Thread.sleep(2000);
+			Web.nextGenDriver.switchTo().window(parentWindow);
+		} catch (Exception e) {
+
+		}
+
+		return flag;
+
 	}
 
 	public String gettingButtonPageName(String buttonName){

@@ -9,6 +9,9 @@ import java.util.List;
 
 
 
+
+
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -19,7 +22,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import com.aventstack.extentreports.Status;
+
 import bdd_lib.Web;
+import bdd_reporter.Reporter;
 import pscBDD.commonLib.CommonLib;
 import pscBDD.homePage.HomePage;
 
@@ -74,6 +80,8 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	
 	@FindBy(id="assetAllocationTab")
 	private WebElement modelPortfolioAssetAllocation;
+	
+	
 	
 	LoadableComponent<?> parent;
 	public static WebDriver webDriver;
@@ -134,5 +142,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 		Web.FrameSwitchONandOFF(false);
 		return false;
 	}
+	
+	
 
 }

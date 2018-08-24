@@ -6,6 +6,7 @@ package pscBDD.employee;
 
 
 import java.sql.ResultSet;
+import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,6 +24,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+
+
 
 
 
@@ -78,6 +82,8 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	private WebElement firstNameLink;
 	@FindBy(how = How.ID, using = "participantDetail")
 	private WebElement employeeDetailTab;
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Overview')]")
+	private WebElement employeeOverviewHeader;
 	
 	
 	@FindBy(how = How.XPATH, using = "//table/tbody[@id='overviewtable_data']/tr/td/a")
@@ -130,19 +136,27 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	private WebElement dollarButtonInDeflInformForRoth;
 	@FindBy(how=How.ID,using="ongoingContinueButton")
 	private WebElement ongoingContinueButton;
+	@FindBy(how=How.ID,using="onetimeContinueButton")
+	private WebElement oneTimeContinueButton;
 	@FindBy(how=How.ANGULAR_ATTRIBUTE,using="click",text="saveEditForm")
 	private WebElement ongoingButtonContinue;
+	@FindBy(how=How.ANGULAR_ATTRIBUTE,using="ng-click",text="saveEditForm")
+	private WebElement oneTimeButtonContinue;
 	@FindBy(how=How.XPATH,using="//button[text()='Done']")
 	private WebElement buttonConfirmationDone;
 	@FindBy(how=How.XPATH,using="//td[text()='Before Tax']/preceding-sibling::td[2]")
 	private List<WebElement> effectiveDateForBeforeTax;
 	@FindBy(how=How.XPATH,using="//td[text()='Roth']/preceding-sibling::td[2]")
 	private List<WebElement> effectiveDateRoth;
+	@FindBy(how=How.XPATH,using="//tr[@ng-repeat='cedr in cpDeferralList']/td[6]")
+	private List<WebElement> effectiveDeferralAmount;
 	
 	@FindBy(how=How.XPATH,using="//*[*[label[contains(text(),'Deferral information for Before Tax')]]]//select[@id='customDt']")
 	private WebElement selectTargetPayrollBeforeTax;
 	@FindBy(how=How.XPATH,using="//*[*[label[contains(text(),'Deferral information for Before Tax')]]]//*[@id='two']")
 	private WebElement dollarButtonBeforeTax;
+	@FindBy(how=How.XPATH,using="//*[*[label[contains(text(),'Deferral information for Before Tax')]]]//*[@id='one']")
+	private WebElement percentButtonBeforeTax;
 	@FindBy(how=How.XPATH,using="//*[*[label[contains(text(),'Deferral information for Before Tax')]]]//input[@ng-model='aedr.increaseValue']")
 	private WebElement incrementTextBoxBeforeTax;
 	@FindBy(how=How.XPATH,using="//*[*[label[contains(text(),'Deferral information for Before Tax')]]]//input[@ng-model='aedr.stopAtValue']")
@@ -214,6 +228,10 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	@FindBy(how=How.XPATH,using="//form[@name='employment.step2.form']//label[normalize-space()='Employer classification code']")
 	private WebElement updateEmpInformationEmployerClassificationCodeLabel;
 	
+	@FindBy(how=How.XPATH,using="//*[span[text()='One-time']]/following-sibling::td//a")
+	private WebElement oneTimeDeferralEditLink;
+	@FindBy(how=How.XPATH,using="//*[@id='deferralForm']/preceding-sibling::div/h4")
+	private WebElement deferralFormHeaderInfo;
 	
 	
 	SimpleDateFormat sdf;
@@ -352,6 +370,11 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 			return true;
 		return false;
 		
+	}
+	public boolean isEmployeeOverviewPage(){
+		if (Web.isWebElementDisplayed(employeeOverviewHeader,true))
+			return true;
+		return false;
 	}
 
 	public void clickOnEmpInfoEditLink() {
@@ -494,10 +517,127 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 		Web.nextGenDriver.waitForAngular();
 		
 	}
+	public void clickOneTimeEdit(){
+		Web.clickOnElement(oneTimeDeferralEditLink);
+		Web.nextGenDriver.waitForAngular();
+		
+	}
 	public void clickScheduleAutomaticIncreaseEdit(){
 		Web.clickOnElement(scheduleAutomaticIncreaseEditLink);
 		Web.nextGenDriver.waitForAngular();
 		
+	}
+	public boolean verifyDeferralScreen(String scrrenName){
+		if(Web.isWebElementDisplayed(deferralFormHeaderInfo, true)){
+			if(deferralFormHeaderInfo.getText().trim().equalsIgnoreCase(scrrenName.trim()))
+				return true;
+		}
+		return false;
+		
+	}
+	public void clickOnSelectTargetPayrollBeforeTax() throws InterruptedException{
+		Web.clickOnElement(selectTargetPayrollBeforeTax);
+		Thread.sleep(2000);
+	}
+
+	public void selectTargetPayrollAsIndex(String indexValue,
+			String... dropdownName) throws InterruptedException {
+		if (dropdownName.length > 0) {
+			if (dropdownName[0].equalsIgnoreCase("Before Tax"))
+				Web.selectDropnDownOptionAsIndex(selectTargetPayrollBeforeTax,
+						indexValue);
+			if (dropdownName[0].equalsIgnoreCase("After Tax"))
+				System.out.println("");
+		} else
+			Web.selectDropnDownOptionAsIndex(selectTargetPayrollBeforeTax,
+					indexValue);
+	}
+	public void clickOnDollarOrPercentBeforeTax(String... name){
+		if(name.length>0){
+			if(name[0].equalsIgnoreCase("dollar"))
+				Web.clickOnElement(dollarButtonBeforeTax);
+			if(name[0].equalsIgnoreCase("percent"))
+				Web.clickOnElement(percentButtonBeforeTax);
+		}
+		else
+			Web.clickOnElement(dollarButtonBeforeTax);
+		
+	}
+	
+	public void setValueForDeferralElection(String value,String... textBoxType) {
+		if (textBoxType.length > 0) {
+			if (textBoxType[0].equalsIgnoreCase("Before Tax"))
+				Web.setTextToTextBox(enterDefElectionContributionBeforeTax,
+						value);
+			if (textBoxType[0].equalsIgnoreCase("After Tax"))
+				Web.setTextToTextBox(enterDefElectionContributionRoth, value);
+		} else
+			Web.setTextToTextBox(enterDefElectionContributionBeforeTax, value);
+
+	}
+	
+	public boolean verifyContinueButtonEnableOrDisableForOneTime(String caseType){
+		if(caseType.contains("enable"))
+			return oneTimeContinueButton.isEnabled();
+		if(caseType.contains("disable"))
+			return !oneTimeContinueButton.isEnabled();		
+		return false;		
+	}
+	
+	public boolean verifyNext18monthsInSelectTargetPayroll(){
+		try{
+			LocalDate start = LocalDate.now();
+			LocalDate end = LocalDate.now().plusMonths(18)
+					.with(TemporalAdjusters.lastDayOfMonth());
+			List<String> dates = Stream
+					.iterate(start, date -> date.plusDays(1))
+					.limit(ChronoUnit.DAYS.between(start, end))
+					.map(element -> (String) element.format(DateTimeFormatter
+							.ofPattern("yyyy/MM/dd")))
+					.collect(Collectors.toList());
+			System.out.println("-----------------");
+			Web.FrameSwitchONandOFF(false);
+			Web.isWebElementDisplayed(editDeferralFrame, true);
+			Web.FrameSwitchONandOFF(true, editDeferralFrame);
+
+			List<String> dropDownDate = new ArrayList<String>();
+			sdf = new SimpleDateFormat("yyyy/MM/dd");
+			if (Web.isWebElementDisplayed(selectTargetPayrollBeforeTax, true)) {
+				List<WebElement> element = new Select(
+						selectTargetPayrollBeforeTax).getOptions();
+				element.remove(0);
+				//element.remove(element.size() - 1);
+				//element.forEach(ele -> dropDownDate.add(this.doFormat(ele.getText())));
+				dropDownDate.add(this.doFormat(element.get(element.size()-1).getText()));
+			}
+			System.out.println(dates.get(dates.size()-1));
+			System.out.println(dropDownDate.get(0));
+			if (dropDownDate.contains(dates.get(dates.size()-2)))
+				return true;
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+		
+	}
+	
+	public int verifyTwoDates() {
+		try {
+			sdf = new SimpleDateFormat("yyyy/MM/dd");
+
+			List<WebElement> element = new Select(selectTargetPayrollBeforeTax)
+					.getOptions();
+			String dropdownDate = this.doFormat(element.get(1).getText());
+			sdf = new SimpleDateFormat("yyyy/MM/dd");
+			String todaysDate = sdf.format(new Date());
+			System.out.println(todaysDate);
+			return dropdownDate.compareTo(todaysDate);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	public void checkAndAddOngoingDeferral(String deferraltype) {
@@ -562,6 +702,44 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 		
 		
 	}
+	public String selectTargetPayrollDate="";
+
+	public void enterDeferralContribution(String type, String amount,
+			String... deferralDate) throws InterruptedException {
+		if (type.trim().equalsIgnoreCase("Before Tax")) {
+			Web.clickOnElement(dollarButtonBeforeTax);
+			Web.setTextToTextBox(enterDefElectionContributionBeforeTax, amount);
+			if (deferralDate.length > 0) {
+				Web.selectDropDownOption(selectTargetPayrollBeforeTax,
+						deferralDate[0], true);
+				Thread.sleep(2000);
+				selectTargetPayrollDate = new Select(
+						selectTargetPayrollBeforeTax).getFirstSelectedOption()
+						.getText();
+			} else {
+				Web.selectDropnDownOptionAsIndex(selectTargetPayrollBeforeTax,
+						"1");
+				selectTargetPayrollDate = new Select(
+						selectTargetPayrollBeforeTax).getFirstSelectedOption()
+						.getText();
+			}
+
+		}
+		if (type.trim().equalsIgnoreCase("Roth")) {
+			System.out.println("");
+		}
+	}
+	public void clickOnOneTimeContinueButton(){
+		if(oneTimeContinueButton.isEnabled()){
+			Web.clickOnElement(oneTimeContinueButton);
+			Web.nextGenDriver.waitForAngular();
+			Web.clickOnElement(oneTimeButtonContinue);
+			Web.nextGenDriver.waitForAngular();
+			Web.clickOnElement(buttonConfirmationDone);
+			Web.nextGenDriver.waitForAngular();
+		}
+			
+	}
 	
 	public String getDateFormat(String inputDate){
 		try {
@@ -615,6 +793,13 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 		}
 		
 		return flag;
+	}
+	
+	public boolean verifyDeferralAmountValue(String amount){
+		
+			if(effectiveDeferralAmount.get(effectiveDeferralAmount.size()-1).getText().contains(amount))
+				return true;
+		return false;
 	}
 	
 	
@@ -815,7 +1000,7 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	String balanceXpath="";
 	String viewButtonXpath="";
 
-	public boolean verifyAccountBalanceSuppressed(String planNo) {
+	public boolean verifyAccountBalanceSuppressedOrDisplays(String planNo,boolean displaysOrSuppressed) {
 		Web.nextGenDriver.waitForAngular();
 		int i = 0;
 		if (Web.isWebElementsDisplayed(planNumberInAccountBalanceSection, true)) {
@@ -826,19 +1011,39 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 							+ "]/td[3]/span";
 					viewButtonXpath = "//*[@id='overviewtable_data']/tr[" + i
 							+ "]//button";
-
-					if (Web.nextGenDriver.findElement(By.xpath(balanceXpath))
-							.getText().trim().equals("N/A"))
+					if(displaysOrSuppressed){
+						if(!Web.nextGenDriver.findElement(By.xpath(balanceXpath))
+								.getText().trim().equals("N/A"))
 						return true;
+						else
+							return false;
+					}else{
+						if(Web.nextGenDriver.findElement(By.xpath(balanceXpath))
+								.getText().trim().equals("N/A"))
+						return true;
+						else
+							return false;
+					}
+
+					
 				}
 			}
 		}
 		return false;
 	}
-	public boolean verifyViewButtonSuppressed(){
+	public boolean verifyViewButtonSuppressedOrDisplays(boolean displaysOrSuppressed){
 		try{
-			Web.nextGenDriver.findElement(By.xpath(viewButtonXpath));
-			return false;
+			if(displaysOrSuppressed){
+				if( Web.nextGenDriver.findElement(By.xpath(viewButtonXpath)).isDisplayed())
+					return true;
+				else
+					return false;
+			}
+			else{
+				Web.nextGenDriver.findElement(By.xpath(viewButtonXpath)).isDisplayed();
+				return false;
+			}
+			
 		}catch(Exception e){
 			return true;
 		}
