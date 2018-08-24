@@ -57,6 +57,7 @@ public class PlanStepDefinitions {
 	    provisionsPage=new PlanProvisionsPage();
 	    investmentPage=new InvestmentsPerformancePage();
 	     loanInfoPage=new LoanInformationPage();
+	     planPage=new PlanPage();
 	    Reporter.initializeModule(featureName);
 	}
 	
@@ -340,6 +341,53 @@ public class PlanStepDefinitions {
 			Reporter.logEvent(Status.FAIL, " Loan restrictions to hardship reasons value displays",
 					" Loan restrictions to hardship reasons value is't displays", true);
 		}
+	}
+	
+	@Then("^main tab displays Plan Analytics section$")
+    public void main_tab_displays_plan_analytics_section() throws Throwable {
+		if (provisionsPage.isPlanAnalyticsSectionDiplays()) {
+			Reporter.logEvent(Status.PASS, " tab displays Plan Analytics section",
+					" tab displays Plan Analytics section", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, " tab displays Plan Analytics section",
+					" tab isn't displays Plan Analytics section", true);
+		}
+    }
+	
+	@When("^user clicks on Important information disclosure link under the Lifetime income score chart$")
+    public void user_clicks_on_important_information_disclosure_link_under_the_lifetime_income_score_chart() throws Throwable {
+		provisionsPage.clickOnImportantInformationDisclosureLink();
+    }
+	@When("^user clicks on About investment strategies link under the investment strategies balances$")
+    public void user_clicks_on_about_investment_strategies_link_under_the_investment_strategies_balances() throws Throwable {
+		provisionsPage.clickOnAboutInvestmentStrategiesLink();
+    }
+
+	@Then("^new tab opens a .pdf file of Important information for the \"([^\"]*)\" and is not branded for Empower$")
+	public void new_tab_opens_a_pdf_file_of_important_information_for_the_something_and_is_not_branded_for_empower(
+			String strArg1) throws Throwable {
+		if (provisionsPage.verifyPdfLinkInPlanAnalyticsSection(strArg1)) {
+			Reporter.logEvent(Status.PASS, " new tab opens a .pdf file of Important information",
+					" new tab opens a .pdf file of Important information", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, " new tab opens a .pdf file of Important information",
+					" new tab isn't opens a .pdf file of Important information", true);
+		}
+		
+
+	}
+	@Then("^new tab opens a .pdf file of \"([^\"]*)\" and is not branded for Empower$")
+	public void new_tab_opens_a_pdf_file_of_something_and_is_not_branded_for_empower(
+			String strArg1) throws Throwable {
+		if (provisionsPage.verifyPdfLinkInPlanAnalyticsSection(strArg1)) {
+			Reporter.logEvent(Status.PASS, " new tab opens a .pdf file About investment strategies",
+					" new tab opens a .pdf file About investment strategies", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, "new tab opens a .pdf file About investment strategies",
+					"new tab isn't opens a .pdf file About investment strategies", true);
+		}
+		
+
 	}
 
 

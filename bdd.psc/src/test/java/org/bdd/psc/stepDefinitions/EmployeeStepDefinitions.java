@@ -135,6 +135,18 @@ public class EmployeeStepDefinitions {
 					"employee detail page don't displays", true);
 		}
 	}
+	@Then("^the Employee Overview page is displayed$")
+    public void the_employee_overview_page_is_displayed() throws Throwable {
+		if(empPages.isEmployeeOverviewPage()){
+			Reporter.logEvent(Status.PASS, "employee overview page displays", 
+					"employee overview page displays", true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "employee overview page displays", 
+					"employee overview page don't displays", true);
+		}
+    }
+
 	@When("^user clicks on Vesting link$")
     public void user_clicks_on_vesting_link() throws Throwable {
         empPages.clickOnVestingLink();
@@ -506,17 +518,34 @@ public class EmployeeStepDefinitions {
 	@Then("^Employee account balance and view account history button is suppressed for \"([^\"]*)\" plan$")
 	public void employee_account_balance_is_suppressed_for_hsa_plan(
 			String hsaPlan) throws Throwable {
-		if (empPages.verifyAccountBalanceSuppressed(hsaPlan) && empPages.verifyViewButtonSuppressed()) {
+		if (empPages.verifyAccountBalanceSuppressedOrDisplays(hsaPlan,false) && empPages.verifyViewButtonSuppressedOrDisplays(false)) {
 			Reporter.logEvent(
 					Status.PASS,
-					"Employee account balance and view account history button are suppressed",
-					"Employee account balance and view account history button are suppressed",
+					"Employee account balance and view account history button are suppressed for external users",
+					"Employee account balance and view account history button are suppressed for external users",
 					true);
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
-					"Employee account balance and view account history button are suppressed",
-					"Employee account balance and view account history button aren't suppressed",
+					"Employee account balance and view account history button are suppressed for external users",
+					"Employee account balance and view account history button aren't suppressed for external users",
+					true);
+		}
+	}
+	@Then("^Employee account balance and view account history button is displays for \"([^\"]*)\" plan$")
+	public void employee_account_balance_is_displays_for_hsa_plan(
+			String hsaPlan) throws Throwable {
+		if (empPages.verifyAccountBalanceSuppressedOrDisplays(hsaPlan,true) && empPages.verifyViewButtonSuppressedOrDisplays(true)) {
+			Reporter.logEvent(
+					Status.PASS,
+					"Employee account balance and view account history button are displays for internal users",
+					"Employee account balance and view account history button are displays for internal users",
+					true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Employee account balance and view account history button are displays for internal users",
+					"Employee account balance and view account history button aren't displays for internal users",
 					true);
 		}
 	}
@@ -614,5 +643,114 @@ public class EmployeeStepDefinitions {
 					true);
 		}
 	}
+	
+	@When("^user clicks 'Edit' next to One-time on the payroll contributions page$")
+    public void user_clicks_edit_next_to_onetime_on_the_payroll_contributions_page() throws Throwable {
+		empPages.clickOneTimeEdit();
+    }
+
+	@Then("^user is sent to \"([^\"]*)\" deferral election screen$")
+	public void user_is_sent_to_one_time_deferral_election_screen(
+			String deferralScreenName) throws Throwable {
+		if (empPages.verifyDeferralScreen(deferralScreenName)) {
+			Reporter.logEvent(Status.PASS, "user is sent to "+ deferralScreenName + " deferral election screen",
+					"user is sent to " + deferralScreenName+ " deferral election screen", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, "user is sent to "+ deferralScreenName + " deferral election screen",
+					"user is not sent to " + deferralScreenName+ " deferral election screen", true);
+		}
+	}
+	@Given("^user is on the One-time deferral election screen$")
+    public void user_is_on_the_onetime_deferral_election_screen() throws Throwable {
+        if(!empPages.verifyDeferralScreen("One-time")){
+        	Reporter.logEvent(Status.WARNING, "user is not on the one-time deferral election screen",
+					"user is not on the one-time deferral election screen", true);
+        	
+        }
+    }
+	@When("^user clicks date dropdown box$")
+    public void user_clicks_date_dropdown_box() throws Throwable {
+		empPages.clickOnSelectTargetPayrollBeforeTax();
+    }
+	
+	@Then("^dropdown should show user's payroll dates for the next 18 months$")
+    public void dropdown_should_show_users_payroll_dates_for_the_next_18_months() throws Throwable {
+		if (empPages.verifyNext18monthsInSelectTargetPayroll()) {
+			Reporter.logEvent(Status.PASS, "dropdown is displays user's payroll dates for the next 18 months",
+					"dropdown is displays user's payroll dates for the next 18 months", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, "dropdown is displays user's payroll dates for the next 18 months",
+					"dropdown is not displays user's payroll dates for the next 18 months", true);
+		}
+    }
+	@Then("^the dates shown should not have already occurred$")
+    public void the_dates_shown_should_not_have_already_occurred() throws Throwable {
+		if (empPages.verifyTwoDates()>0) {
+			Reporter.logEvent(Status.PASS, "the dates shown are not have already occurred",
+					"the dates shown are not have already occurred", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, "the dates shown are not have already occurred",
+					"the dates shown are already occurred", true);
+		}
+    }
+	@Given("^has selected the \"([^\"]*)\" button$")
+    public void has_selected_the_dollarOrPercent_button(String buttonName) throws Throwable {
+		empPages.clickOnDollarOrPercentBeforeTax(buttonName);
+    }
+	@When("^user enters \"([^\"]*)\"$")
+    public void user_enters_deferral_election(String dollar) throws Throwable {
+		empPages.setValueForDeferralElection(dollar);
+    }
+	@When("^user clicks date dropdown box and makes a selection$")
+    public void user_clicks_date_dropdown_box_and_makes_a_selection() throws Throwable {
+		empPages.selectTargetPayrollAsIndex("2");
+    }
+	@Then("^the 'Continue button should be \"([^\"]*)\"$")
+	public void the_continue_button_should_be_enabledOrdisabled(String enableOrDisable) throws Throwable {
+		if (empPages.verifyContinueButtonEnableOrDisableForOneTime(enableOrDisable)) {
+			Reporter.logEvent(Status.PASS, "the 'Continue button is "+enableOrDisable,
+						"the 'Continue button is "+enableOrDisable, true);
+		} else {
+			Reporter.logEvent(Status.FAIL, "the 'Continue button is "+enableOrDisable,
+						"the 'Continue button is not "+enableOrDisable, true);
+		}
+	}
+	@Given("^user has set a one-time deferral amount \"([^\"]*)\" and selected a date from the date dropdown box$")
+    public void user_has_set_a_onetime_deferral_amount_something_and_selected_a_date_from_the_date_dropdown_box(String dollar) throws Throwable {
+		empPages.enterDeferralContribution("Before Tax", dollar);
+    }
+	@When("^user confirms deferral$")
+    public void user_confirms_deferral() throws Throwable {
+		empPages.clickOnOneTimeContinueButton();
+    }
+	
+	@Then("^deferral amount \"([^\"]*)\" and description should appear within 'Current and Pending Deferrals' list$")
+	public void deferral_amount_something_and_description_should_appear_within_current_and_pending_deferrals_list(
+			String dollar) throws Throwable {
+		if (empPages.verifyDeferralAmountValue(dollar)) {
+			Reporter.logEvent(Status.PASS,
+					"verify deferral amount and description",
+					"verify deferral amount and description", true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"verify deferral amount and description",
+					"doesn't verify deferral amount and description", true);
+		}
+
+	}
+
+    @Then("^the selected date should be listed as the effective date$")
+    public void the_selected_date_should_be_listed_as_the_effective_date() throws Throwable {
+    	if (empPages.isEffectiveDateSameAsFutureDate("Before Tax", empPages.selectTargetPayrollDate)) {
+			Reporter.logEvent(Status.PASS,
+					"the selected date is listed as the effective date",
+					"the selected date is listed as the effective date", true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"the selected date is listed as the effective date",
+					"the selected date is not listed as the effective date", true);
+		}
+    }
+
 
 }

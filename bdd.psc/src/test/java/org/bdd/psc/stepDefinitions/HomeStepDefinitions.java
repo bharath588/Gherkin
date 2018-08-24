@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+
+
+
 import pscBDD.fileSharing.FileSharingPage;
 import pscBDD.forgotPassword.ForgotPasswordPage;
 import pscBDD.homePage.HomePage;
@@ -22,6 +25,7 @@ import bdd_lib.Web;
 import com.aventstack.extentreports.Status;
 
 import bdd_core.framework.Globals;
+import gherkin.formatter.model.Result;
 import gherkin.formatter.model.Scenario;
 import bdd_reporter.Reporter;
 import cucumber.api.DataTable;
@@ -75,6 +79,7 @@ public class HomeStepDefinitions {
 
 	@After
 	public void after() throws Exception {
+		
 		Reporter.finalizeTCReport();
 	}
 
