@@ -45,8 +45,17 @@ public class PartnerlinkHomePage extends LoadableComponent<PartnerlinkHomePage> 
 	//@FindBy(xpath="//a/span/span[text()='Plan Express']")
 	@FindBy(xpath="//a[contains(text(),'PlanExpress')]")
 	private WebElement planExpressSubMenu;
-	@FindBy(xpath="html/body/div[1]/div[1]")
+	@FindBy(xpath="//div[@class='pageTitle' and contains(text(),'Welcome to PlanExpress')]")
 	private WebElement welcomeToPlanExpress;
+	
+	@FindBy(xpath="//div[@id='logo']/img")
+	private WebElement metLifeLogo;
+	
+	@FindBy(xpath="//ul[@id='newMenu']/li[1]/a/following-sibling::ul/li[6]/a[text()='PlanVisualizer']")
+	private WebElement lnkPlanVisualizer;
+	
+	@FindBy(xpath="//div[@class='breadcrumb']/i/ancestor::div[contains(text(),'Partner')]")
+	private WebElement breadCrumb;
 	
 	private LoadableComponent<?> parent;
 	public static WebDriver webDriver;
@@ -190,5 +199,40 @@ public class PartnerlinkHomePage extends LoadableComponent<PartnerlinkHomePage> 
 		int[] cords = {xCord,yCord};
 		return cords;
 	}
+	
+	public boolean isMetLifeLogo(){
+		if(metLifeLogo.isDisplayed())
+			return true;
+		return false;
+	}
+	
 
+	public void clickOnPlanVisualizer(){
+		if(Web.isWebElementDisplayed(partnerLinkTab, true))
+			Web.actionsClickOnElement(partnerLinkTab);
+		if(Web.isWebElementDisplayed(lnkPlanVisualizer, true)){
+			Web.actionsClickOnElement(lnkPlanVisualizer);
+		}	
+	}
+		
+	public boolean isBreadcrumb(String expectedText){
+		String actualText;
+		actualText= breadCrumb.getText().trim();
+		if (expectedText.trim().contains(actualText))
+			return true;
+		return false;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -4,7 +4,10 @@
 package pscBDD.userVerification;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
+
 
 
 
@@ -57,10 +60,19 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	private WebElement heritageSecQuestion;
 	@FindBy(xpath=".//button/span[text()='DONE']")
 	private WebElement heritageUserVerDoneButton;
+	@FindBy(xpath = "//table//td[1]/select/option[@selected='selected']")
+	private List<WebElement> drpdwnSecretQues;
+	@FindBy(xpath = "//table//td[2]/input")
+	private List<WebElement> txtSecretAns;
+	@FindBy(xpath = "//button/span[text()='Next']")
+	private WebElement btnNext;
+	
 	LoadableComponent<?> parent;
+	
 	public static WebDriver webDriver;
 	CommonLib commonLib;
 	Map<String,String> securityAnsMap=null;
+	
 	public UserVerificationPage() {
 		this.parent = new LoginPage();
 		PageFactory.initElements(Web.getDriver(), this);
@@ -202,4 +214,18 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		}
 	}
 
+	
+	public void answerSecurityQuestions(){
+		String securityQues, securityAns;
+		for (int i=0;i<3;i++){
+			securityQues= drpdwnSecretQues.get(i).getText().trim();
+			securityAns= getSecurityAnswer(securityQues);
+			txtSecretAns.get(i).clear();
+			txtSecretAns.get(i).click();
+			txtSecretAns.get(i).sendKeys(securityAns);		
+		}
+		Reporter.logEvent(Status.INFO, "Verify User has answered all Security questions",
+				"User has answered all Security questions", true);
+		Web.clickOnElement(btnNext);	
+	}
 }

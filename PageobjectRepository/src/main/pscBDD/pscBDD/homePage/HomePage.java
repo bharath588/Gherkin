@@ -4,10 +4,18 @@
 package pscBDD.homePage;
 
 import java.lang.reflect.Method;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import lib.Stock;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,6 +28,7 @@ import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
 import pscBDD.userVerification.UserVerificationPage;
 import bdd_gwgwebdriver.How;
+import bdd_lib.DB;
 import bdd_lib.Web;
 import bdd_reporter.Reporter;
 
@@ -80,8 +89,12 @@ public class HomePage extends LoadableComponent<HomePage> {
 	@FindBy(xpath = "//*[@id='main']/div/h1")
 	private WebElement iframeFooterHeader;
 	@FindBy(xpath=".//span[text()='Site Bulletin']/following-sibling::a/span")
-	private WebElement CancelNewsBulletin;
-
+	private WebElement CancelNewsBulletin;	
+	@FindBy(id="logOutLink")
+	private WebElement lnkLogout;
+	@FindBy(xpath = "//div[@id='lastLogin']")
+	private WebElement lastLogin;
+	
 	private LoadableComponent<?> parent;
 	public static WebDriver webDriver;
 	private String[] userVeriData;
@@ -212,6 +225,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 			if (Web.isWebElementDisplayed(planSearchBox)) {
 				act.moveToElement(planSearchBox).click(planSearchBox).build()
 				.perform();
+				Thread.sleep(2000);
 				Web.setTextToTextBox(planSearchBox, planNumber);
 				Web.clickOnElement(btnPlanSearchTxtGO);
 				Reporter.logEvent(Status.INFO, "Switched to plan:", planNumber,
@@ -407,5 +421,121 @@ public class HomePage extends LoadableComponent<HomePage> {
 		return null;
 		
 	}
+	
+	public void clickLogout(){	
+		if(Web.isWebElementDisplayed(lnkLogout, true)){
+		Web.clickOnElement(lnkLogout);
+	}
+	}
+	
+	public String getLastLoginDateFromWeb(){
+		String displayedLastLoginDate = "";
+		try {
+			if (Web.isWebElementDisplayed(lastLogin, false)) {
+				displayedLastLoginDate = lastLogin.getText();
+				if (displayedLastLoginDate.contains("ET"))
+				Reporter.logEvent(Status.PASS,
+						"Validate UI Date time displayed in Eastern Time",
+						"UI date and time displayed in Eastern time"
+								+ displayedLastLoginDate.trim(),
+						false);
+			} else
+				Reporter.logEvent(Status.FAIL,
+						"Validate UI Date time displayed in Eastern Time",
+						"UI date and time displayed in Eastern time", false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return displayedLastLoginDate;
+	}
+	
+	public String getLastLoginDateFromDB(String query,String username,List<String> dbnames){
+		String lastLoginDate = "";
+		String firstDBvalue ="";
+		String modifyDB ="D_" ;
+		String DB_Name,modify_User;		
+		int arraySize;
+		//String [] databases = dbnames.get(0).replaceAll("\"", "").split(",");
+		ArrayList<String> lastLoginDates = new ArrayList<>(dbnames.size());
+		 try {
+			for (String database : dbnames) {	
+				DB_Name=modifyDB.concat(database.trim()).replaceAll("\"", "");
+				modify_User= username.replaceAll("\"", "");
+				ResultSet resultSet = DB.executeQuery(DB_Name, query, "K_"+modify_User);
+				while (resultSet.next()) {
+					lastLoginDates.add(resultSet.getString("LASTDATE"));
+					System.out.println(lastLoginDates);
+				}
+			}
+				arraySize= lastLoginDates.size();
+				for (int i=0;i<arraySize;i++){
+					firstDBvalue= lastLoginDates.get(0);
+					if (firstDBvalue == lastLoginDates.get(i)){
+						Reporter.logEvent(Status.INFO,
+								"LAST_LOGIN_DATE_TIME in USERS table displayed in Mountain time in database",
+								dbnames.get(i)
+										, false);
+					} else{
+						Reporter.logEvent(Status.FAIL,
+								"LAST_LOGIN_DATE_TIME in USERS table not displayed in Mountain time in database",
+								dbnames.get(i), false);
+						
+					}					
+				}
+				lastLoginDate= firstDBvalue;
+				if (lastLoginDate != null) {
+					Reporter.logEvent(Status.PASS,
+							"Check last login time is displayed in DB",
+							"Last login time is displayed in DB "
+									+ lastLoginDate.trim(), false);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Check last login time is displayed in DB",
+							"Last login time is not displayed in DB", false);
+				}
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		 return lastLoginDate;
+		 }
+				
+	
+	public boolean verifyLastLoginDateEquality(List<String> DBname,String username,String query){
+		boolean equalDate = false;
+		String dateFromWeb = getLastLoginDateFromWeb().trim().substring(11, 30);
+    	String dateFromDB= getLastLoginDateFromDB(query,username,DBname);
+		int endIndex = dateFromDB.length();
+		String dateFromDB1 = dateFromDB.trim().substring(0, endIndex);
+		String dateFromDB2 = dateFromDB.trim().substring(endIndex);
+		String dateFromDBs = dateFromDB1 + " " + dateFromDB2;
+		try {
+			System.out.println("Date from db is: " + dateFromDBs);
+			System.out.println("Date from Web is: " + dateFromWeb);
+			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy",
+					Locale.US);
+			Date date = sdf.parse(dateFromWeb);
+			Date date1 = sdf.parse(dateFromDBs.trim());
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date1);
+			cal.add(Calendar.HOUR, 2);
+			date1 = cal.getTime();
+			String lastLoginWeb = sdf.format(date);
+			String lastLoginDB = sdf.format(date1);
+			if (lastLoginWeb.equalsIgnoreCase(lastLoginDB)) {
+				equalDate = true;
+			} else
+				equalDate = false;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return equalDate;
+	}
+
+
+	
+	
+	
+	
 }

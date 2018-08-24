@@ -17,16 +17,31 @@ import java.util.List;
 import java.util.Set;
 
 
+
+
+
+
+
+
+
+
+import org.apache.bcel.generic.Select;
+import org.openqa.selenium.Keys;
 //import org.bdd.psc.pageobjects.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import pscBDD.accountVerification.accountVerification;
 import pscBDD.commonLib.CommonLib;
 import pscBDD.forgotPassword.ForgotPasswordPage;
+import pscBDD.userVerification.UserVerificationPage;
+import bdd_core.framework.Globals;
 import bdd_core.framework.ThrowException;
 import bdd_core.framework.ThrowException.TYPE;
 import bdd_lib.Stock;
@@ -138,6 +153,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement readReportLink;
 	@FindBy(xpath = "//a[contains(@href,'Contribution-Limits')]")
 	private WebElement viewLimitsLink;
+	@FindBy(xpath = "button[text()='Clear browsing data']")
+	private WebElement btnClearBrowsing;
 	
 
 	LoadableComponent<?> parent;
@@ -146,7 +163,10 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	ForgotPasswordPage forgotPwdPage;
 	String primeWindow = "";
 	public static String accucode;
-
+	WebDriverWait wait;
+	accountVerification accountVerify;
+	UserVerificationPage userVerify;
+	
 	/*-----------------------------------------------------------------*/
 
 	public LoginPage() {
@@ -157,6 +177,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	public LoginPage(WebDriver webDriver) {
 		LoginPage.webDriver = webDriver;
 		commonLib = new CommonLib(webDriver);
+		accountVerify= new accountVerification(webDriver);
+		userVerify= new UserVerificationPage(webDriver);
 		PageFactory.initElements(webDriver, this);
 	}
 
@@ -752,15 +774,29 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			Web.clickOnElement(bannerSectionReadMoreLink);
 		Thread.sleep(2000);
 	}
+	
 	public boolean verifyMetLifeLogoAndLink(String expLink){
 		System.out.println(expLink.trim());
 		System.out.println(Web.getDriver().getCurrentUrl().replace("proj2-", "").trim());
 		//Web.isWebElementDisplayed(logoMetLife, true) &&
 		if( Web.getDriver().getCurrentUrl().replace("proj2-", "").contains(expLink))
 			return true;
-		return false;
-		
+		return false;		
 	}
 
-
+	public void clearCookies(){			
+		try {
+			Web.getDriver().manage().deleteAllCookies();
+			Reporter.logEvent(Status.INFO, "History deleted for the browser ",
+					"Browser History deleted", true);
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+	
 }
