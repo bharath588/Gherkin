@@ -6,32 +6,17 @@
 	</listeners>
 	<test name="test_new_Development">
 		<classes>
-			<!-- <class name="app.psc.testcases.plan.plantestcases">
+			<class
+				name="app.psc.testcases.accountverification.accountverificationtest_plan">
 				<methods>
-					<include name="TC25_Investment_Document_Page">
+					<!-- <include name="TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input">
 						<parameter name="ManualTCName"
-							value="DDTC-22126_Investment_Document_Page" />
-					</include>
-					<include name="TC24_Investment_Charts_Page">
-						<parameter name="ManualTCName"
-							value="DDTC-22127_Investment_Charts_Page" />
-					</include>
-					<include name="TC26_Terminate_User_ID">
-						<parameter name="ManualTCName"
-							value="DDTC-1301_Terminate_User_ID" />
-					</include>
-				</methods>
-			</class> -->
-			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
-				<methods>
-					<!-- <include name="TC_62_Stop_All_Deferrals">
-						<parameter name="ManualTCName"
-							value="DDTC-242_Stop_All_Deferrals" />
-					</include>
-					<include name="TC_63_Agecatchup">
-						<parameter name="ManualTCName"
-							value="DDTC-204_Agecatchup" />
+							value="DDTC-136_SIT_PSC_Login_01_TC003_Existing User_new Plan access_invalid" />
 					</include> -->
+					<include name="TC012_02_Verify_User_Access_New_Plan_For_Valid_Input">
+						<parameter name="ManualTCName"
+							value="DDTC-22069_SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid" />
+					</include> 
 				</methods>
 			</class>
 		</classes>

@@ -136,9 +136,9 @@
 					</include> 
 				</methods>
 			</class> -->
-			 <class name="app.psc.testcases.login.logintestcases">
+			<!--  <class name="app.psc.testcases.login.logintestcases">
 				<methods>
-					<!--<include name="TC006_01_Verify_Force_Login">
+					<include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
 							value="DDTC-1144_SIT_PSC_Login_01_TC006_Gwrs- Forcelogin" />
 					</include>  
@@ -161,7 +161,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-22067_SIT_PSC_Login_01_TC014_Footer links_Postlogin">
 						</parameter>
-					</include> -->
+					</include>
 					<include name="TC006_01_Verify_Error_Message_For_Terminated_User">
 						<parameter name="ManualTCName" value="DDTC-1007_SIT_PSC_Login_01_TC004_Terminate User" />
 					</include>
@@ -217,7 +217,7 @@
 					</include>
 				</methods>
 
-			</class>
+			</class> -->
 
 			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
@@ -539,11 +539,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-2168_SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping" />
 					</include>
-					<include
-						name="TC11_SIT_PSC_HomePage_Fiduciary_Records_Required_Notices_Part_grouping">
-						<parameter name="ManualTCName"
-							value="DDTC-2256_SIT_PSC_HomePage_Fiduciary_Records_Required_Notices_Part_grouping" />
-					</include>
+					
 					<include name="TC12_3rd_Level_Links">
 						<parameter name="ManualTCName" value="DDTC-1064_3rd_Level_Links" />
 					</include>
@@ -561,9 +557,11 @@
 
 				</methods>
 			</class> -->
-			<class name="app.psc.testcases.plan.plantestcases">
+			
+			
+			<!-- <class name="app.psc.testcases.plan.plantestcases">
 				<methods>
-					<!-- <include name="TC16_Plan_Provisions_page">
+					<include name="TC16_Plan_Provisions_page">
 						<parameter name="ManualTCName"
 							value="DDTC-2150_Plan_Provisions_page" />
 					</include> 
@@ -586,13 +584,14 @@
 					<include name="TC22_Added_to_USERS_table_via_SAW">
 						<parameter name="ManualTCName"
 							value="DDTC-1432_Added_to_USERS_table_via_SAW" />
-					</include> -->
+					</include>
 					<include name="TC24_Investment_Charts_Page">
 						<parameter name="ManualTCName"
 							value="DDTC-22127_Investment_Charts_Page" />
 					</include>
 				</methods>
-			</class>   
+			</class> -->
+		
 			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
 				<methods>
 					<include name="TC017_Verify_the_dropdown_options_And_Screen_elements">

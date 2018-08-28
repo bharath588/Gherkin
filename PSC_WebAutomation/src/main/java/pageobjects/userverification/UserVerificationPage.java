@@ -281,7 +281,8 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	
 	public String getSecurityAnswer()
 	{
-		String securityAnswer = "";
+		//String securityAnswer = "";
+		String securityAnswer = "test";
 		try{
 			if(this.getSecurityQuestion().equalsIgnoreCase("car"))
 				//securityAnswer =    Stock.GetParameterValue("dreamCar");

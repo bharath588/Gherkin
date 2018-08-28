@@ -424,7 +424,7 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 
 	}
 
-	private void fillPlanOnReportOrderPage() {
+	private void fillPlanOnReportOrderPage() throws InterruptedException {
 		// TODO Auto-generated method stub
 		if(planSelection.getText().contains(Stock.GetParameterValue("planId")))
 			Reporter.logEvent(Status.INFO, "Enter plan on report order page", "Plan is already selected on order page", true);
@@ -437,6 +437,8 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 						Web.clickOnElement(plan);
 						Web.nextGenDriver.waitForAngular();
 						//Reporter.logEvent(Status.INFO,"Enter plan on report order page", plan.getText()+" is selected", true);
+						Thread.sleep(2000);
+						Reporter.logEvent(Status.INFO,"Enter plan on report order page", " plan selected", true);
 						break;
 					}
 				}

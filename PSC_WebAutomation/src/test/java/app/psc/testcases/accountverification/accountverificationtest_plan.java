@@ -95,8 +95,9 @@ public class accountverificationtest_plan {
 					Stock.getTestQuery("addPlanNumberQuery"),
 					Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("addPlanNumber"));
-			accountverificationpage.get();
 			accountverificationpage.logoutFromApplication();
+			accountverificationpage.get();
+			
 			userverification.performVerification(new String[] {
 					(userverification.getEmailAddressOfuser(
 							Stock.getTestQuery("getEmailaddressQuery"),
@@ -195,7 +196,7 @@ public class accountverificationtest_plan {
 			accountverificationpage.addPlanNumber(
 					Stock.getTestQuery("addPlanNumberQuery"),
 					Stock.GetParameterValue("username"),
-					Stock.GetParameterValue("addPlanNumber"));
+					Stock.GetParameterValue("PlanNumber"));//addPlanNumber
 			accountverificationpage.logoutFromApplication();
 			accountverificationpage.get();
 			userverification.performVerification(new String[] {

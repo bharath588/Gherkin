@@ -980,7 +980,7 @@ public class CommonLib {
 		boolean found = false;
 
 		// default timeout in seconds
-		long timeOut = 20;
+		long timeOut = 50;
 		try {
 			Path downloadFolderPath = Paths.get(downloadDir);
 			WatchService watchService = FileSystems.getDefault()

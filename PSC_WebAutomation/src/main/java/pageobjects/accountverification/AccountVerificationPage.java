@@ -35,6 +35,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	@FindBy(css = "input[id *= 'mpwrPlanBox']")
 	private WebElement txtPlanNumber;
 	@FindBy(css = "span[class *= 'growl-title']")
+	//@FindBy(id="charSequence")
 	private WebElement errorMsgBox;
 	@FindBy(css = "div[id = 'logo']")
 	private WebElement empowerPscLogo;
@@ -60,6 +61,8 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	private WebElement btnNext1;
 	@FindBy(xpath = ".//button[contains(@id,'changePasswordNext')]")
 	private WebElement btnNext;
+	@FindBy(xpath = "//button[contains(@id,'mpwrPlanList')]//span[text()='Next']")
+	private WebElement btnNextDefaultPlan;//added by smylnk
 	@FindBy(css = "button[class *= 'btn-u btn-u-default swap']")
 	private WebElement btnCancelSecurityQues;
 	@FindBy(css = "input[id *= 'mpwrUsername']")
@@ -100,6 +103,16 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	private WebElement linkLogoutAccveri;
 	@FindBy(xpath="//h1[contains(text(),'Account verification')]")
 	private WebElement accountVerificationTitle;
+	@FindBy(xpath="//label[contains(text(),'previous 10 passwords')]")
+	private WebElement errorMessagePasswordField;
+	@FindBy(id="charSequence")
+	private WebElement passwordCriteriaMessage;
+	@FindBy(xpath="//*[contains(@id,'mpwrPlanBox')]")
+	private WebElement planNumberTextBoxInchangePasswordForm;
+	@FindBy(xpath="//*[contains(@id,'changePasswordNext')]")
+	private WebElement nextButtonDefaultPlanNumber;
+	
+	
 	LoadableComponent<?> parent;
 	Select dropDownSelect;
 	List<String> footerlinksList;
@@ -165,6 +178,9 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		if (fieldName.trim().equalsIgnoreCase("BTNNEXT")) {
 			return this.btnNext;
 		}
+		if (fieldName.trim().equalsIgnoreCase("BTNNEXT Default Plan")) {
+			return this.btnNextDefaultPlan;
+		}
 		if (fieldName.trim().equalsIgnoreCase("SECURITY ANSWER")) {
 			return this.txtFirstDropdownBox;
 		}
@@ -196,6 +212,13 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		if(fieldName.trim().equalsIgnoreCase("Account Verification Title")){
 			return this.accountVerificationTitle;
 		}
+		if(fieldName.trim().equalsIgnoreCase("ERRORMSGPASWDFIELD")){
+			return this.errorMessagePasswordField;
+		}
+		if(fieldName.trim().equalsIgnoreCase("DEFAULT_PLAN_TEXT_FIELD")){
+			return this.planNumberTextBoxInchangePasswordForm;
+		}
+		
 		// Reporter.logEvent(
 		// Status.WARNING,
 		// "Get WebElement for field '" + fieldName + "'",
@@ -203,6 +226,15 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		// + this.getClass().getName() + "</b>",
 		// false);
 		return null;
+	}
+	
+	public void setDefaultPlan() {
+		if (Web.isWebElementDisplayed(planNumberTextBoxInchangePasswordForm,
+				true)) {
+			Web.setTextToTextBox(planNumberTextBoxInchangePasswordForm,
+					Stock.GetParameterValue("DefaultPlan"));
+			Web.clickOnElement(nextButtonDefaultPlanNumber);
+		}
 	}
 
 	/**
@@ -217,9 +249,22 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	public String getErrorMessageText() throws InterruptedException {
 		if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("IE"))
 			Thread.sleep(3000);
+		System.out.println("   ");
 		boolean isElementPresent = Web.isWebElementDisplayed(this.errorMsgBox,true);
+		//boolean isElementPresent = Web.isWebElementDisplayed(this.passwordCriteriaMessage,true);
 		if (isElementPresent)
 			return this.errorMsgBox.getText();
+			//return this.passwordCriteriaMessage.getText();
+		else
+			return "";
+	}
+	public String verifyErrorMessagePasswordField() throws InterruptedException{
+		if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("IE"))
+			Thread.sleep(3000);
+		System.out.println("   ");
+		boolean isElementPresent = Web.isWebElementDisplayed(this.passwordCriteriaMessage,true);
+		if (isElementPresent)
+			return this.passwordCriteriaMessage.getText();
 		else
 			return "";
 	}
@@ -432,17 +477,34 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	//	}
 
 	public void resetPassword(String... params) throws InterruptedException {
-		int iLoopCnt=0;
-		for(String param : params){
-			if(Web.isWebElementDisplayed(createNewPwdfields.get(iLoopCnt), true)
-					&&createNewPwdfields.get(iLoopCnt).isEnabled()){
-				Thread.sleep(2000);
-				createNewPwdfields.get(iLoopCnt).click();
-				Web.setTextToTextBox(createNewPwdfields.get(iLoopCnt),param);
+		try {
+			int iLoopCnt = 0;
+			Thread.sleep(3000);
+			for (String param : params) {
+				try {
+
+					System.out.println("------------------");
+					if (Web.isWebElementDisplayed(
+							createNewPwdfields.get(iLoopCnt), true)
+							&& createNewPwdfields.get(iLoopCnt).isEnabled()) {
+						Thread.sleep(2000);
+
+						createNewPwdfields.get(iLoopCnt).click();
+						Web.setTextToTextBox(createNewPwdfields.get(iLoopCnt),
+								param);
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				iLoopCnt = iLoopCnt + 1;
 			}
-			iLoopCnt=iLoopCnt+1;
-		}		 
-		btnNext.click();	
+
+			btnNext.click();
+		} catch (Exception e) {
+
+		}
+
 	}
 
 	/**
@@ -701,7 +763,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 			resetPassword(emailAddress,
 					Stock.GetParameterValue("CurrentPassword"),
 					Stock.GetParameterValue("newPassword"),
-					Stock.GetParameterValue("confirmPassword"));
+					Stock.GetParameterValue("confirmPassword"), recentPlan);
 		}		
 	}
 
