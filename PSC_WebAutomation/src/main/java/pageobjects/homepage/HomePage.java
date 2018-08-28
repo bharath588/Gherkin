@@ -158,6 +158,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 	@FindBy(xpath=".//span[text()='Site Bulletin']/following-sibling::a/span")
 	private WebElement CancelNewsBulletin;
 	
+
 	private WebElement menuElement(String menuName) {
 		return Web.getDriver().findElement(
 				By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"
@@ -286,8 +287,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 				Web.clickOnElement(urlJumpPage);
 			}
 			if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
-				Web.clickOnElement(CancelNewsBulletin);	
-			
+				Web.clickOnElement(CancelNewsBulletin);			
 			Web.getDriver().switchTo().defaultContent();
 			Thread.sleep(2000);
 			Web.isWebElementDisplayed(weGreeting, true);
