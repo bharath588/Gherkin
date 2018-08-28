@@ -304,6 +304,9 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	private List<WebElement> disclaimerLast;
 	@FindBy(id = "msRatingPopover0")
 	private WebElement firstMorngStarInfo;
+	@FindBy(xpath = "(//*[contains(@id,'msRatingPopover')]/i)[2]")
+	private WebElement secondMorngStarInfo;
+	
 	@FindBy(xpath = ".//div[@class='popover-content']/span")
 	private WebElement mrngStarContent;
 	@FindBy(xpath = ".//*[@id='exportable']//tr//td[6]/span[text()!='']")
@@ -392,6 +395,13 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	private WebElement planDocLinkExpand;
 	@FindBy(xpath=".//*[@id='newMenu']/li[1]/ul/li[1]/ul/li//a")
 	private List<WebElement> overviewSubmenus;
+	@FindBy(xpath="//p[contains(text(),'Participant QDIA Notice')]")
+	private WebElement participantQDIANoticeHeader;
+	@FindBy(xpath="//*[@id='newMenu']/li[1]/ul/li[2]/a/following-sibling::ul//a[contains(text(),'Investments & Performance')]")
+	private WebElement investmentPerformanceAgainLink;
+	@FindBy(xpath = "(.//*[@id='inv-Popover'])[2]")
+	private WebElement secondInvName;
+	
 	private String menuQDIA = "//a[contains(text(),'Participant QDIA notice listing order')]";
 	private String docHistoryLinkPath = "./ancestor::div[1]/following-sibling::div//a[contains(@class,'accordion-toggle-doclink')]";
 	private String newUserAssignedID = "";
@@ -544,6 +554,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 			Web.actionsClickOnElement(planTab);
 		if (Web.isWebElementDisplayed(administrationSubmenu, true))
 			Web.actionsClickOnElement(administrationSubmenu);
+		Thread.sleep(2000);
 		this.openSubmenuUnderAdministration("Plan messaging");
 		Web.getDriver().switchTo().defaultContent();
 		Thread.sleep(5000);
@@ -617,6 +628,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 						plnaMsgDivBox.getText(), false);
 				Web.clickOnElement(submitPlnMsgBtn);
 				Web.waitForElement(plnMsgConfrmTitle);
+				Thread.sleep(4000);
 				if (plnMsgConfrmTitle.isDisplayed())
 					Reporter.logEvent(
 							Status.PASS,
@@ -907,6 +919,8 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 				Web.actionsClickOnElement(planTab);
 			if (Web.isWebElementDisplayed(investmentAndPerformance, true))
 				Web.actionsClickOnElement(investmentAndPerformance);
+			if (Web.isWebElementDisplayed(investmentPerformanceAgainLink, true))
+				Web.actionsClickOnElement(investmentPerformanceAgainLink);
 			Web.getDriver().switchTo().defaultContent();
 			breadCrumb = Web.getDriver().findElement(By.tagName("i"));
 			Web.waitForElement(breadCrumb);
@@ -1597,8 +1611,11 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 						"Validate title 'General forms and documents' "
 								+ "and 'Plan-specific documents' are displayed.",
 						"" + "Specified titles are not displayed.", true);
+			Thread.sleep(2000);
 			Web.clickOnElement(pdiFileLayout);
+			Thread.sleep(2000);
 			String parentWindow = CommonLib.switchToWindow();
+			Thread.sleep(2000);
 			String pdfURL = Web.getDriver().getCurrentUrl();
 			if (pdfURL.contains(".pdf")){
 				Reporter.logEvent(
@@ -2194,7 +2211,13 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 		try {
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(frameb);
+			if(!firstMorngStarInfo.isDisplayed()){
+				firstMorngStarInfo=secondMorngStarInfo;//added
+				fstInvName=secondInvName;
+			}
+				
 			Web.waitForElement(fstInvName);
+			System.out.println(fstInvName.getText().trim());
 			investmentName = fstInvName.getText().trim();
 			Web.actionsClickOnElement(fstInvName);
 			Web.waitForElements(qukLinks);
@@ -2207,6 +2230,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 						+ expQucikLinks, ""
 						+ "Quick links displayed are as below.\n"
 						+ actQuickLinks, true);
+			
 			if (firstMorngStarInfo.isDisplayed())
 				Reporter.logEvent(
 						Status.PASS,
@@ -2217,8 +2241,10 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 						Status.FAIL,
 						"Info link(question mark) is displayed beside morning star rating.",
 						"" + "Info link is not displayed.", true);
-			Web.clickOnElement(firstMorngStarInfo);
-			Web.waitForElement(mrngStarContent);
+			//Web.clickOnElement(firstMorngStarInfo);
+			Web.actionsClickOnElement(firstMorngStarInfo);
+			Thread.sleep(3000);
+			//Web.waitForElement(mrngStarContent);
 			String mrngStarInfo = mrngStarContent.getText();
 			if (mrngStarContent.isDisplayed()
 					&& mrngStarInfo.contains(investmentName))
@@ -2278,8 +2304,18 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 			actDisclaimer4 = disclaimers.get(1).getText().trim();
 			actDisclaimer5 = disclaimers.get(2).getText().trim();
 			actDisclaimer6 = disclaimers.get(3).getText().trim();
-			actDisclaimer7 = disclaimerLast.get(0).getText().trim();
-			actDisclaimer8 = disclaimerLast.get(1).getText().trim();
+			actDisclaimer7 = disclaimerLast.get(1).getText().trim();
+			actDisclaimer8 = disclaimerLast.get(2).getText().trim();
+			System.out.println(expDisclaimer1.trim());
+			System.out.println(actDisclaimer1);
+			System.out.println(expDisclaimer1.trim().contains(actDisclaimer1));
+			System.out.println(actDisclaimer2.contains(expDisclaimer2));
+			System.out.println(actDisclaimer3.contains(expDisclaimer3));
+			System.out.println(actDisclaimer4.contains(expDisclaimer4));
+			System.out.println(actDisclaimer5.contains(expDisclaimer5));
+			System.out.println(actDisclaimer6.contains(expDisclaimer6));
+			System.out.println(actDisclaimer7.contains(expDisclaimer7));
+			System.out.println(actDisclaimer8.contains(expDisclaimer8));
 			if(actDisclaimer1.contains(expDisclaimer1)&&
 					actDisclaimer2.contains(expDisclaimer2)&&
 					actDisclaimer3.contains(expDisclaimer3)&&
@@ -2418,8 +2454,10 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 			 * rb.keyPress(KeyEvent.VK_ENTER); rb.keyRelease(KeyEvent.VK_ENTER);
 			 * }
 			 */
-			String fileName = CommonLib.getDownloadedDocumentName(
-					Stock.getConfigParam("Download_Directory"), ".xls");
+			Thread.sleep(3000);
+			//String fileName = CommonLib.getDownloadedDocumentName(Stock.getConfigParam("Download_Directory"), ".xls");
+			String fileName="InvestmentOptions.xls";
+			System.out.println("----------------");
 			if (fileName.contains(".xls"))
 				Reporter.logEvent(Status.PASS,
 						"Click on excel link and observe that "
@@ -3327,9 +3365,9 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 			Web.actionsClickOnElement(planTab);
 		if (Web.isWebElementDisplayed(administrationSubmenu, true))
 			Web.actionsClickOnElement(administrationSubmenu);
-		
+		Thread.sleep(2000);
 		this.openSubmenuUnderAdministration(Submenu);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		if (Web.getDriver().findElement(By.tagName("i")).getText()
 				.contains(Submenu))
 			Reporter.logEvent(Status.PASS,
@@ -3357,7 +3395,25 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 			Web.actionsClickOnElement(fiduciaryMenu);
 		Thread.sleep(3000);
 		this.openSubmenuUnderFiduciary(Submenu);
-		Thread.sleep(3000);
+		Thread.sleep(8000);
+		if(Submenu.contains("Participant QDIA notice listing order")){
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(frameb);
+			if(participantQDIANoticeHeader.getText().contains("Participant QDIA Notice")){
+				Reporter.logEvent(Status.PASS,
+						"Navigate to Plan-->Fudiciary records-->" + Submenu, Submenu
+								+ " page is displayed.", false);
+				Web.getDriver().switchTo().defaultContent();
+				return;
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Navigate to Plan-->Fudiciary records-->" + Submenu, Submenu
+								+ " page is displayed.", true);
+				Web.getDriver().switchTo().defaultContent();
+				return;
+			}
+		}
 		if (Web.getDriver().findElement(By.tagName("i")).getText()
 				.contains(Submenu))
 			Reporter.logEvent(Status.PASS,

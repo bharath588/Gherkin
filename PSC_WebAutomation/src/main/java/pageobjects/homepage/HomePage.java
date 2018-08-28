@@ -539,6 +539,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 	public void enterPartialPlanNumber() {
 		try {
 			if (Stock.GetParameterValue("planNumber") != null) {
+				Web.clickOnElement(searchPlansInput);
 				Web.setTextToTextBox(searchPlansInput,
 						Stock.GetParameterValue("planNumber").substring(0, 5));
 				Reporter.logEvent(
@@ -1578,6 +1579,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 		String[] menuNames = null, breadCrumbs = null;
 		String concatedMenuNames = null, concatedBreadCrumbs = null;
 		try {
+			System.out.println("------------");
 
 			if (menuNamesAndBreadCrumbs.length > 0) {
 				concatedMenuNames = menuNamesAndBreadCrumbs[0];
@@ -1586,10 +1588,11 @@ public class HomePage extends LoadableComponent<HomePage> {
 				breadCrumbs = concatedBreadCrumbs.split(",");
 
 				for (String menuName : menuNames) {
+					Thread.sleep(2000);
 					WebElement menuItem = menuElement(menuName);
 					if (menuItem.isDisplayed())
 						Web.actionsClickOnElement(menuItem);
-					Thread.sleep(5000);
+					Thread.sleep(4000);
 					if (pageRedirected(breadCrumbs[counter]))
 						navigated++;
 					counter++;
@@ -1609,6 +1612,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 		String[] actionButtonNames = null, breadCrumbs = null;
 		String concatenatedButtonNames = null, concatenatedBreadCrumbs = null;
 		try {
+			System.out.println("---------------");
 			if (actionButtonAndBreadCrumbs.length > 0) {
 				concatenatedButtonNames = actionButtonAndBreadCrumbs[0];
 				concatenatedBreadCrumbs = actionButtonAndBreadCrumbs[1];
@@ -1618,12 +1622,13 @@ public class HomePage extends LoadableComponent<HomePage> {
 				for (String buttonName : actionButtonNames) {
 					Web.clickOnElement(this.homePageLogo);
 					Web.waitForElement(this.weGreeting);
+					Thread.sleep(3000);
 					Web.getDriver().switchTo().defaultContent();
 					Web.getDriver().switchTo().frame("frameb");
 					WebElement buttonElement = returnActionButtonsOnHomePage(buttonName);
 					if (buttonElement.isDisplayed())
 						Web.actionsClickOnElement(buttonElement);
-					Thread.sleep(5000);
+					Thread.sleep(3000);
 					if (pageRedirected(breadCrumbs[counter]))
 						navigated++;
 					counter++;
@@ -1655,12 +1660,14 @@ public class HomePage extends LoadableComponent<HomePage> {
 		try {
 			int count = 0;
 			Web.getDriver().switchTo().defaultContent();
+			Thread.sleep(5000);
 			for (WebElement crumb : breadCrumb) {
 				if (crumb.isDisplayed()) {
 					break;
 				}
 				count++;
 			}
+			Thread.sleep(2000);
 			String brdcrmbstring = breadCrumb.get(count).getText();
 			if (brdcrmbstring.contains(expBreadCrumbEndString)) {
 				isValidated = true;

@@ -202,7 +202,7 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 		if(Web.isWebElementDisplayed(new HomePage(), "Reports Menu", true)){
 			
 			try {
-				Web.actionsClickOnElement(Web.returnElement(new HomePage(),
+				Web.actionsClickOnElement(Web.returnElement(new HomePage(), 
 						"Reports Menu"));
 				//Web.clickOnElement(new HomePage(), "Reports Menu");
 				Web.nextGenDriver.waitForAngular();
@@ -297,15 +297,16 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 		return false;
 	}
 
-	private void clickOnSearchedReport(String txnCode){
+	private void clickOnSearchedReport(String txnCode) throws InterruptedException{
 		searchResultByTxnCode(txnCode);
+		Thread.sleep(3000);
 		if(isSearchedReportDisplayed()){
 			System.out.println(reportSearchResult.get(0).getText());
 			Web.clickOnElement(reportSearchResult.get(0).findElement(By.tagName("a")));}
 		Web.nextGenDriver.waitForAngular();
 	}
 
-	public boolean isReportOrderFormByTxnCodeSearch(String reportTxnCode){
+	public boolean isReportOrderFormByTxnCodeSearch(String reportTxnCode) throws InterruptedException{
 		clickOnSearchedReport(reportTxnCode);
 		//if(isReportOrderForm())
 		if(Web.isWebElementDisplayed(planSelection, false))
@@ -419,7 +420,7 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 
 	}
 
-	private void fillPlanOnReportOrderPage() {
+	private void fillPlanOnReportOrderPage() throws InterruptedException {
 		// TODO Auto-generated method stub
 		if(planSelection.getText().contains(Stock.GetParameterValue("planId")))
 			Reporter.logEvent(Status.INFO, "Enter plan on report order page", "Plan is already selected on order page", true);
@@ -431,7 +432,8 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 					if(plan.getText().contains(Stock.GetParameterValue("planId"))){
 						Web.clickOnElement(plan);
 						Web.nextGenDriver.waitForAngular();
-						Reporter.logEvent(Status.INFO,"Enter plan on report order page", plan.getText()+" is selected", true);
+						Thread.sleep(2000);
+						Reporter.logEvent(Status.INFO,"Enter plan on report order page", " plan selected", true);
 						break;
 					}
 				}

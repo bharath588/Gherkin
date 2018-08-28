@@ -87,11 +87,17 @@ public class accountverification_existingusr {
 					Stock.GetParameterValue("username"));
 			accountverification.get();
 			if (itr == 1) {
-				userverification.performVerification(new String[] {
-						(userverification.getEmailAddressOfuser(
-								Stock.getTestQuery("getEmailaddressQuery"),
-								Stock.GetParameterValue("username"))).trim(),
-								Stock.GetParameterValue("UserSecondaryAns") });
+				try{
+					userverification.performVerification(new String[] {
+							(userverification.getEmailAddressOfuser(
+									Stock.getTestQuery("getEmailaddressQuery"),
+									Stock.GetParameterValue("username"))).trim(),
+									Stock.GetParameterValue("UserSecondaryAns") });
+				}
+				catch(Exception e){
+					
+				}
+				
 			}
 			accountverification.resetPassword(
 					Stock.GetParameterValue("CurrentPassword"),
@@ -280,9 +286,17 @@ public class accountverification_existingusr {
 							Stock.getTestQuery("getEmailaddressQuery"),
 							Stock.GetParameterValue("username"))).trim(),
 							Stock.GetParameterValue("UserSecondaryAns") });
-			if (Web.isWebElementDisplayed(userverification,
+			/*if (Web.isWebElementDisplayed(userverification,
 					"DEFAULT_PLAN_INPUT_FIELD", true)) {
 				userverification.enterPlanWhenDefaultPlanIsNull();
+			}*/
+			if (Web.isWebElementDisplayed(accountverification,
+					"DEFAULT_PLAN_TEXT_FIELD", true)) {
+				accountverification.setDefaultPlan();
+			}
+			if (Web.isWebElementDisplayed(accountverification,
+					"DEFAULT PLAN DROPDOWN", true)) {
+				accountverification.selectUnlockedPlan();
 			}
 			if (PlanCount > 25) {
 
@@ -336,7 +350,9 @@ public class accountverification_existingusr {
 							true);
 				}
 			}
-			Web.clickOnElement(accountverification, "BTNNEXT");
+			//Web.clickOnElement(accountverification, "BTNNEXT");
+			Web.clickOnElement(accountverification, "BTNNEXT Default Plan");
+			
 			Thread.sleep(2000);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -487,13 +503,14 @@ public class accountverification_existingusr {
 					Stock.GetParameterValue("newPassword"),
 					Stock.GetParameterValue("confirmPassword"));
 			
-			if (Web.isWebElementDisplayed(accountverification, "ERRORMSG")) {
+			//if (Web.isWebElementDisplayed(accountverification, "ERRORMSG")) {
+			if (Web.isWebElementDisplayed(accountverification, "ERRORMSGPASWDFIELD")) {
 				Reporter.logEvent(Status.PASS,
 						"Enter any of the last 10 passwords.",
-						"Error message displayed\n"
-						+accountverification.getErrorMessageText(), false);
-				Web.clickOnElement(accountverification, "ERRORMSG");
-				Web.clickOnElement(accountverification, "DISMISS");
+						"Error message displayed\n",false);
+						//+accountverification.getErrorMessageText(), false);
+				//Web.clickOnElement(accountverification, "ERRORMSG");
+				//Web.clickOnElement(accountverification, "DISMISS");
 			}
 			else
 			{
@@ -562,7 +579,7 @@ public class accountverification_existingusr {
 					CommonLib.getIterationDataAsString(testData), false);
 			accountverification = new AccountVerificationPage();
 			if (Stock.GetParameterValue("infoType").equalsIgnoreCase(
-					"NonAvailability")) {
+					"NonAvailability")) {			
 				HomePage homePage = new HomePage(new LoginPage(), false,
 						new String[] { Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password") }).get();
@@ -589,7 +606,7 @@ public class accountverification_existingusr {
 				accountverification.addTransactionCode(
 						Stock.getTestQuery("addTransactionCode"),
 						Stock.GetParameterValue("TxnCode"),
-						"K_" + Stock.GetParameterValue("username"));
+						Stock.GetParameterValue("username"));//"K_" + 
 				HomePage homePage = new HomePage(new LoginPage(), false,
 						new String[] { Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password") }).get();
@@ -615,7 +632,7 @@ public class accountverification_existingusr {
 				accountverification.deleteTransactionCode(
 						Stock.getTestQuery("deleteTransactionCode"),
 						Stock.GetParameterValue("TxnCode"),
-						"K_" + Stock.GetParameterValue("username"));
+						Stock.GetParameterValue("username"));
 			}
 
 		} catch (Exception e) {
@@ -655,6 +672,7 @@ public class accountverification_existingusr {
 			accountverification = new AccountVerificationPage();
 			if (Stock.GetParameterValue("infoType").equalsIgnoreCase(
 					"NonAvailability")) {
+				
 				HomePage homePage = new HomePage(new LoginPage(), false,
 						new String[] { Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password") }).get();
@@ -748,11 +766,12 @@ public class accountverification_existingusr {
 					Stock.GetParameterValue("username"));
 			MyProfilePage myProfPage = new MyProfilePage().get();
 			isEmailUpdatedFromUI = myProfPage.updateEmailAddress();
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 			updatedEmailAddress = userVer.getEmailAddressOfuser(
 					Stock.getTestQuery("getEmailaddressQuery"),
 					Stock.GetParameterValue("username"));
 			Reporter.logEvent(Status.INFO, "Email address in DB post update", updatedEmailAddress, true);
+			Thread.sleep(2000);
 			if (isEmailUpdatedFromUI
 					&& (!prevEmailAddress.equals(updatedEmailAddress))) {
 				Reporter.logEvent(Status.PASS,

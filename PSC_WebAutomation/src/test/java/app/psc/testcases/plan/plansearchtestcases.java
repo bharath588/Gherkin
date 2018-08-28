@@ -187,8 +187,9 @@ public class plansearchtestcases {
 			homePage = new HomePage(new LoginPage(), false, new String[] {
 					Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password") }).get();
+			Thread.sleep(3000);
 			homePage.enterPartialPlanNumber();
-			
+			Thread.sleep(3000);
 			if (homePage.verifyAutocompletePlanSuggestion()) {
 				Reporter.logEvent(
 						Status.PASS,
@@ -368,7 +369,7 @@ public class plansearchtestcases {
 			planPage = new PlanPage(new LoginPage(), false, new String[] {
 					Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password") }).get();
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 			planPage.navigateToPlanMessagingPage();
 			Thread.sleep(1500);
 			planPage.addNewPlanMessage();
@@ -722,6 +723,7 @@ public class plansearchtestcases {
 					Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password") }).get();
 			homePage = new HomePage();
+			Thread.sleep(4000);
 			planPage.openAnySubmenuUnderFiduciary("Plan documents");
 			// homePage.searchPlanWithIdOrName(Stock.GetParameterValue("planNumber"));
 			/*if (homePage.navigateToProvidedPage("Plan", "Fiduciary records",
@@ -1025,6 +1027,7 @@ public class plansearchtestcases {
 			/*CommonLib.navigateToProvidedPage("Plan", "Administration",
 					"Viewâˆ•change banking information");*/
 			//planPage.openAnySubmenuUnderAdministrationMenu("View∕change banking information");
+			Thread.sleep(2000);
 			planPage.openAnySubmenuUnderAdministrationMenu("change banking information");
 			planPage.validateBankingInfoAndUpdateLink();
 			planPage.updateBankDetails();
