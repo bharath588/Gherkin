@@ -4,7 +4,7 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="PSC Full Regression" parallel="classes" thread-count="3">
+	<test name="PSC Full Regression" parallel="classes" thread-count="2">
 	<classes>
 	 <class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
@@ -69,12 +69,12 @@
 							value="DDTC-22072_SIT_PSC_Login_01_TC019_Default_Plan_Prompting">
 						</parameter>
 					</include>
-					<include
+					<!-- <include
 						name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario">
 						<parameter name="ManualTCName"
 							value="DDTC-22070_SIT_PSC_Login_01_TC002_Expired Password_negative">
 						</parameter>
-					</include>
+					</include> -->
 					<include
 						name="TC004_02_Verify_Changepasword_When_Password_Expired_Positive_Flow">
 						<parameter name="ManualTCName"
