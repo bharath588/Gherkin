@@ -1344,6 +1344,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 						"Pay plan expenses tab is not displayed even"
 								+ "ESCPPE button is displayed.", true);
 			act.click(payPlanExpense).build().perform();
+			Thread.sleep(2000);
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.getDriver().switchTo().frame(iFramePlanB);
 			if (Web.isWebElementDisplayed(viewPlanInvoicesBtn, true))
@@ -1402,6 +1403,8 @@ public class HomePage extends LoadableComponent<HomePage> {
 	 */
 	public void validateHomePageScreenAfterDeletingTxnCodes1() {
 		try {
+			if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
+				Web.clickOnElement(CancelNewsBulletin);	
 			Web.getDriver().switchTo().defaultContent();
 			Actions act = new Actions(Web.getDriver());
 			act.moveToElement(planMenu).build().perform();

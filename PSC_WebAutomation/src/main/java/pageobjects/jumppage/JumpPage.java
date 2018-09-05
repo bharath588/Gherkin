@@ -213,7 +213,7 @@ public void ClickOnJumpPageURL() throws Exception
 	Thread.sleep(2000);
 	Web.waitForElement(urlJumpPage);
 	Web.clickOnElement(urlJumpPage);
-	Web.waitForPageToLoad(Web.getDriver());
+	Web.waitForPageToLoad(Web.getDriver());		
 	Web.waitForElement(weGreeting);
 	if(weGreeting.isDisplayed())
 		Reporter.logEvent(Status.INFO, "Check if Login is successfull","Login for PSC is successfull",false);
