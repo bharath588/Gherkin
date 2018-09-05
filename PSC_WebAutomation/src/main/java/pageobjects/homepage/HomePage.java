@@ -253,6 +253,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 				invokeMethod.invoke(this.parent.getClass().newInstance(),
 						new Object[] { userData });
 				loginObj.waitForSuccessfulLogin();
+				Web.waitForPageToLoad(Web.getDriver());
 				// Check if UserVerification Pages appears then
 				// performVerification
 				if (Web.isWebElementDisplayed(Web.returnElement(userVeriPg,
