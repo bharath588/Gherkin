@@ -154,7 +154,7 @@ public class guidedpayrolltestcases {
 
 	@AfterClass
 	public void cleanupSessions() {
-		Web.getDriver().close();
-		Web.getDriver().quit();
+		/*Web.getDriver().close();
+		Web.getDriver().quit();*/
 	}
 }
