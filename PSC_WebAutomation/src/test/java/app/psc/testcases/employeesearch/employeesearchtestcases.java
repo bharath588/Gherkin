@@ -1496,7 +1496,31 @@ public class employeesearchtestcases {
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
 			employeesearch = new EmployeeSearch().get();
-			resultset = employeesearch.getEmployeesForUser(
+			
+			homePage = new HomePage();
+			/*resultset = employeesearch.getEmployeesForUser(
+					Stock.getTestQuery("getEmployeeWithSubSetSection1"),
+					Stock.GetParameterValue("username"));*/
+			homePage.searchPlanWithIdOrName(Stock.GetParameterValue("PlanWithSubSet"));
+			employeesearch.navigateToEmployeeTab();
+			employeesearch.searchEmployeeBySSN("");
+			employeesearch.navigateToEmployeeOverViewPage();
+			employeesearch.navigateToEmpDetailPage();
+			if (employeesearch.isSubSetSectionDisplayed()) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Check Employee subset information section is displayed.",
+						"Employee subset information is displayed.", false);
+				employeesearch.verifySubSetColumnHeaders();
+				employeesearch.verifySubsetHistorySection();
+				employeesearch.checkSubSetHistDataIsDisplayed();
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Check Employee subset information section is displayed.",
+						"Employee subset information is not displayed.", true);
+			}
+			/*resultset = employeesearch.getEmployeesForUser(
 					Stock.getTestQuery("getEmployeeWithSubSetSection"),
 					Stock.GetParameterValue("username"));
 			employeesearch.searchEmployeeBySSNAllPlans(employeesearch
@@ -1516,13 +1540,18 @@ public class employeesearchtestcases {
 						Status.FAIL,
 						"Check Employee subset information section is displayed.",
 						"Employee subset information is not displayed.", true);
-			}
-			resultset.deleteRow();
-			resultset = employeesearch.getEmployeeForUser(
+			}*/
+			//resultset.deleteRow();
+			/*resultset = employeesearch.getEmployeeForUser(
 					Stock.getTestQuery("getEmployeeWithoutSubSetSection"),
 					Stock.GetParameterValue("username"));
 			employeesearch.searchEmployeeBySSNAllPlans(employeesearch
 					.getEmployeeSSNFromResultSet(resultset));
+			employeesearch.navigateToEmployeeOverViewPage();
+			employeesearch.navigateToEmpDetailPage();*/
+			homePage.searchPlanWithIdOrName(Stock.GetParameterValue("PlanWithOutSubSet"));
+			employeesearch.navigateToEmployeeTab();
+			employeesearch.searchEmployeeBySSN("");
 			employeesearch.navigateToEmployeeOverViewPage();
 			employeesearch.navigateToEmpDetailPage();
 			if (employeesearch.isSubSetSectionDisplayed())

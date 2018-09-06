@@ -401,6 +401,8 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	private WebElement investmentPerformanceAgainLink;
 	@FindBy(xpath = "(.//*[@id='inv-Popover'])[2]")
 	private WebElement secondInvName;
+	@FindBy(xpath=".//span[text()='Site Bulletin']/following-sibling::a/span")
+	private WebElement CancelNewsBulletin;
 	
 	private String menuQDIA = "//a[contains(text(),'Participant QDIA notice listing order')]";
 	private String docHistoryLinkPath = "./ancestor::div[1]/following-sibling::div//a[contains(@class,'accordion-toggle-doclink')]";
@@ -491,6 +493,8 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 				Web.isWebElementDisplayed(urlJumpPage, true);
 				Web.clickOnElement(urlJumpPage);
 			}
+			if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
+				Web.clickOnElement(CancelNewsBulletin);		
 			Web.getDriver().switchTo().defaultContent();
 			Web.isWebElementDisplayed(weGreeting, true);
 			Reporter.logEvent(Status.INFO, "Check if Login is successfull",

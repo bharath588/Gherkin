@@ -261,8 +261,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	@FindBy(id = "workPhoneNumber")
 	private WebElement workPhoneNumber;
 
-	//@FindBy(xpath = "//button[text()='Save']")
-
+	@FindBy(xpath = "//button[text()='Save']")
+	private WebElement reHireSave;
 	@FindBy(xpath = "//input[@name='ESC_BASIC_UPDATE_SAVE']")
 	private WebElement save;
 	
@@ -2996,8 +2996,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						.getString("MAILING_NAME_1").trim());
 				beneficiaryRecordsDB.put("Percent",
 						queryResultSet.getString("PERCENT").trim());
-				beneficiaryRecordsDB.put("SSN", queryResultSet.getString("SSN")
-						.trim());
+				//beneficiaryRecordsDB.put("SSN", queryResultSet.getString("SSN").trim());
 				beneficiaryRecordsDB.put("Birth date", queryResultSet
 						.getString("BIRTH_DATE").trim());
 			} else {
@@ -3301,7 +3300,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					+ "'", "Column header:'" + header.getText()
 					+ "' is displayed.", true);
 		}
-
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	/*
@@ -3488,7 +3487,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Date dt = dateFormat.parse(termDate_1);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(dt);
-		calendar.add(Calendar.DATE, 1);
+		calendar.add(Calendar.YEAR, 1);
 		String newHireDate = dateFormat.format(calendar.getTime());
 		System.out.println("Date string is:"
 				+ dateFormat.format(calendar.getTime()));
@@ -3501,7 +3500,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		}
 		// termDate.clear();
 		try {
-			Web.clickOnElement(save);
+			Web.clickOnElement(reHireSave);
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(framecA);
 			CommonLib.waitForProgressBar();
