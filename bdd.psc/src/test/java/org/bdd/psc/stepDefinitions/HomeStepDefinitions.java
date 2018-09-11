@@ -3,9 +3,12 @@
  */
 package org.bdd.psc.stepDefinitions;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import pscBDD.fileSharing.FileSharingPage;
@@ -368,6 +371,9 @@ public class HomeStepDefinitions {
 		DataTable dataTable = DataTable.create(accuWithCreds);
 		Globals.creds = dataTable;
 		LoginPage.setURL(accuCode);
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+		Date date = new Date();
+		Globals.localDateTimeIST= dateFormat.format(date);
 		new LoginPage().get();
 		new HomePage(new LoginPage(), false,
 				new String[] { username, password }).get();
@@ -422,6 +428,7 @@ public class HomeStepDefinitions {
 			if (Globals.scenarioName.contains("post login page")) {
 				if (homePage.isHomePagePostPopUpClose()) {
 					homePageVisits++;
+					
 				}
 			}
 			if (Globals.scenarioName.contains("forgot password page")) {
@@ -724,21 +731,35 @@ public class HomeStepDefinitions {
 	    	if (homePage.verifyLastLoginDateEquality(DBname,username,query)) {
 	    		Reporter.logEvent(
 						Status.PASS,
-						"Compare last login date and time from application and database ",
+						"Validate last login date and time from application and database ",
 						"Time displayed on application home page is equal to time stored in database",
 						false);
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
-						"Compare last login date and time values from application and database ",
+						"Validate last login date and time values from application and database ",
 						"Time displayed on application home page is not equal to time stored in database",
 						true);
 				  }
 	    }
-	   
 	    
-	  
-	    
+	    @When("^user is on the Home page of \"([^\"]*)\" when user again login with correct \"([^\"]*)\" and \"([^\"]*)\"$")
+	    public void user_is_on_the_home_page_of_something_when_user_again_login_with_correct_something_and_something(String accuCode, String username, String password) throws Throwable {    	
+	    	List<List<String>> accuWithCreds = Arrays.asList(
+					Arrays.asList("accuCode", "username", "password"),
+					Arrays.asList(accuCode, username, password));
+			DataTable dataTable = DataTable.create(accuWithCreds);
+			Globals.creds = dataTable;
+			LoginPage.setURL(accuCode);
+			new LoginPage().get();
+			new HomePage(new LoginPage(), false,
+					new String[] { username, password }).get(); 
+			Reporter.logEvent(
+					Status.INFO,
+					"User opens URl and again logged into PlanEmpower",
+					"User is on Homepage",
+					true);
+	    }
 	    
 	    
 }

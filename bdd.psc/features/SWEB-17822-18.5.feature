@@ -36,9 +36,9 @@ Feature: American Funds Plan Express to Differentiate Frozen money types
     Examples: 
       | accuCode | username | password | GA_ID      | Classification_Code  | Descr                          | Money_Type                   |Type_Descr|
       | InstAF   | 2af      | testing1 | 345320-01  | DISCRETNARY MATCH FZ | EMPLOYER MATCH 1               | EMPLOYER MATCH               |EMPLOYER MATCH 2|
-      | InstAF   | 2af      | testing1 | 345320-01  | MONEYPURCHASE FZ     | EMPLOYER MONEY PURCHASE 1      | EMPLOYER MONEY PURCHASE      | EMPLOYER MONEY PURCHASE 2|
-      | InstAF   | 2af      | testing1 | 345320-01  | PROFITSHARING FZ     | EMPLOYER PROFIT SHARING 1      | EMPLOYER PROFIT SHARING      |EMPLOYER PROFIT SHARING 2|
-      | InstAF   | 2af      | testing1 | 345320-01  | SAFE HARBOR MATCH FZ | SAFE HARBOR MATCH 1            | SAFE HARBOR MATCH            |SAFE HARBOR MATCH 2|   
-      | InstAF   | 2af      | testing1 | 1355138-01 | SAFEHRBR NON-ELEC FZ | SAFE HARBOR NON ELECTVE 1      | SAFE HARBOR NON-ELECTIVE      |SAFE HARBOR NON ELECTVE 2|
-      | InstAF   | 2af      | testing1 | 1355138-01 | NONELECTIVE FZ       | QACA SAFE HARBOR NON ELECTVE 1 | QACA SAFE HARBOR NON ELECTIVE |QACA SAFE HARBOR NON ELECTVE 2|
-      | InstAF   | 2af      | testing1 | 1355138-01 | MATCH FZ             | QACA SAFE HARBOR MATCH 1       | QACA SAFE HARBOR MATCH       |QACA SAFE HARBOR MATCH 2| 
+      #| InstAF   | 2af      | testing1 | 345320-01  | MONEYPURCHASE FZ     | EMPLOYER MONEY PURCHASE 1      | EMPLOYER MONEY PURCHASE      | EMPLOYER MONEY PURCHASE 2|
+      #| InstAF   | 2af      | testing1 | 345320-01  | PROFITSHARING FZ     | EMPLOYER PROFIT SHARING 1      | EMPLOYER PROFIT SHARING      |EMPLOYER PROFIT SHARING 2|
+      #| InstAF   | 2af      | testing1 | 345320-01  | SAFE HARBOR MATCH FZ | SAFE HARBOR MATCH 1            | SAFE HARBOR MATCH            |SAFE HARBOR MATCH 2|   
+      #| InstAF   | 2af      | testing1 | 1355138-01 | SAFEHRBR NON-ELEC FZ | SAFE HARBOR NON ELECTVE 1      | SAFE HARBOR NON-ELECTIVE      |SAFE HARBOR NON ELECTVE 2|
+      #| InstAF   | 2af      | testing1 | 1355138-01 | NONELECTIVE FZ       | QACA SAFE HARBOR NON ELECTVE 1 | QACA SAFE HARBOR NON ELECTIVE |QACA SAFE HARBOR NON ELECTVE 2|
+      #| InstAF   | 2af      | testing1 | 1355138-01 | MATCH FZ             | QACA SAFE HARBOR MATCH 1       | QACA SAFE HARBOR MATCH       |QACA SAFE HARBOR MATCH 2| 
