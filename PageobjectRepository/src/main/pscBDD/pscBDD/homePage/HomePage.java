@@ -6,12 +6,14 @@ package pscBDD.homePage;
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,6 +29,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
 import pscBDD.userVerification.UserVerificationPage;
+import bdd_core.framework.Globals;
 import bdd_gwgwebdriver.How;
 import bdd_lib.DB;
 import bdd_lib.Web;
@@ -178,6 +181,9 @@ public class HomePage extends LoadableComponent<HomePage> {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
+			Web.clickOnElement(CancelNewsBulletin);			
+		Web.getDriver().switchTo().defaultContent();
 
 	}
 
@@ -435,14 +441,13 @@ public class HomePage extends LoadableComponent<HomePage> {
 				displayedLastLoginDate = lastLogin.getText();
 				if (displayedLastLoginDate.contains("ET"))
 				Reporter.logEvent(Status.PASS,
-						"Validate UI Date time displayed in Eastern Time",
-						"UI date and time displayed in Eastern time"
-								+ displayedLastLoginDate.trim(),
-						false);
+						"Validate UI Date time displayed in Eastern Time",					
+								 displayedLastLoginDate.trim(),
+						true);
 			} else
 				Reporter.logEvent(Status.FAIL,
 						"Validate UI Date time displayed in Eastern Time",
-						"UI date and time displayed in Eastern time", false);
+						"UI date and time displayed in Eastern time", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -455,7 +460,6 @@ public class HomePage extends LoadableComponent<HomePage> {
 		String modifyDB ="D_" ;
 		String DB_Name,modify_User;		
 		int arraySize;
-		//String [] databases = dbnames.get(0).replaceAll("\"", "").split(",");
 		ArrayList<String> lastLoginDates = new ArrayList<>(dbnames.size());
 		 try {
 			for (String database : dbnames) {	
@@ -470,7 +474,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 				arraySize= lastLoginDates.size();
 				for (int i=0;i<arraySize;i++){
 					firstDBvalue= lastLoginDates.get(0);
-					if (firstDBvalue == lastLoginDates.get(i)){
+					if (firstDBvalue.contains(lastLoginDates.get(i))){
 						Reporter.logEvent(Status.INFO,
 								"LAST_LOGIN_DATE_TIME in USERS table displayed in Mountain time in database",
 								dbnames.get(i)
@@ -482,29 +486,29 @@ public class HomePage extends LoadableComponent<HomePage> {
 						
 					}					
 				}
-				lastLoginDate= firstDBvalue;
-				if (lastLoginDate != null) {
-					Reporter.logEvent(Status.PASS,
-							"Check last login time is displayed in DB",
-							"Last login time is displayed in DB "
-									+ lastLoginDate.trim(), false);
-				} else {
-					Reporter.logEvent(Status.FAIL,
-							"Check last login time is displayed in DB",
-							"Last login time is not displayed in DB", false);
-				}
-
+				lastLoginDate= firstDBvalue;			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		 return lastLoginDate;
-		 }
-				
-	
+		 }					
+
 	public boolean verifyLastLoginDateEquality(List<String> DBname,String username,String query){
 		boolean equalDate = false;
-		String dateFromWeb = getLastLoginDateFromWeb().trim().substring(11, 30);
+		Date localTime ;
+		String localTime1 = null;
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyyy hh:mm a");	
+		try {
+			localTime = sdf2.parse(Globals.localDateTimeIST);
+			localTime1= formatDateToString(localTime,"MM/dd/yyyy hh:mm a","EST");
+		} catch (ParseException e2) {
+			e2.printStackTrace();
+		}
+		String dateFromWeb = getLastLoginDateFromWeb().trim().substring(11, 30);		
     	String dateFromDB= getLastLoginDateFromDB(query,username,DBname);
+    	if (dateFromWeb.equalsIgnoreCase(localTime1)){
+			System.out.println("System date Time matched with UI Application date and time");
+		}
 		int endIndex = dateFromDB.length();
 		String dateFromDB1 = dateFromDB.trim().substring(0, endIndex);
 		String dateFromDB2 = dateFromDB.trim().substring(endIndex);
@@ -512,28 +516,52 @@ public class HomePage extends LoadableComponent<HomePage> {
 		try {
 			System.out.println("Date from db is: " + dateFromDBs);
 			System.out.println("Date from Web is: " + dateFromWeb);
-			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy",
+			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm aaa",
 					Locale.US);
 			Date date = sdf.parse(dateFromWeb);
-			Date date1 = sdf.parse(dateFromDBs.trim());
+			Date date1 = sdf.parse(dateFromDB.trim());
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date1);
 			cal.add(Calendar.HOUR, 2);
 			date1 = cal.getTime();
 			String lastLoginWeb = sdf.format(date);
 			String lastLoginDB = sdf.format(date1);
-			if (lastLoginWeb.equalsIgnoreCase(lastLoginDB)) {
-				equalDate = true;
+			if (!lastLoginWeb.equalsIgnoreCase(lastLoginDB)) {
+				cal.setTime(date);
+				cal.add(Calendar.MINUTE, 1);
+				date = cal.getTime();
+				String lastLoginWeb1 = sdf.format(date);
+				if (lastLoginWeb1.equalsIgnoreCase(lastLoginDB)){					
+					equalDate = true;
+				} else{
+					equalDate = false;
+				}
+				
 			} else
-				equalDate = false;
-
+				equalDate = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return equalDate;
 	}
-
-
+	
+	
+	public String formatDateToString(Date date, String format,
+			String timeZone) {
+		if (date == null)
+			return null;
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		if (timeZone == null || "".equalsIgnoreCase(timeZone.trim())) {
+			timeZone = Calendar.getInstance().getTimeZone().getID();
+		}
+		sdf.setTimeZone(TimeZone.getTimeZone(timeZone));
+		return sdf.format(date);
+	}
+	
+	
+	
+	
+	
 	
 	
 	

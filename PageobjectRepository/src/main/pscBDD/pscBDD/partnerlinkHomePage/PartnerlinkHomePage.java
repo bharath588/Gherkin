@@ -7,6 +7,8 @@ import java.lang.reflect.Method;
 
 
 
+
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
@@ -19,7 +21,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import com.aventstack.extentreports.Status;
+
 import bdd_lib.Web;
+import bdd_reporter.Reporter;
 import pscBDD.commonLib.CommonLib;
 import pscBDD.login.LoginPage;
 import pscBDD.userVerification.UserVerificationPage;
@@ -39,10 +44,12 @@ public class PartnerlinkHomePage extends LoadableComponent<PartnerlinkHomePage> 
 	private WebElement welcomeToPartnerLink;
 	@FindBy(id="framea")
 	private WebElement landingPageFrame;
-	//@FindBy(xpath=".//*[contains(@id,'menu')]//li/a//span[text()='Implementation']")
+	@FindBy(xpath=".//*[contains(@id,'menu')]//li/a//span[text()='Implementation']")
+	private WebElement implementationMenuPL;
 	@FindBy(xpath="//a[contains(text(),'Partner')]/following-sibling::ul//*[text()='Implementation']")
 	private WebElement implementationMenu;
-	//@FindBy(xpath="//a/span/span[text()='Plan Express']")
+	@FindBy(xpath="//a/span/span[text()='Plan Express']")
+	private WebElement planExpressSubMenuPL;
 	@FindBy(xpath="//a[contains(text(),'PlanExpress')]")
 	private WebElement planExpressSubMenu;
 	@FindBy(xpath="//div[@class='pageTitle' and contains(text(),'Welcome to PlanExpress')]")
@@ -152,7 +159,10 @@ public class PartnerlinkHomePage extends LoadableComponent<PartnerlinkHomePage> 
 			Web.actionsClickOnElement(partnerLinkTab);
 		if(Web.isWebElementDisplayed(implementationMenu, true)){
 			Web.actionsClickOnElement(implementationMenu);
-		}
+		}		
+		/*if(Web.isWebElementDisplayed(implementationMenuPL, true)){
+			Web.actionsClickOnElement(implementationMenuPL);
+		}*/
 	}
 	private void clickOnPlanExpressSubMenu() throws InterruptedException{
 		this.clickOnImplementationMenu();
@@ -176,12 +186,30 @@ public class PartnerlinkHomePage extends LoadableComponent<PartnerlinkHomePage> 
 				jse.executeScript(onClickScript, planExpressSubMenu);*/
 		if(Web.isWebElementDisplayed(planExpressSubMenu, true))
 			Web.actionsClickOnElement(planExpressSubMenu);
-		Thread.sleep(3000);
+		Thread.sleep(3000);	
+		/*if(Web.isWebElementDisplayed(planExpressSubMenuPL, true))
+			Web.actionsClickOnElement(planExpressSubMenuPL);
+		Thread.sleep(3000);*/
 		/*WebDriverWait wait = new WebDriverWait(Web.getDriver(),30);
 		wait.until(ExpectedConditions.elementToBeClickable(planExpressSubMenu));
 		//Thread.sleep(4000);
 		Web.jsClick(planExpressSubMenu);*/
 	}
+	
+	public void clickOnPLPlanExpressSubMenu() {
+		try {
+			Web.FrameSwitchONandOFF(false);
+			if(Web.isWebElementDisplayed(implementationMenuPL, true)){
+				Web.actionsClickOnElement(implementationMenuPL);
+			}
+			if(Web.isWebElementDisplayed(planExpressSubMenuPL, true))
+				Web.actionsClickOnElement(planExpressSubMenuPL);
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public boolean isPlanExpressPage() throws InterruptedException{
 		this.clickOnPlanExpressSubMenu();
@@ -200,6 +228,14 @@ public class PartnerlinkHomePage extends LoadableComponent<PartnerlinkHomePage> 
 		return cords;
 	}
 	
+	public boolean isPLPlanExpressPage() throws InterruptedException{
+		this.clickOnPLPlanExpressSubMenu();
+		Web.FrameSwitchONandOFF(true, landingPageFrame);
+		if(Web.isWebElementDisplayed(welcomeToPlanExpress, true))
+			return true;
+		return false;
+	}
+	
 	public boolean isMetLifeLogo(){
 		if(metLifeLogo.isDisplayed())
 			return true;
@@ -210,15 +246,19 @@ public class PartnerlinkHomePage extends LoadableComponent<PartnerlinkHomePage> 
 	public void clickOnPlanVisualizer(){
 		if(Web.isWebElementDisplayed(partnerLinkTab, true))
 			Web.actionsClickOnElement(partnerLinkTab);
+		Reporter.logEvent(Status.INFO, "Clicked on PartnerLink Tab",
+				"Clicked on PartnerLink Tab", true);
 		if(Web.isWebElementDisplayed(lnkPlanVisualizer, true)){
 			Web.actionsClickOnElement(lnkPlanVisualizer);
+			Reporter.logEvent(Status.INFO, "Select Plan Visualizer from the list",
+					"Plan Visualizer menu option selected", true);
 		}	
 	}
 		
 	public boolean isBreadcrumb(String expectedText){
 		String actualText;
 		actualText= breadCrumb.getText().trim();
-		if (expectedText.trim().contains(actualText))
+		if (expectedText.trim().contains(actualText.split("/")[0]))
 			return true;
 		return false;
 	}
