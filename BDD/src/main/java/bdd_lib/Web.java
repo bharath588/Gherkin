@@ -319,6 +319,23 @@ public class Web {
 		return success;
 	}
 
+	public static boolean isCheckBoxChecked(WebElement fieldName, 
+			boolean... waitForElement)
+	{
+		boolean isElementChecked = false;
+		try
+		{
+			if(isWebElementDisplayed(fieldName, waitForElement)){
+				isElementChecked = fieldName.isSelected();	
+			}			
+		}
+		catch(Exception e)
+		{
+			throw new Error(e.getMessage());
+		}
+		return isElementChecked;
+	}
+	
 	/**
 	 * <pre>
 	 * Method to get declared WebElement from a specified page.
@@ -528,6 +545,12 @@ public class Web {
 				capabilities.setCapability("chrome.exe","C:\\Program Files (x86)\\Google\\Chrome\\Application");
 				capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 				webDriver = new ChromeDriver(capabilities);
+			
+				
+				/*ChromeOptions options = new ChromeOptions();
+				options.addArguments("disable-infobars");
+				
+				webDriver = new ChromeDriver(options);*/
 
 			} else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
 					|| webBrowser.trim().equalsIgnoreCase("FF")) {
