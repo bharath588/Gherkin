@@ -11,6 +11,7 @@ import java.util.List;
 
 
 
+
 import pscBDD.fileSharing.FileSharingPage;
 import pscBDD.forgotPassword.ForgotPasswordPage;
 import pscBDD.homePage.HomePage;
@@ -78,8 +79,8 @@ public class HomeStepDefinitions {
 	}
 
 	@After
-	public void after() throws Exception {
-		
+	public void after(cucumber.api.Scenario scenario) throws Exception {
+		Reporter.logAfterExceptionEvent(scenario);			
 		Reporter.finalizeTCReport();
 	}
 
@@ -107,6 +108,15 @@ public class HomeStepDefinitions {
 		Globals.planNumber = planNumber;
 		homePage = new HomePage();
 		homePage.switchPlan(planNumber);
+	}
+	
+	@When("^user switch to plan number$")
+	public void user_switches_to_Plan(DataTable planNumber) throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		Globals.gaId = planNumber;
+		String planNo=Web.rawValues(Globals.gaId).get(0).get("plan_no");
+		homePage = new HomePage();
+		homePage.switchPlan(planNo);
 	}
 
 	@Then("^GWC connect page is displayed$")
@@ -307,6 +317,7 @@ public class HomeStepDefinitions {
 				Globals.scenarioName);
 		if (!accAndCreds.equals(Globals.creds)) {
 			Globals.creds = accAndCreds;
+			
 			LoginPage.setURL(Web.rawValues(Globals.creds).get(0)
 					.get("accuCode"));
 			if (Web.isWebElementDisplayed(Web.returnWebElement(new LoginPage(),

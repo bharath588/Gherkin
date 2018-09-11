@@ -12,7 +12,6 @@ import pscBDD.homePage.HomePage;
 import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
 import pscBDD.userVerification.UserVerificationPage;
-
 import bdd_lib.Web;
 
 import com.aventstack.extentreports.Status;
@@ -22,7 +21,6 @@ import bdd_core.framework.Globals;
 
 
 import bdd_reporter.Reporter;
-
 import cucumber.api.DataTable;
 import cucumber.api.Delimiter;
 import cucumber.api.Scenario;
@@ -68,7 +66,8 @@ public class LoginStepDefinitions {
 	}
 
 	@After
-	public void after() throws Exception {
+	public void after(cucumber.api.Scenario scenario) throws Exception {
+		Reporter.logAfterExceptionEvent(scenario);
 		Reporter.finalizeTCReport();
 	}
 

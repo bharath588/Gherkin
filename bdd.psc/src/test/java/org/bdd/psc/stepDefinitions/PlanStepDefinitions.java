@@ -2,6 +2,7 @@
 
 package org.bdd.psc.stepDefinitions;
 
+import gherkin.formatter.model.Result;
 import gherkin.formatter.model.Scenario;
 
 import java.util.ArrayList;
@@ -62,7 +63,9 @@ public class PlanStepDefinitions {
 	}
 	
 	@After
-	public void after() throws Exception{
+	public void after(cucumber.api.Scenario scenario) throws Exception{
+		
+		Reporter.logAfterExceptionEvent(scenario);
 		Reporter.finalizeTCReport();
 	}
 	

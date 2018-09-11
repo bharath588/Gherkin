@@ -3,6 +3,11 @@ package org.bdd.psc.stepDefinitions;
 
 import java.util.List;
 
+
+
+
+
+import org.bdd.psc.serviceUtils.WebService_PSC;
 import org.testng.Assert;
 
 import pscBDD.employee.EmployeePage;
@@ -12,16 +17,21 @@ import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
 import pscBDD.planPage.PlanProvisionsPage;
 import pscBDD.userVerification.UserVerificationPage;
+import webservices.util.JsonReadWriteUtils;
 import gherkin.formatter.model.Scenario;
 
 
 
+import bdd_core.framework.Globals;
 import bdd_lib.CommonLib;
 import bdd_lib.Web;
 import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
-import com.gargoylesoftware.htmlunit.javascript.host.media.webkitMediaStream;
+
+
+
+
 
 import cucumber.api.DataTable;
 import cucumber.api.Delimiter;
@@ -51,6 +61,7 @@ public class EmployeeStepDefinitions {
 	EmployeePages empPages;
 	String planNumber=null;
 	PlanProvisionsPage provisionPage;
+	WebService_PSC psc; 
 
 
 	@Before()
@@ -63,6 +74,7 @@ public class EmployeeStepDefinitions {
 			empPages=new EmployeePages();
 			provisionPage=new PlanProvisionsPage();
 			homePage=new HomePage();
+			psc = new WebService_PSC();
 		}
 	@After
 	public void after() throws Exception{
@@ -80,9 +92,18 @@ public class EmployeeStepDefinitions {
 	@Given("^User is on Employee Search Page$")
 	public void userNavigateToEmployeeSearchPage() throws Exception{
 		//Reporter.initializeReportForTC(1,scenarioName);
-		empPage = new EmployeePage(Web.getDriver());
-		empPage.get();
+		//empPage = new EmployeePage(Web.getDriver());
+		empPages.get();
 	}
+	
+	@When("^'user' selects \"([^\"]*)\" in Employee Search and clicks on 'Go'$")
+	 public void user_selects_searchDropDown_in_employee_search(String searchBy) throws Throwable {
+		empPages.searchEmployeeBy(searchBy);
+		if(!searchBy.contains("Division"))
+		Reporter.logEvent(Status.INFO, "user selects "+searchBy+ " and click on go", 
+				"search by "+searchBy, true);
+	    }
+	
 	@When("^user clicks Employee$")
     public void user_clicks_on_employee() throws Throwable {
         
@@ -102,6 +123,26 @@ public class EmployeeStepDefinitions {
 		}
 			
 	}
+	@When("^click on search results$")
+    public void click_on_search_results() throws Throwable {
+        empPages.clickOnFirstNameLinkInSearchResult();
+    }
+	@When("^click on paycheck contribution edit link$")
+	    public void click_on_paycheck_contribution_edit_link() throws Throwable {
+		   empPages.openEmployeeDetailPage();
+		   empPages.clickOnPaycheckContribution();
+	    }
+	 @Then("^deferral page will display$")
+	    public void deferral_page_will_display() throws Throwable {
+		 if(empPages.isDeferralPage())
+			 Reporter.logEvent(Status.INFO, "User is on deferral page", 
+						"User is on deferral page", true);
+		 
+		 else
+			 Reporter.logEvent(Status.INFO, "User is on deferral page", 
+						"User isn't landed on deferral page", true);
+	    }
+
 
 	@When("^User is landing on Employee Search Page$")
 	public void user_is_landing_on_Employee_SearchPage() throws Exception {
@@ -236,6 +277,29 @@ public class EmployeeStepDefinitions {
 		}
 
 	}
+	@Then("^table should populate with employees$")
+    public void table_should_populate_with_employees() throws Throwable {
+		if(empPages.isSearchResultDisplayed()){
+			Reporter.logEvent(Status.PASS, "Search result displays", 
+					"Search result displays", true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "Search result displays", 
+					"Search result do not display", true);
+		}
+    }
+	@Then("^no duplicate results should be returned across all pages$")
+    public void no_duplicate_results_should_be_returned_across_all_pages() throws Throwable {
+		if(empPages.isSearchResultDisplayedDuplicateRecord()){
+			Reporter.logEvent(Status.PASS, "no duplicate results", 
+					"no duplicate results", true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "no duplicate results", 
+					"duplicate results found", true);
+		}
+    }
+
 
 	@Given("^I am on employee search result page$")
 	public void employeeSearchResult() throws Exception{
@@ -361,6 +425,45 @@ public class EmployeeStepDefinitions {
 		empPages.openDeferralDetailsPage();
 
 	}
+	
+	@When("^click on ongoing Edit button$")
+    public void click_on_ongoing_edit_button() throws Throwable {
+        empPages.clickOngoingEdit();
+    }
+	
+	@When("^user enters a contribution \"([^\"]*)\" amount lower than the minimum$")
+	    public void user_enters_a_contribution_amount_lower_than_the_minimum(String dollarOrPercent) throws Throwable {
+		   empPages.clickOnDollarOrPercentBeforeTax(dollarOrPercent);
+		   String value=Integer.toString(Integer.parseInt(EmployeePages.serviceValue)-1);
+		   empPages.setValueForDeferralElection(value);
+		   empPages.selectTargetPayrollAsIndex("1");
+		   empPages.clickOnOngoingContinue();
+	    }
+	Boolean errorMessage=false;
+	@Then("^an error message should appear indicating that the \"([^\"]*)\"$")
+    public void an_error_message_should_appear_indicating_that_the_something(String errorMsg) throws Throwable {
+		if (empPages.verifyDeferralContributionErrorMessage(errorMsg)) {
+			errorMessage=true;
+			Reporter.logEvent(Status.PASS,"error message displays",errorMsg,true);
+		} else {
+			Reporter.logEvent(Status.FAIL,"error message not displays",errorMsg,true);
+		}
+	}
+	
+	 @Then("^the contribution should not be processed$")
+	    public void the_contribution_should_not_be_processed() throws Throwable {
+		 if (errorMessage) {
+				Reporter.logEvent(Status.PASS,"the contribution should not be processed","the contribution not processed",true);
+			} else {
+				Reporter.logEvent(Status.FAIL,"the contribution should not be processed","the contribution processed",true);
+			}
+	    }
+	 @When("^user clicks 'Edit' next to 'Stop all deferrals'$")
+	    public void user_clicks_edit_next_to_stop_all_deferrals() throws Throwable {
+		 empPages.clickOnStopAllDeferralEditLink();
+	    }
+
+	
 	@When("^user switched to \"([^\"]*)\" and navigate to Deferral Contribution screen for Future Dated Ongoing Deferrals$")
     public void user_switched_to_planno_and_navigate_to_deferral_contribution_screen_for_future_dated_ongoing_deferrals(String planno) throws Throwable {
 		if (planno == null ||planno.equals(""))
@@ -751,6 +854,58 @@ public class EmployeeStepDefinitions {
 					"the selected date is not listed as the effective date", true);
 		}
     }
+
+    @Given("^a mandatory minimum deferral amount is in place$")
+    public void a_mandatory_minimum_deferral_amount_is_in_place(DataTable inputService) throws Throwable {
+        
+       Globals.serviceInputField=inputService;
+        String defBody=psc.getJSONResponse( Web.rawValues(Globals.serviceInputField).get(0).get("service_url"),
+        		Web.rawValues(Globals.serviceInputField).get(0).get("db_name"),
+        		Web.rawValues(Globals.serviceInputField).get(0).get("plan_no"),
+        		Web.rawValues(Globals.serviceInputField).get(0).get("ind_id"));
+        EmployeePages.serviceValue=JsonReadWriteUtils.getNodeValueUsingJpath(defBody, "$.."+Web.rawValues(Globals.serviceInputField).get(0).get("node_object"));
+        System.out.println(EmployeePages.serviceValue);
+        
+
+    }
+    public String minBefore="";
+    public String minAfter="";
+    @Given("^a mandatory minimum deferral amount is in place for a deferral type$")
+    public void a_mandatory_minimum_deferral_amount_is_in_place_for_a_deferral_type(DataTable inputService) throws Throwable {
+    	 Globals.serviceInputField=inputService;
+         String defBody=psc.getJSONResponse( Web.rawValues(Globals.serviceInputField).get(0).get("service_url"),
+         		Web.rawValues(Globals.serviceInputField).get(0).get("db_name"),
+         		Web.rawValues(Globals.serviceInputField).get(0).get("plan_no"),
+         		Web.rawValues(Globals.serviceInputField).get(0).get("ind_id"));
+         String[] deffType=Web.rawValues(Globals.serviceInputField).get(0).get("deferral type").split(",");
+         minBefore=JsonReadWriteUtils.getNodeValueUsingJpath(defBody, "$.."+"allowableDeferrals[?(@.typeCode=="+deffType[0]+")]..minPct");
+         minAfter=JsonReadWriteUtils.getNodeValueUsingJpath(defBody, "$.."+"allowableDeferrals[?(@.typeCode=="+deffType[1]+")]..minPct");
+         System.out.println("----------------------");
+         System.out.println(minBefore);
+         System.out.println(minAfter);
+         System.out.println("----------------------");
+    
+    }
+    @Given("^user back to deferral page$")
+    public void user_back_to_deferral_page() throws Throwable {
+    	empPages.clickOnBackButton();
+    }
+    @When("^clicks 'confirm' on the following screen$")
+    public void clicks_confirm_on_the_following_screen() throws Throwable {
+        //Web.clickOnElement(empPages, "Stop Deferral Continue");
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 }
