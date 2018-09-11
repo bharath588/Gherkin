@@ -240,4 +240,5 @@ public class Globals {
 	public static Integer currentIteration = null;
 	public static String scenarioName;
 	public static String planNumber;
+	public static String localDateTimeIST;
 }

@@ -528,7 +528,7 @@ public class Web {
 				capabilities.setCapability("chrome.exe","C:\\Program Files (x86)\\Google\\Chrome\\Application");
 				capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 				webDriver = new ChromeDriver(capabilities);
-
+				
 			} else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
 					|| webBrowser.trim().equalsIgnoreCase("FF")) {
 				System.setProperty("webdriver.firefox.marionette", Stock.getConfigParam("GeckoDriverClassPath"));
