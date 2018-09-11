@@ -5,6 +5,11 @@ import gherkin.formatter.model.Scenario;
 
 import java.util.List;
 
+
+
+
+
+import org.bdd.psc.serviceUtils.WebService_PSC;
 import org.testng.Assert;
 
 import pscBDD.employee.EmployeePage;
@@ -14,12 +19,19 @@ import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
 import pscBDD.planPage.PlanProvisionsPage;
 import pscBDD.userVerification.UserVerificationPage;
+
+import webservices.util.JsonReadWriteUtils;
+import gherkin.formatter.model.Scenario;
+
+
+
+import bdd_core.framework.Globals;
+
 import bdd_lib.CommonLib;
 import bdd_lib.Web;
 import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
-//import com.gargoylesoftware.htmlunit.javascript.host.media.webkitMediaStream;
 
 import cucumber.api.DataTable;
 import cucumber.api.Delimiter;
@@ -50,6 +62,7 @@ public class EmployeeStepDefinitions {
 	EmployeePages empPages;
 	String planNumber=null;
 	PlanProvisionsPage provisionPage;
+	WebService_PSC psc; 
 
 
 	@Before()
@@ -62,6 +75,7 @@ public class EmployeeStepDefinitions {
 			empPages=new EmployeePages();
 			provisionPage=new PlanProvisionsPage();
 			homePage=new HomePage();
+			psc = new WebService_PSC();
 		}
 	@After
 	public void after() throws Exception{
@@ -82,6 +96,15 @@ public class EmployeeStepDefinitions {
 		//empPage = new EmployeePage(Web.getDriver());
 		empPages.get();
 	}
+	
+	@When("^'user' selects \"([^\"]*)\" in Employee Search and clicks on 'Go'$")
+	 public void user_selects_searchDropDown_in_employee_search(String searchBy) throws Throwable {
+		empPages.searchEmployeeBy(searchBy);
+		if(!searchBy.contains("Division"))
+		Reporter.logEvent(Status.INFO, "user selects "+searchBy+ " and click on go", 
+				"search by "+searchBy, true);
+	    }
+	
 	@When("^user clicks Employee$")
     public void user_clicks_on_employee() throws Throwable {
         
@@ -101,6 +124,26 @@ public class EmployeeStepDefinitions {
 		}
 			
 	}
+	@When("^click on search results$")
+    public void click_on_search_results() throws Throwable {
+        empPages.clickOnFirstNameLinkInSearchResult();
+    }
+	@When("^click on paycheck contribution edit link$")
+	    public void click_on_paycheck_contribution_edit_link() throws Throwable {
+		   empPages.openEmployeeDetailPage();
+		   empPages.clickOnPaycheckContribution();
+	    }
+	 @Then("^deferral page will display$")
+	    public void deferral_page_will_display() throws Throwable {
+		 if(empPages.isDeferralPage())
+			 Reporter.logEvent(Status.INFO, "User is on deferral page", 
+						"User is on deferral page", true);
+		 
+		 else
+			 Reporter.logEvent(Status.INFO, "User is on deferral page", 
+						"User isn't landed on deferral page", true);
+	    }
+
 
 	@When("^User is landing on Employee Search Page$")
 	public void user_is_landing_on_Employee_SearchPage() throws Exception {
@@ -134,6 +177,18 @@ public class EmployeeStepDefinitions {
 					"employee detail page don't displays", true);
 		}
 	}
+	@Then("^the Employee Overview page is displayed$")
+    public void the_employee_overview_page_is_displayed() throws Throwable {
+		if(empPages.isEmployeeOverviewPage()){
+			Reporter.logEvent(Status.PASS, "employee overview page displays", 
+					"employee overview page displays", true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "employee overview page displays", 
+					"employee overview page don't displays", true);
+		}
+    }
+
 	@When("^user clicks on Vesting link$")
     public void user_clicks_on_vesting_link() throws Throwable {
         empPages.clickOnVestingLink();
@@ -223,6 +278,29 @@ public class EmployeeStepDefinitions {
 		}
 
 	}
+	@Then("^table should populate with employees$")
+    public void table_should_populate_with_employees() throws Throwable {
+		if(empPages.isSearchResultDisplayed()){
+			Reporter.logEvent(Status.PASS, "Search result displays", 
+					"Search result displays", true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "Search result displays", 
+					"Search result do not display", true);
+		}
+    }
+	@Then("^no duplicate results should be returned across all pages$")
+    public void no_duplicate_results_should_be_returned_across_all_pages() throws Throwable {
+		if(empPages.isSearchResultDisplayedDuplicateRecord()){
+			Reporter.logEvent(Status.PASS, "no duplicate results", 
+					"no duplicate results", true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "no duplicate results", 
+					"duplicate results found", true);
+		}
+    }
+
 
 	@Given("^I am on employee search result page$")
 	public void employeeSearchResult() throws Exception{
@@ -348,6 +426,45 @@ public class EmployeeStepDefinitions {
 		empPages.openDeferralDetailsPage();
 
 	}
+	
+	@When("^click on ongoing Edit button$")
+    public void click_on_ongoing_edit_button() throws Throwable {
+        empPages.clickOngoingEdit();
+    }
+	
+	@When("^user enters a contribution \"([^\"]*)\" amount lower than the minimum$")
+	    public void user_enters_a_contribution_amount_lower_than_the_minimum(String dollarOrPercent) throws Throwable {
+		   empPages.clickOnDollarOrPercentBeforeTax(dollarOrPercent);
+		   String value=Integer.toString(Integer.parseInt(EmployeePages.serviceValue)-1);
+		   empPages.setValueForDeferralElection(value);
+		   empPages.selectTargetPayrollAsIndex("1");
+		   empPages.clickOnOngoingContinue();
+	    }
+	Boolean errorMessage=false;
+	@Then("^an error message should appear indicating that the \"([^\"]*)\"$")
+    public void an_error_message_should_appear_indicating_that_the_something(String errorMsg) throws Throwable {
+		if (empPages.verifyDeferralContributionErrorMessage(errorMsg)) {
+			errorMessage=true;
+			Reporter.logEvent(Status.PASS,"error message displays",errorMsg,true);
+		} else {
+			Reporter.logEvent(Status.FAIL,"error message not displays",errorMsg,true);
+		}
+	}
+	
+	 @Then("^the contribution should not be processed$")
+	    public void the_contribution_should_not_be_processed() throws Throwable {
+		 if (errorMessage) {
+				Reporter.logEvent(Status.PASS,"the contribution should not be processed","the contribution not processed",true);
+			} else {
+				Reporter.logEvent(Status.FAIL,"the contribution should not be processed","the contribution processed",true);
+			}
+	    }
+	 @When("^user clicks 'Edit' next to 'Stop all deferrals'$")
+	    public void user_clicks_edit_next_to_stop_all_deferrals() throws Throwable {
+		 empPages.clickOnStopAllDeferralEditLink();
+	    }
+
+	
 	@When("^user switched to \"([^\"]*)\" and navigate to Deferral Contribution screen for Future Dated Ongoing Deferrals$")
     public void user_switched_to_planno_and_navigate_to_deferral_contribution_screen_for_future_dated_ongoing_deferrals(String planno) throws Throwable {
 		if (planno == null ||planno.equals(""))
@@ -505,17 +622,34 @@ public class EmployeeStepDefinitions {
 	@Then("^Employee account balance and view account history button is suppressed for \"([^\"]*)\" plan$")
 	public void employee_account_balance_is_suppressed_for_hsa_plan(
 			String hsaPlan) throws Throwable {
-		if (empPages.verifyAccountBalanceSuppressed(hsaPlan) && empPages.verifyViewButtonSuppressed()) {
+		if (empPages.verifyAccountBalanceSuppressedOrDisplays(hsaPlan,false) && empPages.verifyViewButtonSuppressedOrDisplays(false)) {
 			Reporter.logEvent(
 					Status.PASS,
-					"Employee account balance and view account history button are suppressed",
-					"Employee account balance and view account history button are suppressed",
+					"Employee account balance and view account history button are suppressed for external users",
+					"Employee account balance and view account history button are suppressed for external users",
 					true);
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
-					"Employee account balance and view account history button are suppressed",
-					"Employee account balance and view account history button aren't suppressed",
+					"Employee account balance and view account history button are suppressed for external users",
+					"Employee account balance and view account history button aren't suppressed for external users",
+					true);
+		}
+	}
+	@Then("^Employee account balance and view account history button is displays for \"([^\"]*)\" plan$")
+	public void employee_account_balance_is_displays_for_hsa_plan(
+			String hsaPlan) throws Throwable {
+		if (empPages.verifyAccountBalanceSuppressedOrDisplays(hsaPlan,true) && empPages.verifyViewButtonSuppressedOrDisplays(true)) {
+			Reporter.logEvent(
+					Status.PASS,
+					"Employee account balance and view account history button are displays for internal users",
+					"Employee account balance and view account history button are displays for internal users",
+					true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Employee account balance and view account history button are displays for internal users",
+					"Employee account balance and view account history button aren't displays for internal users",
 					true);
 		}
 	}
@@ -613,6 +747,164 @@ public class EmployeeStepDefinitions {
 					true);
 		}
 	}
+	
+	@When("^user clicks 'Edit' next to One-time on the payroll contributions page$")
+    public void user_clicks_edit_next_to_onetime_on_the_payroll_contributions_page() throws Throwable {
+		empPages.clickOneTimeEdit();
+    }
+
+	@Then("^user is sent to \"([^\"]*)\" deferral election screen$")
+	public void user_is_sent_to_one_time_deferral_election_screen(
+			String deferralScreenName) throws Throwable {
+		if (empPages.verifyDeferralScreen(deferralScreenName)) {
+			Reporter.logEvent(Status.PASS, "user is sent to "+ deferralScreenName + " deferral election screen",
+					"user is sent to " + deferralScreenName+ " deferral election screen", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, "user is sent to "+ deferralScreenName + " deferral election screen",
+					"user is not sent to " + deferralScreenName+ " deferral election screen", true);
+		}
+	}
+	@Given("^user is on the One-time deferral election screen$")
+    public void user_is_on_the_onetime_deferral_election_screen() throws Throwable {
+        if(!empPages.verifyDeferralScreen("One-time")){
+        	Reporter.logEvent(Status.WARNING, "user is not on the one-time deferral election screen",
+					"user is not on the one-time deferral election screen", true);
+        	
+        }
+    }
+	@When("^user clicks date dropdown box$")
+    public void user_clicks_date_dropdown_box() throws Throwable {
+		empPages.clickOnSelectTargetPayrollBeforeTax();
+    }
+	
+	@Then("^dropdown should show user's payroll dates for the next 18 months$")
+    public void dropdown_should_show_users_payroll_dates_for_the_next_18_months() throws Throwable {
+		if (empPages.verifyNext18monthsInSelectTargetPayroll()) {
+			Reporter.logEvent(Status.PASS, "dropdown is displays user's payroll dates for the next 18 months",
+					"dropdown is displays user's payroll dates for the next 18 months", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, "dropdown is displays user's payroll dates for the next 18 months",
+					"dropdown is not displays user's payroll dates for the next 18 months", true);
+		}
+    }
+	@Then("^the dates shown should not have already occurred$")
+    public void the_dates_shown_should_not_have_already_occurred() throws Throwable {
+		if (empPages.verifyTwoDates()>0) {
+			Reporter.logEvent(Status.PASS, "the dates shown are not have already occurred",
+					"the dates shown are not have already occurred", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, "the dates shown are not have already occurred",
+					"the dates shown are already occurred", true);
+		}
+    }
+	@Given("^has selected the \"([^\"]*)\" button$")
+    public void has_selected_the_dollarOrPercent_button(String buttonName) throws Throwable {
+		empPages.clickOnDollarOrPercentBeforeTax(buttonName);
+    }
+	@When("^user enters \"([^\"]*)\"$")
+    public void user_enters_deferral_election(String dollar) throws Throwable {
+		empPages.setValueForDeferralElection(dollar);
+    }
+	@When("^user clicks date dropdown box and makes a selection$")
+    public void user_clicks_date_dropdown_box_and_makes_a_selection() throws Throwable {
+		empPages.selectTargetPayrollAsIndex("2");
+    }
+	@Then("^the 'Continue button should be \"([^\"]*)\"$")
+	public void the_continue_button_should_be_enabledOrdisabled(String enableOrDisable) throws Throwable {
+		if (empPages.verifyContinueButtonEnableOrDisableForOneTime(enableOrDisable)) {
+			Reporter.logEvent(Status.PASS, "the 'Continue button is "+enableOrDisable,
+						"the 'Continue button is "+enableOrDisable, true);
+		} else {
+			Reporter.logEvent(Status.FAIL, "the 'Continue button is "+enableOrDisable,
+						"the 'Continue button is not "+enableOrDisable, true);
+		}
+	}
+	@Given("^user has set a one-time deferral amount \"([^\"]*)\" and selected a date from the date dropdown box$")
+    public void user_has_set_a_onetime_deferral_amount_something_and_selected_a_date_from_the_date_dropdown_box(String dollar) throws Throwable {
+		empPages.enterDeferralContribution("Before Tax", dollar);
+    }
+	@When("^user confirms deferral$")
+    public void user_confirms_deferral() throws Throwable {
+		empPages.clickOnOneTimeContinueButton();
+    }
+	
+	@Then("^deferral amount \"([^\"]*)\" and description should appear within 'Current and Pending Deferrals' list$")
+	public void deferral_amount_something_and_description_should_appear_within_current_and_pending_deferrals_list(
+			String dollar) throws Throwable {
+		if (empPages.verifyDeferralAmountValue(dollar)) {
+			Reporter.logEvent(Status.PASS,
+					"verify deferral amount and description",
+					"verify deferral amount and description", true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"verify deferral amount and description",
+					"doesn't verify deferral amount and description", true);
+		}
+
+	}
+
+    @Then("^the selected date should be listed as the effective date$")
+    public void the_selected_date_should_be_listed_as_the_effective_date() throws Throwable {
+    	if (empPages.isEffectiveDateSameAsFutureDate("Before Tax", empPages.selectTargetPayrollDate)) {
+			Reporter.logEvent(Status.PASS,
+					"the selected date is listed as the effective date",
+					"the selected date is listed as the effective date", true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"the selected date is listed as the effective date",
+					"the selected date is not listed as the effective date", true);
+		}
+    }
+
+    @Given("^a mandatory minimum deferral amount is in place$")
+    public void a_mandatory_minimum_deferral_amount_is_in_place(DataTable inputService) throws Throwable {
+        
+       Globals.serviceInputField=inputService;
+        String defBody=psc.getJSONResponse( Web.rawValues(Globals.serviceInputField).get(0).get("service_url"),
+        		Web.rawValues(Globals.serviceInputField).get(0).get("db_name"),
+        		Web.rawValues(Globals.serviceInputField).get(0).get("plan_no"),
+        		Web.rawValues(Globals.serviceInputField).get(0).get("ind_id"));
+        EmployeePages.serviceValue=JsonReadWriteUtils.getNodeValueUsingJpath(defBody, "$.."+Web.rawValues(Globals.serviceInputField).get(0).get("node_object"));
+        System.out.println(EmployeePages.serviceValue);
+        
+
+    }
+    public String minBefore="";
+    public String minAfter="";
+    @Given("^a mandatory minimum deferral amount is in place for a deferral type$")
+    public void a_mandatory_minimum_deferral_amount_is_in_place_for_a_deferral_type(DataTable inputService) throws Throwable {
+    	 Globals.serviceInputField=inputService;
+         String defBody=psc.getJSONResponse( Web.rawValues(Globals.serviceInputField).get(0).get("service_url"),
+         		Web.rawValues(Globals.serviceInputField).get(0).get("db_name"),
+         		Web.rawValues(Globals.serviceInputField).get(0).get("plan_no"),
+         		Web.rawValues(Globals.serviceInputField).get(0).get("ind_id"));
+         String[] deffType=Web.rawValues(Globals.serviceInputField).get(0).get("deferral type").split(",");
+         minBefore=JsonReadWriteUtils.getNodeValueUsingJpath(defBody, "$.."+"allowableDeferrals[?(@.typeCode=="+deffType[0]+")]..minPct");
+         minAfter=JsonReadWriteUtils.getNodeValueUsingJpath(defBody, "$.."+"allowableDeferrals[?(@.typeCode=="+deffType[1]+")]..minPct");
+         System.out.println("----------------------");
+         System.out.println(minBefore);
+         System.out.println(minAfter);
+         System.out.println("----------------------");
+    
+    }
+    @Given("^user back to deferral page$")
+    public void user_back_to_deferral_page() throws Throwable {
+    	empPages.clickOnBackButton();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 
 	
 	
@@ -661,10 +953,7 @@ public class EmployeeStepDefinitions {
 	        throw new PendingException();
 	    }
 	
-	    @When("^user clicks 'Edit' next to 'Stop all deferrals'$")
-	    public void user_clicks_edit_next_to_stop_all_deferrals() throws Throwable {
-	        throw new PendingException();
-	    }
+	  
 	
 	    @Then("^an error message should appear$")
 	    public void an_error_message_should_appear() throws Throwable {
@@ -686,10 +975,7 @@ public class EmployeeStepDefinitions {
 	        throw new PendingException();
 	    }
 	
-	    @And("^the contribution should not be processed$")
-	    public void the_contribution_should_not_be_processed() throws Throwable {
-	        throw new PendingException();
-	    }
+	  
 	
 	    @And("^clicks 'confirm' on the following screen$")
 	    public void clicks_confirm_on_the_following_screen() throws Throwable {
