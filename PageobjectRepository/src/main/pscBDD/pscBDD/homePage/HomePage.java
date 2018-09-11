@@ -5,10 +5,20 @@ package pscBDD.homePage;
 
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import lib.Stock;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,6 +30,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
 import pscBDD.userVerification.UserVerificationPage;
+import bdd_core.framework.Globals;
 import bdd_gwgwebdriver.How;
 import bdd_lib.DB;
 import bdd_lib.Web;
@@ -93,6 +104,12 @@ public class HomePage extends LoadableComponent<HomePage> {
 	
 	
 	
+
+	@FindBy(id="logOutLink")
+	private WebElement lnkLogout;
+	@FindBy(xpath = "//div[@id='lastLogin']")
+	private WebElement lastLogin;
+
 	
 	private LoadableComponent<?> parent;
 	public static WebDriver webDriver;
@@ -158,6 +175,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 
 				}
 			}
+
 		} catch (Exception e) {
 			try {
 				throw new Exception(
@@ -171,17 +189,23 @@ public class HomePage extends LoadableComponent<HomePage> {
 		if (Web.isWebElementDisplayed(jumpPage, "JUMP PAGE URL", false))
 			try {
 				Web.clickOnElement(Web.returnElement(jumpPage, "JUMP PAGE URL"));
+				Web.nextGenDriver.waitForAngular();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 		if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
 			Web.clickOnElement(CancelNewsBulletin);	
+		
+		Web.getDriver().switchTo().defaultContent();
+
+
 	}
 
 	@Override
 	protected void isLoaded() throws Error {
-		// TODO Auto-generated method stub
+		
 		if (!Web.isWebElementDisplayed(weGreeting)) {
 			throw new AssertionError(
 					"Plan service center landing page not loaded.");
@@ -221,30 +245,30 @@ public class HomePage extends LoadableComponent<HomePage> {
 		try {
 			act = new Actions(Web.getDriver());
 			if (Web.isWebElementDisplayed(planSearchBox)) {
-				act.moveToElement(planSearchBox).click(planSearchBox).build()
-				.perform();
+				act.moveToElement(planSearchBox).click(planSearchBox).build().perform();
+				Thread.sleep(2000);
 				Web.setTextToTextBox(planSearchBox, planNumber);
 				Web.clickOnElement(btnPlanSearchTxtGO);
 				Reporter.logEvent(Status.INFO, "Switched to plan:", planNumber,
 						true);
 				Thread.sleep(5000);
-			}else if(Web.isWebElementDisplayed(planDropDownMenu,true)){
+			} else if (Web.isWebElementDisplayed(planDropDownMenu, true)) {
 				Web.actionsClickOnElement(planDropDownMenu);
 				Web.actionsClickOnElement(planDropDownMenu);
 				Web.selectDropDownOption(planDropDownMenu, planNumber, true);
 				Web.clickOnElement(btnPlanSearchDropDownGO);
-				
+
 				Reporter.logEvent(Status.INFO, "Switched to plan:", planNumber,
 						true);
 				Thread.sleep(5000);
-			} 
-			else {
+			} else {
 				Reporter.logEvent(
 						Status.INFO,
 						"No plan search box. User is associated with single plan",
 						"No plan search box. User is associated with single plan",
 						true);
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -418,6 +442,72 @@ public class HomePage extends LoadableComponent<HomePage> {
 		return null;
 		
 	}
+	
+	public void clickLogout(){	
+		if(Web.isWebElementDisplayed(lnkLogout, true)){
+		Web.clickOnElement(lnkLogout);
+	}
+	}
+	
+	public String getLastLoginDateFromWeb(){
+		String displayedLastLoginDate = "";
+		try {
+			if (Web.isWebElementDisplayed(lastLogin, false)) {
+				displayedLastLoginDate = lastLogin.getText();
+				if (displayedLastLoginDate.contains("ET"))
+				Reporter.logEvent(Status.PASS,
+						"Validate UI Date time displayed in Eastern Time",					
+								 displayedLastLoginDate.trim(),
+						true);
+			} else
+				Reporter.logEvent(Status.FAIL,
+						"Validate UI Date time displayed in Eastern Time",
+						"UI date and time displayed in Eastern time", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return displayedLastLoginDate;
+	}
+	
+	public String getLastLoginDateFromDB(String query,String username,List<String> dbnames){
+		String lastLoginDate = "";
+		String firstDBvalue ="";
+		String modifyDB ="D_" ;
+		String DB_Name,modify_User;		
+		int arraySize;
+		ArrayList<String> lastLoginDates = new ArrayList<>(dbnames.size());
+		 try {
+			for (String database : dbnames) {	
+				DB_Name=modifyDB.concat(database.trim()).replaceAll("\"", "");
+				modify_User= username.replaceAll("\"", "");
+				ResultSet resultSet = DB.executeQuery(DB_Name, query, "K_"+modify_User);
+				while (resultSet.next()) {
+					lastLoginDates.add(resultSet.getString("LASTDATE"));
+					System.out.println(lastLoginDates);
+				}
+			}
+				arraySize= lastLoginDates.size();
+				for (int i=0;i<arraySize;i++){
+					firstDBvalue= lastLoginDates.get(0);
+					if (firstDBvalue.contains(lastLoginDates.get(i))){
+						Reporter.logEvent(Status.INFO,
+								"LAST_LOGIN_DATE_TIME in USERS table displayed in Mountain time in database",
+								dbnames.get(i)
+										, false);
+					} else{
+						Reporter.logEvent(Status.FAIL,
+								"LAST_LOGIN_DATE_TIME in USERS table not displayed in Mountain time in database",
+								dbnames.get(i), false);
+						
+					}					
+				}
+				lastLoginDate= firstDBvalue;			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		 return lastLoginDate;
+		 }					
+
 
 	public boolean checkUserHasPlanOndatabase(String plans, String databases) {
 		// TODO Auto-generated method stub
@@ -462,6 +552,72 @@ public class HomePage extends LoadableComponent<HomePage> {
 			//Web.initDropDownObj(dropDownUpdateDefaultPlan);
 		}
 		
+	}
+
+
+	public boolean verifyLastLoginDateEquality(List<String> DBname,String username,String query){
+		boolean equalDate = false;
+		Date localTime ;
+		String localTime1 = null;
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MM/dd/yyyy hh:mm a");	
+		try {
+			localTime = sdf2.parse(Globals.localDateTimeIST);
+			localTime1= formatDateToString(localTime,"MM/dd/yyyy hh:mm a","EST");
+		} catch (ParseException e2) {
+			e2.printStackTrace();
+		}
+		String dateFromWeb = getLastLoginDateFromWeb().trim().substring(11, 30);		
+    	String dateFromDB= getLastLoginDateFromDB(query,username,DBname);
+    	if (dateFromWeb.equalsIgnoreCase(localTime1)){
+			System.out.println("System date Time matched with UI Application date and time");
+		}
+		int endIndex = dateFromDB.length();
+		String dateFromDB1 = dateFromDB.trim().substring(0, endIndex);
+		String dateFromDB2 = dateFromDB.trim().substring(endIndex);
+		String dateFromDBs = dateFromDB1 + " " + dateFromDB2;
+		try {
+			System.out.println("Date from db is: " + dateFromDBs);
+			System.out.println("Date from Web is: " + dateFromWeb);
+			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm aaa",
+					Locale.US);
+			Date date = sdf.parse(dateFromWeb);
+			Date date1 = sdf.parse(dateFromDB.trim());
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date1);
+			cal.add(Calendar.HOUR, 2);
+			date1 = cal.getTime();
+			String lastLoginWeb = sdf.format(date);
+			String lastLoginDB = sdf.format(date1);
+			if (!lastLoginWeb.equalsIgnoreCase(lastLoginDB)) {
+				cal.setTime(date);
+				cal.add(Calendar.MINUTE, 1);
+				date = cal.getTime();
+				String lastLoginWeb1 = sdf.format(date);
+				if (lastLoginWeb1.equalsIgnoreCase(lastLoginDB)){					
+					equalDate = true;
+				} else{
+					equalDate = false;
+				}
+				
+			} else
+				equalDate = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return equalDate;
+	}
+	
+	
+	public String formatDateToString(Date date, String format,
+			String timeZone) {
+		if (date == null)
+			return null;
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		if (timeZone == null || "".equalsIgnoreCase(timeZone.trim())) {
+			timeZone = Calendar.getInstance().getTimeZone().getID();
+		}
+		sdf.setTimeZone(TimeZone.getTimeZone(timeZone));
+		return sdf.format(date);
 	}
 
 }
