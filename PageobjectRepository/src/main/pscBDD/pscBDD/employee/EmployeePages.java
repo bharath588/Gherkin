@@ -28,6 +28,8 @@ import java.util.stream.Stream;
 
 
 
+
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -59,11 +61,14 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 
 	LoadableComponent<?> parent;
 	public static String planNumber;
-
+	ResultSet queryResultSet;
 	@FindBy(how = How.XPATH, using = ".//*[@id='newMenu']//*[contains(text(),'Employees')]")
 	private WebElement employeesTab;
 	@FindBy(how = How.XPATH, using = ".//*[@id='newMenu']//li//a[text()='Search employee']")
 	private WebElement searchEmployee;
+	@FindBy(how = How.XPATH, using = ".//*[@id='newMenu']//li//a[text()='Add employee']")
+	private WebElement addEmployee;
+	
 	@FindBy(how = How.ID, using = "framec")
 	private WebElement employeeFrame;
 	@FindBy(how = How.ID, using = "searchSelector")
@@ -994,6 +999,90 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 		}
 	return false;
 }
+
+	public void retrivePlanFromDBAndSerach(String user,String plan, String db) {
+		try
+		{
+			Web.getDriver().switchTo().defaultContent();
+			String planNumber = null;
+			queryResultSet = DB.executeQuery(db, plan);
+			while (queryResultSet.next()) {
+				planNumber = queryResultSet.getString("GA_ID");
+			}
+			
+			new HomePage().switchPlan(planNumber);
+			
+		}
+		catch(Exception e)
+		{
+			Reporter.logEvent(Status.FAIL, " Exception Occured While Retriving Plan from DB", "" + e.getMessage(),true);
+		}
+		
+	}
+
+	public void verifyMenuItems(String menuitems) {
+		try
+		{
+			String []Menu=menuitems.split(",");
+			
+			if(Menu[0].equalsIgnoreCase("Employees"))
+			{
+				
+				Web.waitForElement(employeesTab);
+				/*Web.actionsClickOnElement(employeesTab);
+				Web.actionsClickOnElement(searchEmployee);
+				Web.waitForElement(employeeFrame);
+				Web.FrameSwitchONandOFF(true, employeeFrame);
+				if (Web.isWebElementDisplayed(employeeSearchButton, true)) {
+					Reporter.logEvent(Status.INFO, "User is on employee search page",
+							"User is on employee search page", true);
+				}*/
+				Web.actionsClickOnElement(employeesTab);
+				if(Web.actionsClickOnElement(employeesTab))
+				{
+					Reporter.logEvent(Status.PASS, "Employees Tab Should Display", "Employees Tab is Displayed" ,true);
+					Web.actionsClickOnElement(employeesTab);
+					if(Web.isWebElementDisplayed(searchEmployee, true))
+					{
+						Reporter.logEvent(Status.PASS, "Search Employees Tab Should Display", "Search Employees Tab is Displayed" ,true);
+					}
+					else
+					{
+						Reporter.logEvent(Status.FAIL, "Search Employees Tab Should Display", "Search Employees Tab is Displayed" ,true);
+					}
+					
+					if(Web.isWebElementDisplayed(addEmployee, true))
+					{
+						Reporter.logEvent(Status.PASS, "Add Employees Tab Should Display", "Add Employees Tab is Displayed" ,true);
+					}
+					else
+					{
+						Reporter.logEvent(Status.FAIL, "Add Employees Tab Should Display", "Add Employees Tab is Displayed" ,true);
+					}
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Employees Tab Should Display", "Employees Tab is Displayed" ,true);
+				}
+				//Web.clickOnElement(employeesTab);
+			
+				
+				
+			}
+			
+			
+			
+			
+			System.out.println(Menu + "  "+menuitems);
+			
+		}
+		catch(Exception e)
+		{
+			Reporter.logEvent(Status.FAIL, " Exception Occured While Retriving Plan from DB", "" + e.getMessage(),true);
+		}
+		
+		
+	}
 	
 	
 

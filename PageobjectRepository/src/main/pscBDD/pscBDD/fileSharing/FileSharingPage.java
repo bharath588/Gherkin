@@ -35,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 
 
 
+
 import org.apache.commons.io.FilenameUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -68,6 +69,8 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 
 	LoadableComponent<?> parent;
 	Actions actions;
+	private static String FolderName="";
+	private static String ExpandedFolderName="";
 
 	@FindBy(how=How.XPATH,using=".//*[@id='docSearchText']")
 	private WebElement filterSearch;
@@ -134,6 +137,19 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	@FindBy(how=How.XPATH,using="//div[@id='folderNotificationsModal']//button[text()='Cancel']")
 	private WebElement cancleButtonOnFolderNotificationsModal;
 	
+	@FindBy(how=How.XPATH,using="//*[@class='ng-binding ng-scope minussign folderlink']/..//div[@class='subfolders']//input")
+	private List<WebElement> subFoldersCheckBoxesOnFolderNotificationsModal;
+	
+	@FindBy(how=How.XPATH,using="//*[@class='ng-binding ng-scope minussign folderlink']/..//div/input")
+	private List<WebElement> selectAllSubFolderNotificationsModal;
+	
+	@FindBy(how=How.XPATH,using="//span//input[@type='checkbox']|//label//input[@type='checkbox']")
+	private List<WebElement> allFolderCheckBoxes;
+	
+	
+	@FindBy(how=How.XPATH,using="//button[@id='selectAll']")
+	private WebElement selectAllButtonOnFolderNotificationsModal;
+	
 	
 	
 	private static final String folderRepeater = "folder in fileShareRepo.folders";
@@ -147,8 +163,13 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	
 	@FindBy(how=How.XPATH,using="//*[@class='ng-binding ng-scope plussign folderlink']")
 	private List<WebElement> plusButtonsInNotificationWindow;
+	@FindBy(how=How.XPATH,using="//*[@class='ng-binding ng-scope minussign folderlink']")
+	private List<WebElement> minusButtonsInNotificationWindow;
+	 
 	@FindBy(how=How.XPATH,using="//div[@ng-show='fileShareRepo.hasDailyDocuments']//ul//li//ul")
 	private List<WebElement> subFoldersList;
+	
+	
 	
 	
 	
@@ -1038,19 +1059,23 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 					Reporter.logEvent(Status.PASS, "Number of Folders is having Subfolders ",
 							" "+plusButtonsInNotificationWindow.size(), false);
 					
-					String PlusFoldername=plusButtonsInNotificationWindow.get(0).getText();
+					FolderName=plusButtonsInNotificationWindow.get(0).getText();
+					if(minusButtonsInNotificationWindow.size()>0)
+						ExpandedFolderName=minusButtonsInNotificationWindow.get(0).getText();
 					Web.clickOnElement(plusButtonsInNotificationWindow.get(0));
-					Reporter.logEvent(Status.PASS, " Clicked on Plus Button Next to "+PlusFoldername +" Folder"," ", false);
+					Reporter.logEvent(Status.PASS, " Clicked on Plus Button Next to "+FolderName +" Folder"," ", false);
 					
 					
 					for(WebElement foldername: plusButtonsInNotificationWindow)
 					{
 						System.out.println(foldername.getText());
 					}
-					
 										
 				}
-	
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Plus Buttons are not appeared in Manage Notification Folder Window ","", true);
+				}
 		
 			} catch (Exception e) {
 					Reporter.logEvent(Status.FAIL, "Plus Button Should Present next to the folder ",
@@ -1058,6 +1083,477 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	
 			}
 	}
-}
+	
+	public void checkPlusButtonConvertedToMinus()
+	{
+		if (Web.isWebElementsDisplayed(minusButtonsInNotificationWindow, true))
+		{
+			if(FolderName.equalsIgnoreCase(minusButtonsInNotificationWindow.get(0).getText()))
+			{
+				Reporter.logEvent(Status.PASS, FolderName +" Folder Plus Button should convert into a Minus Button",FolderName +" Folder Plus Button is converted into a Minus Button", false);
+				Reporter.logEvent(Status.PASS, "Nested Subfolders section for that folder should expand",FolderName +" Folder Nested Subfolders section is expanded", true);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, FolderName +" Folder Plus Button should convert into a Minus Button",FolderName +" Folder Plus Button is not converted into a Minus Button", false);
+				Reporter.logEvent(Status.FAIL, "Nested Subfolders section for that folder should expand",FolderName +" Folder Nested Subfolders section is expanded", true);
+			}
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Minus Buttons are not appeared in Manage Notification Folder Window ","", true);
+		}
+	}
+	public void otherNestedFolderSectionIsMinimised()
+	{
+		if(ExpandedFolderName.equalsIgnoreCase(""))
+		{
+			Reporter.logEvent(Status.INFO, "Earlier there is No another Expanded Section ","", false);
+		}
+		if (Web.isWebElementDisplayed(cancleButtonOnFolderNotificationsModal, true))
+			Web.clickOnElement(cancleButtonOnFolderNotificationsModal);
+	}
+	public void clickOnMinusButton()
+	{
+		if (!Web.isWebElementsDisplayed(minusButtonsInNotificationWindow, true))
+		{
+			FolderName=plusButtonsInNotificationWindow.get(0).getText();
+			Web.clickOnElement(plusButtonsInNotificationWindow.get(0));
+		}
+		ExpandedFolderName=minusButtonsInNotificationWindow.get(0).getText();
+		Reporter.logEvent(Status.INFO, " Minus Button is present Next to "+ExpandedFolderName +" Folder"," ", true);
+		Web.clickOnElement(minusButtonsInNotificationWindow.get(0));
+		Reporter.logEvent(Status.PASS, " Clicked on Minus Button Next to "+ExpandedFolderName +" Folder"," ", false);
+		
+	}
+	public void checkMinusButtonConvertedToPlus()
+	{
+		Boolean converted=false;
+		for(WebElement foldername: plusButtonsInNotificationWindow)
+		{
+			if(ExpandedFolderName.equalsIgnoreCase(foldername.getText()))
+			{
+				converted=true;
+				break;
+			}
+			System.out.println(foldername.getText());
+		}
+		if(converted)
+		{
+			Reporter.logEvent(Status.PASS, ExpandedFolderName +" Folder Minus Button should convert into a Plus Button",ExpandedFolderName +" Folder Minus Button is converted into a Plus Button", false);
+			Reporter.logEvent(Status.PASS, "Nested Subfolders section for that folder should minimize",FolderName +" Folder Nested Subfolders section is minimized", true);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, ExpandedFolderName +" Folder Minus Button should convert into a Plus Button",ExpandedFolderName +" Folder Minus Button is not converted into a Plus Button", false);
+			Reporter.logEvent(Status.FAIL, "Nested Subfolders section for that folder should minimize",FolderName +" Folder Nested Subfolders section is not minimized", true);
+		}
+	}
+	
+	public void changePrefereanceBySelectingSubFoldersCheckBox()
+	{
+		if (Web.isWebElementsDisplayed(subFoldersCheckBoxesOnFolderNotificationsModal, true))
+		{
+			if(minusButtonsInNotificationWindow.size()>0)
+				ExpandedFolderName=minusButtonsInNotificationWindow.get(0).getText();
+			Reporter.logEvent(Status.PASS, "Number of SubFolders in "+ExpandedFolderName+" folder ",
+					" "+subFoldersCheckBoxesOnFolderNotificationsModal.size(), false);
+			
+			for(WebElement SubFolderCheckBox: subFoldersCheckBoxesOnFolderNotificationsModal)
+			{
+				Web.clickOnElement(SubFolderCheckBox);
+				System.out.println(SubFolderCheckBox.getText());
+			}
+			if(Web.isCheckBoxChecked(subFoldersCheckBoxesOnFolderNotificationsModal.get(0), true))
+				Reporter.logEvent(Status.PASS, "User has made a change in "+ExpandedFolderName+" subfolder notification preferences",
+					" ", true);
+			else
+				Reporter.logEvent(Status.FAIL, "User has not made any change in "+ExpandedFolderName+" subfolder notification preferences",
+						" ", true);
+			
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Sub Folders Should Present ",
+					"Sub Folders are not exist", true);
+		}
+	}
+	public void minimizeSubfolderSection()
+	{
+		if (Web.isWebElementsDisplayed(minusButtonsInNotificationWindow, true))
+		{
+			ExpandedFolderName=minusButtonsInNotificationWindow.get(0).getText();
+			Web.clickOnElement(minusButtonsInNotificationWindow.get(0));
+			if(minusButtonsInNotificationWindow.size()>0)
+			{
+				Reporter.logEvent(Status.FAIL, "User Should minimized the Nested Subfolders ",
+						"User has not minimized the Nested Subfolders", true);
+			}
+			else
+			{
+				Reporter.logEvent(Status.PASS, "User Should minimized the Nested Subfolders ",
+						"User has  minimized the Nested Subfolders", true);
+				
+			}
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Sub Folders Should Present ",
+					"Sub Folders are not exist", true);
+		}
+	}
+	public void reopenPreviouslyMinimizedNotificationFolder()
+	{
+		String PrevioulsyExpandedFolderName=ExpandedFolderName;
+		if (Web.isWebElementsDisplayed(plusButtonsInNotificationWindow, true))
+		{
+			for(WebElement foldername: plusButtonsInNotificationWindow)
+			{
+				if(PrevioulsyExpandedFolderName.equalsIgnoreCase(foldername.getText()))
+				{
+					Web.clickOnElement(foldername);
+					Reporter.logEvent(Status.PASS, "User Should reopens nested Subfolders ",
+							"User has reopened nested Subfolders", true);
+					break;
+				}
+			}
+			//Reporter.logEvent(Status.FAIL, "User Should reopens nested Subfolders ","User has not able to reopen nested Subfolders", true);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Plus Button Should Present next to the folder ",
+					"Plus Button is not displayed next to the folder ", true);
+		}
+	}
+	public boolean isCheckChangesIsPreserved()
+	{
+		if (Web.isWebElementsDisplayed(minusButtonsInNotificationWindow, true))
+		{
+			for(WebElement foldername: minusButtonsInNotificationWindow)
+			{
+				if(ExpandedFolderName.equalsIgnoreCase(foldername.getText()))
+				{
+					if(Web.isCheckBoxChecked(subFoldersCheckBoxesOnFolderNotificationsModal.get(0), true))
+						return true;
+					else
+						return false;
+				}
+			}
+			return false;
+				
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Sub Folders Should Present ",
+					"Sub Folders are not exist", true);
+			return false;
+		}
+	}
+	
+	public void closeFolderNotificationsModal() throws InterruptedException
+	{
+		if (Web.isWebElementDisplayed(cancleButtonOnFolderNotificationsModal, true))
+			Web.clickOnElement(cancleButtonOnFolderNotificationsModal);
+		Thread.sleep(2000);
+		if(!Web.isWebElementDisplayed(cancleButtonOnFolderNotificationsModal, true))
+		{
+			Reporter.logEvent(Status.PASS, "User closes the Notifications Manager without clicking Update ",
+					"User closes Notifications Manager without clicking Update", true);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "User closes the Notifications Manager without clicking Update ",
+					"User not able to close Notifications Manager without clicking Update", true);
+		}
+	}
+	
+	public void selectAllFolderSubFoldersOptions()
+	{
+		try{
+			if (Web.isWebElementsDisplayed(selectAllSubFolderNotificationsModal, true))
+			{
+				if(selectAllSubFolderNotificationsModal.size()>2)
+				{
+					Web.clickOnElement(selectAllSubFolderNotificationsModal.get(0));
+					if(Web.isCheckBoxChecked(selectAllSubFolderNotificationsModal.get(0), true))
+					{	
+						Reporter.logEvent(Status.PASS, "User Should select the Select all subfolders option on Notifications Manager",
+									"User is selected the Select all subfolders option on Notifications Manager", false);
+					}
+					else
+					{
+						Reporter.logEvent(Status.PASS, "User Should select the Select all subfolders option on Notifications Manager",
+								"User is not able to select the Select all subfolders option on Notifications Manager", false);
+					}
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Select all subfolders option is does not exist on Notifications Manager",
+							"", false);
+				}
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "No Sub Folders exist on Notifications Manager","", false);
+			}
+		} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL, "Exception Occured on Notifications Manager Window ",""+e.getMessage(), false);
 
+		}
+		
+	}
+	
+	public void deSelectAllFolderSubFoldersOptions()
+	{
+		try{
+			if (Web.isWebElementsDisplayed(selectAllSubFolderNotificationsModal, true))
+			{
+				if(selectAllSubFolderNotificationsModal.size()>2)
+				{
+					 if(Web.isCheckBoxChecked(selectAllSubFolderNotificationsModal.get(0), true))
+					 {
+						 	Web.clickOnElement(selectAllSubFolderNotificationsModal.get(0));
+					 }
+					 Reporter.logEvent(Status.PASS, "User Deselected the Select all subfolders option on Notifications Manager",
+									"", false);
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Select all subfolders option is does not exist on Notifications Manager",
+							"", false);
+				}
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "No Sub Folders exist on Notifications Manager","", false);
+			}
+		} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL, "Exception Occured on Notifications Manager Window ",""+e.getMessage(), false);
+
+		}
+		
+	}
+
+	public void checkAllSubFoldersOptionsisChecked() {
+		
+		try{
+			if (Web.isWebElementsDisplayed(selectAllSubFolderNotificationsModal, true))
+			{
+				int count=0;
+				if(selectAllSubFolderNotificationsModal.size()>2)
+				{
+					for(WebElement checkbox: selectAllSubFolderNotificationsModal)
+					{
+						  if(Web.isCheckBoxChecked(checkbox, true))
+							  count++;
+					}
+					if(count==selectAllSubFolderNotificationsModal.size())
+					{
+						Reporter.logEvent(Status.PASS, "All subfolder options for that folder should be selected",
+								"All subfolder options for the folder is selected", false);
+					}
+					else if(count==0)
+					{
+						Reporter.logEvent(Status.PASS, "All subfolder options for that folder should be deselected",
+								"All subfolder options for the folder is deselected", false);
+					}
+					else
+					{
+						Reporter.logEvent(Status.FAIL, "All subfolder options for that folder should be selected",
+								"All subfolder options for the folder is not selected", false);
+					}
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Select all subfolders option is does not exist on Notifications Manager",
+							"", false);
+				}
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "No Sub Folders exist on Notifications Manager","", false);
+			}
+		} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL, "Exception Occured on Notifications Manager Window ",""+e.getMessage(), false);
+
+		}
+	}
+
+	public void deSelectOneSubFolder() {
+		try{
+			if (Web.isWebElementsDisplayed(selectAllSubFolderNotificationsModal, true))
+			{
+				int count=0;
+				if(selectAllSubFolderNotificationsModal.size()>2)
+				{
+					Web.clickOnElement(selectAllSubFolderNotificationsModal.get(1));
+					
+					for(WebElement checkbox: selectAllSubFolderNotificationsModal)
+					{
+						  if(Web.isCheckBoxChecked(checkbox, true))
+							  count++;
+					}
+					if(count!=selectAllSubFolderNotificationsModal.size())
+					{
+						Reporter.logEvent(Status.PASS, "User Should deselects a selected subfolder",
+								"User is deselected S a selected subfolder", false);
+					}
+					else
+					{
+						Reporter.logEvent(Status.FAIL,"User Should deselects a selected subfolder",
+								"User is not deselected S a selected subfolder", false);
+					}
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Select all subfolders option is does not exist on Notifications Manager",
+							"", false);
+				}
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "No Sub Folders exist on Notifications Manager","", false);
+			}
+		} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL, "Exception Occured on Notifications Manager Window ",""+e.getMessage(), false);
+
+		}
+		
+	}
+
+	public boolean checkSelectAllFolderOptionIsSelected() {
+		try{
+			if (Web.isWebElementsDisplayed(selectAllSubFolderNotificationsModal, true))
+			{
+				if(selectAllSubFolderNotificationsModal.size()>2)
+				{
+					if(Web.isCheckBoxChecked(selectAllSubFolderNotificationsModal.get(0), true))
+						return true;
+					else
+						return false;
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Select all subfolders option is does not exist on Notifications Manager",
+							"", false);
+				}
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "No Sub Folders exist on Notifications Manager","", false);
+			}
+		} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL, "Exception Occured on Notifications Manager Window ",""+e.getMessage(), false);
+
+		}
+		return false;
+		
+	}
+
+	public void selectAllFoldersIndividuavally() {
+		try{
+			if (Web.isWebElementsDisplayed(selectAllSubFolderNotificationsModal, true))
+			{
+				int count=0;
+				if(selectAllSubFolderNotificationsModal.size()>2)
+				{
+					int totalCheckBoxCount=0;				
+					for(WebElement checkbox: selectAllSubFolderNotificationsModal)
+					{
+						if(totalCheckBoxCount==0)
+							continue;
+						totalCheckBoxCount++;
+						Web.clickOnElement(checkbox);  
+						if(Web.isCheckBoxChecked(checkbox, true))
+							  count++;
+					}
+					if(count+1==totalCheckBoxCount)
+					{
+						Reporter.logEvent(Status.PASS, "User Should selects all subfolder manually or individuvally and not select Select All Sub Folder Option",
+								"User is selected all subfolder manually or individuvally and not selected Select All Sub Folder Option", false);
+					}
+					else
+					{
+						Reporter.logEvent(Status.FAIL,"User Should selects all subfolder manually or individuvally and not select Select All Sub Folder Option",
+								"User is not selected all subfolder manually or individuvally", false);
+					}
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Select all subfolders option is does not exist on Notifications Manager",
+							"", false);
+				}
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "No Sub Folders exist on Notifications Manager","", false);
+			}
+		} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL, "Exception Occured on Notifications Manager Window ",""+e.getMessage(), false);
+
+		}
+		
+	}
+
+
+	public void clickOnSelectAllButton()
+	{
+		try{
+			if (Web.isWebElementDisplayed(selectAllButtonOnFolderNotificationsModal, true))
+			{
+				
+					Web.clickOnElement(selectAllButtonOnFolderNotificationsModal);
+					if(Web.isCheckBoxChecked(selectAllSubFolderNotificationsModal.get(0), true))
+							Reporter.logEvent(Status.PASS, "User Should click on Select all Button",
+									"User is clicked on Select all button", false);
+					
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Select All Button is not exist on Notifications Manager","", false);
+			}
+		} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL, "Exception Occured on Notifications Manager Window ",""+e.getMessage(), false);
+	
+		}
+		
+	}
+	
+	public void checkAllFolderCheckBoxesAreChecked()
+	{
+		try{
+			if (Web.isWebElementsDisplayed(allFolderCheckBoxes, true))
+			{
+				int totalCheckBoxCount=0;
+				for(WebElement checkbox: allFolderCheckBoxes)
+				{
+					
+					Web.clickOnElement(checkbox);  
+					if(Web.isCheckBoxChecked(checkbox, true))
+						totalCheckBoxCount++;
+				}
+				if(totalCheckBoxCount==allFolderCheckBoxes.size())
+				{
+					Reporter.logEvent(Status.PASS, "All Folder options should be selected",
+							"All folder options  is selected", false);
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "All Folder options should be selected",
+							"All folder options  is not selected", false);
+				}
+				clickOnPlusButtonNexttoFolder();
+				checkAllSubFoldersOptionsisChecked();
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Select All Button is not exist on Notifications Manager","", false);
+			}
+		} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL, "Exception Occured on Notifications Manager Window ",""+e.getMessage(), false);
+	
+		}
+	}
+
+}
 

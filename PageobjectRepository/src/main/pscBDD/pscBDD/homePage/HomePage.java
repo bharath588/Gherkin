@@ -4,6 +4,7 @@
 package pscBDD.homePage;
 
 import java.lang.reflect.Method;
+import java.sql.ResultSet;
 import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -20,6 +21,7 @@ import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
 import pscBDD.userVerification.UserVerificationPage;
 import bdd_gwgwebdriver.How;
+import bdd_lib.DB;
 import bdd_lib.Web;
 import bdd_reporter.Reporter;
 
@@ -82,6 +84,16 @@ public class HomePage extends LoadableComponent<HomePage> {
 	@FindBy(xpath=".//span[text()='Site Bulletin']/following-sibling::a/span")
 	private WebElement CancelNewsBulletin;
 
+	@FindBy(xpath="(//div[@ng-show='showDefaultPlan']//button[text()='Update'])[1]")
+	private WebElement defaultPlanUpdateButton;
+	
+	@FindBy(xpath="//select[@id='newPlanSel']")
+	private WebElement dropDownUpdateDefaultPlan;
+	
+	
+	
+	
+	
 	private LoadableComponent<?> parent;
 	public static WebDriver webDriver;
 	private String[] userVeriData;
@@ -404,6 +416,51 @@ public class HomePage extends LoadableComponent<HomePage> {
 			return planNo;
 		}
 		return null;
+		
+	}
+
+	public boolean checkUserHasPlanOndatabase(String plans, String databases) {
+		// TODO Auto-generated method stub
+		try
+		{
+			Web.getDriver().switchTo().defaultContent();
+			String planNumber = null;
+			ResultSet queryResultSet = DB.executeQuery(databases, plans);
+			while (queryResultSet.next()) {
+				planNumber = queryResultSet.getString("GA_ID");
+				if(!planNumber.equalsIgnoreCase(null))
+				{
+					return true;
+				}
+			}
+			return false;
+						
+		}
+		catch(Exception e)
+		{
+			Reporter.logEvent(Status.FAIL, " Exception Occured While Retriving Plan from DB", "" + e.getMessage(),true);
+		}
+		return false;
+	}
+
+	public void clickOnDefaultPlanUpdateButton() {
+		if(Web.isWebElementDisplayed(defaultPlanUpdateButton, true))
+			Web.clickOnElement(defaultPlanUpdateButton);
+		Reporter.logEvent(Status.INFO, " Clicked on Update Button", "" ,false);
+	}
+
+	public void clickOnDropDownUpdateDefaultPlan() {
+		// TODO Auto-generated method stubif(Web.isWebElementDisplayed(defaultPlanUpdateButton, true))
+		if(Web.isWebElementDisplayed(dropDownUpdateDefaultPlan, true))
+			Web.clickOnElement(dropDownUpdateDefaultPlan);
+		
+	}
+
+	public void countAvailablePlansforSelection() {
+		if(Web.isWebElementDisplayed(dropDownUpdateDefaultPlan, true))
+		{
+			//Web.initDropDownObj(dropDownUpdateDefaultPlan);
+		}
 		
 	}
 
