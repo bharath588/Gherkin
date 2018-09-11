@@ -33,17 +33,23 @@ public class Reporter {
 
 	static Properties objProperties;
 
-	private static Map<Long,Boolean> checkTestStatusMap = new LinkedHashMap<Long, Boolean>();
+	//private static Map<Long,Boolean> checkTestStatusMap = new LinkedHashMap<Long, Boolean>();
+	private static Map<Long,Map<String,Boolean>> checkTestStatusMap = new LinkedHashMap<Long, Map<String,Boolean>>();
 	static{
-		checkTestStatusMap.put(Thread.currentThread().getId(), true);
+		Map<String,Boolean> tempStatus = new LinkedHashMap<String,Boolean>();
+		tempStatus.put("Status", true);
+		tempStatus.put("hasMinStepsReported", false);
+		checkTestStatusMap.put(Thread.currentThread().getId(), tempStatus);
 	}
 
 	public static boolean isCheckTestStatus() {
-		return checkTestStatusMap.get(Thread.currentThread().getId());
+		return checkTestStatusMap.get(Thread.currentThread().getId()).get("Status");
 	}
 
 	public static void setCheckTestStatus(boolean checkTestStatus) {
-		checkTestStatusMap.put(Thread.currentThread().getId(),checkTestStatus);
+		Map<String,Boolean> tempStatus = checkTestStatusMap.get(Thread.currentThread().getId());
+		tempStatus.put("Status", checkTestStatus);
+		checkTestStatusMap.put(Thread.currentThread().getId(),tempStatus);
 	}
 
 
@@ -179,7 +185,8 @@ public class Reporter {
 											.assignCategory("TestCases");
 		}
 
-		checkTestStatusMap.put(Thread.currentThread().getId(), true);
+		//checkTestStatusMap.put(Thread.currentThread().getId(), true);
+		setCheckTestStatus(true);
 	}
 
 
@@ -261,7 +268,8 @@ public class Reporter {
 				tmpLogStatus = Status.FAIL;
 				Details = "<font size=\"3\" color=\"red\"><pre>" + Details
 						+ "</pre></font>";
-				checkTestStatusMap.put(Thread.currentThread().getId(), false);
+				//checkTestStatusMap.put(Thread.currentThread().getId(), false);
+				setCheckTestStatus(false);
 				Details += stackTraceLnk;
 				break;
 			case WARNING:
@@ -444,10 +452,28 @@ public class Reporter {
 	 */
 	public static synchronized void finalizeTCReport() throws Exception {
 		// Checking final report status
-		if (!checkTestStatusMap.get(Thread.currentThread().getId())) {
+		if (!checkTestStatusMap.get(Thread.currentThread().getId()).get("Status")) {
 			TestListener.setFinalTestStatus(false);
 		}else{
 			TestListener.setFinalTestStatus(true);
+		}
+	}
+	/**
+	 * <pre>
+	 * Method to log the event fail in HTML Report after cucumber exception
+	 * This method has to be called at the after method of each step definitions file
+	 *  @param scenario object:  to check the status for scenario object
+	 * </pre>
+	 * 
+	 * @throws Exception
+	 */
+	
+	public static void logAfterExceptionEvent(cucumber.api.Scenario scenario){
+		if (scenario.isFailed()) {
+			Reporter.setCheckTestStatus(false);
+			if(!checkTestStatusMap.get(Thread.currentThread().getId()).get("hasMinStepsReported"))
+				Reporter.logEvent(Status.FAIL, "Unexpected failure occured", "", true);
+			checkTestStatusMap.get(Thread.currentThread().getId()).put("hasMinStepsReported",true);
 		}
 	}
 

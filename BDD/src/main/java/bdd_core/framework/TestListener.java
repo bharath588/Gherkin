@@ -79,6 +79,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 				Log.Report(Level.INFO,
 
 				"Test Report folder removed on exist on suite level");
+				
 
 			}
 			/*

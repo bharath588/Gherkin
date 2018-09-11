@@ -241,4 +241,11 @@ public class Globals {
 	public static String scenarioName;
 	public static String planNumber;
 	public static String localDateTimeIST;
+	public static String GC_REMOTE_OUTPUT_PATH = "";
+	  public static DataTable gaId;
+	  public static DataTable serviceInputField;
+
+
+
+
 }
