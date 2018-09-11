@@ -16,12 +16,10 @@ import cucumber.api.testng.TestNGCucumberRunner;
 @CucumberOptions(
 		features="features",
 		glue={"org.bdd.psc.stepDefinitions"},
-		//format = { "json", "json:target/cucumber.json" },strict = false, //for behavePro
-		plugin = {"pretty","html:target/cucumber-html-report"} ,
+		//format = { "json", "json:target/cucumber.json" },strict = false, //for behavePro		
+		plugin = {"pretty","html:target/cucumber-html-report","bdd_core.framework.CustomReporter:build/reports/json/testresult.json"} ,
 		monochrome = true
-		,tags = {"@SWEB-18056"})
-
-
+		,tags = {"@SWEB-16826"})
 
 
 public class TestRunner {
