@@ -1,6 +1,8 @@
 
 package org.bdd.psc.stepDefinitions;
 
+import gherkin.formatter.model.Scenario;
+
 import java.util.List;
 
 import org.testng.Assert;
@@ -12,10 +14,6 @@ import pscBDD.jumpPage.JumpPage;
 import pscBDD.login.LoginPage;
 import pscBDD.planPage.PlanProvisionsPage;
 import pscBDD.userVerification.UserVerificationPage;
-import gherkin.formatter.model.Scenario;
-
-
-
 import bdd_lib.CommonLib;
 import bdd_lib.Web;
 import bdd_reporter.Reporter;
@@ -81,8 +79,8 @@ public class EmployeeStepDefinitions {
 	@Given("^User is on Employee Search Page$")
 	public void userNavigateToEmployeeSearchPage() throws Exception{
 		//Reporter.initializeReportForTC(1,scenarioName);
-		empPage = new EmployeePage(Web.getDriver());
-		empPage.get();
+		//empPage = new EmployeePage(Web.getDriver());
+		empPages.get();
 	}
 	@When("^user clicks Employee$")
     public void user_clicks_on_employee() throws Throwable {
@@ -618,6 +616,26 @@ public class EmployeeStepDefinitions {
 
 	
 	
+		@When("^\"([^\"]*)\" has retrived \"([^\"]*)\" from \"([^\"]*)\" and selected from the top right drop-down list$")
+	    public void something_has_retrived_something_from_something_and_selected_from_the_top_right_dropdown_list(String user, String plan, String db) throws Throwable {
+			empPages.retrivePlanFromDBAndSerach(user,plan,db);
+	    }
+
+		/* @Then("^\"([^\"]*)\" related \"([^\"]*)\" should display $")	
+	    public void something_related_something_should_display(String user, String menuitems) throws Throwable {
+	       // throw new PendingException();
+	    }*/
+	
+		 @Then("^\"([^\"]*)\" related \"([^\"]*)\" should display$")
+		    public void something_related_something_should_display(String user, String menuitems) throws Throwable {
+			 empPages.verifyMenuItems(menuitems);
+			 System.out.println(menuitems);
+		    }
+
+	 	
+	 	
+	 	
+	 	
 		@Given("^a mandatory minimum deferral amount is in place$")
 	    public void a_mandatory_minimum_deferral_amount_is_in_place() throws Throwable {
 	        throw new PendingException();
@@ -678,5 +696,5 @@ public class EmployeeStepDefinitions {
 	        throw new PendingException();
 	    }
 
-	
+	   
 }

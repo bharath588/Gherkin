@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Actions;
 
 import pscBDD.fileSharing.FileSharingPage;
@@ -23,11 +24,13 @@ import bdd_lib.Web;
 import bdd_reporter.Reporter;
 
 import com.aventstack.extentreports.Status;
+import com.google.common.base.Throwables;
 
 import cucumber.api.DataTable;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.But;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -71,6 +74,16 @@ public class FileSharingStepDefinitions {
 
 	@After
 	public void after() throws Exception{
+		
+		if (Globals.exception != null ) {
+			
+			 Reporter.logEvent(Status.FAIL, "Excpetion ", " "+Globals.exception, true);
+		} 
+		else if(Globals.assertionerror != null)
+		{
+			 Reporter.logEvent(Status.FAIL, "assertionerror ", " "+Globals.assertionerror, true);
+		}
+		
 		Reporter.finalizeTCReport();
 	}
 	
@@ -783,5 +796,194 @@ public class FileSharingStepDefinitions {
     @When("^The User clicks on the Plus Button next to the folder$")
     public void the_user_clicks_on_the_plus_button_next_to_the_folder() throws Throwable {
     	fileSharePage.clickOnPlusButtonNexttoFolder();
+    }
+    
+    @Then("^The Plus Button should convert into a Minus Button$")
+    public void the_plus_button_should_convert_into_a_minus_button() throws Throwable {
+       fileSharePage.checkPlusButtonConvertedToMinus();
+    }
+    @And("^the Nested Subfolders section for that folder should expand$")
+    public void the_nested_subfolders_section_for_that_folder_should_expand() throws Throwable {
+        //throw new PendingException();
+    }
+    @And("^other Nested Subfolder sections should minimize$")
+    public void other_nested_subfolder_sections_should_minimize() throws Throwable {
+    	fileSharePage.otherNestedFolderSectionIsMinimised();
+    }
+    @And("^other Minus Buttons should convert into Plus Buttons$")
+    public void other_minus_buttons_should_convert_into_plus_buttons() throws Throwable {
+       // throw new PendingException();
+    }
+    
+   /* @SWEB-16663 
+    * Scenario: Verify when the Minus Button converts to a Plus Button    
+    * Given User has access to a folder with subfolders      
+    * And there is a Minus Button on the Notification Manager     
+    * When The User clicks on the Minus Button        
+    * Then The Minus Button should convert into a Plus Button      
+    * And the Nested Subfolders section for that folder should minimize
+    * */
+    
+    @And("^there is a Minus Button on the Notification Manager$")
+    public void there_is_a_minus_button_on_the_notification_manager() throws Throwable {
+    	fileSharePage.openFolderNotificationManager();
+    	
+    }
+    @When("^The User clicks on the Minus Button$")
+    public void the_user_clicks_on_the_minus_button() throws Throwable {
+    	fileSharePage.clickOnMinusButton();
+    }
+    @Then("^The Minus Button should convert into a Plus Button$")
+    public void the_minus_button_should_convert_into_a_plus_button() throws Throwable {
+    	fileSharePage.checkMinusButtonConvertedToPlus();
+    }
+    @And("^the Nested Subfolders section for that folder should minimize$")
+    public void the_nested_subfolders_section_for_that_folder_should_minimize() throws Throwable {
+        //throw new PendingException();
+    }
+    
+    /*@SWEB-16663
+     * Scenario: Verify changes to preferences in the Notification Manager are preserved    
+     * Given User has made a change to their subfolder notification preferences      
+     * And User has minimized the Nested Subfolders     
+     * When User re-opens the Nested Subfolders     
+     * Then User's changes should be preserved
+     */    
+    
+    @Given("^User has made a change to their subfolder notification preferences$")
+    public void user_has_made_a_change_to_their_subfolder_notification_preferences() throws Throwable {
+    	fileSharePage.isSubFoldersPresent();
+    	fileSharePage.openFolderNotificationManager();
+    	fileSharePage.clickOnPlusButtonNexttoFolder();
+    	fileSharePage.changePrefereanceBySelectingSubFoldersCheckBox();
+    }
+    
+    @And("^User has minimized the Nested Subfolders$")
+    public void user_has_minimized_the_nested_subfolders() throws Throwable {
+        //throw new PendingException();
+        fileSharePage.minimizeSubfolderSection();
+    }
+    @When("^User reopens the Nested Subfolders$")
+    public void user_reopens_the_nested_subfolders() throws Throwable {
+    	fileSharePage.reopenPreviouslyMinimizedNotificationFolder();
+    }
+    
+    @Then("^User's changes should be preserved$")
+    public void users_changes_should_be_preserved() throws Throwable {
+      
+        if(fileSharePage.isCheckChangesIsPreserved())
+			Reporter.logEvent(Status.PASS, "User has made a change in subfolder notification preferences are preserved",
+				" ", true);
+		else
+			Reporter.logEvent(Status.FAIL, "User has not made any change in subfolder notification preferences are not preserved",
+					" ", true);
+    }
+    
+    @When("^User closes the Notifications Manager without clicking 'Update'$")
+    public void user_closes_the_notifications_manager_without_clicking_update() throws Throwable {
+    	fileSharePage.closeFolderNotificationsModal();
+    }
+    
+    @Then("^User's changes should be NOT be preserved$")
+    public void users_changes_should_be_not_be_preserved() throws Throwable {
+    	fileSharePage.openFolderNotificationManager();
+    	fileSharePage.reopenPreviouslyMinimizedNotificationFolder();
+    	if(!fileSharePage.isCheckChangesIsPreserved())
+			Reporter.logEvent(Status.PASS, "User made changes in subfolder notification preferences are not preserved",
+				" ", true);
+		else
+			Reporter.logEvent(Status.FAIL, "User made changes in subfolder notification preferences are preserved",
+					" ", true);
+    }
+    
+    
+    @Given("^User has expanded a folder's nested subfolders$")
+    public void user_has_expanded_a_folders_nested_subfolders() throws Throwable {
+    	fileSharePage.isSubFoldersPresent();
+    	fileSharePage.openFolderNotificationManager();
+    	fileSharePage.clickOnPlusButtonNexttoFolder();
+    }
+    @When("^User selects the 'Select all subfolders' option$")
+    public void user_selects_the_select_all_subfolders_option() throws Throwable {
+       // throw new PendingException();
+    	fileSharePage.selectAllFolderSubFoldersOptions();
+    	JavascriptExecutor javascript = (JavascriptExecutor) Web.getDriver();
+    	Boolean b2 = (Boolean) javascript.executeScript("return document.documentElement.scrollHeight>document.documentElement.clientHeight;");
+    }
+    @Then("^All subfolder options for that folder should be selected$")
+    public void all_subfolder_options_for_that_folder_should_be_selected() throws Throwable {
+    	fileSharePage.checkAllSubFoldersOptionsisChecked();
+    }
+    
+    
+    @When("^User deselects the 'Select all subfolders' option$")
+    public void user_deselects_the_select_all_subfolders_option() throws Throwable {
+    	fileSharePage.selectAllFolderSubFoldersOptions();
+    	fileSharePage.deSelectAllFolderSubFoldersOptions();
+    }
+    @Then("^All subfolder options for that folder should be deselected$")
+    public void all_subfolder_options_for_that_folder_should_be_deselected() throws Throwable {
+    	fileSharePage.checkAllSubFoldersOptionsisChecked();
+    }
+    
+    @And("^User has selected 'Select all subfolders'$")
+    public void user_has_selected_select_all_subfolders() throws Throwable {
+    	fileSharePage.selectAllFolderSubFoldersOptions();
+    }
+    
+    @When("^User deselects a selected subfolder$")
+    public void user_deselects_a_selected_subfolder() throws Throwable {
+    	fileSharePage.deSelectOneSubFolder();
+    }
+    
+    @Then("^The 'Select all subfolders' option should be deselected$")
+    public void the_select_all_subfolders_option_should_be_deselected() throws Throwable {
+        if(!fileSharePage.checkSelectAllFolderOptionIsSelected())
+        {
+        	Reporter.logEvent(Status.PASS, "Select all subfolders option should be deselected",
+					"Select all subfolders option is deselected", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL,"Select all subfolders option should be deselected",
+					"Select all subfolders option is not deselected", false);
+		}
+    }
+    
+    @When("^User manually selects all subfolders$")
+    public void user_manually_selects_all_subfolders() throws Throwable {
+    	fileSharePage.selectAllFoldersIndividuavally();
+    }
+    @But("^does not select 'Select all subfolders'$")
+    public void does_not_select_select_all_subfolders() throws Throwable {
+    	// fileSharePage.checkSelectAllFolderOptionIsSelected();
+    }
+    
+    @Then("^The 'Select all subfolders' option should be selected$")
+    public void the_select_all_subfolders_option_should_be_selected() throws Throwable {
+    	if(fileSharePage.checkSelectAllFolderOptionIsSelected())
+        {
+        	Reporter.logEvent(Status.PASS, "Select all subfolders option should be selected",
+					"Select all subfolders option is selected", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL,"Select all subfolders option should be selected",
+					"Select all subfolders option is not selected", false);
+		}
+    }
+    
+    @Given("^User has access to folders and subfolders in the Notifications Manager$")
+    public void user_has_access_to_folders_and_subfolders_in_the_notifications_manager() throws Throwable {
+    	fileSharePage.isSubFoldersPresent();
+    	fileSharePage.openFolderNotificationManager();
+    }
+    @When("^User clicks 'Select all' button$")
+    public void user_clicks_select_all_button() throws Throwable {
+    	fileSharePage.clickOnSelectAllButton();
+    }
+    @Then("^All folders and subfolders within the Notifications Manager are selected$")
+    public void all_folders_and_subfolders_within_the_notifications_manager_are_selected() throws Throwable {
+    	fileSharePage.checkAllFolderCheckBoxesAreChecked();
     }
 }

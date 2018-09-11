@@ -17,6 +17,7 @@ import pscBDD.planPage.LoanInformationPage;
 import pscBDD.planPage.PlanDMBACustomSitePage;
 import pscBDD.userVerification.UserVerificationPage;
 import bdd_lib.CommonLib;
+import bdd_lib.DB;
 import bdd_lib.Web;
 
 import com.aventstack.extentreports.Status;
@@ -29,6 +30,7 @@ import cucumber.api.Delimiter;
 import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -75,6 +77,15 @@ public class HomeStepDefinitions {
 
 	@After
 	public void after() throws Exception {
+		if (Globals.exception != null ) {
+			
+			 Reporter.logEvent(Status.FAIL, "Excpetion ", " "+Globals.exception, true);
+		} 
+		else if(Globals.assertionerror != null)
+		{
+			 Reporter.logEvent(Status.FAIL, "assertionerror ", " "+Globals.assertionerror, true);
+		}
+		
 		Reporter.finalizeTCReport();
 	}
 
@@ -588,6 +599,34 @@ public class HomeStepDefinitions {
 			}
 	    }
 
+	 	@And("^\"([^\"]*)\" has \"([^\"]*)\" on multiple \"([^\"]*)\"$")
+	    public void something_has_something_on_multiple_something(String user, String plans, String databases) throws Throwable {
+	       // throw new PendingException();
+	    	if(homePage.checkUserHasPlanOndatabase(plans,databases)){
+				Reporter.logEvent(Status.PASS, " User should have plan on "+databases, " User is having have plan on "+databases, false);
+			}else{		
+				Reporter.logEvent(Status.FAIL, " User should have plan on "+databases, " User is not having have plan on "+databases, false);
+			}
+	    	
+	    	
+	    }
+	 
+	 	@When("^\"([^\"]*)\" navigates to the plan list in My Profile$")
+	    public void something_navigates_to_the_plan_list_in_my_profile(String user, String strArg1) throws Throwable {
+	 		homePage.clickOnMyProfile();
+	        Web.nextGenDriver.waitForAngular();
+	        homePage.clickOnDefaultPlanUpdateButton();
+	        homePage.clickOnDropDownUpdateDefaultPlan();
+	        
+	    }
 
+	    @Then("^\"([^\"]*)\" on multiple \"([^\"]*)\" will be available for selection$")
+	    public void something_on_multiple_something_will_be_available_for_selection(String plans, String databases, String strArg1, String strArg2) throws Throwable {
+	        
+	    	homePage.countAvailablePlansforSelection();
+	    	
+	    }
+
+	   
 
 }

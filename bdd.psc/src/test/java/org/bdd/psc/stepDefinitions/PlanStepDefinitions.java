@@ -2,6 +2,7 @@
 
 package org.bdd.psc.stepDefinitions;
 
+import gherkin.formatter.model.Result;
 import gherkin.formatter.model.Scenario;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import pscBDD.planPage.LoanInformationPage;
 import pscBDD.planPage.PlanPage;
 import pscBDD.planPage.PlanProvisionsPage;
 import pscBDD.userVerification.UserVerificationPage;
+import bdd_core.framework.Globals;
 import bdd_lib.Web;
 import bdd_reporter.Reporter;
 
@@ -28,6 +30,8 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+
+import cucumber.runtime.Runtime;
 
 /**
  * @author rvpndy
@@ -62,6 +66,16 @@ public class PlanStepDefinitions {
 	
 	@After
 	public void after() throws Exception{
+		
+		
+		if (Globals.exception != null ) {
+			
+			 Reporter.logEvent(Status.FAIL, "Excpetion ", " "+Globals.exception, true);
+		} 
+		else if(Globals.assertionerror != null)
+		{
+			 Reporter.logEvent(Status.FAIL, "assertionerror ", " "+Globals.assertionerror, true);
+		}
 		Reporter.finalizeTCReport();
 	}
 	
