@@ -25,5 +25,5 @@ Narrative Description : As a MetLife client I want the Pre-login static page to 
       | accuCode     |
       | InstMetLife |
     When user clicks on Pre-login banner
-    Then a page like this link is displayed "https://plan.empower-retirement.com/static/PlanEmpower/sponsor-plananalytics.html" and is branded for MetLife
+    Then a page like this link is displayed "https://proj1-plan.retirementpartner.com/static/InstMetLife/welcome.html" and is branded for MetLife
    

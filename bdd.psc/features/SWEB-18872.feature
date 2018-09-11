@@ -13,7 +13,8 @@
 # <> (placeholder)																                                |
 # ""                                                                              |
 # # (Comments)																	                                  |
-# Sample Feature Definition Template                                              |
+# Sample Feature Definition Template
+#User- 799S3(Plan- 932777-01) instead of 7QT7C.                                   |
 #-----------------------------------------------------------------------------------------------------------------------
 @SWEB-18872
 Feature: As a xDB user, when I upload Employee Data File, I should see a message
@@ -29,7 +30,7 @@ Feature: As a xDB user, when I upload Employee Data File, I should see a message
     Examples: 
       | accuCode    | username | password |
       | PlanEmpower | 7KPKI    | testing1 |
-      #| PlanEmpower | 7QT7C    | testing1 |
+      | PlanEmpower | 799S3    | testing1 |
 
   Scenario Outline: Verify that uploaded file is rejected if it does not match authorized File Name list
     Given user is on the Home page of "<accuCode>" when user login with correct "<username>" and "<password>"
@@ -42,4 +43,6 @@ Feature: As a xDB user, when I upload Employee Data File, I should see a message
     Examples: 
       | accuCode    | username | password |
       | PlanEmpower | 7KPKI    | testing1 |
-      #| PlanEmpower | 7QT7C    | testing1 |
+      | PlanEmpower | 799S3    | testing1 |
+      
+      

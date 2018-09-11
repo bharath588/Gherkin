@@ -26,6 +26,8 @@ Given user is on the Home page of "<accuCode>" when user login with correct "<us
     And Plan Analytics are suppressed
     Examples: 
       | accuCode    | username | password | CMREMIT   |
-      | PlanEmpower | 1INST    | testing1 | 194179-01 |
+      | PlanEmpower | 1ISIS    | testing1 | 331876-01 |
+      #| PlanEmpower | 1IN02    | testing1 | 194179-01 |
+      #| PlanEmpower | 1INST    | testing1 | 194179-01 |
 
 
