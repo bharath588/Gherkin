@@ -172,7 +172,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		// TODO Auto-generated method stub
+		
 		if (!Web.isWebElementDisplayed(weGreeting)) {
 			throw new AssertionError(
 					"Plan service center landing page not loaded.");

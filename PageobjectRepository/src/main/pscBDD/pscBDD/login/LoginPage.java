@@ -81,7 +81,6 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement PrivacyPolicy;
 	@FindBy(linkText="Legal Notices")
 	private WebElement LegalNotices;
-	//@FindBy(id="facebook")
 	@FindBy(xpath="//*[contains(@id,'facebook') or contains(@class,'social-link facebook')]")
 	private WebElement facebook;
 	@FindBy(xpath="//*[contains(@id,'twitter') or contains(@class,'social-link twitter')]")
