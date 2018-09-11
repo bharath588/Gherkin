@@ -19,11 +19,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+
+
+
+
+
+
 
 
 
@@ -78,12 +87,16 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	private WebElement employeeSearchButton;
 	@FindBy(how = How.XPATH, using = ".//*[@id='searchResultsTable_row_0']/td")
 	private WebElement searchResultsTablerow;
+	@FindBy(how = How.XPATH, using = "//*[@id='searchResultsTable_data']/tr/td[4]")
+	private List<WebElement> searchResultsTable;
 	@FindBy(how = How.XPATH, using = ".//tbody[@id='searchResultsTable_data']/tr[1]/td[2]/a")
 	private WebElement firstNameLink;
 	@FindBy(how = How.ID, using = "participantDetail")
 	private WebElement employeeDetailTab;
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Overview')]")
 	private WebElement employeeOverviewHeader;
+	@FindBy(how = How.XPATH, using = "//*[contains(@class,'empDivisionSearch')]//tbody/tr[1]//a")
+	private WebElement selectDivisionTableData;
 	
 	
 	@FindBy(how = How.XPATH, using = "//table/tbody[@id='overviewtable_data']/tr/td/a")
@@ -113,6 +126,12 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	private WebElement ongoingEditLink;
 	@FindBy(how=How.XPATH,using= "//*[*[span[text()='Schedule automatic increase']]]//a")
 	private WebElement scheduleAutomaticIncreaseEditLink;
+	@FindBy(how=How.XPATH,using= "//*[*[span[text()='Stop all deferrals']]]//a")
+	private WebElement stopAllDeferralEditLink;
+	@FindBy(how=How.CLASS_NAME,using= "btn btn-continueprimary ng-binding")
+	private WebElement stopAllDeferralContinueButton;
+	@FindBy(how=How.XPATH,using= "//*[contains(text(),'Continue without deferrals')]/following-sibling::button[1]")
+	private WebElement backButtonToDeferral;
 	
 	@FindBy(how=How.ID,using="aedrvalue1")
 	private WebElement enterDefElectionInDeflInformForBeforeTax;
@@ -232,17 +251,40 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	private WebElement oneTimeDeferralEditLink;
 	@FindBy(how=How.XPATH,using="//*[@id='deferralForm']/preceding-sibling::div/h4")
 	private WebElement deferralFormHeaderInfo;
+	@FindBy(how=How.REPEATER,using="validate in errorMsg")
+	private WebElement deferralContributionErrorMessage;
 	
-	
+	List<String> listSSN;
+	Set<String> setSSN;
 	SimpleDateFormat sdf;
 	Calendar c;
 	LocalDate date;
+	public static String serviceValue="";
 
 	public EmployeePages() {
 		Web.getDriver().manage().timeouts()
 				.setScriptTimeout(30, TimeUnit.SECONDS);
 		Web.nextGenDriver = new NextGenWebDriver(Web.getDriver());
 		NextGenPageFactory.initWebElements(Web.getDriver(), this);
+	}
+	
+	/**
+	 * <pre>
+	 * Method to return WebElement object corresponding to specified field name
+	 * Elements available for fields:
+	 * </pre>
+	 * 
+	 * @param fieldName
+	 * @return
+	 */
+	@SuppressWarnings("unused")
+	private WebElement getWebElement(String fieldName) {
+
+		if (fieldName.trim().equalsIgnoreCase("Stop Deferral Continue")) {
+			return this.stopAllDeferralContinueButton;
+		}
+		return null;
+
 	}
 
 	@Override
@@ -323,6 +365,14 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 			Web.setTextToTextBox(searchEmpTextBox, searchText);
 		}
 		Web.clickOnElement(employeeSearchButton);
+		if(searchEmployeeBy.contains("Division")){
+			if(Web.isWebElementDisplayed(selectDivisionTableData))
+				Web.clickOnElement(selectDivisionTableData);
+			else
+				Reporter.logEvent(Status.FAIL, "division table data not present ", "division table data not present",true);
+		}
+			
+		
 		Web.waitForProgressBar();
 	}
 
@@ -339,10 +389,61 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 		return false;
 
 	}
+	/**
+	 * This method verifies if the search results contain any duplicate values
+	 * ,Returns true if it finds any duplicate record
+	 * 
+	 * @return
+	 */
+	public boolean isSearchResultDisplayedDuplicateRecord(){
+		boolean noDuplateRowFound = false;
+		try{
+			Web.FrameSwitchONandOFF(false);
+			Web.FrameSwitchONandOFF(true, employeeFrame);
+			
+			if(Web.isWebElementDisplayed(searchResultsTablerow, true)){
+				listSSN = getMultipleWebElementstoListofStrings(searchResultsTable);
+				setSSN = new TreeSet<>(listSSN);
+				if (listSSN.size() == setSSN.size()) {
+					noDuplateRowFound = true;
+				} else {
+					noDuplateRowFound = false;
+				}
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		Web.FrameSwitchONandOFF(false);
+		return noDuplateRowFound;
+
+	}
+	/**
+	 * This method converts the List of WebElements to List of string when
+	 * multiple columns are selected
+	 * 
+	 * @param refList
+	 * @return
+	 */
+
+	public List<String> getMultipleWebElementstoListofStrings(
+			List<WebElement> refList) {
+		List<String> list = new ArrayList<String>();
+		if (refList.size() > 0) {
+			for (WebElement ele : refList) {
+				list.add(ele.getText());
+			}
+			return list;
+		}
+		throw new Error("No search result");
+
+	}
 
 	public void clickOnFirstNameLinkInSearchResult() {
 		if (isSearchResultDisplayed()) {
 			Web.clickOnElement(firstNameLink);
+			Reporter.logEvent(Status.INFO, "User click on first employee search result",
+					"User click on first employee search result", true);
 			Web.waitForProgressBar();
 		}
 	}
@@ -357,9 +458,12 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 		}
 	}
 
-	public void openEmployeeDetailPage() {
-		if (Web.isWebElementDisplayed(employeeDetailTab))
+	public void openEmployeeDetailPage() throws InterruptedException {
+		if (Web.isWebElementDisplayed(employeeDetailTab)){
 			Web.clickOnElement(employeeDetailTab);
+			Thread.sleep(3000);
+		}
+			
 		else
 			Reporter.logEvent(Status.INFO,
 					"Employee Detail tab is not displayed",
@@ -376,6 +480,29 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 			return true;
 		return false;
 	}
+	
+	public void clickOnPaycheckContribution(){
+		if(Web.isWebElementDisplayed(paycheckContributionEditLink,true)){
+			Web.clickOnElement(paycheckContributionEditLink);
+		    Web.nextGenDriver.waitForAngular();
+		    Reporter.logEvent(Status.INFO,
+					"clicked on employee paycheck contribution edit link",
+					"clicked on employee paycheck contribution edit link", true);
+		}
+			
+	}
+	
+	public boolean isDeferralPage(){
+		Web.FrameSwitchONandOFF(false);
+	    Web.isWebElementDisplayed(editDeferralFrame,true);
+		Web.FrameSwitchONandOFF(true, editDeferralFrame);
+		
+		if(Web.isWebElementDisplayed(deferralText,true))
+			return true;			
+		else
+			return false;			
+	}
+		
 
 	public void clickOnEmpInfoEditLink() {
 		if (Web.isWebElementDisplayed(empInformationEditLink, true)) {
@@ -513,8 +640,19 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	}
 	
 	public void clickOngoingEdit(){
-		Web.clickOnElement(ongoingEditLink);
-		Web.nextGenDriver.waitForAngular();
+		if(Web.isWebElementDisplayed(ongoingEditLink, true)){
+			Web.clickOnElement(ongoingEditLink);
+			Web.nextGenDriver.waitForAngular();
+			Reporter.logEvent(Status.INFO, "User clicked on ongoing edit button", 
+					"User clicked on ongoing edit button", true);
+		}
+		else{
+			Reporter.logEvent(Status.INFO, "ongoing edit button not available", 
+					"ongoing edit button not available", true);
+			throw new Error("there is no ongoing deferral for given plan");
+		}
+			
+		
 		
 	}
 	public void clickOneTimeEdit(){
@@ -525,6 +663,16 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	public void clickScheduleAutomaticIncreaseEdit(){
 		Web.clickOnElement(scheduleAutomaticIncreaseEditLink);
 		Web.nextGenDriver.waitForAngular();
+		
+	}
+	public void clickOnStopAllDeferralEditLink(){
+		if(Web.isWebElementDisplayed(stopAllDeferralEditLink, true)){
+			Web.clickOnElement(stopAllDeferralEditLink);
+			Reporter.logEvent(Status.INFO, "user click on stop all deferral", "clicked on stop all deferral", false);
+		}
+		else
+			Reporter.logEvent(Status.INFO, "stop all deferral link not available for the plan", "stop all deferral link not available for the plan", true);
+			
 		
 	}
 	public boolean verifyDeferralScreen(String scrrenName){
@@ -559,8 +707,12 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 			if(name[0].equalsIgnoreCase("percent"))
 				Web.clickOnElement(percentButtonBeforeTax);
 		}
-		else
+		else{
 			Web.clickOnElement(dollarButtonBeforeTax);
+			name[0]="dollar";
+		}
+			
+		Reporter.logEvent(Status.INFO, "user select "+name[0], name[0]+" Selected", false);
 		
 	}
 	
@@ -573,7 +725,21 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 				Web.setTextToTextBox(enterDefElectionContributionRoth, value);
 		} else
 			Web.setTextToTextBox(enterDefElectionContributionBeforeTax, value);
+		
+		Reporter.logEvent(Status.INFO, "user enter the amount "+value, "user enter the amount "+value, false);
 
+	}
+	public void clickOnOngoingContinue(){
+		if(ongoingContinueButton.isEnabled()){
+			Web.clickOnElement(ongoingContinueButton);
+		    Web.nextGenDriver.waitForAngular();
+		    Reporter.logEvent(Status.INFO, "user click on continue button", "user click on continue button", false);
+		}
+			
+	}
+	public void clickOnBackButton(){
+			Web.clickOnElement(backButtonToDeferral);
+		    Web.nextGenDriver.waitForAngular();		
 	}
 	
 	public boolean verifyContinueButtonEnableOrDisableForOneTime(String caseType){
@@ -582,6 +748,15 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 		if(caseType.contains("disable"))
 			return !oneTimeContinueButton.isEnabled();		
 		return false;		
+	}
+	
+	public boolean verifyDeferralContributionErrorMessage(String errorMsg){
+		if(Web.isWebElementDisplayed(deferralContributionErrorMessage, true)){
+			if(deferralContributionErrorMessage.getText().contains(errorMsg.trim()))
+				return true;
+		}
+		return false;
+		
 	}
 	
 	public boolean verifyNext18monthsInSelectTargetPayroll(){

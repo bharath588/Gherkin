@@ -166,7 +166,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 				e.printStackTrace();
 			}
 		if(Web.isWebElementDisplayed(CancelNewsBulletin,true)) 
-			Web.clickOnElement(CancelNewsBulletin);		
+			Web.clickOnElement(CancelNewsBulletin);
 
 	}
 
@@ -213,29 +213,29 @@ public class HomePage extends LoadableComponent<HomePage> {
 			act = new Actions(Web.getDriver());
 			if (Web.isWebElementDisplayed(planSearchBox)) {
 				act.moveToElement(planSearchBox).click(planSearchBox).build()
-				.perform();
+						.perform();
 				Web.setTextToTextBox(planSearchBox, planNumber);
 				Web.clickOnElement(btnPlanSearchTxtGO);
 				Reporter.logEvent(Status.INFO, "Switched to plan:", planNumber,
 						true);
 				Thread.sleep(5000);
-			}else if(Web.isWebElementDisplayed(planDropDownMenu,true)){
+			} else if (Web.isWebElementDisplayed(planDropDownMenu, true)) {
 				Web.actionsClickOnElement(planDropDownMenu);
 				Web.actionsClickOnElement(planDropDownMenu);
 				Web.selectDropDownOption(planDropDownMenu, planNumber, true);
 				Web.clickOnElement(btnPlanSearchDropDownGO);
-				
+
 				Reporter.logEvent(Status.INFO, "Switched to plan:", planNumber,
 						true);
 				Thread.sleep(5000);
-			} 
-			else {
+			} else {
 				Reporter.logEvent(
 						Status.INFO,
 						"No plan search box. User is associated with single plan",
 						"No plan search box. User is associated with single plan",
 						true);
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
