@@ -96,7 +96,6 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement PrivacyPolicy;
 	@FindBy(linkText="Legal Notices")
 	private WebElement LegalNotices;
-	//@FindBy(id="facebook")
 	@FindBy(xpath="//*[contains(@id,'facebook') or contains(@class,'social-link facebook')]")
 	private WebElement facebook;
 	@FindBy(xpath="//*[contains(@id,'twitter') or contains(@class,'social-link twitter')]")
@@ -186,20 +185,19 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	protected void load() {
 		// TODO Auto-generated method stub
 		// webDriver.get(Stock.getConfigParam("AppURLPSC"));
-		
-		try{
+
+		try {
 			if (Web.isWebElementDisplayed(logout))
-				 Web.clickOnElement(logout);
-			}
-		catch(Exception e){
-			
+				Web.clickOnElement(logout);
+		} catch (Exception e) {
+
 		}
-		
+
 		if (!(URL == null)) {
 			Web.getDriver().get(URL);
 			Web.getDriver().manage().window().maximize();
 		} else {
-			if(LoginPage.accucode == null)
+			if (LoginPage.accucode == null)
 				LoginPage.accucode = Stock.getConfigParam("accucode");
 			URL = Stock.getConfigParam("AppURLPSC");
 			URL = URL.replace("accucode", Stock.getConfigParam("accucode"));
@@ -207,7 +205,10 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			Web.getDriver().get(URL);
 			Web.getDriver().manage().window().maximize();
 		}
-		Reporter.logEvent(Status.INFO, "opens the URL for the accuCode: "+LoginPage.accucode,"opens the URL for the accuCode: "+LoginPage.accucode, true);
+
+		Reporter.logEvent(Status.INFO, "opens the URL for the accuCode: "
+				+ LoginPage.accucode, "opens the URL for the accuCode: "
+				+ LoginPage.accucode, true);
 	}
 
 	@Override

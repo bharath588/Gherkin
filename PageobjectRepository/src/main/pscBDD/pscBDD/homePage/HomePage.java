@@ -162,8 +162,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 
 				}
 			}
-			if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
-				Web.clickOnElement(CancelNewsBulletin);		
+			
 		} catch (Exception e) {
 			try {
 				throw new Exception(
@@ -177,10 +176,12 @@ public class HomePage extends LoadableComponent<HomePage> {
 		if (Web.isWebElementDisplayed(jumpPage, "JUMP PAGE URL", false))
 			try {
 				Web.clickOnElement(Web.returnElement(jumpPage, "JUMP PAGE URL"));
+				Web.nextGenDriver.waitForAngular();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 		if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
 			Web.clickOnElement(CancelNewsBulletin);			
 		Web.getDriver().switchTo().defaultContent();
@@ -189,7 +190,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		// TODO Auto-generated method stub
+		
 		if (!Web.isWebElementDisplayed(weGreeting)) {
 			throw new AssertionError(
 					"Plan service center landing page not loaded.");
@@ -229,31 +230,30 @@ public class HomePage extends LoadableComponent<HomePage> {
 		try {
 			act = new Actions(Web.getDriver());
 			if (Web.isWebElementDisplayed(planSearchBox)) {
-				act.moveToElement(planSearchBox).click(planSearchBox).build()
-				.perform();
+				act.moveToElement(planSearchBox).click(planSearchBox).build().perform();
 				Thread.sleep(2000);
 				Web.setTextToTextBox(planSearchBox, planNumber);
 				Web.clickOnElement(btnPlanSearchTxtGO);
 				Reporter.logEvent(Status.INFO, "Switched to plan:", planNumber,
 						true);
 				Thread.sleep(5000);
-			}else if(Web.isWebElementDisplayed(planDropDownMenu,true)){
+			} else if (Web.isWebElementDisplayed(planDropDownMenu, true)) {
 				Web.actionsClickOnElement(planDropDownMenu);
 				Web.actionsClickOnElement(planDropDownMenu);
 				Web.selectDropDownOption(planDropDownMenu, planNumber, true);
 				Web.clickOnElement(btnPlanSearchDropDownGO);
-				
+
 				Reporter.logEvent(Status.INFO, "Switched to plan:", planNumber,
 						true);
 				Thread.sleep(5000);
-			} 
-			else {
+			} else {
 				Reporter.logEvent(
 						Status.INFO,
 						"No plan search box. User is associated with single plan",
 						"No plan search box. User is associated with single plan",
 						true);
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

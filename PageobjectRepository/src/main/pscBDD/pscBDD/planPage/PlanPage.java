@@ -4,19 +4,7 @@
 package pscBDD.planPage;
 
 import java.util.List;
-
-
-
-
-
-
-
-
-
-
-
 import lib.Reporter;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -26,9 +14,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import com.aventstack.extentreports.Status;
-
+import com.aventstack.extentreports.Status;
 import bdd_lib.Web;
 import pscBDD.commonLib.CommonLib;
 import pscBDD.homePage.HomePage;
@@ -85,6 +72,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	@FindBy(id="assetAllocationTab")
 	private WebElement modelPortfolioAssetAllocation;
 	
+
 	@FindBy(xpath="//ul[@id='newMenu']//a[contains(text(),'Contacts')]")
 	private WebElement linkContacts;
 	
@@ -99,6 +87,8 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	
 	@FindBy(xpath="//span[contains(text(),'Managed account')]/ancestor::div[1]/following-sibling::div")
 	private WebElement imgMAXEnrollment;
+
+	
 	
 	LoadableComponent<?> parent;
 	public static WebDriver webDriver;
@@ -160,6 +150,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 		return false;
 	}
 	
+
 	public void clickOnContactsUnderPlanTab() {	
 			try {
 				Thread.sleep(3000);
@@ -208,6 +199,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 		}
 		return false;
 	}
+
 
 	public boolean verifyHighChart(){
 		try {
