@@ -927,7 +927,7 @@ public class EmployeeStepDefinitions {
 	 	
 	 	
 	 	
-	 	
+	 /*	
 		@Given("^a mandatory minimum deferral amount is in place$")
 	    public void a_mandatory_minimum_deferral_amount_is_in_place() throws Throwable {
 	        throw new PendingException();
@@ -980,7 +980,7 @@ public class EmployeeStepDefinitions {
 	    @And("^clicks 'confirm' on the following screen$")
 	    public void clicks_confirm_on_the_following_screen() throws Throwable {
 	        throw new PendingException();
-	    }
+	    }*/
 
 	   
 }

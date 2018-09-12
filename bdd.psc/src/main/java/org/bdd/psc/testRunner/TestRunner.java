@@ -17,9 +17,9 @@ import cucumber.api.testng.TestNGCucumberRunner;
 		features="features",
 		glue={"org.bdd.psc.stepDefinitions"},
 		//format = { "json", "json:target/cucumber.json" },strict = false, //for behavePro		
-		plugin = {"pretty","html:target/cucumber-html-report","bdd_core.framework.CustomReporter:build/reports/json/testresult.json"} ,
+		plugin = {"pretty","html:target/cucumber-html-report"} ,
 		monochrome = true
-		,tags = {"@SWEB-16826"})
+		,tags = {"@SWEB-18868"})
 
 
 public class TestRunner {
