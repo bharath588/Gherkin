@@ -138,7 +138,7 @@
 			</class> -->
 			<class name="app.psc.testcases.login.logintestcases">
 				<methods>
-					<!-- <include name="TC006_01_Verify_Force_Login">
+				 <include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
 							value="DDTC-1144_SIT_PSC_Login_01_TC006_Gwrs- Forcelogin" />
 					</include>  
@@ -196,7 +196,7 @@
 						name="TC011_01_SIT_PSC_Login_01_TC020_Unsuccessful_login_attempts">
 						<parameter name="ManualTCName"
 							value="DDTC-31_SIT_PSC_Login_01_TC020_Unsuccessful_login_attempts" />
-					</include>  -->
+					</include>  
 					<include name="TC01_SIT_PSC_HomePage_Transaction_Security">
 						<parameter name="ManualTCName" value="DDTC-1205_SIT_PSC_HomePage_Transaction_Security" />
 					</include>  
