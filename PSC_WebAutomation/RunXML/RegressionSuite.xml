@@ -74,11 +74,7 @@
 
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-				    <include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
-						<parameter name="ManualTCName"
-							value="DDTC-1246_SIT_PSC_User_Remember_Search_Employee_Selection" />
-					</include>
-					<include name="TC001_Search_Employee_For_Valid_SSN">
+				   	<include name="TC001_Search_Employee_For_Valid_SSN">
 						<parameter name="ManualTCName" value="DDTC-21982_Employee_Search_Sanity_Suite_validssn">
 						</parameter>
 					</include>
@@ -230,6 +226,14 @@
 					<include name="TC39_SIT_PSC_Accountdetail_Vesting_Reg">
 						<parameter name="ManualTCName" value="DDTC-74_SIT_PSC_Accountdetail_Vesting_Reg" />
 					</include>
+					
+			
+				</methods> 
+			</class> 
+			
+			<class name="app.psc.testcases.employeesearch.employeesearchtestcases_part2">
+				<methods>
+			 
 					<include name="TC40_SIT_PSC_Accountdetail_Loans_Reg">
 						<parameter name="ManualTCName" value="DDTC-82_SIT_PSC_Accountdetail_Loans_Reg" />
 					</include>
@@ -239,6 +243,10 @@
 					</include>
 					<include name="TC42_Paycheck_Contribution_History">
 						<parameter name="ManualTCName" value="DDTC-2162_Paycheck_Contribution_History" />
+					</include>
+					<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
+						<parameter name="ManualTCName"
+							value="DDTC-1246_SIT_PSC_User_Remember_Search_Employee_Selection" />
 					</include>
 					<include name="TC_44_Enroll_And_Eligibility_Fields_Type_Validations">
 						<parameter name="ManualTCName"
@@ -343,6 +351,7 @@
 					</include>
 				</methods> 
 			</class> 
+			
 			
 			 <class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
