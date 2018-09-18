@@ -1,6 +1,6 @@
 [{
        "Browser": "FF",
-       "Port": "http://143.199.167.42:5557/wd/hub",
+       "Port": "http://143.199.167.42:5556/wd/hub",
        "Platform": "Windows.xp"
 },
 {
