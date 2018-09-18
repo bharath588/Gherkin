@@ -1,16 +1,16 @@
 [{
        "Browser": "FF",
-       "Port": "http://10.4.61.146:5558/wd/hub",
+       "Port": "http://143.199.167.42:5557/wd/hub",
        "Platform": "Windows.xp"
 },
 {
-       "Browser": "CHROME",
-       "Port": " http://10.4.61.146:5559/wd/hub",
+       "Browser": "FF",
+       "Port": "http://143.199.167.179:5558/wd/hub",
        "Platform": "Windows.xp"
 },
 {
-       "Browser": "CHROME",
-       "Port": " http://10.4.61.69:5557/wd/hub",
+       "Browser": "FF",
+       "Port": "http://143.199.166.158:5559/wd/hub",
        "Platform": "Windows.xp"
 }
 ]
