@@ -203,7 +203,7 @@
 				</methods>
 			</class>
 			
-			 <class name="app.psc.testcases.reports.ReportsTestCases">
+			<!--  <class name="app.psc.testcases.reports.ReportsTestCases">
 				<methods>
 					<include
 						name="TC01_01_SIT_PSC_Reports_02_TC017_ViewReport_Parameters">
@@ -216,7 +216,7 @@
 							value="DDTC_8283_PSCNextGen-Reports-Plan_review_PDF_PPTX"/>
 					</include>
 				</methods>
-			</class> 
+			</class>  -->
 			
 		</classes>
 	</test>
