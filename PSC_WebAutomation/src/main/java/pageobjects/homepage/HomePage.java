@@ -284,6 +284,12 @@ public class HomePage extends LoadableComponent<HomePage> {
 			Thread.sleep(3000);
 			if (Stock.getConfigParam("DataType").equals("NonApple")) {
 				Web.waitForPageToLoad(Web.getDriver());
+				try{ 
+					Thread.sleep(5000);
+					Web.waitForElement(urlJumpPage);
+				} catch(Exception e){
+					
+				}
 				if (Web.isWebElementDisplayed(urlJumpPage, true))
 				Web.clickOnElement(urlJumpPage);
 			}
@@ -844,7 +850,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 						false);
 			} else {
 				Reporter.logEvent(Status.FAIL,
-						"Verify if all submenu options are displayed on home page for '"
+						"Verify if all 3" +expectSubMenuItems+" submenu options are displayed on home page for '"
 								+ menu + "'.", "All submenu tabs '"
 								+ actualSubMenuItems + "' are not displayed.",
 						true);
