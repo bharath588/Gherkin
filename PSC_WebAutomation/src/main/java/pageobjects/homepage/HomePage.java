@@ -253,7 +253,8 @@ public class HomePage extends LoadableComponent<HomePage> {
 				invokeMethod.invoke(this.parent.getClass().newInstance(),
 						new Object[] { userData });
 				loginObj.waitForSuccessfulLogin();
-				Web.waitForPageToLoad(Web.getDriver());
+				Thread.sleep(4000);
+				//Web.waitForPageToLoad(Web.getDriver());
 				// Check if UserVerification Pages appears then
 				// performVerification
 				if (Web.isWebElementDisplayed(Web.returnElement(userVeriPg,
@@ -280,8 +281,8 @@ public class HomePage extends LoadableComponent<HomePage> {
 
 				}
 			}
-			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(3000);
+			//Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(5000);
 			if (Stock.getConfigParam("DataType").equals("NonApple")) {
 				Web.waitForPageToLoad(Web.getDriver());
 				try{ 
