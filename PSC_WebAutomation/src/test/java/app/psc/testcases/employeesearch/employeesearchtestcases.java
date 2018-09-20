@@ -831,12 +831,12 @@ public class employeesearchtestcases {
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
 			employeesearch = new EmployeeSearch().get();
-			resultset = employeesearch.selectPlanForUser(
+			/*resultset = employeesearch.selectPlanForUser(
 					Stock.getTestQuery("getPlanswithDivisions"),
 					Stock.GetParameterValue("username"));
-			employeesearch.selectPlanFromResultset(resultset);
-			Thread.sleep(3000);
-			employeesearch.navigateToEmployeeTab();
+			employeesearch.selectPlanFromResultset(resultset);*/
+			Thread.sleep(2000);
+			/*employeesearch.navigateToEmployeeTab();*/
 			employeesearch.searchByDivision();
 			Thread.sleep(3000);
 			if (employeesearch.checkIfduplicateExists()) {
@@ -848,7 +848,7 @@ public class employeesearchtestcases {
 						"Check if any duplicate record exists",
 						"The search result contains duplicate records", true);
 			}
-			employeesearch.navigateToEmployeeTabSearchByName();
+			//employeesearch.navigateToEmployeeTabSearchByName();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;

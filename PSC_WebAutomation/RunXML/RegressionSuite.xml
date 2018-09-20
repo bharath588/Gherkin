@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite">
+<suite name="testsuite"parallel="classes" thread-count="3">
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="PSC Full Regression" parallel="classes" >
+	<test name="PSC Full Regression">
 	<classes>
 	
 			  <class name="app.psc.testcases.login.logintestcases">
