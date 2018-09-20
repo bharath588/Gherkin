@@ -1340,6 +1340,8 @@ public class HomePage extends LoadableComponent<HomePage> {
 						"If txn code PSOVMN assigned,Overview menu is displayed.",
 						"Overview" + " menu is not displayed.", true);
 			}
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(administrationTab);
 			act.click(administrationTab).build().perform();
 			if (payPlanExpense.isDisplayed())
 				Reporter.logEvent(Status.PASS,
@@ -1362,7 +1364,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Check if user can view plan invoices.",
-						"User can not view plan invoices.", true);
+						"User can not view plan invoices,Page not loaded properly", true);
 			Web.getDriver().switchTo().defaultContent();
 			Web.clickOnElement(homePageLogo);
 			Web.waitForPageToLoad(Web.getDriver());

@@ -199,22 +199,22 @@
 					</include>  
 					<include name="TC01_SIT_PSC_HomePage_Transaction_Security">
 						<parameter name="ManualTCName" value="DDTC-1205_SIT_PSC_HomePage_Transaction_Security" />
-					</include>  
+					</include>   
 				</methods>
 			</class>
 			
-			  <class name="app.psc.testcases.reports.ReportsTestCases">
+			 <class name="app.psc.testcases.reports.ReportsTestCases">
 				<methods>
 					<include
 						name="TC01_01_SIT_PSC_Reports_02_TC017_ViewReport_Parameters">
 						<parameter name="ManualTCName"
 							value="DDTC_2264_SIT_PSC_Reports_02_TC017_ViewReport_Parameters"/>
 					</include>
-					<include
+					 <include
 						name="TC02_01_PSCNextGen_Reports_Plan_review_PDF_PPTX">
 						<parameter name="ManualTCName"
 							value="DDTC_8283_PSCNextGen-Reports-Plan_review_PDF_PPTX"/>
-					</include>
+					</include> 
 				</methods>
 			</class>  
 			
