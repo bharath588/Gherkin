@@ -294,6 +294,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 				if (Web.isWebElementDisplayed(urlJumpPage, true))
 				Web.clickOnElement(urlJumpPage);
 			}
+			Thread.sleep(5000);
 			if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
 				Web.clickOnElement(CancelNewsBulletin);			
 			Web.getDriver().switchTo().defaultContent();
