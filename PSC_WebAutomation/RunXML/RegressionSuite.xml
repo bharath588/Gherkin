@@ -4,7 +4,7 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="PSC Full Regression" parallel="classes" >
+	<test name="PSC Full Regression" parallel="none" >
 	<classes>
 	
 			  <class name="app.psc.testcases.login.logintestcases">
