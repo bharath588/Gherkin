@@ -1029,6 +1029,7 @@ public class employeesearchtestcases {
 			employeesearch = new EmployeeSearch().get();
 			CommonLib.switchToDefaultPlan();
 			employeesearch.navigateToEmployeeTab();
+			//employeesearch.navigateToEmployeeTabSearchByName();
 			employeesearch.searchEmployeeBySSN(employeesearch.getSSNFromDB());
 			employeesearch.contactInFoSectionValidation();
 			employeesearch.contactInFoLabelValidation();
