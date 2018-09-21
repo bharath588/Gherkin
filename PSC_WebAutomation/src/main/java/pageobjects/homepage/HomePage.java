@@ -561,7 +561,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 			if (Stock.GetParameterValue("planNumber") != null) {
 				Web.clickOnElement(searchPlansInput);
 				Web.setTextToTextBox(searchPlansInput,
-						Stock.GetParameterValue("planNumber").substring(0, 5));
+						Stock.GetParameterValue("planNumber").substring(0, 6));
 				Reporter.logEvent(
 						Status.INFO,
 						"Check if five characters are entered in plan search input box",
