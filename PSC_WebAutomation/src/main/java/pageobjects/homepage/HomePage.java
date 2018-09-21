@@ -281,7 +281,9 @@ public class HomePage extends LoadableComponent<HomePage> {
 
 				}
 			}
+
 			//Web.waitForPageToLoad(Web.getDriver());
+
 			Thread.sleep(5000);
 			if (Stock.getConfigParam("DataType").equals("NonApple")) {
 				Web.waitForPageToLoad(Web.getDriver());

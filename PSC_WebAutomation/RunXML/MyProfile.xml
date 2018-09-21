@@ -8,18 +8,18 @@
 		<classes>
 		<class name="app.psc.testcases.myprofile.MyProfileTestCases">
 				<methods>
-					<include name="TC001_01_SIT_PSC_Update_My_profile_Default_Plan">
+					  <include name="TC001_01_SIT_PSC_Update_My_profile_Default_Plan">
 						<parameter name="ManualTCName" value="DDTC-10189_SIT_PSC_Update_My_profile_Default_Plan" />
 					</include>
 					 <include name="TC001_02_SIT_PSC_Update_My_profile_Default_Plan">
 						<parameter name="ManualTCName"
 							value="DDTC-10189_SIT_PSC_Update_My_profile_Default_Plan_Negative" />
-					</include>
+					</include> 
 					<include name="TC002_01_SIT_PSC_Update_Email_Address_Positive_Flow">
 						<parameter name="ManualTCName"
 							value="DDTC-1276_SIT_PSC_Update_Email_Address_Positive_Flow" />
 					</include>
-					<include name="TC002_02_SIT_PSC_Update_Email_Address_Negative_Flow">
+				 <include name="TC002_02_SIT_PSC_Update_Email_Address_Negative_Flow">
 						<parameter name="ManualTCName"
 							value="DDTC-1276_SIT_PSC_Update_Email_Address_Negative_Flow" />
 					</include>
@@ -34,12 +34,12 @@
 						<parameter name="ManualTCName"
 							value="DDTC-1024_SIT_PSC_Update_My_profile_Security_Questions" />
 					</include>
-					<include name="TC005_01_SIT_PSC_Update_My_profile_Password">
-						<parameter name="ManualTCName" value="DDTC-10186_SIT_PSC_Update_My_profile_Password" />
-					</include>
 					<include name="TC006_01_FAQ_DDTC_245">
 						<parameter name="ManualTCName" value="DDTC-245_FAQ_DDTC" />
 					</include> 
+					 <include name="TC005_01_SIT_PSC_Update_My_profile_Password">
+						<parameter name="ManualTCName" value="DDTC-10186_SIT_PSC_Update_My_profile_Password" />
+					</include>					
 				</methods>
 			</class>
 		</classes>
