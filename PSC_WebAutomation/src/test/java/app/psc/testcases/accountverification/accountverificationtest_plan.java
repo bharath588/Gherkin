@@ -237,8 +237,8 @@ public class accountverificationtest_plan {
 
 	@AfterSuite
 	public void cleanUpSession() {
-		Web.getDriver().close();
-		Web.getDriver().quit();
+		/*Web.getDriver().close();
+		Web.getDriver().quit();*/
 	}
 
 }

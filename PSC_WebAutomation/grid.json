@@ -1,30 +1,17 @@
-[
-{
-
-        "Browser": "Chrome",
-
-        "Port": "http://10.4.61.69:5557/wd/hub",
-
-        "Platform": "Windows.xp"
-
+[{
+       "Browser": "FF",
+       "Port": "http://143.199.167.42:5566/wd/hub",
+       "Platform": "Windows.xp"
 },
 {
-
-        "Browser": "Chrome",
-
-        "Port": "http://10.4.61.54:5557/wd/hub",
-
-        "Platform": "Windows.xp"
-
+       "Browser": "FF",
+       "Port": "http://143.199.167.179:5558/wd/hub",
+       "Platform": "Windows.xp"
 },
 {
-
-        "Browser": "Chrome",
-
-        "Port": "http://10.4.61.146:5558/wd/hub",
-
-        "Platform": "Windows.xp"
-
+       "Browser": "FF",
+       "Port": "http://143.199.166.158:5559/wd/hub",
+       "Platform": "Windows.xp"
 }
 ]
 

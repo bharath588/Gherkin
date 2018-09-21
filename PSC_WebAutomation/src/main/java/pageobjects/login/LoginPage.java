@@ -352,6 +352,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
 	public void waitForSuccessfulLogin() throws InterruptedException
 	{
+		try{
 		if(Web.isWebElementDisplayed(frmLogin))
 		{
 			Web.getDriver().switchTo().defaultContent();
@@ -364,6 +365,9 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			}while(Web.isWebElementDisplayed(loginSpinner));
 		}
 		Web.getDriver().switchTo().defaultContent();
+		}catch(Exception e) {
+			
+		}
 	}
 
 	/**
@@ -443,12 +447,19 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 				if (!Arrays.asList(txnCodes).contains(expectedTxnCodes[i])){
 					try {
 						DB.executeUpdate(Stock.getTestQuery("addTransactionCode")[0], Stock.getTestQuery("addTransactionCode")[1], 
-								expectedTxnCodes[i], "K_"+Stock.GetParameterValue("username"));
+								expectedTxnCodes[i]);
 					} catch (Exception e) {					
 						e.printStackTrace();
 					}
 				}
 			}
+		}
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("checkPlanTxnCodes")[0],
+				Stock.getTestQuery("checkPlanTxnCodes")[1],"K_"+Stock.GetParameterValue("username"));
+		int count1=0;
+		while(queryResultSet.next()){
+			txnCodes[count1] = queryResultSet.getString("TXN_CODE");
+			count1++;
 		}
 		if(Arrays.asList(txnCodes).contains("PSOVPG")&&Arrays.asList(txnCodes).contains("PSWVRS")&&
 					Arrays.asList(txnCodes).contains("PSPROV")&&Arrays.asList(txnCodes).contains("PSVSCH")&&

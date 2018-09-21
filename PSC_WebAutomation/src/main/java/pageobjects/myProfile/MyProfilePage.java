@@ -658,6 +658,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 						"New assigned user name is entered", false);
 				Web.clickOnElement(updateUserNameButton());
 				Web.gwgWebDriver.waitForAngularRequestsToFinish();
+				Thread.sleep(2000);
 				Web.setTextToAngularTextBox(confirmModalBox(), Stock.GetParameterValue("password"));
 				Web.clickOnElement(confirmPwdButton);
 				Web.gwgWebDriver.waitForAngularRequestsToFinish();

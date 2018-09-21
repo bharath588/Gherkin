@@ -261,8 +261,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	@FindBy(id = "workPhoneNumber")
 	private WebElement workPhoneNumber;
 
-	//@FindBy(xpath = "//button[text()='Save']")
-
+	@FindBy(xpath = "//button[text()='Save']")
+	private WebElement reHireSave;
 	@FindBy(xpath = "//input[@name='ESC_BASIC_UPDATE_SAVE']")
 	private WebElement save;
 	
@@ -1024,7 +1024,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement rehireButton;
 	@FindBy(xpath = ".//*[@id='employmentInfoPage']/div[4]/div/div/div/div/accordion/div/div/div[2]/div/div/div/section/div/div/div[3]/div/div/div/div[2]/button")
 	private WebElement returnToEmployeePagePostSave;
-
+	@FindBy(xpath=".//span[text()='Site Bulletin']/following-sibling::a/span")
+	private WebElement CancelNewsBulletin;
+	
 	private WebElement deferralHeaderSection(String expDeferralTypeText) {
 		// CommonLib.switchToFrame(framecA);
 		return Web.getDriver().findElement(
@@ -1298,6 +1300,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return null;
 	}
 
+	public void clickOnCancelNewsBulletin()
+	{
+		if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
+			Web.clickOnElement(CancelNewsBulletin);	
+	}
+	
 	/**
 	 * This method used to search the employee by SSN number
 	 * 
@@ -2996,8 +3004,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						.getString("MAILING_NAME_1").trim());
 				beneficiaryRecordsDB.put("Percent",
 						queryResultSet.getString("PERCENT").trim());
-				beneficiaryRecordsDB.put("SSN", queryResultSet.getString("SSN")
-						.trim());
+				//beneficiaryRecordsDB.put("SSN", queryResultSet.getString("SSN").trim());
 				beneficiaryRecordsDB.put("Birth date", queryResultSet
 						.getString("BIRTH_DATE").trim());
 			} else {
@@ -3301,7 +3308,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					+ "'", "Column header:'" + header.getText()
 					+ "' is displayed.", true);
 		}
-
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	/*
@@ -3488,7 +3495,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Date dt = dateFormat.parse(termDate_1);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(dt);
-		calendar.add(Calendar.DATE, 1);
+		calendar.add(Calendar.YEAR, 1);
 		String newHireDate = dateFormat.format(calendar.getTime());
 		System.out.println("Date string is:"
 				+ dateFormat.format(calendar.getTime()));
@@ -3501,7 +3508,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		}
 		// termDate.clear();
 		try {
-			Web.clickOnElement(save);
+			Web.clickOnElement(reHireSave);
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(framecA);
 			CommonLib.waitForProgressBar();
@@ -4805,10 +4812,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Web.waitForPageToLoad(Web.getDriver());
 				Thread.sleep(3000);
 				Web.waitForElement(enrollAndEligEditFrame);
+				Thread.sleep(3000);
 				Web.getDriver().switchTo().frame(enrollAndEligEditFrame);
+				
 				Select eligibilityCode = new Select(eligiCode);
 				Select inEligibilityCode = new Select(inEligiReasonCode);
 				if (selectedEligiCode.getText().equals("No")) {
+					Thread.sleep(2000);
 					eligibilityCode.selectByVisibleText("Yes");
 					inEligibilityCode.selectByValue("0");
 					updatedEliCode = "Yes";
@@ -4819,10 +4829,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					updatedEliCode = "No";
 					updatedInEliCode = "Other";
 				}
+				Thread.sleep(2000);
 				Web.clickOnElement(this.enrollAndEligEditFrameSave);
+				Thread.sleep(2000);
 				CommonLib.switchToFrame(employeeSearchFrame);
 				CommonLib.waitForProgressBar();
-
+				Thread.sleep(2000);
 				if (eligibilityCodeOverview.getText().trim()
 						.equals(updatedEliCode)
 						&& inEligibilityCodeOverview.getText().trim()
@@ -4837,10 +4849,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							"Edit Enrollment and Eligibility section and update eligibility code and reason code accordingly and save.",
 							"Details are not saved correctly.", true);
 				}
+				Thread.sleep(5000);
 				Web.clickOnElement(enrolAndEligibltyEditLink);
 				//CommonLib.switchToFrame(enrollAndEligEditFrame);
 				Web.waitForPageToLoad(Web.getDriver());
-				Thread.sleep(3000);
+				Thread.sleep(2000);
 				Web.waitForElement(enrollAndEligEditFrame);
 				Web.getDriver().switchTo().frame(enrollAndEligEditFrame);
 				
@@ -4852,6 +4865,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				calendar.add(Calendar.DATE, 1);
 				String partDateInString = dateFormat.format(calendar.getTime());
 				Web.setTextToTextBox(partDate, partDateInString);
+				Thread.sleep(2000);
 				if (selectedEligiCode.getText().equals("No")) {
 					eligibilityCode.selectByVisibleText("Yes");
 					inEligibilityCode.selectByValue("0");
@@ -4864,8 +4878,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					updatedInEliCode = "Other";
 				}
 				Web.clickOnElement(this.cancel);
+				Thread.sleep(2000);
 				CommonLib.switchToFrame(employeeSearchFrame);
 				CommonLib.waitForProgressBar();
+				Thread.sleep(2000);
 				if (!updatedEliCode.equals(eligibilityCodeOverview.getText()
 						.trim())
 						&& !updatedInEliCode.equals(inEligibilityCodeOverview

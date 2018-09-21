@@ -49,6 +49,9 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 	@FindBy(css = "a[id = 'jumpPageTable:0:j_idt48']")
 	private WebElement urlJumpPage;
 	@FindBy(css="div[id='greeting'] span[class='label']") private WebElement weGreeting;
+	@FindBy(xpath=".//span[text()='Site Bulletin']/following-sibling::a/span")
+	private WebElement CancelNewsBulletin;
+	
 	private LoadableComponent<?> parent;
 	private boolean ifUserOrAccntVerificationMandate = false; 
 	private Method invokeMethod;
@@ -211,8 +214,14 @@ public void ClickOnJumpPageURL() throws Exception
 {
 	Web.getDriver().switchTo().defaultContent();
 	Thread.sleep(2000);
+	Web.waitForPageToLoad(Web.getDriver());
 	Web.waitForElement(urlJumpPage);
 	Web.clickOnElement(urlJumpPage);
+	Web.waitForPageToLoad(Web.getDriver());	
+	if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
+		Web.clickOnElement(CancelNewsBulletin);			
+	Web.getDriver().switchTo().defaultContent();
+	Thread.sleep(2000);
 	Web.waitForPageToLoad(Web.getDriver());
 	Web.waitForElement(weGreeting);
 	if(weGreeting.isDisplayed())

@@ -493,11 +493,12 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 				Web.isWebElementDisplayed(urlJumpPage, true);
 				Web.clickOnElement(urlJumpPage);
 			}
+
 			Thread.sleep(2000);
-			Web.getDriver().switchTo().defaultContent();
+
 			if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
-				Web.clickOnElement(CancelNewsBulletin);			
-			
+				Web.clickOnElement(CancelNewsBulletin);		
+
 			Web.isWebElementDisplayed(weGreeting, true);
 			Reporter.logEvent(Status.INFO, "Check if Login is successfull",
 					"Login for PSC is successfull", false);

@@ -157,9 +157,9 @@ public class ReportsTestCases {
 	
 	@AfterSuite
 	public void DriverQuite() {
-		Web.getDriver().close();
+		/*Web.getDriver().close();
 		Web.getDriver().quit();
-		Web.removeWebDriverInstance();
+		Web.removeWebDriverInstance();*/
 	}
 	
 

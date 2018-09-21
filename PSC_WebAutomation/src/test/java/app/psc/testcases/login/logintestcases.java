@@ -36,7 +36,8 @@ public class logintestcases {
 	LoginPage login;
 	UserVerificationPage userverification;
 	HomePage home;
-
+	JumpPage jumpPage;
+	
 	@BeforeClass
 	public void InitTest() throws Exception {
 		Reporter.initializeModule(this.getClass().getName());
@@ -92,7 +93,7 @@ public class logintestcases {
 					Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password") });
 			// Thread.sleep(10000);
-			//Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForPageToLoad(Web.getDriver());
 			// Step-2 : Check if the user is on the login page
 			if ((!Web.isWebElementDisplayed(login, "LOGIN FRAME"))) {
 				Reporter.logEvent(Status.PASS,
@@ -103,7 +104,7 @@ public class logintestcases {
 						"Check if the user is on the login page",
 						"User login failed ", true);
 			}
-			// new JumpPage().logoutPSCFromJumpage();
+			 new JumpPage().logoutPSCFromJumpage();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -207,6 +208,7 @@ public class logintestcases {
 
 			// Step-3:Check for forcelogin with dummyvalues
 			Web.getDriver().get(Stock.GetParameterValue("ForceLoginDummyURL"));
+			Thread.sleep(2000);
 			isGWRSLogoDisplayed = Web
 					.isWebElementDisplayed(login, "GWRS IMAGE");
 
@@ -570,7 +572,10 @@ public class logintestcases {
 				userverification.performVerification(new String[] {
 						Stock.GetParameterValue("UserVeriEmail"),
 						Stock.GetParameterValue("UserSecondaryAns") });
-				new HomePage().get();
+				Web.waitForPageToLoad(Web.getDriver());
+				jumpPage= new JumpPage();
+				jumpPage.ClickOnJumpPageURL();
+				//new HomePage().get();
 				Reporter.logEvent(Status.PASS, "Check if home page is loaded",
 						"Home page is loaded", false);
 			}
@@ -1188,7 +1193,8 @@ public class logintestcases {
 				jumpPage.ClickOnJumpPageURL();
 				homePage.validateOverviewAndPlanDashboardAfterDeletingTxnCodes();
 				login.insertPSOVPGandPSOVMNTxnCodes();
-				homePage.logoutPSC();
+				Thread.sleep(2000);
+				//homePage.logoutPSC();
 
 			} else {
 				Reporter.logEvent(Status.FAIL,
@@ -1321,8 +1327,8 @@ public class logintestcases {
 	 */
 	@AfterSuite
 	public void DriverQuite() {
-		Web.getDriver().close();
+		/*Web.getDriver().close();
 		Web.getDriver().quit();
-		Web.removeWebDriverInstance();
+		Web.removeWebDriverInstance();*/
 	}
 }
