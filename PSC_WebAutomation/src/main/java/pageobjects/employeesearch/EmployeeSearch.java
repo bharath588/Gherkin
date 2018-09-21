@@ -1178,6 +1178,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			actions = new Actions(Web.getDriver());
 			actions.moveToElement(tabEmployees).click().build().perform();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(1000);
 			if (!Web.isWebElementDisplayed(employeeSearchFrame, false)) {
 				actions.moveToElement(tabEmployees).click().build().perform();
 				actions.click(searchEmployeeOptionLink).perform();
@@ -11126,7 +11127,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		else
 			Reporter.logEvent(Status.FAIL, "Verify print button is displayed.",
 					"Print button is not displayed.", true);
-		if (empName.contains(employeeSearched) && ssn.contains(ssnText))
+		if (empName.contains(employeeSearched) && ssn.contains(ssnText.substring(ssnText.length() - 7, ssnText.length())))
 			Reporter.logEvent(Status.PASS,
 					"Validate name and ssn are displayed.", ""
 							+ "Name and SSN are displayed as below:\nSSN:"

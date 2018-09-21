@@ -6,8 +6,7 @@
 	</listeners>
 	<test name="PSC Full Regression">
 	<classes>
-	
-			  <class name="app.psc.testcases.login.logintestcases">
+				  <class name="app.psc.testcases.login.logintestcases">
 			                 <methods>
                                   <include name="TC006_01_Verify_Force_Login">
                                          <parameter name="ManualTCName"
@@ -18,7 +17,7 @@
                                                 value="DDTC-1063_SIT_PSC_Login_01_TC017_Internal and External User">
                                          </parameter>
                                   </include> 
-                            <include name="TC002_01_Verify_Existing_User_Error_Messages_PreLogin">
+                                  <include name="TC002_01_Verify_Existing_User_Error_Messages_PreLogin">
                                          <parameter name="ManualTCName"
                                                 value="DDTC-316_SIT_PSC_Login_01_TC008_Login flow- New PSC User">
                                          </parameter>
@@ -72,7 +71,8 @@
 			
 			</class> 
 
-			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+			<!--  
+			 <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
 				   	<include name="TC001_Search_Employee_For_Valid_SSN">
 						<parameter name="ManualTCName" value="DDTC-21982_Employee_Search_Sanity_Suite_validssn">
@@ -351,7 +351,7 @@
 					</include>
 				</methods> 
 			</class> 
-			
+			 -->
 			
 			 <class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
@@ -454,7 +454,7 @@
 				</methods>
 			</class> 
 		
-			<class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+		<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
 				<methods>
 					<include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
 						<parameter name="ManualTCName"
@@ -512,7 +512,7 @@
 					</include>
 				</methods>
 			</class>
-		 	
+		 	 -->
 			<!-- <class name="app.psc.testcases.myprofile.MyProfileTestCases">
 				<methods>
 					<include name="TC001_01_SIT_PSC_Update_My_profile_Default_Plan">
