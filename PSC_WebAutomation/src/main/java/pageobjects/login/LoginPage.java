@@ -352,6 +352,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
 	public void waitForSuccessfulLogin() throws InterruptedException
 	{
+		try{
 		if(Web.isWebElementDisplayed(frmLogin))
 		{
 			Web.getDriver().switchTo().defaultContent();
@@ -364,6 +365,9 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			}while(Web.isWebElementDisplayed(loginSpinner));
 		}
 		Web.getDriver().switchTo().defaultContent();
+		}catch(Exception e) {
+			
+		}
 	}
 
 	/**

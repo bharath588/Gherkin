@@ -3,6 +3,7 @@ package pageobjects.userverification;
 import java.sql.ResultSet;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -42,12 +43,18 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	private WebElement linkPSC;
 	@FindBy(xpath = ".//*[@id='gritter-item-1']/div/div[1]")
 	private WebElement dismissErrorBox;	
-	@FindBy(xpath=".//*[@class='verificationTable']/tbody/tr[1]/td/table/tbody/tr[3]/td[2]/label")
+	@FindBy(xpath=".//td[./label[contains(text(),'Security question')]]/following-sibling::td/label")   
 	private WebElement securityQuestion;
 	@FindBy(xpath=".//div//input[contains(@id,'changePasswordForm')]")
 	private WebElement planTextFieldDefaultPlanNull;
 	@FindBy(xpath=".//button//span[text()='Next']")
 	private WebElement nextButton;
+	@FindBy(xpath="//div[@class='ui-growl-message']")
+	private WebElement securityErrorMessage;
+	@FindBy(xpath=".//*[@id='gritter-item-1']/div/div[1]")
+	private WebElement closSsecurityErrorMessage;
+	
+	
 	/* variable declaration */
 	LoadableComponent<?> parent;
 	ResultSet resultset;
@@ -161,12 +168,17 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		Thread.sleep(3000);
 		if (Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {			
 			Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
-			Thread.sleep(2000);
 			Web.setTextToTextBox(txtUserVerificationSecAns, this.getSecurityAnswer());
-			//Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
 			Web.clickOnElement(btnUserVerificationNext);
-			Web.waitForElement(imgEmpowerPsc);
-		}		
+			
+		}	
+		if(Web.isWebElementDisplayed(securityErrorMessage)){
+			Actions action=new Actions(Web.getDriver());
+			action.moveToElement(closSsecurityErrorMessage).click().build().perform();
+			Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
+			Web.clickOnElement(btnUserVerificationNext);
+		}
+		Web.waitForElement(imgEmpowerPsc);
 		if (!Web.isWebElementDisplayed(txtUserVerificationEmail)) {
 				Reporter.logEvent(Status.INFO, "Verify if the user verification screen is loaded",
 						"The user verification screen is not loaded", false);
@@ -181,10 +193,9 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	public void performErrorVerification(String[] userVerfiData) throws InterruptedException {
 		new UserVerificationPage();	
 		Thread.sleep(3000);
-		if (Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {
-			//if(!(userVerfiData[0]==null))
+		if (Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {			
 			Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
-			//if(!(userVerfiData[1]==null))
+			
 			Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
 			Web.clickOnElement(btnUserVerificationNext);
 			Web.waitForElement(imgEmpowerPsc);
@@ -262,29 +273,30 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	public String getSecurityQuestion()
 	{
 		String securityQuestionText = "";
+		String ans="";
 		try{
-			if(securityQuestion.getText().contains("car"))
+			/*if(securityQuestion.getText().contains("car"))
 				return securityQuestionText="car";
 			else if(securityQuestion.getText().contains("drink"))
 				return securityQuestionText="drink";
 			else if(securityQuestion.getText().contains("spouse"))
 				return securityQuestionText="spouse";
-			return
-					securityQuestionText;
+			return*/
+					securityQuestionText=securityQuestion.getText().toString().trim();
+					ans=securityQuestionText.substring(securityQuestionText.length()-2).split("/?")[0];
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		return securityQuestionText;
+		return ans;
 	}
 	
 	public String getSecurityAnswer()
 	{
-		//String securityAnswer = "";
-		String securityAnswer = "test";
+		String securityAnswer = "";
 		try{
-			if(this.getSecurityQuestion().equalsIgnoreCase("car"))
+			/*if(this.getSecurityQuestion().equalsIgnoreCase("car"))
 				//securityAnswer =    Stock.GetParameterValue("dreamCar");
 				securityAnswer = "testr";
 			else if(this.getSecurityQuestion().equalsIgnoreCase("drink"))
@@ -293,8 +305,9 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 			else if(this.getSecurityQuestion().equalsIgnoreCase("spouse"))
 				//securityAnswer = Stock.GetParameterValue("spouseMidName");
 				securityAnswer = "teste";
-			else
-				securityAnswer = Stock.GetParameterValue("UserSecondaryAns");
+			else*/
+				//securityAnswer = Stock.GetParameterValue("UserSecondaryAns");
+			securityAnswer = "test"+getSecurityQuestion();
 		}
 		catch(Exception e)
 		{

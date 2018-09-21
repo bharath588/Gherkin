@@ -253,7 +253,8 @@ public class HomePage extends LoadableComponent<HomePage> {
 				invokeMethod.invoke(this.parent.getClass().newInstance(),
 						new Object[] { userData });
 				loginObj.waitForSuccessfulLogin();
-				Web.waitForPageToLoad(Web.getDriver());
+				Thread.sleep(4000);
+				//Web.waitForPageToLoad(Web.getDriver());
 				// Check if UserVerification Pages appears then
 				// performVerification
 				if (Web.isWebElementDisplayed(Web.returnElement(userVeriPg,
@@ -280,13 +281,22 @@ public class HomePage extends LoadableComponent<HomePage> {
 
 				}
 			}
-			Web.waitForPageToLoad(Web.getDriver());
+
+			//Web.waitForPageToLoad(Web.getDriver());
+
 			Thread.sleep(5000);
 			if (Stock.getConfigParam("DataType").equals("NonApple")) {
 				Web.waitForPageToLoad(Web.getDriver());
+				try{ 
+					Thread.sleep(5000);
+					Web.waitForElement(urlJumpPage);
+				} catch(Exception e){
+					
+				}
 				if (Web.isWebElementDisplayed(urlJumpPage, true))
 				Web.clickOnElement(urlJumpPage);
 			}
+			Thread.sleep(5000);
 			if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
 				Web.clickOnElement(CancelNewsBulletin);			
 			Web.getDriver().switchTo().defaultContent();
@@ -844,7 +854,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 						false);
 			} else {
 				Reporter.logEvent(Status.FAIL,
-						"Verify if all submenu options are displayed on home page for '"
+						"Verify if all 3" +expectSubMenuItems+" submenu options are displayed on home page for '"
 								+ menu + "'.", "All submenu tabs '"
 								+ actualSubMenuItems + "' are not displayed.",
 						true);
@@ -1333,6 +1343,8 @@ public class HomePage extends LoadableComponent<HomePage> {
 						"If txn code PSOVMN assigned,Overview menu is displayed.",
 						"Overview" + " menu is not displayed.", true);
 			}
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(administrationTab);
 			act.click(administrationTab).build().perform();
 			if (payPlanExpense.isDisplayed())
 				Reporter.logEvent(Status.PASS,
@@ -1355,7 +1367,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Check if user can view plan invoices.",
-						"User can not view plan invoices.", true);
+						"User can not view plan invoices,Page not loaded properly", true);
 			Web.getDriver().switchTo().defaultContent();
 			Web.clickOnElement(homePageLogo);
 			Web.waitForPageToLoad(Web.getDriver());

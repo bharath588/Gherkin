@@ -78,6 +78,7 @@ public class userverificationtestcases {
 		String actualErrorMessage = "";
 		login = new LoginPage();
 		try {
+			
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			userverification = new UserVerificationPage().get();
 			Reporter.logEvent(Status.INFO, "Testcase Description",
@@ -158,6 +159,11 @@ public class userverificationtestcases {
 	public void TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int itr,
 			Map<String, String> testdata) {
 		try {
+			Web.getDriver();
+			Web.getDriver().manage().deleteAllCookies();
+			//Web.getDriver().close();
+			Thread.sleep(2000);
+			
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			String actualErrorMessage = "";
 			Reporter.logEvent(Status.INFO, "Testcase Description",

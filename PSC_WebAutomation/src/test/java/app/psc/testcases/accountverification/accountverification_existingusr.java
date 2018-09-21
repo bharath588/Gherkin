@@ -95,8 +95,12 @@ public class accountverification_existingusr {
 									Stock.GetParameterValue("UserSecondaryAns") });
 				}
 				catch(Exception e){
-					
+					e.printStackTrace();
 				}
+				try{
+					userverification.performVerification(new String[] {"discard@gwl.com",
+									Stock.GetParameterValue("UserSecondaryAns") });
+				}catch(Exception e){}
 				
 			}
 			accountverification.resetPassword(

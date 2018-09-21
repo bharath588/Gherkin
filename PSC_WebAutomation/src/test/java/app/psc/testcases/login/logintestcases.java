@@ -36,7 +36,8 @@ public class logintestcases {
 	LoginPage login;
 	UserVerificationPage userverification;
 	HomePage home;
-
+	JumpPage jumpPage;
+	
 	@BeforeClass
 	public void InitTest() throws Exception {
 		Reporter.initializeModule(this.getClass().getName());
@@ -207,6 +208,7 @@ public class logintestcases {
 
 			// Step-3:Check for forcelogin with dummyvalues
 			Web.getDriver().get(Stock.GetParameterValue("ForceLoginDummyURL"));
+			Thread.sleep(2000);
 			isGWRSLogoDisplayed = Web
 					.isWebElementDisplayed(login, "GWRS IMAGE");
 
@@ -570,7 +572,10 @@ public class logintestcases {
 				userverification.performVerification(new String[] {
 						Stock.GetParameterValue("UserVeriEmail"),
 						Stock.GetParameterValue("UserSecondaryAns") });
-				new HomePage().get();
+				Web.waitForPageToLoad(Web.getDriver());
+				jumpPage= new JumpPage();
+				jumpPage.ClickOnJumpPageURL();
+				//new HomePage().get();
 				Reporter.logEvent(Status.PASS, "Check if home page is loaded",
 						"Home page is loaded", false);
 			}
@@ -1188,7 +1193,8 @@ public class logintestcases {
 				jumpPage.ClickOnJumpPageURL();
 				homePage.validateOverviewAndPlanDashboardAfterDeletingTxnCodes();
 				login.insertPSOVPGandPSOVMNTxnCodes();
-				homePage.logoutPSC();
+				Thread.sleep(2000);
+				//homePage.logoutPSC();
 
 			} else {
 				Reporter.logEvent(Status.FAIL,
