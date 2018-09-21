@@ -1176,15 +1176,20 @@ public class logintestcases {
 				homePage.searchPlanWithIdOrName(Stock.GetParameterValue("PlanNo"));
 				homePage.validatePlanSubmenuBasedOnTxnCodes();
 				homePage.validateOtherHomePageSecutiryTXNCodes();
+				System.out.println("1");
 				login.deletePlanMenuTxnCodes1();
+				System.out.println("2");
 				homePage.logoutPSC();
 				login.submitLoginCredentials(new String[] {
 						Stock.GetParameterValue("username"),
 						Stock.GetParameterValue("password") });
 				jumpPage.ClickOnJumpPageURL();
 				homePage.validateHomePageScreenAfterDeletingTxnCodes1();
+				System.out.println("3");
 				login.insertPlanMenuTxnCodes();
+				System.out.println("4");
 				login.deletePlanMenuTxnCodes2();
+				System.out.println("5");
 				homePage.logoutPSC();
 				Thread.sleep(2000);
 				login.submitLoginCredentials(new String[] {
@@ -1193,6 +1198,7 @@ public class logintestcases {
 				jumpPage.ClickOnJumpPageURL();
 				homePage.validateOverviewAndPlanDashboardAfterDeletingTxnCodes();
 				login.insertPSOVPGandPSOVMNTxnCodes();
+				System.out.println("6");
 				Thread.sleep(2000);
 				//homePage.logoutPSC();
 
