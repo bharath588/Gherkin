@@ -87,8 +87,12 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	private WebElement txtNewPassword;
 	@FindBy(xpath = "(//td[contains(@class,'formLeftColumn')])[5]//input")
 	private WebElement txtConfirmPassword;
+	//table[@class='changePasswordTable']//tr/td[@class=' formLeftColumn']//input
 	@FindBy(css = "table[class='changePasswordTable'] tr>td[class=' formLeftColumn'] input")
 	private List<WebElement> createNewPwdfields;
+	@FindBy(xpath = "//table[@class='changePasswordTable']//tr/td[@class=' formLeftColumn']//input[contains(@name,'mpwrConfirmPassword')]")
+	private WebElement createNewPwdfieldsTxtConfirmPassword;
+	
 	@FindBy(css = "a[id = 'jumpPageTable:0:j_idt48']")
 	private WebElement urlJumpPage;
 	@FindBy(css = "div[class = 'ui-growl-item']")
@@ -111,6 +115,9 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	private WebElement planNumberTextBoxInchangePasswordForm;
 	@FindBy(xpath="//*[contains(@id,'changePasswordNext')]")
 	private WebElement nextButtonDefaultPlanNumber;
+	
+	@FindBy(xpath=".//span[text()='Site Bulletin']/following-sibling::a/span")
+	private WebElement CancelNewsBulletin;
 	
 	
 	LoadableComponent<?> parent;
@@ -488,14 +495,21 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 							createNewPwdfields.get(iLoopCnt), true)
 							&& createNewPwdfields.get(iLoopCnt).isEnabled()) {
 						Thread.sleep(2000);
-
-						createNewPwdfields.get(iLoopCnt).click();
-						Web.setTextToTextBox(createNewPwdfields.get(iLoopCnt),
-								param);
+						if(iLoopCnt!=3){
+							createNewPwdfields.get(iLoopCnt).click();
+							Web.setTextToTextBox(createNewPwdfields.get(iLoopCnt),
+									param);
+						}else{
+							createNewPwdfieldsTxtConfirmPassword.click();
+							createNewPwdfieldsTxtConfirmPassword.sendKeys(param);
+							Web.setTextToTextBox(createNewPwdfieldsTxtConfirmPassword,
+									param);
+						}
+						
 					}
 
 				} catch (Exception e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 				iLoopCnt = iLoopCnt + 1;
 			}
@@ -662,17 +676,23 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	 * This method will log out user from the application
 	 * @throws InterruptedException
 	 */
-	public void logoutFromApplication() throws InterruptedException
+	public void logoutFromApplication()
 	{
-		if(Web.isWebElementDisplayed(linkLogout)){
-			Web.actionsClickOnElement(linkLogout);
-		}
-		else if(Web.isWebElementDisplayed(linkLogoutAccveri))
-		{
-			Web.actionsClickOnElement(linkLogoutAccveri);
+		try{
+			if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
+				Web.clickOnElement(CancelNewsBulletin);
+			Thread.sleep(3000);
+			if(Web.isWebElementDisplayed(linkLogout)){
+				Web.actionsClickOnElement(linkLogout);
+			}
+			else if(Web.isWebElementDisplayed(linkLogoutAccveri))
+			{
+				Web.actionsClickOnElement(linkLogoutAccveri);
 
-		}
-		Thread.sleep(3000);
+			}
+			Thread.sleep(3000);
+		}catch(Exception e){}
+		
 	}
 
 	/**
@@ -771,6 +791,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	{
 		try {
 			DB.executeUpdate(addTxnCodeQuery[0], addTxnCodeQuery[1], txnCode,"K_"+userName);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -780,6 +801,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	{
 		try {
 			DB.executeUpdate(deleteTxnCodeQuery[0], deleteTxnCodeQuery[1], txnCode,"K_"+userName);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

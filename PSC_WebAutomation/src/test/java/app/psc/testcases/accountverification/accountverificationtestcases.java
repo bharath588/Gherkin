@@ -98,7 +98,7 @@ public class accountverificationtestcases {
 			accountverification.resetPasswordQuery(
 					Stock.getTestQuery("updateUserEffdateQuery"),
 					Stock.GetParameterValue("username"));
-			accountverification.logoutFromApplication();
+			//accountverification.logoutFromApplication();
 			accountverification.get();
 			userverification = new UserVerificationPage();
 			String actualErrorMessage = "";
@@ -113,8 +113,8 @@ public class accountverificationtestcases {
 			accountverification.resetPassword(userAccessTosites, emailAddress,
 					recentPlan);
 
-			//actualErrorMessage = accountverification.getErrorMessageText();
-			actualErrorMessage = accountverification.verifyErrorMessagePasswordField();
+			actualErrorMessage = accountverification.getErrorMessageText();
+			//actualErrorMessage = accountverification.verifyErrorMessagePasswordField();
 			if (!actualErrorMessage.trim().isEmpty()) {
 				Reporter.logEvent(
 						Status.PASS,
@@ -194,7 +194,7 @@ public class accountverificationtestcases {
 			accountverification.resetPasswordQuery(
 					Stock.getTestQuery("updateUserEffdateQuery"),
 					Stock.GetParameterValue("username"));
-			accountverification.logoutFromApplication();
+			//accountverification.logoutFromApplication();
 			accountverification.get();
 			userverification = new UserVerificationPage();
 			String actualErrorMessage = "";

@@ -401,6 +401,8 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	private WebElement investmentPerformanceAgainLink;
 	@FindBy(xpath = "(.//*[@id='inv-Popover'])[2]")
 	private WebElement secondInvName;
+	@FindBy(xpath=".//span[text()='Site Bulletin']/following-sibling::a/span")
+	private WebElement CancelNewsBulletin;
 	
 	private String menuQDIA = "//a[contains(text(),'Participant QDIA notice listing order')]";
 	private String docHistoryLinkPath = "./ancestor::div[1]/following-sibling::div//a[contains(@class,'accordion-toggle-doclink')]";
@@ -491,7 +493,11 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 				Web.isWebElementDisplayed(urlJumpPage, true);
 				Web.clickOnElement(urlJumpPage);
 			}
+			Thread.sleep(2000);
 			Web.getDriver().switchTo().defaultContent();
+			if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
+				Web.clickOnElement(CancelNewsBulletin);			
+			
 			Web.isWebElementDisplayed(weGreeting, true);
 			Reporter.logEvent(Status.INFO, "Check if Login is successfull",
 					"Login for PSC is successfull", false);
@@ -585,6 +591,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 			if (Web.isWebElementDisplayed(addNewMessageTab, true)) {
 				Web.clickOnElement(addNewMessageTab);
 				Web.waitForElement(planMsgingTitle);
+				Thread.sleep(3000);
 				if (submitPlnMsgBtn.isDisplayed()
 						&& cancelPlnMsgBtn.isDisplayed())
 					Reporter.logEvent(
@@ -1143,8 +1150,21 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 			 * homePage.navigateToProvidedPage("Plan", "Administration",
 			 * "Username security management");
 			 */
+			Thread.sleep(2000);
 			this.openAnySubmenuUnderAdministrationMenu("Username security management");
+			
 			Web.getDriver().switchTo().frame(frameb);
+			
+			if(!Web.isWebElementDisplayed(searchUserId)){
+				Web.getDriver().switchTo().defaultContent();
+				Web.clickOnElement(homePage, "Reports Menu");
+				Thread.sleep(5000);
+				this.openAnySubmenuUnderAdministrationMenu("Username security management");
+				Web.getDriver().switchTo().frame(frameb);
+			}
+				
+			
+			
 			if (Web.isWebElementDisplayed(showAdvSearchedLink, true))
 				Web.actionsClickOnElement(showAdvSearchedLink);
 			// Web.waitForPageToLoad(Web.getDriver());
@@ -1208,8 +1228,10 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 						"" + "Specified fields are not editable.", false);
 			Select sel = new Select(userAccessdropDwon2);
 			sel.selectByIndex(1);
-			Thread.sleep(2000);
+			Web.clickOnElement(userAccessdropDwon2);
+			Thread.sleep(4000);
 			Web.clickOnElement(editButtonn);
+			Thread.sleep(3000);
 			Web.waitForPageToLoad(Web.getDriver());
 			if (Web.isWebElementDisplayed(confirmMsgBox, true))
 				Reporter.logEvent(Status.PASS,
@@ -1572,6 +1594,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 		Web.getDriver().switchTo().defaultContent();
 		homePage.navigateToProvidedPage("Plan", "Fiduciary records", "");
 		Thread.sleep(3000);
+		System.out.println("");
 		if (CommonLib.isElementExistByXpath(menuQDIA))
 			isDisplayed = false;
 		else
