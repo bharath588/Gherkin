@@ -361,10 +361,10 @@ public class ReportsPage extends LoadableComponent<ReportsPage>{
 								(By.id(reportParams.get(i))).getTagName();
 						String label = Web.getDriver().findElement
 								(By.xpath(".//*[@id='"+reportParams.get(i)+"']/../preceding-sibling::label")).getText();
-						if(tagName.equalsIgnoreCase("select"))
+						/*if(tagName.equalsIgnoreCase("select"))
 							selectParamOnReportOrderPage(reportParams.get(i),label);
 						else if(tagName.equalsIgnoreCase("input"))
-							enterDateOnReportOrderPage(reportParams.get(i),label);
+							enterDateOnReportOrderPage(reportParams.get(i),label);*/
 					}
 					else if(reportParams.get(i).toLowerCase().contains("label")){
 						Reporter.logEvent(Status.INFO, "There are instructions on page", 
