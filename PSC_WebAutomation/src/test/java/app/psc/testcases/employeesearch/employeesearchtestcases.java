@@ -3809,8 +3809,7 @@ public class employeesearchtestcases {
 				if (employeesearch.employmentInfoSectionAndEditLinkValidation()) {
 					employeesearch.navigateToHirePageWhenEmpActiveNoTermDate();
 					employeesearch.validateBreadCrumb("Employment information");
-					employeesearch.validateBasicEmploymentElements(planNumber,
-							ssn);
+					employeesearch.validateBasicEmploymentElements(planNumber,ssn);
 					employeesearch.validateEmploymentHistoryLabels();
 					employeesearch.hireTermDateCalendarValidation();
 					employeesearch.compareTerminationReason();
