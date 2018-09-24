@@ -29,6 +29,7 @@ public class userverificationtestcases {
 	UserVerificationPage userverification;
 	HomePage home;
 	boolean checkReLoginStats = false;
+	static boolean clearCache=false; 
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;	
 
 /*	@BeforeTest
@@ -159,10 +160,14 @@ public class userverificationtestcases {
 	public void TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int itr,
 			Map<String, String> testdata) {
 		try {
-			Web.getDriver();
-			Web.getDriver().manage().deleteAllCookies();
-			//Web.getDriver().close();
-			Thread.sleep(2000);
+			if(!clearCache){
+				Web.getDriver();
+				Web.getDriver().manage().deleteAllCookies();
+				//Web.getDriver().close();
+				Thread.sleep(2000);
+				clearCache=true;
+			}
+			
 			
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			String actualErrorMessage = "";
