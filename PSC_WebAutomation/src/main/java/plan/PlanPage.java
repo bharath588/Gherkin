@@ -84,7 +84,8 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	private WebElement datePickerBegin;
 	@FindBy(xpath = "//*[@id='date-picker-end']//following-sibling::label")
 	private WebElement datePickerEnd;
-	@FindBy(xpath = ".//td[contains(@class,'ui-datepicker-today')]//following-sibling::*[2]//a")
+	//@FindBy(xpath = ".//td[contains(@class,'ui-datepicker-today')]//following-sibling::*[2]//a")
+	@FindBy(xpath = "//td[contains(@class,'ui-datepicker-today') or contains(@class,'ui-datepicker-week-end')]//following-sibling::*[2]//a")
 	private WebElement nextToNextDayDate;
 	@FindBy(id = "selectMessage")
 	private WebElement selectMsgLink;
@@ -465,6 +466,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 				loginObj.waitForSuccessfulLogin();
 				// Check if UserVerification Pages appears then
 				// performVerification
+				Thread.sleep(2000);
 				if (Web.isWebElementDisplayed(Web.returnElement(userVeriPg,
 						"EMAIL ADDRESS"))) {
 					/*
@@ -489,6 +491,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 				}
 			}
 			// urlJumpPage.click();
+			Thread.sleep(2000);
 			if (Stock.getConfigParam("DataType").equals("NonApple")) {
 				Web.isWebElementDisplayed(urlJumpPage, true);
 				Web.clickOnElement(urlJumpPage);
